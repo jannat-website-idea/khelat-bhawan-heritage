@@ -7,65 +7,49 @@ export default {
   theme: {
     extend: {
       colors: {
-        parchment: {
-          50: '#FDFBF7',
-          100: '#FAF6EF',
-          200: '#F4ECE0',
-          300: '#EBDCC8',
-          400: '#DFC8AC',
-          500: '#D1B28C',
-          900: '#2A2118',
+        background: 'hsl(var(--background))',
+        foreground: 'hsl(var(--foreground))',
+        primary: {
+          DEFAULT: 'hsl(var(--primary))',
+          foreground: 'hsl(var(--primary-foreground))',
         },
-        rosegold: {
-          50: '#FAF5F3',
-          100: '#F5EBE6',
-          200: '#EBD5CB',
-          300: '#DEBAAC',
-          400: '#CF9D8B',
-          500: '#B87D65', // Signature Royal Rose Gold
-          600: '#A46650',
-          700: '#8A503D',
-          800: '#714031',
-          900: '#5D362B',
+        secondary: {
+          DEFAULT: 'hsl(var(--secondary))',
+          foreground: 'hsl(var(--secondary-foreground))',
         },
-        burgundy: {
-          50: '#F9F1F2',
-          100: '#F3E1E4',
-          200: '#E7C5CB',
-          300: '#D59EAA',
-          400: '#BE7083',
-          500: '#A5495E',
-          600: '#8B3448',
-          700: '#722638',
-          800: '#5C202E',
-          900: '#4A121A', // Signature Deep Burgundy Wine
-          950: '#2C060D',
+        card: {
+          DEFAULT: 'hsl(var(--card))',
+          foreground: 'hsl(var(--card-foreground))',
         },
-        heritage: {
-          gold: '#C5A059',
-          darkgold: '#9A7B38',
-          charcoal: '#1A1817',
-          ink: '#121110',
-          cream: '#FAF8F5',
-          warmgray: '#78716C',
-        }
+        muted: {
+          DEFAULT: 'hsl(var(--muted))',
+          foreground: 'hsl(var(--muted-foreground))',
+        },
+        accent: {
+          DEFAULT: 'hsl(var(--accent))',
+          foreground: 'hsl(var(--accent-foreground))',
+        },
+        border: 'hsl(var(--border))',
+        'rose-gold': 'hsl(var(--rose-gold))',
+        'warm-gold': 'hsl(var(--warm-gold))',
+        'matte-red': 'hsl(var(--matte-red))',
+        'navy': 'hsl(var(--navy))',
+        'navy-deep': 'hsl(var(--navy-deep))',
+        'ivory': 'hsl(var(--ivory))',
       },
       fontFamily: {
         serif: ['"Playfair Display"', 'Georgia', 'serif'],
-        display: ['"Cormorant Garamond"', 'Georgia', 'serif'],
-        sans: ['"Plus Jakarta Sans"', 'sans-serif'],
+        body: ['Inter', 'Helvetica Neue', 'sans-serif'],
         bengali: ['"Noto Serif Bengali"', '"Hind Siliguri"', 'serif'],
       },
       backgroundImage: {
-        'rosegold-gradient': 'linear-gradient(135deg, #DEBAAC 0%, #B87D65 50%, #8A503D 100%)',
-        'rosegold-light': 'linear-gradient(135deg, #F5EBE6 0%, #EBD5CB 100%)',
-        'burgundy-gradient': 'linear-gradient(135deg, #4A121A 0%, #2C060D 100%)',
-        'parchment-gradient': 'linear-gradient(180deg, #FDFBF7 0%, #FAF6EF 100%)',
+        'gradient-heritage': 'linear-gradient(135deg, hsl(var(--navy)), hsl(var(--navy-deep)))',
+        'gradient-gold': 'linear-gradient(135deg, hsl(var(--warm-gold)), hsl(var(--rose-gold)))',
       },
       boxShadow: {
-        'royal': '0 20px 40px -15px rgba(74, 18, 26, 0.07), 0 0 15px rgba(184, 125, 101, 0.08)',
-        'royal-lg': '0 30px 60px -15px rgba(74, 18, 26, 0.12), 0 0 25px rgba(184, 125, 101, 0.15)',
-        'inner-glow': 'inset 0 0 20px rgba(184, 125, 101, 0.1)',
+        'subtle': '0 2px 10px rgba(0, 0, 0, 0.05)',
+        'elevated': '0 10px 30px -10px rgba(0, 0, 0, 0.1)',
+        'royal': '0 20px 40px -15px rgba(22, 26, 38, 0.15)',
       }
     },
   },
