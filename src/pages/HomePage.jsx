@@ -1,125 +1,135 @@
-import React, { useState, useRef } from 'react';
-import { Volume2, VolumeX, Play, Pause, ChevronRight, Calendar, ArrowRight, Check } from 'lucide-react';
+import React, { useState, useEffect, useRef } from 'react';
+import { ChevronLeft, ChevronRight, ArrowRight } from 'lucide-react';
 import SectionHeader from '../components/SectionHeader';
 import { getAssetUrl } from '../utils/assetHelper';
 import { galleryData } from '../data/galleryData';
 
 export default function HomePage({ lang, setActiveTab, onOpenBooking, onOpenLightbox, content }) {
   const t = content[lang];
-  const [isPlaying, setIsPlaying] = useState(true);
-  const [isMuted, setIsMuted] = useState(true);
-  const videoRef = useRef(null);
+  const [currentSlide, setCurrentSlide] = useState(0);
 
-  const togglePlay = () => {
-    if (videoRef.current) {
-      if (isPlaying) {
-        videoRef.current.pause();
-      } else {
-        videoRef.current.play();
-      }
-      setIsPlaying(!isPlaying);
+  const heroSlides = [
+    {
+      image: "/images/hero-rajbari.jpg",
+      kicker: lang === 'bn' ? "প্রতিষ্ঠিত ১৮৪৫ · পাথুরিয়াঘাটা, কলকাতা" : "Est. 1845 · Pathuriaghata, Kolkata",
+      title: lang === 'bn' ? "খেলাৎ ভবন" : "Khelat Bhavan",
+      subtitle: lang === 'bn' ? "যেখানে ইতিহাস ও আভিজাত্য জীবন্ত হয়ে ওঠে" : "Where History Lives & Celebrates"
+    },
+    {
+      image: "/images/gallery-wedding.jpg",
+      kicker: lang === 'bn' ? "রাজকীয় বিবাহ ও উৎসব" : "Royal Weddings & Celebrations",
+      title: lang === 'bn' ? "রাজকীয় বিবাহ" : "Royal Weddings",
+      subtitle: lang === 'bn' ? "স্মরণীয় উদযাপনের এক অবিস্মরণীয় পটভূমি" : "A Legacy of Grand Celebrations"
+    },
+    {
+      image: "/images/gallery-cultural.jpg",
+      kicker: lang === 'bn' ? "ঐতিহাসিক সংস্কৃতি ও শাস্ত্রীয় সঙ্গীত" : "Cultural Heritage & Music",
+      title: lang === 'bn' ? "সাংস্কৃতিক ঐতিহ্য" : "Cultural Heritage",
+      subtitle: lang === 'bn' ? "কলা · সঙ্গীত · আধ্যাত্মিক সাধনা" : "Art · Drama · Devotion"
+    },
+    {
+      image: "/images/gallery-festival.jpg",
+      kicker: lang === 'bn' ? "১৮৫৫ সাল থেকে অবিচ্ছিন্ন দুর্গাপূজা" : "Durga Puja Since 1855",
+      title: lang === 'bn' ? "আলোকের মহোৎসব" : "Festivals of Light",
+      subtitle: lang === 'bn' ? "অনাবিল আনন্দ ও আধ্যাত্মিকতার মুহূর্ত" : "Moments of Eternal Joy"
     }
-  };
+  ];
 
-  const toggleMute = () => {
-    if (videoRef.current) {
-      videoRef.current.muted = !isMuted;
-      setIsMuted(!isMuted);
-    }
-  };
+  // Auto advance slides every 5.5s
+  useEffect(() => {
+    const timer = setInterval(() => {
+      setCurrentSlide((prev) => (prev + 1) % heroSlides.length);
+    }, 5500);
+    return () => clearInterval(timer);
+  }, [heroSlides.length]);
+
+  const nextSlide = () => setCurrentSlide((prev) => (prev + 1) % heroSlides.length);
+  const prevSlide = () => setCurrentSlide((prev) => (prev - 1 + heroSlides.length) % heroSlides.length);
 
   return (
     <div className="space-y-0">
-      {/* 01: CINEMATIC HERO SECTION */}
-      <section className="relative h-screen min-h-[680px] flex items-center justify-center overflow-hidden gradient-heritage text-primary-foreground">
-        {/* Video / Background Layer */}
-        <div className="absolute inset-0 w-full h-full overflow-hidden">
-          <video
-            ref={videoRef}
-            src={getAssetUrl('/Videos/khelat bhaban video.mp4')}
-            poster={getAssetUrl('/images/SDP_0344.jpg')}
-            autoPlay
-            loop
-            muted={isMuted}
-            playsInline
-            className="w-full h-full object-cover opacity-50 scale-105 transform transition-transform duration-1000"
-          />
-          {/* Subtle Dark Radial Gradient */}
-          <div className="absolute inset-0 bg-gradient-to-t from-navy-deep via-navy-deep/60 to-navy-deep/40" />
-        </div>
-
-        {/* Video Controls (Floating Top Right) */}
-        <div className="absolute top-28 right-6 z-30 flex items-center gap-2">
-          <button
-            onClick={togglePlay}
-            className="p-2.5 rounded-full bg-navy/80 hover:bg-navy text-primary-foreground border border-white/20 backdrop-blur-md transition-all shadow-md"
-            title={isPlaying ? "Pause Video" : "Play Video"}
+      {/* 01: EXACT CINEMATIC HERO SLIDER MATCHING LOVABLE REFERENCE */}
+      <section className="relative h-screen min-h-[620px] max-h-[1080px] overflow-hidden bg-black text-white flex items-center justify-center">
+        {/* Background Slides */}
+        {heroSlides.map((slide, idx) => (
+          <div
+            key={idx}
+            className={`absolute inset-0 transition-opacity duration-1000 ease-in-out ${
+              idx === currentSlide ? 'opacity-100 scale-100' : 'opacity-0 scale-105 pointer-events-none'
+            } transform transition-transform duration-[6000ms]`}
           >
-            {isPlaying ? <Pause className="w-4 h-4" /> : <Play className="w-4 h-4" />}
-          </button>
-          <button
-            onClick={toggleMute}
-            className="p-2.5 rounded-full bg-navy/80 hover:bg-navy text-primary-foreground border border-white/20 backdrop-blur-md transition-all shadow-md"
-            title={isMuted ? "Unmute Audio" : "Mute Audio"}
-          >
-            {isMuted ? <VolumeX className="w-4 h-4" /> : <Volume2 className="w-4 h-4" />}
-          </button>
-        </div>
-
-        {/* Hero Content */}
-        <div className="relative z-20 max-w-5xl mx-auto px-6 text-center mt-8">
-          {/* Ornamental Divider */}
-          <div className="flex items-center justify-center gap-4 mb-4">
-            <div className="h-px w-12 bg-primary-foreground/30" />
-            <span className="text-rose-gold text-xs tracking-[0.3em] uppercase font-body font-medium">❖</span>
-            <div className="h-px w-12 bg-primary-foreground/30" />
+            <img
+              src={getAssetUrl(slide.image)}
+              alt={slide.title}
+              className="w-full h-full object-cover"
+              loading={idx === 0 ? "eager" : "lazy"}
+            />
+            {/* Subtle Gradient that preserves full image clarity while ensuring text legibility */}
+            <div className="absolute inset-0 bg-gradient-to-b from-black/55 via-black/20 to-black/75" />
           </div>
+        ))}
 
-          <p className="text-xs md:text-sm tracking-[0.3em] uppercase text-rose-gold font-body font-semibold mb-4">
-            {t.hero.subtitle}
+        {/* Previous & Next Arrow Controls */}
+        <button
+          onClick={prevSlide}
+          className="absolute left-4 md:left-8 z-30 p-3 rounded-full bg-black/30 hover:bg-black/70 text-white/80 hover:text-white border border-white/20 backdrop-blur-md transition-all shadow-lg hidden sm:flex items-center justify-center"
+          aria-label="Previous Slide"
+        >
+          <ChevronLeft className="w-6 h-6" />
+        </button>
+
+        <button
+          onClick={nextSlide}
+          className="absolute right-4 md:right-8 z-30 p-3 rounded-full bg-black/30 hover:bg-black/70 text-white/80 hover:text-white border border-white/20 backdrop-blur-md transition-all shadow-lg hidden sm:flex items-center justify-center"
+          aria-label="Next Slide"
+        >
+          <ChevronRight className="w-6 h-6" />
+        </button>
+
+        {/* Centered Hero Content Matching Reference Vibe */}
+        <div className="relative z-20 max-w-5xl mx-auto px-6 text-center mt-12 sm:mt-8">
+          <p className="text-rose-gold text-xs md:text-sm tracking-[0.4em] md:tracking-[0.5em] uppercase font-body font-bold mb-4 md:mb-6 animate-fade-in drop-shadow-md">
+            {heroSlides[currentSlide].kicker}
           </p>
 
-          <h1 className="font-serif text-4xl sm:text-6xl md:text-8xl font-bold tracking-tight text-primary-foreground leading-[1.05] mb-6">
-            {lang === 'bn' ? 'খেলাৎ ভবন রাজবাড়ি' : 'Khelat Bhavan'}
+          <h1 className="font-serif text-5xl sm:text-7xl md:text-8xl lg:text-9xl font-bold tracking-tight text-white mb-3 md:mb-4 leading-[0.95] drop-shadow-lg">
+            {heroSlides[currentSlide].title}
           </h1>
 
-          <p className="max-w-2xl mx-auto text-sm sm:text-base md:text-lg text-primary-foreground/80 font-body font-light leading-relaxed mb-10">
-            {t.hero.tagline}
+          <p className="font-serif text-xl sm:text-2xl md:text-3xl text-white/90 italic mb-8 md:mb-10 font-normal drop-shadow-md">
+            {heroSlides[currentSlide].subtitle}
           </p>
 
-          {/* CTAs matching Lovable style */}
+          {/* Twin CTAs matching Lovable Reference */}
           <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
             <button
               onClick={onOpenBooking}
-              className="w-full sm:w-auto bg-accent text-accent-foreground px-10 py-3.5 text-xs tracking-[0.2em] uppercase font-body font-semibold hover:bg-matte-red transition-colors rounded-sm shadow-md"
+              className="w-full sm:w-auto bg-accent text-accent-foreground px-10 py-3.5 text-xs tracking-[0.2em] uppercase font-body font-bold hover:bg-matte-red transition-all rounded-sm shadow-2xl hover:scale-105"
             >
               {lang === 'bn' ? 'বুকিং অনুসন্ধান' : 'Book Your Event'}
             </button>
 
             <button
               onClick={() => setActiveTab('gallery')}
-              className="w-full sm:w-auto border border-primary-foreground/40 text-primary-foreground px-10 py-3.5 text-xs tracking-[0.2em] uppercase font-body font-medium hover:bg-primary-foreground/10 transition-colors rounded-sm backdrop-blur-sm"
+              className="w-full sm:w-auto border border-white/70 text-white hover:bg-white/15 px-10 py-3.5 text-xs tracking-[0.2em] uppercase font-body font-bold transition-all rounded-sm backdrop-blur-sm shadow-2xl hover:scale-105"
             >
               {lang === 'bn' ? 'গ্যালারি দেখুন' : 'Explore Gallery'}
             </button>
           </div>
+        </div>
 
-          {/* Stats bar */}
-          <div className="grid grid-cols-2 lg:grid-cols-4 gap-4 mt-16 pt-8 border-t border-white/15 text-left">
-            {t.hero.stats.map((stat, idx) => (
-              <div key={idx} className="p-4 rounded-sm bg-white/5 border border-white/10 backdrop-blur-md">
-                <div className="font-serif text-2xl md:text-3xl font-bold text-rose-gold">
-                  {stat.value}
-                </div>
-                <div className="text-xs font-semibold text-primary-foreground mt-1 font-body">
-                  {stat.label}
-                </div>
-                <div className="text-[11px] text-primary-foreground/60 font-light mt-0.5 font-body">
-                  {stat.sub}
-                </div>
-              </div>
-            ))}
-          </div>
+        {/* Bottom Slide Indicators Matching Lovable Reference */}
+        <div className="absolute bottom-8 z-30 flex items-center justify-center gap-3">
+          {heroSlides.map((_, idx) => (
+            <button
+              key={idx}
+              onClick={() => setCurrentSlide(idx)}
+              className={`h-1.5 rounded-full transition-all duration-500 ${
+                idx === currentSlide ? 'w-12 bg-accent shadow-md' : 'w-4 bg-white/40 hover:bg-white/70'
+              }`}
+              aria-label={`Go to slide ${idx + 1}`}
+            />
+          ))}
         </div>
       </section>
 
