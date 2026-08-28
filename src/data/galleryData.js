@@ -25,7 +25,7 @@ export const galleryData = [
     "category": "video",
     "title": "Khelat Bhavan Official Video Tour",
     "desc": "High-definition cinematic walkthrough of Pathuria Ghata Ghosh Bari, exploring the Thakur Dalan, courtyards, and grand heritage halls.",
-    "src": "/Videos/khelat bhaban video.mp4",
+    "src": "/Videos/khelat-bhawan-video.mp4",
     "poster": "/images/SDP_0344.jpg",
     "date": "2023-11-01",
     "photographer": "Khelat Bhawan Heritage Media"
@@ -596,7 +596,7 @@ export const galleryData = [
     "category": "heritage",
     "title": "Heritage Building Details",
     "desc": "Close-up details of the heritage building's architectural elements",
-    "src": "/images/unnamed (1).webp",
+    "src": "/images/unnamed_1.webp",
     "date": "2023-07-05",
     "photographer": "Architecture Documentation"
   },
@@ -606,7 +606,7 @@ export const galleryData = [
     "category": "heritage",
     "title": "Heritage Building Details",
     "desc": "Close-up details of the heritage building's architectural elements",
-    "src": "/images/unnamed (2).webp",
+    "src": "/images/unnamed_13.webp",
     "date": "2023-07-05",
     "photographer": "Architecture Documentation"
   },

@@ -2,6 +2,7 @@ import React, { useState, useMemo } from 'react';
 import { Play, Maximize2, Calendar, User, Eye, Sparkles } from 'lucide-react';
 import SectionHeader from '../components/SectionHeader';
 import { galleryData } from '../data/galleryData';
+import { getAssetUrl } from '../utils/assetHelper';
 
 export default function GalleryPage({ lang, onOpenLightbox, content }) {
   const [filter, setFilter] = useState('all');
@@ -88,54 +89,59 @@ export default function GalleryPage({ lang, onOpenLightbox, content }) {
 
         {/* Grid matching lovable.app layout */}
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 md:gap-6">
-          {displayedItems.map((item) => (
-            <div
-              key={item.id}
-              onClick={() => onOpenLightbox(item)}
-              className="relative group cursor-pointer overflow-hidden aspect-square rounded-sm shadow-sm hover:shadow-xl transition-all duration-500 bg-black"
-            >
-              {/* Media Image / Video Poster */}
-              <img
-                src={item.type === 'video' ? (item.poster || '/images/SDP_0344.jpg') : item.src}
-                alt={item.title}
-                className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110 opacity-95 group-hover:opacity-100"
-                loading="lazy"
-              />
+          {displayedItems.map((item) => {
+            const rawSrc = item.type === 'video' ? (item.poster || '/images/SDP_0344.jpg') : item.src;
+            const finalSrc = getAssetUrl(rawSrc);
 
-              {/* Video Play Badge if Video */}
-              {item.type === 'video' && (
-                <div className="absolute inset-0 flex items-center justify-center bg-black/25 group-hover:bg-black/10 transition-colors">
-                  <div className="w-16 h-16 rounded-full bg-accent/90 border-2 border-white flex items-center justify-center text-white shadow-xl group-hover:scale-110 transition-transform">
-                    <Play className="w-6 h-6 fill-current ml-0.5" />
+            return (
+              <div
+                key={item.id}
+                onClick={() => onOpenLightbox(item)}
+                className="relative group cursor-pointer overflow-hidden aspect-square rounded-sm shadow-sm hover:shadow-xl transition-all duration-500 bg-black"
+              >
+                {/* Media Image / Video Poster */}
+                <img
+                  src={finalSrc}
+                  alt={item.title}
+                  className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110 opacity-95 group-hover:opacity-100"
+                  loading="lazy"
+                />
+
+                {/* Video Play Badge if Video */}
+                {item.type === 'video' && (
+                  <div className="absolute inset-0 flex items-center justify-center bg-black/25 group-hover:bg-black/10 transition-colors">
+                    <div className="w-16 h-16 rounded-full bg-accent/90 border-2 border-white flex items-center justify-center text-white shadow-xl group-hover:scale-110 transition-transform">
+                      <Play className="w-6 h-6 fill-current ml-0.5" />
+                    </div>
+                  </div>
+                )}
+
+                {/* Category Pill on top left */}
+                <div className="absolute top-3 left-3 bg-navy-deep/80 backdrop-blur-md px-2.5 py-1 text-[10px] tracking-wider uppercase text-rose-gold font-body font-semibold rounded-sm border border-white/10 opacity-90 group-hover:opacity-100">
+                  {item.type === 'video' ? 'VIDEO TOUR' : item.category.toUpperCase()}
+                </div>
+
+                {/* Hover Dark Overlay */}
+                <div className="absolute inset-0 bg-foreground/0 group-hover:bg-foreground/50 transition-colors duration-300 flex items-end">
+                  {/* Slide-up Details */}
+                  <div className="p-5 translate-y-full group-hover:translate-y-0 transition-transform duration-300 w-full text-left bg-gradient-to-t from-black/80 via-black/40 to-transparent">
+                    <p className="font-serif text-primary-foreground text-lg md:text-xl font-semibold leading-snug">
+                      {item.title}
+                    </p>
+                    <p className="text-primary-foreground/75 text-xs font-body line-clamp-2 mt-1">
+                      {item.desc}
+                    </p>
+                    <div className="flex items-center justify-between mt-2 pt-2 border-t border-white/20 text-[11px] text-rose-gold font-body">
+                      <span>{item.date}</span>
+                      <span className="text-primary-foreground/70 uppercase tracking-wider text-[10px]">
+                        {lang === 'bn' ? 'পূর্ণাঙ্গ চিত্র' : 'View High-Res'}
+                      </span>
+                    </div>
                   </div>
                 </div>
-              )}
-
-              {/* Category Pill on top left */}
-              <div className="absolute top-3 left-3 bg-navy-deep/80 backdrop-blur-md px-2.5 py-1 text-[10px] tracking-wider uppercase text-rose-gold font-body font-semibold rounded-sm border border-white/10 opacity-90 group-hover:opacity-100">
-                {item.type === 'video' ? 'VIDEO TOUR' : item.category.toUpperCase()}
               </div>
-
-              {/* Hover Dark Overlay */}
-              <div className="absolute inset-0 bg-foreground/0 group-hover:bg-foreground/50 transition-colors duration-300 flex items-end">
-                {/* Slide-up Details */}
-                <div className="p-5 translate-y-full group-hover:translate-y-0 transition-transform duration-300 w-full text-left bg-gradient-to-t from-black/80 via-black/40 to-transparent">
-                  <p className="font-serif text-primary-foreground text-lg md:text-xl font-semibold leading-snug">
-                    {item.title}
-                  </p>
-                  <p className="text-primary-foreground/75 text-xs font-body line-clamp-2 mt-1">
-                    {item.desc}
-                  </p>
-                  <div className="flex items-center justify-between mt-2 pt-2 border-t border-white/20 text-[11px] text-rose-gold font-body">
-                    <span>{item.date}</span>
-                    <span className="text-primary-foreground/70 uppercase tracking-wider text-[10px]">
-                      {lang === 'bn' ? 'পূর্ণাঙ্গ চিত্র' : 'View High-Res'}
-                    </span>
-                  </div>
-                </div>
-              </div>
-            </div>
-          ))}
+            );
+          })}
         </div>
 
         {/* Load More Button */}

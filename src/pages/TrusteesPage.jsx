@@ -1,6 +1,7 @@
 import React from 'react';
 import { Heart, Music, Users, Check } from 'lucide-react';
 import SectionHeader from '../components/SectionHeader';
+import { getAssetUrl } from '../utils/assetHelper';
 
 export default function TrusteesPage({ lang, setActiveTab, onOpenLightbox, content }) {
   const t = content[lang];
@@ -124,7 +125,7 @@ export default function TrusteesPage({ lang, setActiveTab, onOpenLightbox, conte
                   <div className="lg:col-span-5 space-y-4 text-left">
                     <div className="h-60 rounded-sm overflow-hidden bg-black shadow-inner">
                       <img
-                        src={trust.image}
+                        src={getAssetUrl(trust.image)}
                         alt={trust.name}
                         className="w-full h-full object-cover hover:scale-105 transition-transform duration-500 cursor-pointer"
                         onClick={() => onOpenLightbox({

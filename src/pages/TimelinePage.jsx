@@ -1,5 +1,6 @@
 import React from 'react';
 import SectionHeader from '../components/SectionHeader';
+import { getAssetUrl } from '../utils/assetHelper';
 
 export default function TimelinePage({ lang, setActiveTab, onOpenLightbox, content }) {
   const t = content[lang];
@@ -117,7 +118,7 @@ export default function TimelinePage({ lang, setActiveTab, onOpenLightbox, conte
               <div className="md:col-span-4">
                 <div className="h-44 rounded-sm overflow-hidden bg-black">
                   <img
-                    src={item.image}
+                    src={getAssetUrl(item.image)}
                     alt={item.title}
                     className="w-full h-full object-cover hover:scale-105 transition-transform duration-500 cursor-pointer"
                     onClick={() => onOpenLightbox({

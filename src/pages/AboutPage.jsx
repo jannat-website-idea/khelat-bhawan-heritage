@@ -1,6 +1,7 @@
 import React from 'react';
 import { Compass, Award, ArrowRight } from 'lucide-react';
 import SectionHeader from '../components/SectionHeader';
+import { getAssetUrl } from '../utils/assetHelper';
 
 export default function AboutPage({ lang, setActiveTab, onOpenLightbox, content }) {
   const t = content[lang];
@@ -46,7 +47,7 @@ export default function AboutPage({ lang, setActiveTab, onOpenLightbox, content 
           <div className="lg:col-span-6">
             <div className="rounded-sm overflow-hidden shadow-xl aspect-[4/3] bg-black">
               <img
-                src="/images/SDP_0282.jpg"
+                src={getAssetUrl('/images/SDP_0282.jpg')}
                 alt="Colonnaded Arches of Khelat Bhavan"
                 className="w-full h-full object-cover hover:scale-105 transition-transform duration-700 cursor-pointer"
                 onClick={() => onOpenLightbox({
@@ -75,7 +76,7 @@ export default function AboutPage({ lang, setActiveTab, onOpenLightbox, content 
               >
                 <div>
                   <div className="h-44 rounded-sm overflow-hidden mb-4 bg-black">
-                    <img src={gen.image} alt={gen.name} className="w-full h-full object-cover" />
+                    <img src={getAssetUrl(gen.image)} alt={gen.name} className="w-full h-full object-cover" />
                   </div>
                   <span className="text-[10px] uppercase tracking-widest text-accent font-body font-semibold block mb-1">
                     {gen.gen} · {gen.period}

@@ -1,5 +1,6 @@
 import React, { useEffect } from 'react';
 import { X, ChevronLeft, ChevronRight } from 'lucide-react';
+import { getAssetUrl } from '../utils/assetHelper';
 
 export default function Lightbox({ item, onClose, onNext, onPrev, hasNext, hasPrev }) {
   useEffect(() => {
@@ -13,6 +14,8 @@ export default function Lightbox({ item, onClose, onNext, onPrev, hasNext, hasPr
   }, [onClose, onNext, onPrev, hasNext, hasPrev]);
 
   if (!item) return null;
+
+  const finalSrc = getAssetUrl(item.src);
 
   return (
     <div 
@@ -44,7 +47,7 @@ export default function Lightbox({ item, onClose, onNext, onPrev, hasNext, hasPr
         {item.type === 'video' ? (
           <div className="max-w-5xl max-h-[75vh] w-full rounded-sm overflow-hidden shadow-2xl bg-black border border-white/10">
             <video
-              src={item.src}
+              src={finalSrc}
               controls
               autoPlay
               playsInline
@@ -53,7 +56,7 @@ export default function Lightbox({ item, onClose, onNext, onPrev, hasNext, hasPr
           </div>
         ) : (
           <img
-            src={item.src}
+            src={finalSrc}
             alt={item.title}
             className="max-w-full max-h-[75vh] object-contain rounded-sm shadow-2xl"
           />

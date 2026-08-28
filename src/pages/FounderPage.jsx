@@ -1,5 +1,6 @@
 import React from 'react';
 import SectionHeader from '../components/SectionHeader';
+import { getAssetUrl } from '../utils/assetHelper';
 
 export default function FounderPage({ lang, setActiveTab, onOpenLightbox, content }) {
   const t = content[lang];
@@ -18,7 +19,7 @@ export default function FounderPage({ lang, setActiveTab, onOpenLightbox, conten
           <div className="md:col-span-5 text-center">
             <div className="p-3 bg-card rounded-sm border border-border inline-block shadow-md">
               <img
-                src={t.founder.image}
+                src={getAssetUrl(t.founder.image)}
                 alt={t.founder.name}
                 className="w-full h-[400px] object-cover rounded-sm grayscale hover:grayscale-0 transition-all duration-700 cursor-pointer"
                 onClick={() => onOpenLightbox({

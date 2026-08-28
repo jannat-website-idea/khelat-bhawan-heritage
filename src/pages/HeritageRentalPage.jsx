@@ -1,6 +1,7 @@
 import React from 'react';
 import { Check, Calendar } from 'lucide-react';
 import SectionHeader from '../components/SectionHeader';
+import { getAssetUrl } from '../utils/assetHelper';
 
 export default function HeritageRentalPage({ lang, onOpenBooking, onOpenLightbox, content }) {
   const t = content[lang];
@@ -24,7 +25,7 @@ export default function HeritageRentalPage({ lang, onOpenBooking, onOpenLightbox
               <div>
                 <div className="h-60 overflow-hidden bg-black relative">
                   <img
-                    src={srv.image}
+                    src={getAssetUrl(srv.image)}
                     alt={srv.title}
                     className="w-full h-full object-cover hover:scale-105 transition-transform duration-700 cursor-pointer"
                     onClick={() => onOpenLightbox({

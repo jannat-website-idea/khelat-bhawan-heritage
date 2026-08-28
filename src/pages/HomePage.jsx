@@ -1,6 +1,8 @@
 import React, { useState, useRef } from 'react';
 import { Volume2, VolumeX, Play, Pause, ChevronRight, Calendar, ArrowRight, Check } from 'lucide-react';
 import SectionHeader from '../components/SectionHeader';
+import { getAssetUrl } from '../utils/assetHelper';
+import { galleryData } from '../data/galleryData';
 
 export default function HomePage({ lang, setActiveTab, onOpenBooking, onOpenLightbox, content }) {
   const t = content[lang];
@@ -34,8 +36,8 @@ export default function HomePage({ lang, setActiveTab, onOpenBooking, onOpenLigh
         <div className="absolute inset-0 w-full h-full overflow-hidden">
           <video
             ref={videoRef}
-            src="/Videos/khelat bhaban video.mp4"
-            poster="/images/SDP_0344.jpg"
+            src={getAssetUrl('/Videos/khelat bhaban video.mp4')}
+            poster={getAssetUrl('/images/SDP_0344.jpg')}
             autoPlay
             loop
             muted={isMuted}
@@ -133,7 +135,7 @@ export default function HomePage({ lang, setActiveTab, onOpenBooking, onOpenLigh
             <div className="lg:col-span-6 relative">
               <div className="relative rounded-sm overflow-hidden shadow-xl aspect-[4/3] bg-black">
                 <img
-                  src="/images/SDP_0344.jpg"
+                  src={getAssetUrl('/images/SDP_0344.jpg')}
                   alt="Khelat Bhavan Courtyard"
                   className="w-full h-full object-cover hover:scale-105 transition-transform duration-700 cursor-pointer"
                   onClick={() => onOpenLightbox({
@@ -192,7 +194,7 @@ export default function HomePage({ lang, setActiveTab, onOpenBooking, onOpenLigh
                 <div>
                   <div className="h-56 overflow-hidden bg-black relative">
                     <img
-                      src={trust.image}
+                      src={getAssetUrl(trust.image)}
                       alt={trust.title}
                       className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700"
                     />
@@ -246,7 +248,7 @@ export default function HomePage({ lang, setActiveTab, onOpenBooking, onOpenLigh
                   {item.year}
                 </span>
                 <div className="h-40 rounded-sm overflow-hidden mb-4 bg-black">
-                  <img src={item.image} alt={item.title} className="w-full h-full object-cover hover:scale-105 transition-transform" />
+                  <img src={getAssetUrl(item.image)} alt={item.title} className="w-full h-full object-cover hover:scale-105 transition-transform" />
                 </div>
                 <h3 className="font-serif text-lg font-semibold text-foreground mb-2">
                   {item.title}
@@ -276,7 +278,7 @@ export default function HomePage({ lang, setActiveTab, onOpenBooking, onOpenLigh
             <div className="lg:col-span-5 text-center">
               <div className="p-3 bg-white/5 rounded-sm border border-white/15 inline-block">
                 <img
-                  src={t.founder.image}
+                  src={getAssetUrl(t.founder.image)}
                   alt={t.founder.name}
                   className="w-full h-[400px] object-cover rounded-sm grayscale hover:grayscale-0 transition-all duration-700"
                 />
@@ -325,30 +327,33 @@ export default function HomePage({ lang, setActiveTab, onOpenBooking, onOpenLigh
           />
 
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 max-w-6xl mx-auto my-12">
-            {t.gallery.items.slice(0, 6).map((item) => (
-              <div
-                key={item.id}
-                onClick={() => onOpenLightbox(item)}
-                className="relative group cursor-pointer overflow-hidden aspect-square rounded-sm shadow-sm hover:shadow-xl transition-all duration-500 bg-black"
-              >
-                <img
-                  src={item.type === 'video' ? (item.poster || '/images/SDP_0344.jpg') : item.src}
-                  alt={item.title}
-                  className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110 opacity-95 group-hover:opacity-100"
-                />
+            {galleryData.slice(0, 6).map((item) => {
+              const rawSrc = item.type === 'video' ? (item.poster || '/images/SDP_0344.jpg') : item.src;
+              return (
+                <div
+                  key={item.id}
+                  onClick={() => onOpenLightbox(item)}
+                  className="relative group cursor-pointer overflow-hidden aspect-square rounded-sm shadow-sm hover:shadow-xl transition-all duration-500 bg-black"
+                >
+                  <img
+                    src={getAssetUrl(rawSrc)}
+                    alt={item.title}
+                    className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110 opacity-95 group-hover:opacity-100"
+                  />
 
-                <div className="absolute inset-0 bg-foreground/0 group-hover:bg-foreground/50 transition-colors duration-300 flex items-end">
-                  <div className="p-5 translate-y-full group-hover:translate-y-0 transition-transform duration-300 w-full text-left">
-                    <p className="font-serif text-primary-foreground text-lg font-semibold">
-                      {item.title}
-                    </p>
-                    <p className="text-rose-gold text-xs font-body tracking-wider uppercase mt-1">
-                      {item.category}
-                    </p>
+                  <div className="absolute inset-0 bg-foreground/0 group-hover:bg-foreground/50 transition-colors duration-300 flex items-end">
+                    <div className="p-5 translate-y-full group-hover:translate-y-0 transition-transform duration-300 w-full text-left">
+                      <p className="font-serif text-primary-foreground text-lg font-semibold">
+                        {item.title}
+                      </p>
+                      <p className="text-rose-gold text-xs font-body tracking-wider uppercase mt-1">
+                        {item.category}
+                      </p>
+                    </div>
                   </div>
                 </div>
-              </div>
-            ))}
+              );
+            })}
           </div>
 
           <div className="text-center mt-10">
