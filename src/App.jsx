@@ -1,4 +1,5 @@
 import React, { useEffect, useMemo, useRef, useState } from 'react';
+import './family-tree.css';
 import { ArrowRight, ChevronLeft, ChevronRight, Clock3, Mail, MapPin, Menu, Pause, Phone, Play, Send, Volume2, VolumeX, X } from 'lucide-react';
 
 const officialEmail = 'councilofculture.ghoshbari47@gmail.com';
@@ -85,6 +86,25 @@ const trustsBn = [
   { ...trustsEn[2], est:'প্রতিষ্ঠিত ২০০০+', label:'সমাজসেবা ট্রাস্ট', text:'পরিবেশনশিল্প, সমাজসেবা, শিশুদের শিক্ষা ও স্বাস্থ্যসচেতনতা নিয়ে কাজ করে।', activities:['পরিবেশনশিল্প কর্মশালা ও অনুষ্ঠান','সুবিধাবঞ্চিত শিশুদের শিক্ষাসহায়তা','স্বাস্থ্যসচেতনতা অভিযান','সমাজসেবামূলক উদ্যোগ','সংস্কৃতি সংরক্ষণ কর্মসূচি'] }
 ];
 
+const lineageEn = [
+  ['01','Khelat Ghosh','1775–1845','Founder'],
+  ['02','Second Generation','1810–1880','Inheritor'],
+  ['03','Third Generation','1845–1915','Spiritual Custodian'],
+  ['04','Fourth Generation','1880–1950','Cultural Guardian'],
+  ['05','Fifth Generation','1915–1985','Modernizer'],
+  ['06','Sixth Generation','1950–Present','Contemporary Custodian'],
+  ['07','Seventh Generation','1985–Present','Future Vision']
+];
+const lineageBn = [
+  ['০১','Khelat Ghosh','১৭৭৫–১৮৪৫','প্রতিষ্ঠাতা'],
+  ['০২','দ্বিতীয় প্রজন্ম','১৮১০–১৮৮০','উত্তরাধিকারী'],
+  ['০৩','তৃতীয় প্রজন্ম','১৮৪৫–১৯১৫','আধ্যাত্মিক তত্ত্বাবধায়ক'],
+  ['০৪','চতুর্থ প্রজন্ম','১৮৮০–১৯৫০','সাংস্কৃতিক অভিভাবক'],
+  ['০৫','পঞ্চম প্রজন্ম','১৯১৫–১৯৮৫','আধুনিকায়নকারী'],
+  ['০৬','ষষ্ঠ প্রজন্ম','১৯৫০–বর্তমান','সমকালীন তত্ত্বাবধায়ক'],
+  ['০৭','সপ্তম প্রজন্ম','১৯৮৫–বর্তমান','ভবিষ্যৎ পরিকল্পনা']
+];
+
 const gallery = ['/images/SDP_0344.jpg','/images/SDP_0257.jpg','/images/SDP_0273.jpg','/images/SDP_0282.jpg','/images/SDP_0291.jpg','/images/SDP_0299.jpg','/images/SDP_0305.jpg','/images/SDP_0359.jpg','/images/SDP_0368.jpg','/images/unnamed_3.webp','/images/unnamed_4.webp','/images/unnamed_6.webp','/images/unnamed_8.webp','/images/unnamed_11.webp','/images/unnamed_12.webp'].map((src,i)=>({id:i+1,type:'image',src,title:`Khelat Bhawan visual archive · ${String(i+1).padStart(2,'0')}`}));
 gallery.splice(3,0,{id:'video',type:'video',src:'/Videos/khelat bhaban video.mp4',poster:'/images/SDP_0344.jpg',title:'Khelat Bhawan film'});
 
@@ -108,6 +128,21 @@ function Home({t,lang,openBooking,openMedia}) {
 
 function Heritage({t,lang}) { return <><PageHero eyebrow={lang==='en'?'About Khelat Bhawan':'Khelat Bhawan সম্পর্কে'} title={t.heritageTitle} lead={t.heritageLead}/><section className="section story"><div><p className="eyebrow">1845</p><h2>{lang==='en'?'Our story':'আমাদের কথা'}</h2><Mark/><p>{t.introA}</p><p>{lang==='en'?'For over 175 years, the mansion has been a centre of cultural and religious activity in Kolkata. The official website describes it as a bridge between Bengal’s past and future.':'১৭৫ বছরেরও বেশি সময় ধরে এই বাড়ি কলকাতার সাংস্কৃতিক ও ধর্মীয় কর্মকাণ্ডের কেন্দ্র। সরকারি ওয়েবসাইট একে বাংলার অতীত ও ভবিষ্যতের মধ্যে সেতু হিসেবে বর্ণনা করে।'}</p></div><div className="image-frame wide"><img src="/images/SDP_0291.jpg" alt="Khelat Bhawan heritage architecture"/></div></section><div className="alpana-band" aria-hidden="true"/><section className="section split-story"><div className="image-frame tall"><img src="/images/unnamed_6.webp" alt="Religious celebration at Khelat Bhawan"/></div><div><p className="eyebrow">1855</p><h2>{lang==='en'?'Devotion and tradition':'ভক্তি ও পরম্পরা'}</h2><p>{lang==='en'?'Durga Puja has been celebrated here since 1855. The official website also records Jagadhatri Puja, daily Nitya Seva and traditional rituals among the house’s devotional activities.':'১৮৫৫ সাল থেকে এখানে দুর্গাপূজা উদ্‌যাপিত হয়ে আসছে। সরকারি ওয়েবসাইটে জগদ্ধাত্রী পূজা, দৈনিক নিত্যসেবা ও ঐতিহ্যবাহী আচারও বাড়িটির ধর্মীয় কর্মকাণ্ডের অংশ হিসেবে উল্লেখ আছে।'}</p><p className="eyebrow">1881</p><h2>{lang==='en'?'Spiritual significance':'আধ্যাত্মিক গুরুত্ব'}</h2><p>{lang==='en'?'Sri Ramakrishna Paramhansa visited Khelat Bhawan in 1881. The official history describes this visit as a defining moment in the spiritual life of the house.':'১৮৮১ সালে শ্রী রামকৃষ্ণ পরমহংস Khelat Bhawan-এ আসেন। সরকারি ইতিহাসে এই আগমনকে বাড়িটির আধ্যাত্মিক জীবনের একটি গুরুত্বপূর্ণ মুহূর্ত বলা হয়েছে।'}</p></div></section><section className="section mission"><article><p className="eyebrow">{lang==='en'?'Mission':'লক্ষ্য'}</p><h3>{lang==='en'?'Preserve, promote and perpetuate':'সংরক্ষণ, প্রসার ও ধারাবাহিকতা'}</h3><p>{lang==='en'?'To preserve Bengali cultural heritage through religious devotion, classical arts and community service while maintaining its traditions.':'ধর্মীয় ভক্তি, শাস্ত্রীয় শিল্পকলা ও সমাজসেবার মাধ্যমে বাংলা সাংস্কৃতিক ঐতিহ্য ও তার পরম্পরা সংরক্ষণ করা।'}</p></article><article><p className="eyebrow">{lang==='en'?'Today':'বর্তমান'}</p><h3>{lang==='en'?'A living cultural house':'এক জীবন্ত সাংস্কৃতিক বাড়ি'}</h3><p>{lang==='en'?'Khelat Bhawan continues to host cultural activity and make its heritage setting available for visits and selected events.':'Khelat Bhawan সাংস্কৃতিক কর্মকাণ্ড চালিয়ে যাচ্ছে এবং ভ্রমণ ও নির্বাচিত অনুষ্ঠানের জন্য ঐতিহ্যবাহী পরিসর উন্মুক্ত রাখছে।'}</p></article></section></>; }
 
+function FamilyTree({lang}) {
+  const people=lang==='en'?lineageEn:lineageBn;
+  return <section className="family-tree-section">
+    <div className="family-tree-heading"><p className="eyebrow">{lang==='en'?'Seven generations of custodians':'সাত প্রজন্মের তত্ত্বাবধান'}</p><h2>{lang==='en'?'The Ghosh family lineage':'ঘোষ পরিবারের উত্তরাধিকার'}</h2><Mark/><p>{lang==='en'?'The official website names Khelat Ghosh and describes the six later generations by generation and role. Unpublished names and portraits remain respectfully unfilled.':'সরকারি ওয়েবসাইটে Khelat Ghosh-এর নাম এবং পরবর্তী ছয় প্রজন্মকে প্রজন্ম ও ভূমিকা অনুযায়ী বর্ণনা করা হয়েছে। অপ্রকাশিত নাম ও প্রতিকৃতি সম্মানের সঙ্গে ফাঁকা রাখা হয়েছে।'}</p></div>
+    <div className="tree-canopy" aria-hidden="true"><i/><i/><i/></div>
+    <div className="family-tree">
+      {people.map((person,index)=><article className={`family-node node-${index+1}`} key={person[0]}>
+        <div className="portrait-oval"><span>{index===0?'KG':person[0]}</span><small>{lang==='en'?'ARCHIVE PORTRAIT PENDING':'আর্কাইভ প্রতিকৃতি অপেক্ষমাণ'}</small></div>
+        <div className="name-scroll"><strong>{person[1]}</strong><span>{person[2]} · {person[3]}</span></div>
+      </article>)}
+    </div>
+    <p className="family-note">{lang==='en'?'No identities have been inferred. The tree can be completed when verified family records and portraits are supplied.':'কোনও পরিচয় অনুমান করা হয়নি। যাচাইকৃত পারিবারিক নথি ও প্রতিকৃতি পাওয়া গেলে বৃক্ষটি সম্পূর্ণ করা যাবে।'}</p>
+  </section>;
+}
+
 function History({t,lang}) { const items=lang==='en'?timelineEn:timelineBn; const images={0:'/images/SDP_0344.jpg',2:'/images/rk01.png',5:'/images/SDP_0299.jpg',8:'/images/SDP_0368.jpg'}; return <><PageHero eyebrow={lang==='en'?'Chronicle':'কালপঞ্জি'} title={t.historyTitle} lead={t.historyLead} image="/images/SDP_0359.jpg"/><section className="section full-timeline print-corners">{items.map((x,i)=><article key={x[0]}><div className="year">{x[0]}</div><div className="dot"/><div><p className="eyebrow">{String(i+1).padStart(2,'0')}</p><h2>{x[1]}</h2><p>{x[2]}</p>{images[i]&&<img src={images[i]} alt="Khelat Bhawan archival visual"/>}</div></article>)}</section></>; }
 
 function Founder({t,lang}) { return <><PageHero eyebrow={lang==='en'?'Founder profile':'প্রতিষ্ঠাতা পরিচিতি'} title="Khelat Ghosh" lead={t.founderLead} image="/images/SDP_0273.jpg"/><section className="section founder-article"><aside><div className="founder-monogram">KG</div><dl><dt>{lang==='en'?'Name':'নাম'}</dt><dd>Khelat Ghosh</dd><dt>{lang==='en'?'Dates shown on official site':'সরকারি সাইটে উল্লিখিত সময়কাল'}</dt><dd>1775–1845</dd><dt>{lang==='en'?'Role':'ভূমিকা'}</dt><dd>{lang==='en'?'Founder':'প্রতিষ্ঠাতা'}</dd></dl></aside><article><p className="eyebrow">{lang==='en'?'Verified profile':'যাচাইকৃত পরিচিতি'}</p><h2>{lang==='en'?'The beginning of the legacy':'উত্তরাধিকারের সূচনা'}</h2><Mark/><p>{lang==='en'?'The official Khelat Bhawan website identifies Khelat Ghosh as the founder and describes him as the visionary who established the heritage mansion and laid the foundation for its cultural legacy. Its published timeline dates the establishment of Khelat Bhawan to 1845.':'Khelat Bhawan-এর সরকারি ওয়েবসাইটে Khelat Ghosh-কে প্রতিষ্ঠাতা বলা হয়েছে এবং ঐতিহ্যবাহী বাড়ি ও তার সাংস্কৃতিক উত্তরাধিকারের ভিত্তি স্থাপনকারী দূরদর্শী ব্যক্তি হিসেবে বর্ণনা করা হয়েছে। প্রকাশিত সময়রেখায় Khelat Bhawan-এর প্রতিষ্ঠা ১৮৪৫ সালে বলে উল্লেখ আছে।'}</p><div className="source-note"><strong>{lang==='en'?'Archive note':'আর্কাইভ নোট'}</strong><p>{lang==='en'?'No verified founder portrait, extended biography, quotations or additional personal details are published on the official website. Those details remain unstated pending client-approved archival material.':'সরকারি ওয়েবসাইটে প্রতিষ্ঠাতার যাচাইকৃত প্রতিকৃতি, বিস্তৃত জীবনী, উদ্ধৃতি বা অতিরিক্ত ব্যক্তিগত তথ্য প্রকাশিত নেই। ক্লায়েন্ট-অনুমোদিত আর্কাইভ উপকরণ না পাওয়া পর্যন্ত এই তথ্যগুলি যোগ করা হয়নি।'}</p></div></article></section></>; }
@@ -127,6 +162,6 @@ export default function App() {
   useEffect(()=>{const sync=()=>{const p=window.location.hash.slice(1);setPage(pageIds.includes(p)?p:'home');setMenu(false)};sync();window.addEventListener('hashchange',sync);return()=>window.removeEventListener('hashchange',sync)},[]);
   useEffect(()=>{document.documentElement.lang=lang;document.title=`Khelat Bhawan | ${t.nav[page]}`},[lang,page,t]);
   const index=media?gallery.findIndex(x=>x.id===media.id):-1;
-  const screen=useMemo(()=>({home:<Home t={t} lang={lang} openBooking={()=>setBooking(true)} openMedia={setMedia}/>,heritage:<Heritage t={t} lang={lang}/>,history:<History t={t} lang={lang}/>,founder:<Founder t={t} lang={lang}/>,trustees:<Trustees t={t} lang={lang}/>,gallery:<Gallery t={t} lang={lang} openMedia={setMedia}/>,contact:<Contact t={t} lang={lang} openBooking={()=>setBooking(true)}/>}[page]),[page,t,lang]);
+  const screen=useMemo(()=>({home:<Home t={t} lang={lang} openBooking={()=>setBooking(true)} openMedia={setMedia}/>,heritage:<><Heritage t={t} lang={lang}/><FamilyTree lang={lang}/></>,history:<History t={t} lang={lang}/>,founder:<Founder t={t} lang={lang}/>,trustees:<Trustees t={t} lang={lang}/>,gallery:<Gallery t={t} lang={lang} openMedia={setMedia}/>,contact:<Contact t={t} lang={lang} openBooking={()=>setBooking(true)}/>}[page]),[page,t,lang]);
   return <div className={lang==='bn'?'bn':''}><a className="skip" href="#main">Skip to content</a><nav className="nav"><button className="brand" onClick={()=>go('home')}><span>KHELAT BHAWAN</span><small>EST. 1845 · KOLKATA</small></button><div className={`nav-links ${menu?'open':''}`}>{Object.entries(t.nav).map(([k,v])=><button key={k} className={page===k?'active':''} onClick={()=>go(k)}>{v}</button>)}<button className="lang" onClick={()=>setLang(lang==='en'?'bn':'en')} aria-label="Change language"><b>{lang==='en'?'EN':'বাংলা'}</b><span>/</span>{lang==='en'?'বাংলা':'EN'}</button><button className="btn rose nav-book" onClick={()=>{setBooking(true);setMenu(false)}}>{t.book}</button></div><button className="menu" onClick={()=>setMenu(!menu)} aria-label="Open menu">{menu?<X/>:<Menu/>}</button></nav><main id="main">{screen}</main><footer><div><span className="footer-mark">ক</span><h2>KHELAT BHAWAN</h2><p>{t.heroText}</p></div><div><p className="eyebrow light">{lang==='en'?'Explore':'দেখুন'}</p>{Object.entries(t.nav).slice(1).map(([k,v])=><button key={k} onClick={()=>go(k)}>{v}</button>)}</div><div><p className="eyebrow light">{lang==='en'?'Contact':'যোগাযোগ'}</p><a href="tel:+919831093021">+91 98310 93021</a><a href={`mailto:${officialEmail}`}>{officialEmail}</a><p>{t.address}</p></div><small>© {new Date().getFullYear()} Khelat Bhawan. {t.source}</small></footer><Booking t={t} open={booking} close={()=>setBooking(false)}/><Lightbox item={media} close={()=>setMedia(null)} previous={()=>setMedia(gallery[(index-1+gallery.length)%gallery.length])} next={()=>setMedia(gallery[(index+1)%gallery.length])} t={t}/></div>;
 }
