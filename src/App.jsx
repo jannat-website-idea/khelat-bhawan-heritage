@@ -1,163 +1,167 @@
-import React, { useState, useEffect } from 'react';
-import Navbar from './components/Navbar';
-import Footer from './components/Footer';
-import BookingModal from './components/BookingModal';
-import Lightbox from './components/Lightbox';
+import React, { useEffect, useMemo, useRef, useState } from 'react';
+import './family-tree.css';
+import { ArrowRight, ChevronLeft, ChevronRight, Clock3, Mail, MapPin, Menu, Pause, Phone, Play, Send, Volume2, VolumeX, X } from 'lucide-react';
 
-import HomePage from './pages/HomePage';
-import AboutPage from './pages/AboutPage';
-import TimelinePage from './pages/TimelinePage';
-import FounderPage from './pages/FounderPage';
-import TrusteesPage from './pages/TrusteesPage';
-import GalleryPage from './pages/GalleryPage';
-import HeritageRentalPage from './pages/HeritageRentalPage';
-import ContactPage from './pages/ContactPage';
+const officialEmail = 'councilofculture.ghoshbari47@gmail.com';
+const pageIds = ['home', 'heritage', 'history', 'founder', 'trustees', 'gallery', 'contact'];
 
-import { siteData } from './data/content';
+const ui = {
+  en: {
+    nav: { home: 'Home', heritage: 'Heritage', history: 'History', founder: 'Founder', trustees: 'Trustees', gallery: 'Gallery', contact: 'Contact' },
+    book: 'Booking enquiry', explore: 'Explore the heritage', timelineCta: 'View full heritage timeline', founderCta: 'Discover Khelat Ghosh', galleryCta: 'Explore gallery',
+    heroKicker: 'Pathuria Ghata Ghosh Bari · Established 1845', heroTitle: 'Khelat Bhawan', heroText: 'A living legacy preserving Bengali culture, music and devotion for 175+ years.',
+    introKicker: 'A living legacy', introTitle: 'A historic house at the heart of Bengali culture',
+    introA: 'Established in 1845, Khelat Bhawan—also known as Pathuria Ghata Ghosh Bari—stands as a testament to Bengali cultural heritage and spiritual devotion.',
+    introB: 'Since 1855, its Durga Puja tradition has continued with devotion. In 1881, Sri Ramakrishna Paramhansa visited the house, adding to its spiritual significance.',
+    pillars: 'Three pillars of heritage', pillarsLead: 'Three active trusts preserve religious devotion, classical arts and community service.',
+    journey: 'A journey through time', founder: 'The founder', archive: 'A visual archive',
+    bookTitle: 'Bring your occasion into a historic setting', bookText: 'Khelat Bhawan accepts enquiries for heritage rentals, weddings, photography and film shoots, cultural programmes and corporate events.',
+    heritageTitle: 'Heritage & legacy', heritageLead: 'A 175+ year journey of preserving Bengali heritage, culture and spiritual traditions.',
+    historyTitle: 'Heritage timeline', historyLead: 'Dates and events presented from the official Khelat Bhawan website.',
+    founderLead: 'An archival profile using only the founder information published by Khelat Bhawan.',
+    trustsTitle: 'Trusts & trustees', trustsLead: 'Three organisations united in devotion, arts and service.',
+    profileWait: 'Trustee profiles awaiting verified information', profileWaitText: 'The official website does not publish individual trustee names, photographs or biographies. This premium profile area is intentionally reserved for client-approved details.',
+    contactTitle: 'Visit & contact', contactLead: 'Everything you need to plan a visit or make an enquiry.',
+    filters: { all: 'All', image: 'Images', video: 'Videos' }, close: 'Close', previous: 'Previous', next: 'Next',
+    form: { title: 'Make a booking enquiry', subtitle: 'Your enquiry will be sent to the official Khelat Bhawan email address.', name: 'Name', email: 'Email', phone: 'Phone', date: 'Preferred date', guests: 'Number of guests', message: 'Message / requirements', submit: 'Submit enquiry', sending: 'Sending…', success: 'Thank you. Your enquiry has been received. We will get back to you shortly.', error: 'The enquiry could not be sent automatically. Please email or call Khelat Bhawan directly.' },
+    address: '47, Pathuria Ghata Street, Kolkata – 700006, West Bengal, India', hours: 'Daily: 6:00 AM – 10:00 PM', nearby: 'Near Sovabazar Metro Station', directions: 'Get directions', source: 'Content sourced from the official Khelat Bhawan website.'
+  },
+  bn: {
+    nav: { home: 'হোম', heritage: 'ঐতিহ্য', history: 'ইতিহাস', founder: 'প্রতিষ্ঠাতা', trustees: 'ট্রাস্টি', gallery: 'গ্যালারি', contact: 'যোগাযোগ' },
+    book: 'বুকিং অনুসন্ধান', explore: 'ঐতিহ্য দেখুন', timelineCta: 'সম্পূর্ণ ঐতিহ্যের সময়রেখা', founderCta: 'Khelat Ghosh সম্পর্কে জানুন', galleryCta: 'গ্যালারি দেখুন',
+    heroKicker: 'পাথুরিয়াঘাটা ঘোষ বাড়ি · প্রতিষ্ঠিত ১৮৪৫', heroTitle: 'Khelat Bhawan', heroText: '১৭৫ বছরেরও বেশি সময় ধরে বাংলা সংস্কৃতি, সঙ্গীত ও ভক্তির এক জীবন্ত উত্তরাধিকার।',
+    introKicker: 'এক জীবন্ত উত্তরাধিকার', introTitle: 'বাংলা সংস্কৃতির হৃদয়ে এক ঐতিহাসিক বাড়ি',
+    introA: '১৮৪৫ সালে প্রতিষ্ঠিত Khelat Bhawan—পাথুরিয়াঘাটা ঘোষ বাড়ি নামেও পরিচিত—বাংলার সাংস্কৃতিক ঐতিহ্য ও আধ্যাত্মিক ভক্তির এক সাক্ষ্য।',
+    introB: '১৮৫৫ সাল থেকে এখানে নিষ্ঠার সঙ্গে দুর্গাপূজা উদ্‌যাপিত হয়ে আসছে। ১৮৮১ সালে শ্রী রামকৃষ্ণ পরমহংস এই বাড়িতে এসেছিলেন, যা এর আধ্যাত্মিক গুরুত্ব বাড়ায়।',
+    pillars: 'ঐতিহ্যের তিন স্তম্ভ', pillarsLead: 'তিনটি সক্রিয় ট্রাস্ট ধর্মীয় ভক্তি, শাস্ত্রীয় শিল্পকলা ও সমাজসেবাকে সংরক্ষণ করে।',
+    journey: 'সময়ের পথে যাত্রা', founder: 'প্রতিষ্ঠাতা', archive: 'দৃশ্য-সংগ্রহ',
+    bookTitle: 'ঐতিহাসিক পরিসরে আপনার বিশেষ আয়োজন', bookText: 'Khelat Bhawan-এ হেরিটেজ ভাড়া, বিবাহ, ফটোগ্রাফি ও চলচ্চিত্রায়ন, সাংস্কৃতিক অনুষ্ঠান এবং কর্পোরেট অনুষ্ঠানের জন্য অনুসন্ধান গ্রহণ করা হয়।',
+    heritageTitle: 'ঐতিহ্য ও উত্তরাধিকার', heritageLead: '১৭৫ বছরেরও বেশি সময় ধরে বাংলা ঐতিহ্য, সংস্কৃতি ও আধ্যাত্মিক পরম্পরা সংরক্ষণের যাত্রা।',
+    historyTitle: 'ঐতিহ্যের সময়রেখা', historyLead: 'Khelat Bhawan-এর সরকারি ওয়েবসাইটে প্রকাশিত তারিখ ও ঘটনাবলি।',
+    founderLead: 'Khelat Bhawan-এর প্রকাশিত প্রতিষ্ঠাতা-তথ্যের ভিত্তিতে একটি আর্কাইভাল পরিচিতি।',
+    trustsTitle: 'ট্রাস্ট ও ট্রাস্টি', trustsLead: 'ভক্তি, শিল্পকলা ও সেবায় একতাবদ্ধ তিনটি প্রতিষ্ঠান।',
+    profileWait: 'যাচাইকৃত ট্রাস্টি-তথ্যের অপেক্ষায়', profileWaitText: 'সরকারি ওয়েবসাইটে পৃথক ট্রাস্টির নাম, ছবি বা জীবনী প্রকাশিত নেই। ক্লায়েন্ট-অনুমোদিত তথ্যের জন্য এই প্রিমিয়াম প্রোফাইল অংশটি সংরক্ষিত রাখা হয়েছে।',
+    contactTitle: 'ভ্রমণ ও যোগাযোগ', contactLead: 'ভ্রমণের পরিকল্পনা বা অনুসন্ধানের জন্য প্রয়োজনীয় তথ্য।',
+    filters: { all: 'সব', image: 'ছবি', video: 'ভিডিও' }, close: 'বন্ধ করুন', previous: 'আগেরটি', next: 'পরেরটি',
+    form: { title: 'বুকিং অনুসন্ধান করুন', subtitle: 'আপনার অনুসন্ধান Khelat Bhawan-এর সরকারি ইমেল ঠিকানায় পাঠানো হবে।', name: 'নাম', email: 'ইমেল', phone: 'ফোন', date: 'পছন্দের তারিখ', guests: 'অতিথির সংখ্যা', message: 'বার্তা / প্রয়োজনীয়তা', submit: 'অনুসন্ধান পাঠান', sending: 'পাঠানো হচ্ছে…', success: 'ধন্যবাদ। আপনার অনুসন্ধান গ্রহণ করা হয়েছে। আমরা শীঘ্রই আপনার সঙ্গে যোগাযোগ করব।', error: 'অনুসন্ধানটি স্বয়ংক্রিয়ভাবে পাঠানো যায়নি। অনুগ্রহ করে সরাসরি ইমেল বা ফোন করুন।' },
+    address: '৪৭, পাথুরিয়াঘাটা স্ট্রিট, কলকাতা – ৭০০০০৬, পশ্চিমবঙ্গ, ভারত', hours: 'প্রতিদিন: সকাল ৬টা – রাত ১০টা', nearby: 'শোভাবাজার মেট্রো স্টেশনের কাছে', directions: 'দিকনির্দেশ', source: 'তথ্যের উৎস Khelat Bhawan-এর সরকারি ওয়েবসাইট।'
+  }
+};
+
+const timelineEn = [
+  ['1845', 'Foundation', 'Khelat Bhawan was established as a grand Bengali heritage mansion by the Ghosh family.'],
+  ['1855', 'Durga Puja tradition begins', 'The annual Durga Puja celebration began and continues uninterrupted.'],
+  ['1881', 'Sri Ramakrishna’s visit', 'Sri Ramakrishna Paramhansa visited Khelat Bhawan, adding to the house’s spiritual significance.'],
+  ['1920', 'First formal trust', 'The official website records the establishment of the first formal trust to protect the heritage.'],
+  ['1947', 'Independence-era adaptation', 'Khelat Bhawan adapted to the post-independence era while maintaining its cultural significance.'],
+  ['1975', 'Architectural restoration', 'The official timeline records a major restoration project to preserve the property.'],
+  ['1985', 'Artist Nectar Council', 'The Artist Nectar Council of Culture was formed to promote performing arts and support artists.'],
+  ['2005', 'Digital archives initiative', 'A digital archiving initiative was launched to document historical materials and records.'],
+  ['2015', 'Heritage tourism programme', 'Khelat Bhawan opened for heritage tourism according to the official timeline.'],
+  ['2020', 'Virtual experience', 'Virtual tours and digital experiences were introduced.'],
+  ['2023', 'Future vision initiative', 'The official timeline records work on sustainable preservation models and wider awareness.']
+];
+const timelineBn = [
+  ['১৮৪৫', 'প্রতিষ্ঠা', 'ঘোষ পরিবার একটি বৃহৎ বাঙালি ঐতিহ্যবাহী প্রাসাদ হিসেবে Khelat Bhawan প্রতিষ্ঠা করে।'],
+  ['১৮৫৫', 'দুর্গাপূজার সূচনা', 'বার্ষিক দুর্গাপূজার সূচনা হয় এবং তা অবিচ্ছিন্নভাবে চলতে থাকে।'],
+  ['১৮৮১', 'শ্রী রামকৃষ্ণের আগমন', 'শ্রী রামকৃষ্ণ পরমহংস Khelat Bhawan-এ আসেন; বাড়িটির আধ্যাত্মিক গুরুত্ব বৃদ্ধি পায়।'],
+  ['১৯২০', 'প্রথম আনুষ্ঠানিক ট্রাস্ট', 'সরকারি ওয়েবসাইটে ঐতিহ্য রক্ষার জন্য প্রথম আনুষ্ঠানিক ট্রাস্ট প্রতিষ্ঠার কথা উল্লেখ আছে।'],
+  ['১৯৪৭', 'স্বাধীনতা-পরবর্তী অভিযোজন', 'সাংস্কৃতিক গুরুত্ব বজায় রেখে Khelat Bhawan স্বাধীনতা-পরবর্তী সময়ের সঙ্গে মানিয়ে নেয়।'],
+  ['১৯৭৫', 'স্থাপত্য পুনরুদ্ধার', 'সরকারি সময়রেখায় সম্পত্তি সংরক্ষণের জন্য একটি বড় পুনরুদ্ধার প্রকল্পের উল্লেখ আছে।'],
+  ['১৯৮৫', 'Artist Nectar Council', 'শিল্পীদের সহায়তা ও পরিবেশনশিল্পের প্রসারে Artist Nectar Council of Culture গঠিত হয়।'],
+  ['২০০৫', 'ডিজিটাল আর্কাইভ উদ্যোগ', 'ঐতিহাসিক উপকরণ ও নথি সংরক্ষণের জন্য ডিজিটাল আর্কাইভ উদ্যোগ শুরু হয়।'],
+  ['২০১৫', 'হেরিটেজ পর্যটন কর্মসূচি', 'সরকারি সময়রেখা অনুযায়ী Khelat Bhawan হেরিটেজ পর্যটনের জন্য উন্মুক্ত হয়।'],
+  ['২০২০', 'ভার্চুয়াল অভিজ্ঞতা', 'ভার্চুয়াল ট্যুর ও ডিজিটাল অভিজ্ঞতা চালু হয়।'],
+  ['২০২৩', 'ভবিষ্যৎ পরিকল্পনা', 'সরকারি সময়রেখায় টেকসই সংরক্ষণ ও বৃহত্তর সচেতনতার উদ্যোগের উল্লেখ আছে।']
+];
+
+const trustsEn = [
+  { n:'01', est:'Est. 1855', name:'Lakshmi Narayan Gopal Radha Krishna Jew Trust', label:'Religious trust', text:'Dedicated to preserving spiritual traditions through devotional practice and religious ceremonies.', activities:['Durga Puja celebration since 1855','Jagadhatri Puja with traditional rituals','Daily Nitya Seva and prayers','Spiritual discourse and bhajans','Religious festival organisation'], image:'/images/unnamed_6.webp' },
+  { n:'02', est:'Est. 1950s', name:'Khelat Ghosh Memorial Trust', label:'Cultural trust', text:'Promotes Bengali music, classical arts and cultural initiatives.', activities:['Classical music concerts and recitals','Support for traditional musicians','Bengali cultural events','Music education programmes','Artist recognition awards'], image:'/images/unnamed_12.webp' },
+  { n:'03', est:'Est. 2000+', name:'Artist Nectar Council of Culture', label:'Social service trust', text:'Focused on performing arts, social service, children’s education and healthcare awareness.', activities:['Performing arts workshops and shows','Educational support for underprivileged children','Healthcare awareness campaigns','Social service initiatives','Cultural preservation programmes'], image:'/images/SDP_0359.jpg' }
+];
+const trustsBn = [
+  { ...trustsEn[0], est:'প্রতিষ্ঠিত ১৮৫৫', label:'ধর্মীয় ট্রাস্ট', text:'ভক্তিমূলক অনুশীলন ও ধর্মীয় অনুষ্ঠানের মাধ্যমে আধ্যাত্মিক পরম্পরা সংরক্ষণে নিবেদিত।', activities:['১৮৫৫ সাল থেকে দুর্গাপূজা','ঐতিহ্যবাহী রীতিতে জগদ্ধাত্রী পূজা','দৈনিক নিত্যসেবা ও প্রার্থনা','আধ্যাত্মিক আলোচনা ও ভজন','ধর্মীয় উৎসবের আয়োজন'] },
+  { ...trustsEn[1], est:'প্রতিষ্ঠিত ১৯৫০-এর দশক', label:'সাংস্কৃতিক ট্রাস্ট', text:'বাংলা সঙ্গীত, শাস্ত্রীয় শিল্পকলা ও সাংস্কৃতিক উদ্যোগের প্রসার ঘটায়।', activities:['শাস্ত্রীয় সঙ্গীতানুষ্ঠান','ঐতিহ্যবাহী শিল্পীদের সহায়তা','বাংলা সাংস্কৃতিক অনুষ্ঠান','সঙ্গীত শিক্ষা কর্মসূচি','শিল্পী সম্মাননা'] },
+  { ...trustsEn[2], est:'প্রতিষ্ঠিত ২০০০+', label:'সমাজসেবা ট্রাস্ট', text:'পরিবেশনশিল্প, সমাজসেবা, শিশুদের শিক্ষা ও স্বাস্থ্যসচেতনতা নিয়ে কাজ করে।', activities:['পরিবেশনশিল্প কর্মশালা ও অনুষ্ঠান','সুবিধাবঞ্চিত শিশুদের শিক্ষাসহায়তা','স্বাস্থ্যসচেতনতা অভিযান','সমাজসেবামূলক উদ্যোগ','সংস্কৃতি সংরক্ষণ কর্মসূচি'] }
+];
+
+const lineageEn = [
+  ['01','Khelat Ghosh','1775–1845','Founder'],
+  ['02','Second Generation','1810–1880','Inheritor'],
+  ['03','Third Generation','1845–1915','Spiritual Custodian'],
+  ['04','Fourth Generation','1880–1950','Cultural Guardian'],
+  ['05','Fifth Generation','1915–1985','Modernizer'],
+  ['06','Sixth Generation','1950–Present','Contemporary Custodian'],
+  ['07','Seventh Generation','1985–Present','Future Vision']
+];
+const lineageBn = [
+  ['০১','Khelat Ghosh','১৭৭৫–১৮৪৫','প্রতিষ্ঠাতা'],
+  ['০২','দ্বিতীয় প্রজন্ম','১৮১০–১৮৮০','উত্তরাধিকারী'],
+  ['০৩','তৃতীয় প্রজন্ম','১৮৪৫–১৯১৫','আধ্যাত্মিক তত্ত্বাবধায়ক'],
+  ['০৪','চতুর্থ প্রজন্ম','১৮৮০–১৯৫০','সাংস্কৃতিক অভিভাবক'],
+  ['০৫','পঞ্চম প্রজন্ম','১৯১৫–১৯৮৫','আধুনিকায়নকারী'],
+  ['০৬','ষষ্ঠ প্রজন্ম','১৯৫০–বর্তমান','সমকালীন তত্ত্বাবধায়ক'],
+  ['০৭','সপ্তম প্রজন্ম','১৯৮৫–বর্তমান','ভবিষ্যৎ পরিকল্পনা']
+];
+
+const gallery = ['/images/SDP_0344.jpg','/images/SDP_0257.jpg','/images/SDP_0273.jpg','/images/SDP_0282.jpg','/images/SDP_0291.jpg','/images/SDP_0299.jpg','/images/SDP_0305.jpg','/images/SDP_0359.jpg','/images/SDP_0368.jpg','/images/unnamed_3.webp','/images/unnamed_4.webp','/images/unnamed_6.webp','/images/unnamed_8.webp','/images/unnamed_11.webp','/images/unnamed_12.webp'].map((src,i)=>({id:i+1,type:'image',src,title:`Khelat Bhawan visual archive · ${String(i+1).padStart(2,'0')}`}));
+gallery.splice(3,0,{id:'video',type:'video',src:'/Videos/khelat bhaban video.mp4',poster:'/images/SDP_0344.jpg',title:'Khelat Bhawan film'});
+
+const go = page => { window.location.hash = page === 'home' ? '' : page; window.scrollTo({top:0,behavior:'smooth'}); };
+const Mark = () => <span className="mark" aria-hidden="true"><i/><b>ক</b><i/></span>;
+
+function PageHero({eyebrow,title,lead,image='/images/SDP_0344.jpg'}) { return <header className="page-hero"><img src={image} alt=""/><div className="page-hero-shade"/><div className="page-hero-copy reveal"><p className="eyebrow light">{eyebrow}</p><h1>{title}</h1><Mark/><p>{lead}</p></div></header>; }
+
+function Home({t,lang,openBooking,openMedia}) {
+  const [playing,setPlaying]=useState(true), [muted,setMuted]=useState(true); const video=useRef(null); const tl=lang==='en'?timelineEn:timelineBn; const tr=lang==='en'?trustsEn:trustsBn;
+  return <>
+    <section className="hero"><video ref={video} autoPlay muted loop playsInline poster="/images/SDP_0344.jpg" src="/Videos/khelat bhaban video.mp4"/><div className="hero-shade"/><div className="hero-copy reveal"><p className="eyebrow light">{t.heroKicker}</p><h1>{t.heroTitle}</h1><Mark/><p className="hero-lead">{t.heroText}</p><button className="btn rose" onClick={()=>go('heritage')}>{t.explore}<ArrowRight/></button></div><div className="media-controls"><button aria-label="Toggle playback" onClick={()=>{playing?video.current.pause():video.current.play();setPlaying(!playing)}}>{playing?<Pause/>:<Play/>}</button><button aria-label="Toggle sound" onClick={()=>{video.current.muted=!muted;setMuted(!muted)}}>{muted?<VolumeX/>:<Volume2/>}</button></div><div className="hero-stats"><div><strong>1845</strong><span>{lang==='en'?'Established':'প্রতিষ্ঠিত'}</span></div><div><strong>1855</strong><span>{lang==='en'?'Durga Puja since':'দুর্গাপূজা শুরু'}</span></div><div><strong>1881</strong><span>{lang==='en'?'Sri Ramakrishna visit':'শ্রী রামকৃষ্ণের আগমন'}</span></div><div><strong>3</strong><span>{lang==='en'?'Active trusts':'সক্রিয় ট্রাস্ট'}</span></div></div></section>
+    <section className="section editorial"><div className="image-frame"><img src="/images/SDP_0344.jpg" alt="Khelat Bhawan courtyard architecture" onClick={()=>openMedia(gallery[0])}/></div><div><p className="eyebrow">{t.introKicker}</p><h2>{t.introTitle}</h2><Mark/><p>{t.introA}</p><p>{t.introB}</p><button className="text-link" onClick={()=>go('heritage')}>{t.explore}<ArrowRight/></button></div></section>
+    <section className="section trusts-preview print-corners"><div className="section-head"><p className="eyebrow">{t.pillars}</p><h2>{t.pillarsLead}</h2></div><div className="trust-grid">{tr.map(x=><article className="trust-card" key={x.n}><img src={x.image} alt="Khelat Bhawan trust activity"/><span>{x.n}</span><p className="eyebrow">{x.label}</p><h3>{x.name}</h3><p>{x.text}</p></article>)}</div><button className="text-link center-dark" onClick={()=>go('trustees')}>{t.nav.trustees}<ArrowRight/></button></section>
+    <section className="section timeline-preview"><div className="section-head left"><p className="eyebrow">1845 — 1881</p><h2>{t.journey}</h2></div><div className="timeline-row">{tl.slice(0,3).map(x=><article key={x[0]}><strong>{x[0]}</strong><h3>{x[1]}</h3><p>{x[2]}</p></article>)}</div><button className="text-link" onClick={()=>go('history')}>{t.timelineCta}<ArrowRight/></button></section>
+    <section className="section founder-preview"><div><p className="eyebrow">{t.founder}</p><h2>Khelat Ghosh</h2><Mark/><p>{lang==='en'?'The official website identifies Khelat Ghosh as the founder and the visionary who established the heritage mansion in 1845.':'সরকারি ওয়েবসাইটে Khelat Ghosh-কে প্রতিষ্ঠাতা এবং ১৮৪৫ সালে ঐতিহ্যবাহী বাড়িটি প্রতিষ্ঠাকারী দূরদর্শী ব্যক্তি হিসেবে উল্লেখ করা হয়েছে।'}</p><button className="text-link" onClick={()=>go('founder')}>{t.founderCta}<ArrowRight/></button></div><div className="image-frame tall"><img src="/images/SDP_0273.jpg" alt="Interior view of Khelat Bhawan"/></div></section>
+    <section className="gallery-preview"><div className="section-head"><p className="eyebrow light">{t.archive}</p><h2>{lang==='en'?'Architecture, devotion & cultural life':'স্থাপত্য, ভক্তি ও সাংস্কৃতিক জীবন'}</h2></div><div className="mosaic">{gallery.filter(x=>x.type==='image').slice(0,4).map((x,i)=><button key={x.id} onClick={()=>openMedia(x)}><img src={x.src} alt={`Khelat Bhawan visual archive ${i+1}`}/></button>)}</div><button className="text-link center" onClick={()=>go('gallery')}>{t.galleryCta}<ArrowRight/></button></section>
+    <section className="booking-band"><p className="eyebrow light">{lang==='en'?'Heritage rental':'হেরিটেজ ভাড়া'}</p><h2>{t.bookTitle}</h2><p>{t.bookText}</p><button className="btn ivory" onClick={openBooking}>{t.book}<ArrowRight/></button></section>
+  </>;
+}
+
+function Heritage({t,lang}) { return <><PageHero eyebrow={lang==='en'?'About Khelat Bhawan':'Khelat Bhawan সম্পর্কে'} title={t.heritageTitle} lead={t.heritageLead}/><section className="section story"><div><p className="eyebrow">1845</p><h2>{lang==='en'?'Our story':'আমাদের কথা'}</h2><Mark/><p>{t.introA}</p><p>{lang==='en'?'For over 175 years, the mansion has been a centre of cultural and religious activity in Kolkata. The official website describes it as a bridge between Bengal’s past and future.':'১৭৫ বছরেরও বেশি সময় ধরে এই বাড়ি কলকাতার সাংস্কৃতিক ও ধর্মীয় কর্মকাণ্ডের কেন্দ্র। সরকারি ওয়েবসাইট একে বাংলার অতীত ও ভবিষ্যতের মধ্যে সেতু হিসেবে বর্ণনা করে।'}</p></div><div className="image-frame wide"><img src="/images/SDP_0291.jpg" alt="Khelat Bhawan heritage architecture"/></div></section><div className="alpana-band" aria-hidden="true"/><section className="section split-story"><div className="image-frame tall"><img src="/images/unnamed_6.webp" alt="Religious celebration at Khelat Bhawan"/></div><div><p className="eyebrow">1855</p><h2>{lang==='en'?'Devotion and tradition':'ভক্তি ও পরম্পরা'}</h2><p>{lang==='en'?'Durga Puja has been celebrated here since 1855. The official website also records Jagadhatri Puja, daily Nitya Seva and traditional rituals among the house’s devotional activities.':'১৮৫৫ সাল থেকে এখানে দুর্গাপূজা উদ্‌যাপিত হয়ে আসছে। সরকারি ওয়েবসাইটে জগদ্ধাত্রী পূজা, দৈনিক নিত্যসেবা ও ঐতিহ্যবাহী আচারও বাড়িটির ধর্মীয় কর্মকাণ্ডের অংশ হিসেবে উল্লেখ আছে।'}</p><p className="eyebrow">1881</p><h2>{lang==='en'?'Spiritual significance':'আধ্যাত্মিক গুরুত্ব'}</h2><p>{lang==='en'?'Sri Ramakrishna Paramhansa visited Khelat Bhawan in 1881. The official history describes this visit as a defining moment in the spiritual life of the house.':'১৮৮১ সালে শ্রী রামকৃষ্ণ পরমহংস Khelat Bhawan-এ আসেন। সরকারি ইতিহাসে এই আগমনকে বাড়িটির আধ্যাত্মিক জীবনের একটি গুরুত্বপূর্ণ মুহূর্ত বলা হয়েছে।'}</p></div></section><section className="section mission"><article><p className="eyebrow">{lang==='en'?'Mission':'লক্ষ্য'}</p><h3>{lang==='en'?'Preserve, promote and perpetuate':'সংরক্ষণ, প্রসার ও ধারাবাহিকতা'}</h3><p>{lang==='en'?'To preserve Bengali cultural heritage through religious devotion, classical arts and community service while maintaining its traditions.':'ধর্মীয় ভক্তি, শাস্ত্রীয় শিল্পকলা ও সমাজসেবার মাধ্যমে বাংলা সাংস্কৃতিক ঐতিহ্য ও তার পরম্পরা সংরক্ষণ করা।'}</p></article><article><p className="eyebrow">{lang==='en'?'Today':'বর্তমান'}</p><h3>{lang==='en'?'A living cultural house':'এক জীবন্ত সাংস্কৃতিক বাড়ি'}</h3><p>{lang==='en'?'Khelat Bhawan continues to host cultural activity and make its heritage setting available for visits and selected events.':'Khelat Bhawan সাংস্কৃতিক কর্মকাণ্ড চালিয়ে যাচ্ছে এবং ভ্রমণ ও নির্বাচিত অনুষ্ঠানের জন্য ঐতিহ্যবাহী পরিসর উন্মুক্ত রাখছে।'}</p></article></section></>; }
+
+function FamilyTree({lang}) {
+  const people=lang==='en'?lineageEn:lineageBn;
+  return <section className="family-tree-section">
+    <div className="family-tree-heading"><p className="eyebrow">{lang==='en'?'Seven generations of custodians':'সাত প্রজন্মের তত্ত্বাবধান'}</p><h2>{lang==='en'?'The Ghosh family lineage':'ঘোষ পরিবারের উত্তরাধিকার'}</h2><Mark/><p>{lang==='en'?'The official website names Khelat Ghosh and describes the six later generations by generation and role. Unpublished names and portraits remain respectfully unfilled.':'সরকারি ওয়েবসাইটে Khelat Ghosh-এর নাম এবং পরবর্তী ছয় প্রজন্মকে প্রজন্ম ও ভূমিকা অনুযায়ী বর্ণনা করা হয়েছে। অপ্রকাশিত নাম ও প্রতিকৃতি সম্মানের সঙ্গে ফাঁকা রাখা হয়েছে।'}</p></div>
+    <div className="tree-canopy" aria-hidden="true"><i/><i/><i/></div>
+    <div className="family-tree">
+      {people.map((person,index)=><article className={`family-node node-${index+1}`} key={person[0]}>
+        <div className="portrait-oval"><span>{index===0?'KG':person[0]}</span><small>{lang==='en'?'ARCHIVE PORTRAIT PENDING':'আর্কাইভ প্রতিকৃতি অপেক্ষমাণ'}</small></div>
+        <div className="name-scroll"><strong>{person[1]}</strong><span>{person[2]} · {person[3]}</span></div>
+      </article>)}
+    </div>
+    <p className="family-note">{lang==='en'?'No identities have been inferred. The tree can be completed when verified family records and portraits are supplied.':'কোনও পরিচয় অনুমান করা হয়নি। যাচাইকৃত পারিবারিক নথি ও প্রতিকৃতি পাওয়া গেলে বৃক্ষটি সম্পূর্ণ করা যাবে।'}</p>
+  </section>;
+}
+
+function History({t,lang}) { const items=lang==='en'?timelineEn:timelineBn; const images={0:'/images/SDP_0344.jpg',2:'/images/rk01.png',5:'/images/SDP_0299.jpg',8:'/images/SDP_0368.jpg'}; return <><PageHero eyebrow={lang==='en'?'Chronicle':'কালপঞ্জি'} title={t.historyTitle} lead={t.historyLead} image="/images/SDP_0359.jpg"/><section className="section full-timeline print-corners">{items.map((x,i)=><article key={x[0]}><div className="year">{x[0]}</div><div className="dot"/><div><p className="eyebrow">{String(i+1).padStart(2,'0')}</p><h2>{x[1]}</h2><p>{x[2]}</p>{images[i]&&<img src={images[i]} alt="Khelat Bhawan archival visual"/>}</div></article>)}</section></>; }
+
+function Founder({t,lang}) { return <><PageHero eyebrow={lang==='en'?'Founder profile':'প্রতিষ্ঠাতা পরিচিতি'} title="Khelat Ghosh" lead={t.founderLead} image="/images/SDP_0273.jpg"/><section className="section founder-article"><aside><div className="founder-monogram">KG</div><dl><dt>{lang==='en'?'Name':'নাম'}</dt><dd>Khelat Ghosh</dd><dt>{lang==='en'?'Dates shown on official site':'সরকারি সাইটে উল্লিখিত সময়কাল'}</dt><dd>1775–1845</dd><dt>{lang==='en'?'Role':'ভূমিকা'}</dt><dd>{lang==='en'?'Founder':'প্রতিষ্ঠাতা'}</dd></dl></aside><article><p className="eyebrow">{lang==='en'?'Verified profile':'যাচাইকৃত পরিচিতি'}</p><h2>{lang==='en'?'The beginning of the legacy':'উত্তরাধিকারের সূচনা'}</h2><Mark/><p>{lang==='en'?'The official Khelat Bhawan website identifies Khelat Ghosh as the founder and describes him as the visionary who established the heritage mansion and laid the foundation for its cultural legacy. Its published timeline dates the establishment of Khelat Bhawan to 1845.':'Khelat Bhawan-এর সরকারি ওয়েবসাইটে Khelat Ghosh-কে প্রতিষ্ঠাতা বলা হয়েছে এবং ঐতিহ্যবাহী বাড়ি ও তার সাংস্কৃতিক উত্তরাধিকারের ভিত্তি স্থাপনকারী দূরদর্শী ব্যক্তি হিসেবে বর্ণনা করা হয়েছে। প্রকাশিত সময়রেখায় Khelat Bhawan-এর প্রতিষ্ঠা ১৮৪৫ সালে বলে উল্লেখ আছে।'}</p><div className="source-note"><strong>{lang==='en'?'Archive note':'আর্কাইভ নোট'}</strong><p>{lang==='en'?'No verified founder portrait, extended biography, quotations or additional personal details are published on the official website. Those details remain unstated pending client-approved archival material.':'সরকারি ওয়েবসাইটে প্রতিষ্ঠাতার যাচাইকৃত প্রতিকৃতি, বিস্তৃত জীবনী, উদ্ধৃতি বা অতিরিক্ত ব্যক্তিগত তথ্য প্রকাশিত নেই। ক্লায়েন্ট-অনুমোদিত আর্কাইভ উপকরণ না পাওয়া পর্যন্ত এই তথ্যগুলি যোগ করা হয়নি।'}</p></div></article></section></>; }
+
+function Trustees({t,lang}) { const list=lang==='en'?trustsEn:trustsBn; return <><PageHero eyebrow={lang==='en'?'Custodianship':'তত্ত্বাবধান'} title={t.trustsTitle} lead={t.trustsLead} image="/images/SDP_0368.jpg"/><section className="section trust-list">{list.map(x=><article key={x.n}><div className="trust-number">{x.n}</div><div><p className="eyebrow">{x.est} · {x.label}</p><h2>{x.name}</h2><p>{x.text}</p><h4>{lang==='en'?'Published activities':'প্রকাশিত কার্যক্রম'}</h4><ul>{x.activities.map(a=><li key={a}>{a}</li>)}</ul></div><img src={x.image} alt="Khelat Bhawan trust activity"/></article>)}</section><section className="section placeholder print-corners"><p className="eyebrow">{lang==='en'?'Individual profiles':'ব্যক্তিগত পরিচিতি'}</p><h2>{t.profileWait}</h2><p>{t.profileWaitText}</p><div className="placeholder-grid">{[1,2,3].map(x=><div key={x}><span/><i/><i/></div>)}</div></section></>; }
+
+function Gallery({t,lang,openMedia}) { const [filter,setFilter]=useState('all'); const items=gallery.filter(x=>filter==='all'||x.type===filter); return <><PageHero eyebrow={lang==='en'?'Official visual archive':'সরকারি দৃশ্য-সংগ্রহ'} title={t.archive} lead={lang==='en'?'Large-format views of Khelat Bhawan, its spaces, traditions and cultural life.':'Khelat Bhawan-এর পরিসর, পরম্পরা ও সাংস্কৃতিক জীবনের বৃহৎ দৃশ্যাবলি।'} image="/images/SDP_0291.jpg"/><section className="gallery-page"><div className="filters">{Object.entries(t.filters).map(([k,v])=><button className={filter===k?'active':''} key={k} onClick={()=>setFilter(k)}>{v}</button>)}</div><div className="gallery-grid">{items.map((x,i)=><button key={x.id} className={`${x.type} g${i%5}`} onClick={()=>openMedia(x)}>{x.type==='video'?<><img src={x.poster} alt="Khelat Bhawan film preview"/><span className="play"><Play/></span></>:<img src={x.src} alt={`${lang==='en'?'Khelat Bhawan visual archive':'Khelat Bhawan দৃশ্য-সংগ্রহ'} ${i+1}`}/>}<span className="gallery-label">{x.type==='video'?(lang==='en'?'Play film':'ভিডিও চালান'):(lang==='en'?'View image':'ছবি দেখুন')}</span></button>)}</div></section></>; }
+
+function Contact({t,lang,openBooking}) { return <><PageHero eyebrow={lang==='en'?'North Kolkata':'উত্তর কলকাতা'} title={t.contactTitle} lead={t.contactLead} image="/images/SDP_0257.jpg"/><section className="section contact-grid"><div><p className="eyebrow">{lang==='en'?'Official details':'সরকারি তথ্য'}</p><h2>{lang==='en'?'Find Khelat Bhawan':'Khelat Bhawan খুঁজে নিন'}</h2><ul className="contact-list"><li><MapPin/><span>{t.address}<small>{t.nearby}</small></span></li><li><Clock3/><span>{t.hours}<small>{lang==='en'?'Prior appointment recommended':'আগাম যোগাযোগের পরামর্শ দেওয়া হয়'}</small></span></li><li><Phone/><span><a href="tel:+919831093021">+91 98310 93021</a><a href="tel:+919903134231">+91 99031 34231</a><a href="tel:+916289580889">+91 62895 80889</a></span></li><li><Mail/><a href={`mailto:${officialEmail}`}>{officialEmail}</a></li></ul><div className="contact-actions"><a className="btn rose" href="https://www.google.com/maps/search/?api=1&query=Khelat+Bhawan+47+Pathuria+Ghata+Street+Kolkata" target="_blank" rel="noreferrer">{t.directions}<ArrowRight/></a><button className="btn outline" onClick={openBooking}>{t.book}</button></div></div><div className="map"><iframe title="Map showing Khelat Bhawan" src="https://www.google.com/maps?q=Khelat%20Bhawan%2047%20Pathuria%20Ghata%20Street%20Kolkata&output=embed" loading="lazy" referrerPolicy="no-referrer-when-downgrade"/></div></section></>; }
+
+function Booking({t,open,close}) { const [state,setState]=useState('idle'); const dialog=useRef(null); useEffect(()=>{if(!open)return;const esc=e=>e.key==='Escape'&&close();document.addEventListener('keydown',esc);document.body.style.overflow='hidden';dialog.current?.focus();return()=>{document.removeEventListener('keydown',esc);document.body.style.overflow=''}},[open,close]); if(!open)return null; const submit=async e=>{e.preventDefault();setState('sending');const form=e.currentTarget,fd=new FormData(form);fd.append('_subject','New Khelat Bhawan booking enquiry');fd.append('_template','table');try{const res=await fetch(`https://formsubmit.co/ajax/${officialEmail}`,{method:'POST',headers:{Accept:'application/json'},body:fd});if(!res.ok)throw new Error();setState('success');form.reset()}catch{setState('error')}}; return <div className="modal-backdrop" onMouseDown={e=>e.target===e.currentTarget&&close()}><section className="booking-modal" role="dialog" aria-modal="true" aria-labelledby="booking-title" tabIndex="-1" ref={dialog}><button className="modal-close" onClick={close} aria-label={t.close}><X/></button><p className="eyebrow">Khelat Bhawan · 1845</p><h2 id="booking-title">{t.form.title}</h2><p>{t.form.subtitle}</p>{state==='success'?<div className="form-status success">{t.form.success}<button className="btn rose" onClick={close}>{t.close}</button></div>:<form onSubmit={submit}><label>{t.form.name}<input name="name" required autoComplete="name"/></label><label>{t.form.email}<input name="email" type="email" required autoComplete="email"/></label><label>{t.form.phone}<input name="phone" type="tel" required autoComplete="tel"/></label><label>{t.form.date}<input name="preferred-date" type="date"/></label><label>{t.form.guests}<input name="guests" type="number" min="1"/></label><label className="full">{t.form.message}<textarea name="message" rows="4" required/></label>{state==='error'&&<p className="form-error">{t.form.error} <a href={`mailto:${officialEmail}`}>{officialEmail}</a></p>}<button className="btn rose full" disabled={state==='sending'}>{state==='sending'?t.form.sending:t.form.submit}<Send/></button></form>}</section></div>; }
+
+function Lightbox({item,close,next,previous,t}) { useEffect(()=>{if(!item)return;const esc=e=>e.key==='Escape'&&close();document.addEventListener('keydown',esc);return()=>document.removeEventListener('keydown',esc)},[item,close]); if(!item)return null; return <div className="lightbox" role="dialog" aria-modal="true"><button className="lightbox-close" onClick={close} aria-label={t.close}><X/></button><button className="lightbox-prev" onClick={previous} aria-label={t.previous}><ChevronLeft/></button>{item.type==='video'?<video src={item.src} controls autoPlay/>:<img src={item.src} alt={item.title}/>}<button className="lightbox-next" onClick={next} aria-label={t.next}><ChevronRight/></button><p>{item.title}</p></div>; }
 
 export default function App() {
-  const [lang, setLang] = useState('en');
-  const [activeTab, setActiveTab] = useState('home');
-  const [isBookingOpen, setIsBookingOpen] = useState(false);
-  const [lightboxItem, setLightboxItem] = useState(null);
-
-  // Sync title and html lang attribute
-  useEffect(() => {
-    document.documentElement.lang = lang;
-    document.title = lang === 'bn' 
-      ? 'খেলাৎ ভবন | ১৮৪৫ সাল থেকে জীবন্ত ঐতিহ্য' 
-      : 'Khelat Bhawan | Living Heritage Since 1845';
-  }, [lang]);
-
-  // Gallery items for lightbox navigation
-  const galleryItems = siteData[lang].gallery.items;
-  const currentLightboxIndex = lightboxItem 
-    ? galleryItems.findIndex(i => i.id === lightboxItem.id) 
-    : -1;
-
-  const handleLightboxNext = () => {
-    if (currentLightboxIndex < galleryItems.length - 1) {
-      setLightboxItem(galleryItems[currentLightboxIndex + 1]);
-    }
-  };
-
-  const handleLightboxPrev = () => {
-    if (currentLightboxIndex > 0) {
-      setLightboxItem(galleryItems[currentLightboxIndex - 1]);
-    }
-  };
-
-  return (
-    <div className={`min-h-screen flex flex-col justify-between bg-[#FAF8F5] text-heritage-charcoal ${lang === 'bn' ? 'font-bengali-text' : 'font-sans'}`}>
-      {/* Sticky Luxury Navbar */}
-      <Navbar
-        lang={lang}
-        setLang={setLang}
-        activeTab={activeTab}
-        setActiveTab={setActiveTab}
-        onOpenBooking={() => setIsBookingOpen(true)}
-        content={siteData}
-      />
-
-      {/* Main Page View Content */}
-      <main className="flex-grow">
-        {activeTab === 'home' && (
-          <HomePage
-            lang={lang}
-            setActiveTab={setActiveTab}
-            onOpenBooking={() => setIsBookingOpen(true)}
-            onOpenLightbox={(item) => setLightboxItem(item)}
-            content={siteData}
-          />
-        )}
-
-        {activeTab === 'heritage' && (
-          <AboutPage
-            lang={lang}
-            setActiveTab={setActiveTab}
-            onOpenBooking={() => setIsBookingOpen(true)}
-            onOpenLightbox={(item) => setLightboxItem(item)}
-            content={siteData}
-          />
-        )}
-
-        {activeTab === 'timeline' && (
-          <TimelinePage
-            lang={lang}
-            setActiveTab={setActiveTab}
-            onOpenLightbox={(item) => setLightboxItem(item)}
-            content={siteData}
-          />
-        )}
-
-        {activeTab === 'founder' && (
-          <FounderPage
-            lang={lang}
-            setActiveTab={setActiveTab}
-            onOpenLightbox={(item) => setLightboxItem(item)}
-            content={siteData}
-          />
-        )}
-
-        {activeTab === 'trustees' && (
-          <TrusteesPage
-            lang={lang}
-            setActiveTab={setActiveTab}
-            onOpenLightbox={(item) => setLightboxItem(item)}
-            content={siteData}
-          />
-        )}
-
-        {activeTab === 'gallery' && (
-          <GalleryPage
-            lang={lang}
-            onOpenLightbox={(item) => setLightboxItem(item)}
-            content={siteData}
-          />
-        )}
-
-        {activeTab === 'rental' && (
-          <HeritageRentalPage
-            lang={lang}
-            onOpenBooking={() => setIsBookingOpen(true)}
-            onOpenLightbox={(item) => setLightboxItem(item)}
-            content={siteData}
-          />
-        )}
-
-        {activeTab === 'contact' && (
-          <ContactPage
-            lang={lang}
-            content={siteData}
-          />
-        )}
-      </main>
-
-      {/* Luxury Heritage Footer */}
-      <Footer
-        lang={lang}
-        setActiveTab={setActiveTab}
-        onOpenBooking={() => setIsBookingOpen(true)}
-        content={siteData}
-      />
-
-      {/* Royal Booking Modal */}
-      <BookingModal
-        isOpen={isBookingOpen}
-        onClose={() => setIsBookingOpen(false)}
-        lang={lang}
-        content={siteData}
-      />
-
-      {/* Full-Screen Lightbox */}
-      <Lightbox
-        item={lightboxItem}
-        onClose={() => setLightboxItem(null)}
-        onNext={handleLightboxNext}
-        onPrev={handleLightboxPrev}
-        hasNext={currentLightboxIndex < galleryItems.length - 1}
-        hasPrev={currentLightboxIndex > 0}
-      />
-    </div>
-  );
+  const [lang,setLang]=useState('en'),[page,setPage]=useState('home'),[menu,setMenu]=useState(false),[booking,setBooking]=useState(false),[media,setMedia]=useState(null); const t=ui[lang];
+  useEffect(()=>{const sync=()=>{const p=window.location.hash.slice(1);setPage(pageIds.includes(p)?p:'home');setMenu(false)};sync();window.addEventListener('hashchange',sync);return()=>window.removeEventListener('hashchange',sync)},[]);
+  useEffect(()=>{document.documentElement.lang=lang;document.title=`Khelat Bhawan | ${t.nav[page]}`},[lang,page,t]);
+  const index=media?gallery.findIndex(x=>x.id===media.id):-1;
+  const screen=useMemo(()=>({home:<Home t={t} lang={lang} openBooking={()=>setBooking(true)} openMedia={setMedia}/>,heritage:<><Heritage t={t} lang={lang}/><FamilyTree lang={lang}/></>,history:<History t={t} lang={lang}/>,founder:<Founder t={t} lang={lang}/>,trustees:<Trustees t={t} lang={lang}/>,gallery:<Gallery t={t} lang={lang} openMedia={setMedia}/>,contact:<Contact t={t} lang={lang} openBooking={()=>setBooking(true)}/>}[page]),[page,t,lang]);
+  return <div className={lang==='bn'?'bn':''}><a className="skip" href="#main">Skip to content</a><nav className="nav"><button className="brand" onClick={()=>go('home')}><span>KHELAT BHAWAN</span><small>EST. 1845 · KOLKATA</small></button><div className={`nav-links ${menu?'open':''}`}>{Object.entries(t.nav).map(([k,v])=><button key={k} className={page===k?'active':''} onClick={()=>go(k)}>{v}</button>)}<button className="lang" onClick={()=>setLang(lang==='en'?'bn':'en')} aria-label="Change language"><b>{lang==='en'?'EN':'বাংলা'}</b><span>/</span>{lang==='en'?'বাংলা':'EN'}</button><button className="btn rose nav-book" onClick={()=>{setBooking(true);setMenu(false)}}>{t.book}</button></div><button className="menu" onClick={()=>setMenu(!menu)} aria-label="Open menu">{menu?<X/>:<Menu/>}</button></nav><main id="main">{screen}</main><footer><div><span className="footer-mark">ক</span><h2>KHELAT BHAWAN</h2><p>{t.heroText}</p></div><div><p className="eyebrow light">{lang==='en'?'Explore':'দেখুন'}</p>{Object.entries(t.nav).slice(1).map(([k,v])=><button key={k} onClick={()=>go(k)}>{v}</button>)}</div><div><p className="eyebrow light">{lang==='en'?'Contact':'যোগাযোগ'}</p><a href="tel:+919831093021">+91 98310 93021</a><a href={`mailto:${officialEmail}`}>{officialEmail}</a><p>{t.address}</p></div><small>© {new Date().getFullYear()} Khelat Bhawan. {t.source}</small></footer><Booking t={t} open={booking} close={()=>setBooking(false)}/><Lightbox item={media} close={()=>setMedia(null)} previous={()=>setMedia(gallery[(index-1+gallery.length)%gallery.length])} next={()=>setMedia(gallery[(index+1)%gallery.length])} t={t}/></div>;
 }
