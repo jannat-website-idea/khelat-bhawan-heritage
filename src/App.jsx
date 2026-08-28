@@ -14,6 +14,7 @@ import HeritageRentalPage from './pages/HeritageRentalPage';
 import ContactPage from './pages/ContactPage';
 
 import { siteData } from './data/content';
+import { galleryData } from './data/galleryData';
 
 export default function App() {
   const [lang, setLang] = useState('en');
@@ -52,21 +53,20 @@ export default function App() {
       : `Khelat Bhavan Rajbari | ${tabName}`;
   }, [lang, activeTab]);
 
-  // Gallery items for lightbox navigation
-  const galleryItems = siteData[lang].gallery.items;
+  // Comprehensive gallery items for lightbox navigation
   const currentLightboxIndex = lightboxItem 
-    ? galleryItems.findIndex(i => i.id === lightboxItem.id) 
+    ? galleryData.findIndex(i => i.id === lightboxItem.id) 
     : -1;
 
   const handleLightboxNext = () => {
-    if (currentLightboxIndex < galleryItems.length - 1) {
-      setLightboxItem(galleryItems[currentLightboxIndex + 1]);
+    if (currentLightboxIndex < galleryData.length - 1) {
+      setLightboxItem(galleryData[currentLightboxIndex + 1]);
     }
   };
 
   const handleLightboxPrev = () => {
     if (currentLightboxIndex > 0) {
-      setLightboxItem(galleryItems[currentLightboxIndex - 1]);
+      setLightboxItem(galleryData[currentLightboxIndex - 1]);
     }
   };
 
@@ -178,7 +178,7 @@ export default function App() {
         onClose={() => setLightboxItem(null)}
         onNext={handleLightboxNext}
         onPrev={handleLightboxPrev}
-        hasNext={currentLightboxIndex < galleryItems.length - 1}
+        hasNext={currentLightboxIndex < galleryData.length - 1}
         hasPrev={currentLightboxIndex > 0}
       />
     </div>
