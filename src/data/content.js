@@ -434,16 +434,16 @@ export const siteData = {
           image: "/images/SDP_0257.jpg"
         },
         {
-          id: "commercial-branding",
-          title: "Commercial Branding",
-          pricing: "Commercial & Brand Licensing",
-          desc: "An iconic, prestigious 19th-century aristocratic estate for luxury commercial branding, brand campaigns, flagship product launches, television commercials, and executive brand storytelling amidst timeless royal architecture.",
+          id: "brand-launches",
+          title: "Product Launches & Corporate Showcases",
+          pricing: "Corporate & Event Enquiries",
+          desc: "An iconic, prestigious 19th-century aristocratic estate for luxury product launches, press previews, corporate gatherings, and executive events amidst timeless royal architecture.",
           features: [
-            "Exclusive commercial branding & brand campaign licensing",
-            "Prestigious heritage backdrop for luxury commercials & ad films",
-            "Flagship product launches, press previews & trademark showcases",
-            "High-amperage production power, VIP hospitality & brand display areas",
-            "Full coordination for print editorials, digital campaigns & corporate identity shoots"
+            "Exclusive heritage licensing for product launches & corporate showcases",
+            "Prestigious heritage backdrop for luxury media productions & ad films",
+            "Flagship product reveals, press previews & exhibition showcases",
+            "High-amperage production power, VIP hospitality & reception areas",
+            "Full coordination for print editorials, digital features & institutional events"
           ],
           image: "/images/SDP_0299.jpg"
         }
@@ -486,7 +486,7 @@ export const siteData = {
         eventTypeOptions: [
           "Heritage Rental — Wedding Ceremony",
           "Heritage Rental — Photography & Film Shoot",
-          "Heritage Rental — Commercial Branding & Campaigns",
+          "Heritage Rental — Product Launches & Corporate Showcases",
           "Heritage Rental — Cultural Event / Concert",
           "Heritage Rental — Corporate Gathering",
           "Heritage Visit / Scholarly Tour",
@@ -948,16 +948,16 @@ export const siteData = {
           image: "/images/SDP_0257.jpg"
         },
         {
-          id: "commercial-branding",
-          title: "কমার্শিয়াল ব্র্যান্ডিং (Commercial Branding)",
-          pricing: "বাণিজ্যিক ও ব্র্যান্ড লাইসেন্সিং",
-          desc: "লাক্সারি ব্র্যান্ডিং, বাণিজ্যিক বিজ্ঞাপন, ব্র্যান্ড ক্যাম্পেইন, ফ্ল্যাগশিপ প্রডাক্ট লঞ্চ ও কর্পোরেট পরিচিতি প্রচারের জন্য উনিশ শতকের এক অনন্য ঐতিহাসিক রাজকীয় পটভূমি।",
+          id: "brand-launches",
+          title: "কর্পোরেট ইভেন্ট ও প্রডাক্ট লঞ্চ",
+          pricing: "কর্পোরেট ও প্রাতিষ্ঠানিক বুকিং",
+          desc: "ফ্ল্যাগশিপ প্রডাক্ট লঞ্চ, প্রেস প্রিভিউ, কর্পোরেট সম্মেলন ও সম্মানীয় প্রাতিষ্ঠানিক সমাবেশের জন্য উনিশ শতকের এক অনন্য ঐতিহাসিক রাজকীয় পটভূমি।",
           features: [
-            "বাণিজ্যিক ব্র্যান্ড ক্যাম্পেইন ও প্রচারের বিশেষ লাইসেন্সিং সুবিধা",
-            "লাক্সারি ব্র্যান্ড বিজ্ঞাপন ও বিজ্ঞাপনী চলচ্চিত্রের রাজকীয় পটভূমি",
-            "ফ্ল্যাগশিপ প্রডাক্ট লঞ্চ, প্রেস প্রিভিউ ও ব্র্যান্ড শোকেস আয়োজন",
+            "প্রডাক্ট লঞ্চ ও প্রাতিষ্ঠানিক প্রদর্শনীর বিশেষ লাইসেন্সিং সুবিধা",
+            "মিডিয়া প্রোডাকশন ও মর্যাদাপূর্ণ প্রদর্শনীর রাজকীয় পটভূমি",
+            "ফ্ল্যাগশিপ প্রডাক্ট উন্মোচন, প্রেস প্রিভিউ ও শোকেস আয়োজন",
             "উচ্চক্ষমতাসম্পন্ন বিদ্যুৎ সংযোগ, ভিআইপি লাউঞ্জ ও আধুনিক আপ্যায়ন ব্যবস্থা",
-            "প্রিন্ট মিডিয়া, ডিজিটাল ক্যাম্পেইন ও কর্পোরেট ব্র্যান্ডিংয়ের সার্বিক সমন্বয়"
+            "প্রিন্ট মিডিয়া, ডিজিটাল ফিচার ও কর্পোরেট সম্মেলনের সার্বিক সমন্বয়"
           ],
           image: "/images/SDP_0299.jpg"
         }
@@ -1000,7 +1000,7 @@ export const siteData = {
         eventTypeOptions: [
           "ঐতিহ্য ভাড়া — বিবাহ অনুষ্ঠান",
           "ঐতিহ্য ভাড়া — ফটোগ্রাফি ও চলচ্চিত্র শুটিং",
-          "ঐতিহ্য ভাড়া — কমার্শিয়াল ব্র্যান্ডিং ও প্রচার (Commercial Branding)",
+          "ঐতিহ্য ভাড়া — কর্পোরেট ইভেন্ট ও প্রডাক্ট লঞ্চ",
           "ঐতিহ্য ভাড়া — সাংস্কৃতিক অনুষ্ঠান / সঙ্গীত আসর",
           "ঐতিহ্য ভাড়া — কর্পোরেট সম্মেলন",
           "ঐতিহাসিক দর্শন / গবেষণা বিষয়ক সফর",

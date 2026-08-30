@@ -65,7 +65,7 @@ export default function HeritageRentalPage({ lang, onOpenBooking, onOpenLightbox
 
               <div className="p-8 pt-0">
                 <button
-                  onClick={() => onOpenBooking(srv.id === 'commercial-branding' ? (lang === 'bn' ? 'ঐতিহ্য ভাড়া — কমার্শিয়াল ব্র্যান্ডিং ও প্রচার (Commercial Branding)' : 'Heritage Rental — Commercial Branding & Campaigns') : srv.title)}
+                  onClick={() => onOpenBooking(srv.title)}
                   className="w-full py-3 bg-accent text-accent-foreground text-xs tracking-[0.2em] uppercase font-body font-semibold hover:bg-matte-red transition-colors rounded-sm text-center"
                 >
                   {lang === 'bn' ? 'বুকিং অনুসন্ধান পাঠান' : 'Enquire For This Venue'}
