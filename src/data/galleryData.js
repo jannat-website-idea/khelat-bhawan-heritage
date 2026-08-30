@@ -6,7 +6,6 @@ export const galleryData = [
     "title": "Grand Courtyard Illuminated at Twilight",
     "desc": "Dramatic evening perspective of the illuminated Thakur Dalan colonnade and classical pediment at Khelat Bhavan.",
     "src": "/images/khelat-bhawan-night-courtyard.jpg",
-    "date": "2024-02-15",
     "photographer": "Official Archive"
   },
   {
@@ -16,7 +15,6 @@ export const galleryData = [
     "title": "Heritage Colonnaded Corridor & Chandeliers",
     "desc": "Sun-drenched marble corridor showcasing classic fluted columns, vintage Belgian chandeliers, and high timber-beam ceilings.",
     "src": "/images/khelat-bhawan-colonnade-corridor.jpg",
-    "date": "2024-02-15",
     "photographer": "Official Archive"
   },
   {
@@ -27,7 +25,6 @@ export const galleryData = [
     "desc": "High-definition cinematic walkthrough of Pathuria Ghata Ghosh Bari, exploring the Thakur Dalan, courtyards, and grand heritage halls.",
     "src": "/Videos/khelat-bhawan-video.mp4",
     "poster": "/images/SDP_0344.jpg",
-    "date": "2023-11-01",
     "photographer": "Khelat Bhawan Heritage Media"
   },
   {
@@ -37,7 +34,6 @@ export const galleryData = [
     "title": "Durga Puja Celebration",
     "desc": "Grand celebration of Maa Durga with traditional rituals and community participation",
     "src": "/images/SDP_0257.jpg",
-    "date": "2023-10-15",
     "photographer": "Heritage Photography Team"
   },
   {
@@ -47,7 +43,6 @@ export const galleryData = [
     "title": "Classical Music Evening",
     "desc": "Mesmerizing evening of Bengali classical music by renowned artists",
     "src": "/images/SDP_0273.jpg",
-    "date": "2023-09-20",
     "photographer": "Cultural Events Team"
   },
   {
@@ -57,7 +52,6 @@ export const galleryData = [
     "title": "Heritage Architecture Details",
     "desc": "Intricate architectural details showcasing 175 years of Bengali craftsmanship",
     "src": "/images/SDP_0282.jpg",
-    "date": "2023-08-10",
     "photographer": "Architecture Documentation"
   },
   {
@@ -67,7 +61,6 @@ export const galleryData = [
     "title": "Traditional Bengali Wedding",
     "desc": "Beautiful Bengali wedding ceremony in our heritage setting",
     "src": "/images/SDP_0291.jpg",
-    "date": "2023-07-25",
     "photographer": "Wedding Photography"
   },
   {
@@ -77,7 +70,6 @@ export const galleryData = [
     "title": "Jagadhatri Puja Rituals",
     "desc": "Sacred rituals of Jagadhatri Puja with traditional ceremonies",
     "src": "/images/SDP_0299.jpg",
-    "date": "2023-11-10",
     "photographer": "Religious Events Team"
   },
   {
@@ -87,7 +79,6 @@ export const galleryData = [
     "title": "Classical Dance Performance",
     "desc": "Graceful classical dance performance in the heritage courtyard",
     "src": "/images/SDP_0305.jpg",
-    "date": "2023-06-15",
     "photographer": "Performance Documentation"
   },
   {
@@ -97,7 +88,6 @@ export const galleryData = [
     "title": "Heritage Building Exterior",
     "desc": "Beautiful exterior view of the heritage building showcasing traditional architecture",
     "src": "/images/SDP_0308.jpg",
-    "date": "2023-05-20",
     "photographer": "Architecture Documentation"
   },
   {
@@ -107,7 +97,6 @@ export const galleryData = [
     "title": "Saraswati Puja Celebration",
     "desc": "Annual Saraswati Puja celebration with students and community members",
     "src": "/images/SDP_0310.jpg",
-    "date": "2023-02-15",
     "photographer": "Heritage Photography Team"
   },
   {
@@ -117,7 +106,6 @@ export const galleryData = [
     "title": "Traditional Bengali Cuisine",
     "desc": "Authentic Bengali cuisine prepared for special cultural events",
     "src": "/images/SDP_0312.jpg",
-    "date": "2023-04-10",
     "photographer": "Cultural Events Team"
   },
   {
@@ -127,7 +115,6 @@ export const galleryData = [
     "title": "Heritage Interior Hallway",
     "desc": "Elegant interior hallway showcasing traditional Bengali architectural elements",
     "src": "/images/SDP_0315.jpg",
-    "date": "2023-03-25",
     "photographer": "Architecture Documentation"
   },
   {
@@ -137,7 +124,6 @@ export const galleryData = [
     "title": "Wedding Ceremony Preparations",
     "desc": "Elaborate preparations for a traditional Bengali wedding ceremony",
     "src": "/images/SDP_0317.jpg",
-    "date": "2023-12-05",
     "photographer": "Wedding Photography"
   },
   {
@@ -147,7 +133,6 @@ export const galleryData = [
     "title": "Kali Puja Celebration",
     "desc": "Vibrant Kali Puja celebration with traditional rituals and offerings",
     "src": "/images/SDP_0320.jpg",
-    "date": "2023-11-12",
     "photographer": "Religious Events Team"
   },
   {
@@ -157,7 +142,6 @@ export const galleryData = [
     "title": "Folk Music Performance",
     "desc": "Traditional Bengali folk music performance during cultural festival",
     "src": "/images/SDP_0321.jpg",
-    "date": "2023-10-25",
     "photographer": "Performance Documentation"
   },
   {
@@ -167,7 +151,6 @@ export const galleryData = [
     "title": "Heritage Courtyard View",
     "desc": "Peaceful courtyard view of the heritage building with traditional elements",
     "src": "/images/SDP_0322.jpg",
-    "date": "2023-09-15",
     "photographer": "Architecture Documentation"
   },
   {
@@ -177,7 +160,6 @@ export const galleryData = [
     "title": "Lakshmi Puja Celebration",
     "desc": "Traditional Lakshmi Puja celebration with community participation",
     "src": "/images/SDP_0323.jpg",
-    "date": "2023-10-28",
     "photographer": "Heritage Photography Team"
   },
   {
@@ -187,7 +169,6 @@ export const galleryData = [
     "title": "Bengali New Year Celebration",
     "desc": "Colorful celebration of Bengali New Year with traditional customs",
     "src": "/images/SDP_0330.jpg",
-    "date": "2023-04-14",
     "photographer": "Cultural Events Team"
   },
   {
@@ -197,7 +178,6 @@ export const galleryData = [
     "title": "Heritage Building Entrance",
     "desc": "Grand entrance of the heritage building with intricate details",
     "src": "/images/SDP_0331.jpg",
-    "date": "2023-08-05",
     "photographer": "Architecture Documentation"
   },
   {
@@ -207,7 +187,6 @@ export const galleryData = [
     "title": "Wedding Rituals",
     "desc": "Sacred wedding rituals performed in traditional Bengali style",
     "src": "/images/SDP_0333.jpg",
-    "date": "2023-11-20",
     "photographer": "Wedding Photography"
   },
   {
@@ -217,7 +196,6 @@ export const galleryData = [
     "title": "Saraswati Idol",
     "desc": "Beautiful Saraswati idol crafted by local artisans for annual puja",
     "src": "/images/SDP_0337.jpg",
-    "date": "2023-02-10",
     "photographer": "Religious Events Team"
   },
   {
@@ -227,7 +205,6 @@ export const galleryData = [
     "title": "Traditional Dance Performance",
     "desc": "Captivating traditional dance performance during cultural event",
     "src": "/images/SDP_0340.jpg",
-    "date": "2023-07-15",
     "photographer": "Performance Documentation"
   },
   {
@@ -237,7 +214,6 @@ export const galleryData = [
     "title": "Heritage Building Interior",
     "desc": "Stunning interior view of the heritage building with traditional decor",
     "src": "/images/SDP_0341.jpg",
-    "date": "2023-06-20",
     "photographer": "Architecture Documentation"
   },
   {
@@ -247,7 +223,6 @@ export const galleryData = [
     "title": "Durga Puja Preparations",
     "desc": "Preparations for Durga Puja with artisans working on decorations",
     "src": "/images/SDP_0342.jpg",
-    "date": "2023-10-10",
     "photographer": "Heritage Photography Team"
   },
   {
@@ -257,7 +232,6 @@ export const galleryData = [
     "title": "Cultural Program",
     "desc": "Vibrant cultural program showcasing Bengali traditions and arts",
     "src": "/images/SDP_0343.jpg",
-    "date": "2023-05-15",
     "photographer": "Cultural Events Team"
   },
   {
@@ -267,7 +241,6 @@ export const galleryData = [
     "title": "Heritage Building Details",
     "desc": "Close-up details of the heritage building's architectural elements",
     "src": "/images/SDP_0344.jpg",
-    "date": "2023-07-05",
     "photographer": "Architecture Documentation"
   },
   {
@@ -277,7 +250,6 @@ export const galleryData = [
     "title": "Heritage Building Details",
     "desc": "Close-up details of the heritage building's architectural elements",
     "src": "/images/SDP_0345.jpg",
-    "date": "2023-07-05",
     "photographer": "Architecture Documentation"
   },
   {
@@ -287,7 +259,6 @@ export const galleryData = [
     "title": "Heritage Building Details",
     "desc": "Close-up details of the heritage building's architectural elements",
     "src": "/images/SDP_0351.jpg",
-    "date": "2023-07-05",
     "photographer": "Architecture Documentation"
   },
   {
@@ -297,7 +268,6 @@ export const galleryData = [
     "title": "Heritage Building Details",
     "desc": "Close-up details of the heritage building's architectural elements",
     "src": "/images/SDP_0352.jpg",
-    "date": "2023-07-05",
     "photographer": "Architecture Documentation"
   },
   {
@@ -307,7 +277,6 @@ export const galleryData = [
     "title": "Heritage Building Details",
     "desc": "Close-up details of the heritage building's architectural elements",
     "src": "/images/SDP_0358.jpg",
-    "date": "2023-07-05",
     "photographer": "Architecture Documentation"
   },
   {
@@ -317,7 +286,6 @@ export const galleryData = [
     "title": "Heritage Building Details",
     "desc": "Close-up details of the heritage building's architectural elements",
     "src": "/images/SDP_0359.jpg",
-    "date": "2023-07-05",
     "photographer": "Architecture Documentation"
   },
   {
@@ -327,7 +295,6 @@ export const galleryData = [
     "title": "Heritage Building Details",
     "desc": "Close-up details of the heritage building's architectural elements",
     "src": "/images/SDP_0361.jpg",
-    "date": "2023-07-05",
     "photographer": "Architecture Documentation"
   },
   {
@@ -337,7 +304,6 @@ export const galleryData = [
     "title": "Heritage Building Details",
     "desc": "Close-up details of the heritage building's architectural elements",
     "src": "/images/SDP_0362.jpg",
-    "date": "2023-07-05",
     "photographer": "Architecture Documentation"
   },
   {
@@ -347,7 +313,6 @@ export const galleryData = [
     "title": "Heritage Building Details",
     "desc": "Close-up details of the heritage building's architectural elements",
     "src": "/images/SDP_0365.jpg",
-    "date": "2023-07-05",
     "photographer": "Architecture Documentation"
   },
   {
@@ -357,7 +322,6 @@ export const galleryData = [
     "title": "Heritage Building Details",
     "desc": "Close-up details of the heritage building's architectural elements",
     "src": "/images/SDP_0366.jpg",
-    "date": "2023-07-05",
     "photographer": "Architecture Documentation"
   },
   {
@@ -367,7 +331,6 @@ export const galleryData = [
     "title": "Heritage Building Details",
     "desc": "Close-up details of the heritage building's architectural elements",
     "src": "/images/SDP_0368.jpg",
-    "date": "2023-07-05",
     "photographer": "Architecture Documentation"
   },
   {
@@ -377,7 +340,6 @@ export const galleryData = [
     "title": "Heritage Building Details",
     "desc": "Close-up details of the heritage building's architectural elements",
     "src": "/images/SDP_0371.jpg",
-    "date": "2023-07-05",
     "photographer": "Architecture Documentation"
   },
   {
@@ -387,7 +349,6 @@ export const galleryData = [
     "title": "Heritage Building Details",
     "desc": "Close-up details of the heritage building's architectural elements",
     "src": "/images/SDP_0373.jpg",
-    "date": "2023-07-05",
     "photographer": "Architecture Documentation"
   },
   {
@@ -397,7 +358,6 @@ export const galleryData = [
     "title": "Heritage Building Details",
     "desc": "Close-up details of the heritage building's architectural elements",
     "src": "/images/SDP_0386.jpg",
-    "date": "2023-07-05",
     "photographer": "Architecture Documentation"
   },
   {
@@ -407,7 +367,6 @@ export const galleryData = [
     "title": "Heritage Building Details",
     "desc": "Close-up details of the heritage building's architectural elements",
     "src": "/images/SDP_0388.jpg",
-    "date": "2023-07-05",
     "photographer": "Architecture Documentation"
   },
   {
@@ -417,7 +376,6 @@ export const galleryData = [
     "title": "Heritage Building Details",
     "desc": "Close-up details of the heritage building's architectural elements",
     "src": "/images/SDP_0391.jpg",
-    "date": "2023-07-05",
     "photographer": "Architecture Documentation"
   },
   {
@@ -427,7 +385,6 @@ export const galleryData = [
     "title": "Heritage Building Details",
     "desc": "Close-up details of the heritage building's architectural elements",
     "src": "/images/SDP_0396.jpg",
-    "date": "2023-07-05",
     "photographer": "Architecture Documentation"
   },
   {
@@ -437,7 +394,6 @@ export const galleryData = [
     "title": "Heritage Building Details",
     "desc": "Close-up details of the heritage building's architectural elements",
     "src": "/images/SDP_0402.jpg",
-    "date": "2023-07-05",
     "photographer": "Architecture Documentation"
   },
   {
@@ -447,7 +403,6 @@ export const galleryData = [
     "title": "Heritage Building Details",
     "desc": "Close-up details of the heritage building's architectural elements",
     "src": "/images/SDP_0409.jpg",
-    "date": "2023-07-05",
     "photographer": "Architecture Documentation"
   },
   {
@@ -457,7 +412,6 @@ export const galleryData = [
     "title": "Heritage Building Details",
     "desc": "Close-up details of the heritage building's architectural elements",
     "src": "/images/SDP_0411.jpg",
-    "date": "2023-07-05",
     "photographer": "Architecture Documentation"
   },
   {
@@ -467,7 +421,6 @@ export const galleryData = [
     "title": "Heritage Building Details",
     "desc": "Close-up details of the heritage building's architectural elements",
     "src": "/images/SDP_0413.jpg",
-    "date": "2023-07-05",
     "photographer": "Architecture Documentation"
   },
   {
@@ -477,7 +430,6 @@ export const galleryData = [
     "title": "Heritage Building Details",
     "desc": "Close-up details of the heritage building's architectural elements",
     "src": "/images/SDP_0416.jpg",
-    "date": "2023-07-05",
     "photographer": "Architecture Documentation"
   },
   {
@@ -487,7 +439,6 @@ export const galleryData = [
     "title": "Heritage Building Details",
     "desc": "Close-up details of the heritage building's architectural elements",
     "src": "/images/SDP_0418.jpg",
-    "date": "2023-07-05",
     "photographer": "Architecture Documentation"
   },
   {
@@ -497,7 +448,6 @@ export const galleryData = [
     "title": "Heritage Building Details",
     "desc": "Close-up details of the heritage building's architectural elements",
     "src": "/images/SDP_0426.jpg",
-    "date": "2023-07-05",
     "photographer": "Architecture Documentation"
   },
   {
@@ -507,7 +457,6 @@ export const galleryData = [
     "title": "Heritage Building Details",
     "desc": "Close-up details of the heritage building's architectural elements",
     "src": "/images/SDP_0430.jpg",
-    "date": "2023-07-05",
     "photographer": "Architecture Documentation"
   },
   {
@@ -517,7 +466,6 @@ export const galleryData = [
     "title": "Heritage Building Details",
     "desc": "Close-up details of the heritage building's architectural elements",
     "src": "/images/SDP_0434.jpg",
-    "date": "2023-07-05",
     "photographer": "Architecture Documentation"
   },
   {
@@ -527,7 +475,6 @@ export const galleryData = [
     "title": "Heritage Building Details",
     "desc": "Close-up details of the heritage building's architectural elements",
     "src": "/images/SDP_0437.jpg",
-    "date": "2023-07-05",
     "photographer": "Architecture Documentation"
   },
   {
@@ -537,7 +484,6 @@ export const galleryData = [
     "title": "Heritage Building Details",
     "desc": "Close-up details of the heritage building's architectural elements",
     "src": "/images/SDP_0440.jpg",
-    "date": "2023-07-05",
     "photographer": "Architecture Documentation"
   },
   {
@@ -547,7 +493,6 @@ export const galleryData = [
     "title": "Heritage Building Details",
     "desc": "Close-up details of the heritage building's architectural elements",
     "src": "/images/SDP_0449.jpg",
-    "date": "2023-07-05",
     "photographer": "Architecture Documentation"
   },
   {
@@ -557,7 +502,6 @@ export const galleryData = [
     "title": "Heritage Building Details",
     "desc": "Close-up details of the heritage building's architectural elements",
     "src": "/images/SDP_0453.jpg",
-    "date": "2023-07-05",
     "photographer": "Architecture Documentation"
   },
   {
@@ -567,7 +511,6 @@ export const galleryData = [
     "title": "Heritage Building Details",
     "desc": "Close-up details of the heritage building's architectural elements",
     "src": "/images/SDP_0454.jpg",
-    "date": "2023-07-05",
     "photographer": "Architecture Documentation"
   },
   {
@@ -577,7 +520,6 @@ export const galleryData = [
     "title": "Heritage Building Details",
     "desc": "Close-up details of the heritage building's architectural elements",
     "src": "/images/SDP_0459.jpg",
-    "date": "2023-07-05",
     "photographer": "Architecture Documentation"
   },
   {
@@ -587,7 +529,6 @@ export const galleryData = [
     "title": "Heritage Building Details",
     "desc": "Close-up details of the heritage building's architectural elements",
     "src": "/images/SDP_0461.jpg",
-    "date": "2023-07-05",
     "photographer": "Architecture Documentation"
   },
   {
@@ -597,7 +538,6 @@ export const galleryData = [
     "title": "Heritage Building Details",
     "desc": "Close-up details of the heritage building's architectural elements",
     "src": "/images/unnamed_1.webp",
-    "date": "2023-07-05",
     "photographer": "Architecture Documentation"
   },
   {
@@ -607,7 +547,6 @@ export const galleryData = [
     "title": "Heritage Building Details",
     "desc": "Close-up details of the heritage building's architectural elements",
     "src": "/images/unnamed_13.webp",
-    "date": "2023-07-05",
     "photographer": "Architecture Documentation"
   },
   {
@@ -617,7 +556,6 @@ export const galleryData = [
     "title": "Heritage Building Details",
     "desc": "Close-up details of the heritage building's architectural elements",
     "src": "/images/unnamed_2.webp",
-    "date": "2023-07-05",
     "photographer": "Architecture Documentation"
   },
   {
@@ -627,7 +565,6 @@ export const galleryData = [
     "title": "Traditional Bengali Wedding",
     "desc": "Beautiful Bengali wedding ceremony in our heritage setting",
     "src": "/images/unnamed_3.webp",
-    "date": "2023-07-05",
     "photographer": "Architecture Documentation"
   },
   {
@@ -637,7 +574,6 @@ export const galleryData = [
     "title": "Kali Puja Celebration",
     "desc": "Vibrant Kali Puja celebration with traditional rituals and offerings",
     "src": "/images/unnamed_4.webp",
-    "date": "2023-07-05",
     "photographer": "Architecture Documentation"
   },
   {
@@ -647,7 +583,6 @@ export const galleryData = [
     "title": "Durga Puja Celebration",
     "desc": "Close-up details of the heritage building's architectural elements",
     "src": "/images/unnamed_5.webp",
-    "date": "2023-07-05",
     "photographer": "Architecture Documentation"
   },
   {
@@ -657,7 +592,6 @@ export const galleryData = [
     "title": "Durga Puja Celebration",
     "desc": "Close-up details of the heritage building's architectural elements",
     "src": "/images/unnamed_6.webp",
-    "date": "2023-07-05",
     "photographer": "Architecture Documentation"
   },
   {
@@ -667,7 +601,6 @@ export const galleryData = [
     "title": "Heritage Building Details",
     "desc": "Close-up details of the heritage building's architectural elements",
     "src": "/images/unnamed_7.webp",
-    "date": "2023-07-05",
     "photographer": "Architecture Documentation"
   },
   {
@@ -677,7 +610,6 @@ export const galleryData = [
     "title": "Heritage Building Details",
     "desc": "Close-up details of the heritage building's architectural elements",
     "src": "/images/unnamed_8.webp",
-    "date": "2023-07-05",
     "photographer": "Architecture Documentation"
   },
   {
@@ -687,7 +619,6 @@ export const galleryData = [
     "title": "Heritage Building Details",
     "desc": "Close-up details of the heritage building's architectural elements",
     "src": "/images/unnamed_9.webp",
-    "date": "2023-07-05",
     "photographer": "Architecture Documentation"
   },
   {
@@ -697,7 +628,6 @@ export const galleryData = [
     "title": "Durga Puja Celebration",
     "desc": "Close-up details of the heritage building's architectural elements",
     "src": "/images/unnamed_10.webp",
-    "date": "2023-07-05",
     "photographer": "Architecture Documentation"
   },
   {
@@ -707,7 +637,6 @@ export const galleryData = [
     "title": "Durga Puja Celebration",
     "desc": "Close-up details of the heritage building's architectural elements",
     "src": "/images/unnamed_11.webp",
-    "date": "2023-07-05",
     "photographer": "Architecture Documentation"
   },
   {
@@ -717,7 +646,6 @@ export const galleryData = [
     "title": "Classical Music Evening",
     "desc": "Close-up details of the heritage building's architectural elements",
     "src": "/images/unnamed_12.webp",
-    "date": "2023-07-05",
     "photographer": "Architecture Documentation"
   }
 ];
