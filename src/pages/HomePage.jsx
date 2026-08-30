@@ -1,5 +1,5 @@
 import React from 'react';
-import { ArrowRight } from 'lucide-react';
+import { ArrowRight, Bird, Drum, Fish, Flower2, Leaf } from 'lucide-react';
 import AlpanaDivider from '../components/AlpanaDivider';
 import { getAssetUrl } from '../utils/assetHelper';
 import { galleryData } from '../data/galleryData';
@@ -31,6 +31,12 @@ export default function HomePage({ lang, setActiveTab, onOpenBooking, onOpenLigh
             <span className="heritage-hero__folk-band heritage-hero__folk-band--left" />
             <i className="heritage-hero__folk-corner heritage-hero__folk-corner--left" />
             <i className="heritage-hero__folk-corner heritage-hero__folk-corner--right" />
+            <span className="heritage-hero__folk-art heritage-hero__folk-art--left">
+              <Flower2 /><Bird /><Leaf /><Drum /><Fish /><Leaf />
+            </span>
+            <span className="heritage-hero__folk-art heritage-hero__folk-art--right">
+              <Flower2 /><Bird /><Leaf /><Fish /><Drum /><Leaf />
+            </span>
           </div>
           <div className="heritage-hero__corner heritage-hero__corner--left" aria-hidden="true" />
           <div className="heritage-hero__corner heritage-hero__corner--right" aria-hidden="true" />

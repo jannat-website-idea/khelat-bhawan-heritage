@@ -30,7 +30,7 @@ export default function Navbar({ lang, setLang, activeTab, setActiveTab, onOpenB
   };
 
   return (
-    <header className={`heritage-nav ${scrolled ? 'heritage-nav--scrolled' : ''}`}>
+    <header className={`heritage-nav ${activeTab === 'home' && !scrolled ? 'heritage-nav--hero' : ''} ${scrolled ? 'heritage-nav--scrolled' : ''}`}>
       <div className="heritage-nav__inner">
         <button className="heritage-brand" onClick={() => navigate('home')} aria-label="Khelat Bhawan home">
           <strong>{lang === 'bn' ? 'খেলাৎ ভবন' : 'KHELAT BHAWAN'}</strong>
