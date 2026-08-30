@@ -15,18 +15,19 @@ export default function HomePage({ lang, setActiveTab, onOpenBooking, onOpenLigh
   return (
     <main className="heritage-home">
       <section className="heritage-hero">
-        <img
-          src={getAssetUrl('/images/SDP_0344.jpg')}
-          alt="Khelat Bhawan heritage façade"
-          className="heritage-hero__image"
-          loading="eager"
-          fetchPriority="high"
-        />
-        <div className="heritage-hero__wash" />
-        <div className="heritage-hero__corner heritage-hero__corner--left" aria-hidden="true" />
-        <div className="heritage-hero__corner heritage-hero__corner--right" aria-hidden="true" />
+        <div className="heritage-hero__frame">
+          <img
+            src={getAssetUrl('/images/SDP_0344.jpg')}
+            alt="Khelat Bhawan heritage façade"
+            className="heritage-hero__image"
+            loading="eager"
+            fetchPriority="high"
+          />
+          <div className="heritage-hero__wash" />
+          <div className="heritage-hero__corner heritage-hero__corner--left" aria-hidden="true" />
+          <div className="heritage-hero__corner heritage-hero__corner--right" aria-hidden="true" />
 
-        <div className="heritage-hero__content">
+          <div className="heritage-hero__content">
           <p className="heritage-hero__eyebrow">
             {isBn ? 'প্রতিষ্ঠিত ১৮৪৫ · ৪৭ পাথুরিয়াঘাটা স্ট্রিট, কলকাতা' : 'Est. 1845 · 47 Pathuria Ghata Street, Kolkata'}
           </p>
@@ -51,6 +52,7 @@ export default function HomePage({ lang, setActiveTab, onOpenBooking, onOpenLigh
             <div><strong>175+</strong><span>{isBn ? 'বছরের ঐতিহ্য' : 'Years of heritage'}</span></div>
             <div><strong>170+</strong><span>{isBn ? 'বছরের দুর্গাপূজা' : 'Years of Durga Puja'}</span></div>
             <div><strong>3</strong><span>{isBn ? 'সক্রিয় ট্রাস্ট' : 'Active trusts'}</span></div>
+          </div>
           </div>
         </div>
       </section>

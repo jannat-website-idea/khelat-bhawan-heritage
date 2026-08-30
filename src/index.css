@@ -120,7 +120,8 @@
 .heritage-nav__drawer-book { margin-top: 30px; border: 1px solid hsl(var(--accent)); background: hsl(var(--accent)); color: hsl(var(--accent-foreground)); padding: 16px; font-size: 10px; font-weight: 600; letter-spacing: .2em; text-transform: uppercase; }
 .heritage-nav__drawer-pattern { height: 18px; margin-bottom: 20px; background: linear-gradient(135deg,hsl(var(--accent)) 25%,transparent 25%) -9px 0/18px 18px,linear-gradient(225deg,hsl(var(--accent)) 25%,transparent 25%) -9px 0/18px 18px,linear-gradient(315deg,hsl(var(--rose-gold)) 25%,transparent 25%) 0 0/18px 18px,linear-gradient(45deg,hsl(var(--rose-gold)) 25%,transparent 25%) 0 0/18px 18px; opacity: .55; }
 
-.heritage-hero { position: relative; height: calc(100svh - 82px); min-height: 700px; margin-top: 82px; display: grid; place-items: center; overflow: hidden; color: #fff9ee; background: #2c0a08; }
+.heritage-hero { position: relative; margin-top: 82px; padding: 22px clamp(14px,2.8vw,48px) 0; color: #fff9ee; background: hsl(var(--background)); }
+.heritage-hero__frame { position: relative; height: calc(100svh - 104px); min-height: 700px; display: grid; place-items: center; overflow: hidden; background: #2c0a08; border-radius: 50% 50% 16px 16px / 11% 11% 16px 16px; box-shadow: 0 26px 55px rgba(35,8,6,.2); }
 .heritage-hero__image { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; object-position: center 48%; filter: saturate(.82) contrast(1.03); transform: scale(1.012); }
 .heritage-hero__wash { position: absolute; inset: 0; background: linear-gradient(90deg,rgba(38,7,6,.58),rgba(38,7,6,.18) 55%,rgba(38,7,6,.52)),linear-gradient(0deg,rgba(30,5,5,.91),transparent 61%),linear-gradient(rgba(86,40,20,.32),rgba(86,40,20,.32)); }
 .heritage-hero__content { position: relative; z-index: 2; width: min(920px, 88vw); text-align: center; padding: 50px 0 28px; }
@@ -156,7 +157,8 @@
   .heritage-nav__book { display: none; }
   .heritage-language span { display: none; }
   .heritage-nav__drawer { inset: 72px 0 0; }
-  .heritage-hero { height: calc(100svh - 72px); min-height: 690px; margin-top: 72px; }
+  .heritage-hero { margin-top: 72px; padding: 12px 8px 0; }
+  .heritage-hero__frame { height: calc(100svh - 84px); min-height: 690px; border-radius: 50% 50% 12px 12px / 6% 6% 12px 12px; }
   .heritage-hero__content { width: 90vw; padding-top: 34px; }
   .heritage-hero__eyebrow { font-size: 8px; line-height: 1.8; letter-spacing: .28em; }
   .heritage-hero h1 { font-size: clamp(54px, 15.5vw, 76px); line-height: .9; }
