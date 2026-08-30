@@ -1,422 +1,184 @@
-import React, { useState, useEffect, useRef } from 'react';
-import { ChevronLeft, ChevronRight, ArrowRight } from 'lucide-react';
-import SectionHeader from '../components/SectionHeader';
+import React from 'react';
+import { ArrowRight } from 'lucide-react';
+import AlpanaDivider from '../components/AlpanaDivider';
 import { getAssetUrl } from '../utils/assetHelper';
 import { galleryData } from '../data/galleryData';
 
 export default function HomePage({ lang, setActiveTab, onOpenBooking, onOpenLightbox, content }) {
   const t = content[lang];
-  const [currentSlide, setCurrentSlide] = useState(0);
+  const isBn = lang === 'bn';
+  const milestones = t.timelinePreview.items.slice(0, 3);
+  const galleryPreview = galleryData.filter((item) => item.type === 'image').slice(0, 5);
 
-  const heroSlides = [
-    {
-      image: "/images/hero-rajbari.jpg",
-      kicker: lang === 'bn' ? "প্রতিষ্ঠিত ১৮৪৫ · পাথুরিয়াঘাটা, কলকাতা" : "Est. 1845 · Pathuriaghata, Kolkata",
-      title: lang === 'bn' ? "খেলাৎ ভবন" : "Khelat Bhavan",
-      subtitle: lang === 'bn' ? "যেখানে ইতিহাস ও আভিজাত্য জীবন্ত হয়ে ওঠে" : "Where History Lives & Celebrates"
-    },
-    {
-      image: "/images/gallery-wedding.jpg",
-      kicker: lang === 'bn' ? "রাজকীয় বিবাহ ও উৎসব" : "Royal Weddings & Celebrations",
-      title: lang === 'bn' ? "রাজকীয় বিবাহ" : "Royal Weddings",
-      subtitle: lang === 'bn' ? "স্মরণীয় উদযাপনের এক অবিস্মরণীয় পটভূমি" : "A Legacy of Grand Celebrations"
-    },
-    {
-      image: "/images/gallery-cultural.jpg",
-      kicker: lang === 'bn' ? "ঐতিহাসিক সংস্কৃতি ও শাস্ত্রীয় সঙ্গীত" : "Cultural Heritage & Music",
-      title: lang === 'bn' ? "সাংস্কৃতিক ঐতিহ্য" : "Cultural Heritage",
-      subtitle: lang === 'bn' ? "কলা · সঙ্গীত · আধ্যাত্মিক সাধনা" : "Art · Drama · Devotion"
-    },
-    {
-      image: "/images/gallery-festival.jpg",
-      kicker: lang === 'bn' ? "১৮৫৫ সাল থেকে অবিচ্ছিন্ন দুর্গাপূজা" : "Durga Puja Since 1855",
-      title: lang === 'bn' ? "আলোকের মহোৎসব" : "Festivals of Light",
-      subtitle: lang === 'bn' ? "অনাবিল আনন্দ ও আধ্যাত্মিকতার মুহূর্ত" : "Moments of Eternal Joy"
-    }
-  ];
-
-  // Auto advance slides every 5.5s
-  useEffect(() => {
-    const timer = setInterval(() => {
-      setCurrentSlide((prev) => (prev + 1) % heroSlides.length);
-    }, 5500);
-    return () => clearInterval(timer);
-  }, [heroSlides.length]);
-
-  const nextSlide = () => setCurrentSlide((prev) => (prev + 1) % heroSlides.length);
-  const prevSlide = () => setCurrentSlide((prev) => (prev - 1 + heroSlides.length) % heroSlides.length);
+  const openImage = (src, title, desc = '') => onOpenLightbox({ type: 'image', src, title, desc });
 
   return (
-    <div className="space-y-0">
-      {/* 01: EXACT CINEMATIC HERO SLIDER MATCHING LOVABLE REFERENCE */}
-      <section className="relative h-screen min-h-[620px] max-h-[1080px] overflow-hidden bg-black text-white flex items-center justify-center">
-        {/* Background Slides */}
-        {heroSlides.map((slide, idx) => (
-          <div
-            key={idx}
-            className={`absolute inset-0 transition-opacity duration-1000 ease-in-out ${
-              idx === currentSlide ? 'opacity-100 scale-100' : 'opacity-0 scale-105 pointer-events-none'
-            } transform transition-transform duration-[6000ms]`}
-          >
-            <img
-              src={getAssetUrl(slide.image)}
-              alt={slide.title}
-              className="w-full h-full object-cover"
-              loading={idx === 0 ? "eager" : "lazy"}
-            />
-            {/* Subtle Gradient that preserves full image clarity while ensuring text legibility */}
-            <div className="absolute inset-0 bg-gradient-to-b from-black/55 via-black/20 to-black/75" />
-          </div>
-        ))}
+    <main className="heritage-home">
+      <section className="heritage-hero">
+        <img
+          src={getAssetUrl('/images/SDP_0344.jpg')}
+          alt="Khelat Bhawan heritage façade"
+          className="heritage-hero__image"
+          loading="eager"
+          fetchPriority="high"
+        />
+        <div className="heritage-hero__wash" />
+        <div className="heritage-hero__corner heritage-hero__corner--left" aria-hidden="true" />
+        <div className="heritage-hero__corner heritage-hero__corner--right" aria-hidden="true" />
 
-        {/* Previous & Next Arrow Controls */}
-        <button
-          onClick={prevSlide}
-          className="absolute left-4 md:left-8 z-30 p-3 rounded-full bg-black/30 hover:bg-black/70 text-white/80 hover:text-white border border-white/20 backdrop-blur-md transition-all shadow-lg hidden sm:flex items-center justify-center"
-          aria-label="Previous Slide"
-        >
-          <ChevronLeft className="w-6 h-6" />
-        </button>
-
-        <button
-          onClick={nextSlide}
-          className="absolute right-4 md:right-8 z-30 p-3 rounded-full bg-black/30 hover:bg-black/70 text-white/80 hover:text-white border border-white/20 backdrop-blur-md transition-all shadow-lg hidden sm:flex items-center justify-center"
-          aria-label="Next Slide"
-        >
-          <ChevronRight className="w-6 h-6" />
-        </button>
-
-        {/* Centered Hero Content Matching Reference Vibe */}
-        <div className="relative z-20 max-w-5xl mx-auto px-6 text-center mt-12 sm:mt-8">
-          <p className="text-rose-gold text-xs md:text-sm tracking-[0.4em] md:tracking-[0.5em] uppercase font-body font-bold mb-4 md:mb-6 animate-fade-in drop-shadow-md">
-            {heroSlides[currentSlide].kicker}
+        <div className="heritage-hero__content">
+          <p className="heritage-hero__eyebrow">
+            {isBn ? 'প্রতিষ্ঠিত ১৮৪৫ · ৪৭ পাথুরিয়াঘাটা স্ট্রিট, কলকাতা' : 'Est. 1845 · 47 Pathuria Ghata Street, Kolkata'}
           </p>
-
-          <h1 className="font-serif text-5xl sm:text-7xl md:text-8xl lg:text-9xl font-bold tracking-tight text-white mb-3 md:mb-4 leading-[0.95] drop-shadow-lg">
-            {heroSlides[currentSlide].title}
+          <h1>
+            {isBn ? 'এক জীবন্ত উত্তরাধিকার' : 'A living legacy,'}
+            <em>{isBn ? '১৮৪৫ সাল থেকে সযত্নে রক্ষিত' : 'held in trust since 1845'}</em>
           </h1>
-
-          <p className="font-serif text-xl sm:text-2xl md:text-3xl text-white/90 italic mb-8 md:mb-10 font-normal drop-shadow-md">
-            {heroSlides[currentSlide].subtitle}
+          <p className="heritage-hero__lead">
+            {isBn
+              ? '১৭৫ বছরেরও বেশি সময় ধরে বাংলা সংস্কৃতি, সঙ্গীত ও ভক্তির ঐতিহ্য সংরক্ষণ করে চলেছে খেলাৎ ভবন।'
+              : 'Khelat Bhawan—Pathuria Ghata Ghosh Bari—has preserved Bengali culture, music and devotion for more than 175 years.'}
           </p>
-
-          {/* Twin CTAs matching Lovable Reference */}
-          <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
-            <button
-              onClick={onOpenBooking}
-              className="w-full sm:w-auto bg-accent text-accent-foreground px-10 py-3.5 text-xs tracking-[0.2em] uppercase font-body font-bold hover:bg-matte-red transition-all rounded-sm shadow-2xl hover:scale-105"
-            >
-              {lang === 'bn' ? 'বুকিং অনুসন্ধান' : 'Book Your Event'}
+          <div className="heritage-hero__actions">
+            <button onClick={() => setActiveTab('trustees')} className="heritage-button heritage-button--gold">
+              {isBn ? 'ট্রাস্টের বিস্তারিত' : 'Trustee details'}
             </button>
-
-            <button
-              onClick={() => setActiveTab('gallery')}
-              className="w-full sm:w-auto border border-white/70 text-white hover:bg-white/15 px-10 py-3.5 text-xs tracking-[0.2em] uppercase font-body font-bold transition-all rounded-sm backdrop-blur-sm shadow-2xl hover:scale-105"
-            >
-              {lang === 'bn' ? 'গ্যালারি দেখুন' : 'Explore Gallery'}
+            <button onClick={() => setActiveTab('timeline')} className="heritage-button heritage-button--line">
+              {isBn ? 'ঐতিহ্যের সময়রেখা' : 'Heritage timeline'}
             </button>
+          </div>
+          <div className="heritage-hero__stats" aria-label={isBn ? 'ঐতিহ্যের মূল পরিসংখ্যান' : 'Key heritage figures'}>
+            <div><strong>175+</strong><span>{isBn ? 'বছরের ঐতিহ্য' : 'Years of heritage'}</span></div>
+            <div><strong>170+</strong><span>{isBn ? 'বছরের দুর্গাপূজা' : 'Years of Durga Puja'}</span></div>
+            <div><strong>3</strong><span>{isBn ? 'সক্রিয় ট্রাস্ট' : 'Active trusts'}</span></div>
           </div>
         </div>
+      </section>
 
-        {/* Bottom Slide Indicators Matching Lovable Reference */}
-        <div className="absolute bottom-8 z-30 flex items-center justify-center gap-3">
-          {heroSlides.map((_, idx) => (
-            <button
-              key={idx}
-              onClick={() => setCurrentSlide(idx)}
-              className={`h-1.5 rounded-full transition-all duration-500 ${
-                idx === currentSlide ? 'w-12 bg-accent shadow-md' : 'w-4 bg-white/40 hover:bg-white/70'
-              }`}
-              aria-label={`Go to slide ${idx + 1}`}
-            />
+      <section className="heritage-story heritage-section">
+        <div className="heritage-story__copy">
+          <p className="heritage-kicker">{isBn ? 'ঐতিহ্য ও উত্তরাধিকার' : 'Heritage & legacy'}</p>
+          <h2>
+            {isBn ? '“এই বাড়ি শুধু ইট ও দেয়াল নয়—' : '“This house isn’t bricks and walls—'}
+            <em>{isBn ? 'এটি বাংলার সাংস্কৃতিক আত্মা।”' : 'it is Bengal’s cultural soul.”'}</em>
+          </h2>
+          <AlpanaDivider className="heritage-story__divider" />
+          <p>
+            {isBn
+              ? '১৮৪৫ সালে প্রতিষ্ঠিত খেলাৎ ভবন—পাথুরিয়াঘাটা ঘোষ বাড়ি নামেও পরিচিত—বাংলার সাংস্কৃতিক ঐতিহ্য ও আধ্যাত্মিক ভক্তির এক জীবন্ত সাক্ষ্য।'
+              : 'Established in 1845, Khelat Bhawan—also known as Pathuria Ghata Ghosh Bari—stands as a living testament to Bengali cultural heritage and spiritual devotion.'}
+          </p>
+          <p>
+            {isBn
+              ? '১৮৮১ সালে শ্রী রামকৃষ্ণ পরমহংসের আগমন বাড়িটির আধ্যাত্মিক গুরুত্ব বাড়ায়। আজ তিনটি সক্রিয় ট্রাস্ট ধর্মীয় ভক্তি, শাস্ত্রীয় শিল্পকলা ও সমাজসেবার উত্তরাধিকার বহন করছে।'
+              : 'Sri Ramakrishna Paramhansa visited the house in 1881, adding to its spiritual significance. Today, three active trusts carry forward its work in devotion, classical arts and community service.'}
+          </p>
+          <button className="editorial-link" onClick={() => setActiveTab('heritage')}>
+            {isBn ? 'সম্পূর্ণ ঐতিহ্য জানুন' : 'Read the full heritage'}<ArrowRight />
+          </button>
+        </div>
+        <button
+          className="heritage-story__image heritage-arched-image"
+          onClick={() => openImage('/images/SDP_0291.jpg', 'Khelat Bhawan courtyard')}
+          aria-label="Open Khelat Bhawan courtyard image"
+        >
+          <img src={getAssetUrl('/images/SDP_0291.jpg')} alt="Illuminated courtyard arches at Khelat Bhawan" loading="lazy" />
+          <span>{isBn ? 'পাথুরিয়াঘাটা ঘোষ বাড়ি' : 'Pathuria Ghata Ghosh Bari'}</span>
+        </button>
+      </section>
+
+      <section className="heritage-trusts heritage-section heritage-pattern-field">
+        <div className="heritage-heading-row">
+          <div>
+            <p className="heritage-kicker">{isBn ? 'তত্ত্বাবধান' : 'Custodianship'}</p>
+            <h2>{isBn ? 'আমাদের তিন সাংস্কৃতিক ট্রাস্ট' : 'Our three cultural trusts'}</h2>
+          </div>
+          <p>{isBn ? 'ভক্তি, শিল্প ও সেবার মাধ্যমে বাংলা ঐতিহ্য সংরক্ষণে তিনটি ট্রাস্ট একসঙ্গে কাজ করে।' : 'United in purpose and distinct in mission, three trusts preserve Bengali heritage through devotion, arts and service.'}</p>
+        </div>
+        <div className="heritage-trust-grid">
+          {t.trusts.list.map((trust) => (
+            <article key={trust.id} className="heritage-trust-card">
+              <div className="heritage-trust-card__top"><span>{trust.num}</span><small>{trust.est}</small></div>
+              <p className="heritage-kicker">{trust.focus}</p>
+              <h3>{trust.title}</h3>
+              <p>{trust.desc}</p>
+              <ul>{trust.activities.slice(0, 4).map((activity) => <li key={activity}>{activity}</li>)}</ul>
+            </article>
+          ))}
+        </div>
+        <button className="heritage-button heritage-button--dark" onClick={() => setActiveTab('trustees')}>
+          {isBn ? 'ট্রাস্ট ও ট্রাস্টি দেখুন' : 'View trusts & trustees'}
+        </button>
+      </section>
+
+      <section className="heritage-timeline-band">
+        <div className="heritage-timeline-band__motif" aria-hidden="true" />
+        <div className="heritage-section">
+          <div className="heritage-heading-row heritage-heading-row--light">
+            <div><p className="heritage-kicker">{isBn ? 'সময়ের যাত্রা' : 'Journey through time'}</p><h2>{isBn ? 'ঐতিহ্যের প্রধান অধ্যায়' : 'Defining chapters of the legacy'}</h2></div>
+            <button className="editorial-link editorial-link--light" onClick={() => setActiveTab('timeline')}>{isBn ? 'সম্পূর্ণ সময়রেখা' : 'Full heritage timeline'}<ArrowRight /></button>
+          </div>
+          <div className="heritage-timeline-preview">
+            {milestones.map((item, index) => (
+              <article key={item.year}>
+                <span>{String(index + 1).padStart(2, '0')}</span>
+                <strong>{item.year}</strong>
+                <h3>{item.title}</h3>
+                <p>{item.desc}</p>
+              </article>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      <section className="heritage-devotion">
+        <div className="heritage-devotion__pattern heritage-devotion__pattern--top" aria-hidden="true" />
+        <p className="heritage-kicker">{isBn ? 'ভক্তি' : 'Devotion'}</p>
+        <h2>{isBn ? '১৮৫৫ সাল থেকে অবিচ্ছিন্ন দুর্গাপূজা' : 'Durga Puja, unbroken since 1855'}</h2>
+        <AlpanaDivider light />
+        <p>{isBn ? 'প্রজন্মের পর প্রজন্ম ধরে ভক্তি ও ঐতিহ্যবাহী আচার সংরক্ষিত হয়ে চলেছে।' : 'A sacred annual tradition carried forward with devotion across generations.'}</p>
+        <button className="heritage-button heritage-button--gold" onClick={() => setActiveTab('heritage')}>{isBn ? 'ঐতিহ্য জানুন' : 'Explore the tradition'}</button>
+        <div className="heritage-devotion__pattern heritage-devotion__pattern--bottom" aria-hidden="true" />
+      </section>
+
+      <section className="heritage-lineage heritage-section">
+        <button className="heritage-lineage__image" onClick={() => openImage('/images/SDP_0359.jpg', 'Khelat Bhawan architectural archive')}>
+          <img src={getAssetUrl('/images/SDP_0359.jpg')} alt="Architectural view of Khelat Bhawan" loading="lazy" />
+        </button>
+        <div>
+          <p className="heritage-kicker">{isBn ? 'পারিবারিক আর্কাইভ' : 'The family archive'}</p>
+          <h2>{isBn ? 'সাত প্রজন্মের তত্ত্বাবধান' : 'Seven generations of custodians'}</h2>
+          <AlpanaDivider className="heritage-lineage__divider" />
+          <p>{isBn ? 'Khelat Ghosh থেকে বর্তমান প্রজন্ম পর্যন্ত, পরিবারের সাত প্রজন্ম এই উত্তরাধিকার সংরক্ষণ করেছে। অপ্রকাশিত নাম বা প্রতিকৃতি অনুমান করা হয়নি।' : 'From Khelat Ghosh to the present generation, seven generations have carried the responsibility of preserving this heritage. Unpublished names and portraits remain respectfully unstated.'}</p>
+          <button className="editorial-link" onClick={() => setActiveTab('heritage')}>{isBn ? 'পারিবারিক উত্তরাধিকার দেখুন' : 'Explore the family lineage'}<ArrowRight /></button>
+        </div>
+      </section>
+
+      <section className="heritage-gallery heritage-section">
+        <div className="heritage-heading-row">
+          <div><p className="heritage-kicker">{isBn ? 'দৃশ্য-সংগ্রহ' : 'The visual archive'}</p><h2>{isBn ? 'স্থাপত্য, ভক্তি ও সাংস্কৃতিক জীবন' : 'Architecture, devotion & cultural life'}</h2></div>
+          <button className="editorial-link" onClick={() => setActiveTab('gallery')}>{isBn ? 'সম্পূর্ণ গ্যালারি' : 'Explore the gallery'}<ArrowRight /></button>
+        </div>
+        <div className="heritage-gallery__grid">
+          {galleryPreview.map((item, index) => (
+            <button key={item.id} className={`heritage-gallery__item heritage-gallery__item--${index + 1}`} onClick={() => onOpenLightbox(item)}>
+              <img src={getAssetUrl(item.src)} alt={item.title} loading="lazy" />
+              <span>{item.title}</span>
+            </button>
           ))}
         </div>
       </section>
 
-      {/* 02: EDITORIAL HERITAGE INTRODUCTION */}
-      <section className="py-24 bg-background">
-        <div className="container mx-auto px-6">
-          <SectionHeader
-            title={t.intro.heading}
-            subtitle={t.intro.eyebrow}
-          />
-
-          <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 items-center max-w-6xl mx-auto mt-12">
-            <div className="lg:col-span-6 relative">
-              <div className="relative rounded-sm overflow-hidden shadow-xl aspect-[4/3] bg-black">
-                <img
-                  src={getAssetUrl('/images/SDP_0344.jpg')}
-                  alt="Khelat Bhavan Courtyard"
-                  className="w-full h-full object-cover hover:scale-105 transition-transform duration-700 cursor-pointer"
-                  onClick={() => onOpenLightbox({
-                    type: 'image',
-                    title: 'Grand Courtyard of Khelat Bhavan',
-                    desc: 'The historic courtyard of Pathuria Ghata Ghosh Bari, established in 1845.',
-                    src: '/images/SDP_0344.jpg'
-                  })}
-                />
-              </div>
-            </div>
-
-            <div className="lg:col-span-6 space-y-6 text-left">
-              <p className="text-foreground/80 text-base md:text-lg leading-relaxed font-body">
-                {t.intro.p1}
-              </p>
-
-              <p className="text-muted-foreground text-sm md:text-base leading-relaxed font-body">
-                {t.intro.p2}
-              </p>
-
-              <div className="p-5 rounded-sm bg-card border-l-2 border-accent">
-                <p className="font-serif italic text-foreground text-base">
-                  "{t.intro.statHighlight}"
-                </p>
-              </div>
-
-              <div className="pt-2 flex gap-4">
-                <button
-                  onClick={() => setActiveTab('heritage')}
-                  className="bg-primary text-primary-foreground px-8 py-3 text-xs tracking-[0.2em] uppercase font-body font-medium hover:bg-foreground transition-colors rounded-sm flex items-center gap-2"
-                >
-                  <span>{t.hero.exploreBtn}</span>
-                  <ArrowRight className="w-3.5 h-3.5" />
-                </button>
-              </div>
-            </div>
-          </div>
+      <section className="heritage-booking">
+        <img src={getAssetUrl('/images/SDP_0344.jpg')} alt="Khelat Bhawan courtyard" loading="lazy" />
+        <div className="heritage-booking__wash" />
+        <div className="heritage-booking__content">
+          <p className="heritage-kicker">{isBn ? 'হেরিটেজ বুকিং' : 'Heritage enquiries'}</p>
+          <h2>{isBn ? 'এক ঐতিহাসিক পরিসরে আপনার বিশেষ আয়োজন' : 'Bring your occasion into a historic setting'}</h2>
+          <p>{isBn ? 'বিবাহ, ফটোগ্রাফি, চলচ্চিত্রায়ন, সাংস্কৃতিক ও কর্পোরেট অনুষ্ঠানের জন্য অনুসন্ধান পাঠান।' : 'Enquire about weddings, photography and film shoots, cultural programmes and corporate events.'}</p>
+          <button className="heritage-button heritage-button--gold" onClick={onOpenBooking}>{isBn ? 'বুকিং অনুসন্ধান' : 'Make a booking enquiry'}</button>
         </div>
       </section>
-
-      {/* 03: THREE PILLARS OF HERITAGE (TRUSTS) */}
-      <section className="py-24 bg-card/40 border-y border-border/50">
-        <div className="container mx-auto px-6">
-          <SectionHeader
-            title={t.trusts.heading}
-            subtitle={t.trusts.desc}
-          />
-
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-8 max-w-6xl mx-auto">
-            {t.trusts.list.map((trust) => (
-              <div
-                key={trust.id}
-                className="bg-background rounded-sm overflow-hidden border border-border hover:border-accent transition-all duration-300 shadow-sm hover:shadow-lg flex flex-col justify-between group"
-              >
-                <div>
-                  <div className="h-56 overflow-hidden bg-black relative">
-                    <img
-                      src={getAssetUrl(trust.image)}
-                      alt={trust.title}
-                      className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700"
-                    />
-                    <div className="absolute top-3 left-3 bg-navy/80 backdrop-blur-md px-3 py-1 text-[10px] uppercase tracking-wider text-rose-gold font-body font-semibold rounded-sm">
-                      {trust.est}
-                    </div>
-                  </div>
-
-                  <div className="p-6 space-y-3">
-                    <span className="text-[10px] uppercase tracking-[0.25em] text-accent font-body font-semibold block">
-                      Trust {trust.num} · {trust.focus}
-                    </span>
-                    <h3 className="font-serif text-xl font-bold text-foreground leading-snug">
-                      {trust.title}
-                    </h3>
-                    <p className="text-xs md:text-sm text-muted-foreground font-body leading-relaxed">
-                      {trust.desc}
-                    </p>
-                  </div>
-                </div>
-
-                <div className="p-6 pt-0">
-                  <button
-                    onClick={() => setActiveTab('trustees')}
-                    className="w-full py-2.5 border border-border text-foreground text-xs tracking-widest uppercase font-body font-medium hover:border-accent hover:text-accent transition-colors rounded-sm"
-                  >
-                    View Trust Details
-                  </button>
-                </div>
-              </div>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      {/* 04: HISTORICAL TIMELINE PREVIEW */}
-      <section className="py-24 bg-background">
-        <div className="container mx-auto px-6 max-w-5xl">
-          <SectionHeader
-            title={t.timelinePreview.heading}
-            subtitle={t.timelinePreview.desc}
-          />
-
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-6 my-12">
-            {t.timelinePreview.items.slice(0, 3).map((item, idx) => (
-              <div
-                key={idx}
-                className="bg-card/60 p-6 rounded-sm border border-border hover:border-accent transition-all duration-300"
-              >
-                <span className="font-serif text-3xl font-bold text-accent block mb-2">
-                  {item.year}
-                </span>
-                <div className="h-40 rounded-sm overflow-hidden mb-4 bg-black">
-                  <img src={getAssetUrl(item.image)} alt={item.title} className="w-full h-full object-cover hover:scale-105 transition-transform" />
-                </div>
-                <h3 className="font-serif text-lg font-semibold text-foreground mb-2">
-                  {item.title}
-                </h3>
-                <p className="text-xs text-muted-foreground font-body leading-relaxed">
-                  {item.desc}
-                </p>
-              </div>
-            ))}
-          </div>
-
-          <div className="text-center mt-8">
-            <button
-              onClick={() => setActiveTab('timeline')}
-              className="inline-block border border-foreground/20 text-foreground px-8 py-3 text-xs tracking-[0.2em] uppercase font-body font-medium hover:bg-foreground hover:text-background transition-colors rounded-sm"
-            >
-              {t.timelinePreview.viewFull}
-            </button>
-          </div>
-        </div>
-      </section>
-
-      {/* 05: FOUNDER PREVIEW */}
-      <section className="py-24 gradient-heritage text-primary-foreground">
-        <div className="container mx-auto px-6 max-w-6xl">
-          <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">
-            <div className="lg:col-span-5 text-center">
-              <div className="p-3 bg-white/5 rounded-sm border border-white/15 inline-block">
-                <img
-                  src={getAssetUrl(t.founder.image)}
-                  alt={t.founder.name}
-                  className="w-full h-[400px] object-cover rounded-sm grayscale hover:grayscale-0 transition-all duration-700"
-                />
-              </div>
-            </div>
-
-            <div className="lg:col-span-7 space-y-6 text-left">
-              <SectionHeader
-                title={t.founder.name}
-                subtitle={`${t.founder.years} · ${t.founder.tagline}`}
-                light={true}
-                className="text-left mb-6 !items-start"
-              />
-
-              <p className="text-primary-foreground/80 font-body text-sm md:text-base leading-relaxed font-light">
-                {t.founder.bio1}
-              </p>
-
-              <p className="text-primary-foreground/70 font-body text-sm md:text-base leading-relaxed font-light">
-                {t.founder.bio2}
-              </p>
-
-              <blockquote className="p-5 border-l-2 border-rose-gold bg-white/5 italic font-serif text-primary-foreground/90 text-base">
-                "{t.founder.quote}"
-              </blockquote>
-
-              <div className="pt-2">
-                <button
-                  onClick={() => setActiveTab('founder')}
-                  className="bg-accent text-accent-foreground px-8 py-3 text-xs tracking-[0.2em] uppercase font-body font-semibold hover:bg-matte-red transition-colors rounded-sm"
-                >
-                  {t.founder.cta}
-                </button>
-              </div>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      {/* 06: GALLERY PREVIEW */}
-      <section className="py-24 bg-background">
-        <div className="container mx-auto px-6">
-          <SectionHeader
-            title={lang === 'bn' ? 'আমাদের গ্যালারি' : 'Our Gallery'}
-            subtitle={lang === 'bn' ? 'খেলাৎ ভবন রাজবাড়ির দৃশ্যপট' : 'A glimpse into the grandeur of Khelat Bhavan Rajbari'}
-          />
-
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 max-w-6xl mx-auto my-12">
-            {galleryData.slice(0, 6).map((item) => {
-              const rawSrc = item.type === 'video' ? (item.poster || '/images/SDP_0344.jpg') : item.src;
-              return (
-                <div
-                  key={item.id}
-                  onClick={() => onOpenLightbox(item)}
-                  className="relative group cursor-pointer overflow-hidden aspect-square rounded-sm shadow-sm hover:shadow-xl transition-all duration-500 bg-black"
-                >
-                  <img
-                    src={getAssetUrl(rawSrc)}
-                    alt={item.title}
-                    className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110 opacity-95 group-hover:opacity-100"
-                  />
-
-                  <div className="absolute inset-0 bg-foreground/0 group-hover:bg-foreground/50 transition-colors duration-300 flex items-end">
-                    <div className="p-5 translate-y-full group-hover:translate-y-0 transition-transform duration-300 w-full text-left">
-                      <p className="font-serif text-primary-foreground text-lg font-semibold">
-                        {item.title}
-                      </p>
-                      <p className="text-rose-gold text-xs font-body tracking-wider uppercase mt-1">
-                        {item.category}
-                      </p>
-                    </div>
-                  </div>
-                </div>
-              );
-            })}
-          </div>
-
-          <div className="text-center mt-10">
-            <button
-              onClick={() => setActiveTab('gallery')}
-              className="inline-block border border-foreground/20 text-foreground px-8 py-3 text-xs tracking-[0.2em] uppercase font-body font-medium hover:bg-foreground hover:text-background transition-colors rounded-sm"
-            >
-              {lang === 'bn' ? 'সম্পূর্ণ গ্যালারি দেখুন' : 'View Full Gallery'}
-            </button>
-          </div>
-        </div>
-      </section>
-
-      {/* 07: BOOKING ENQUIRY BANNER */}
-      <section className="py-24 gradient-heritage text-primary-foreground text-center relative overflow-hidden">
-        <div className="container mx-auto px-6 max-w-3xl space-y-6">
-          <div className="flex items-center justify-center gap-4 mb-2">
-            <div className="h-px w-12 bg-primary-foreground/30" />
-            <span className="text-rose-gold text-xs tracking-[0.3em] uppercase font-body font-medium">❖</span>
-            <div className="h-px w-12 bg-primary-foreground/30" />
-          </div>
-
-          <p className="text-xs tracking-[0.3em] uppercase text-rose-gold font-body font-semibold">
-            {lang === 'bn' ? 'হেরিটেজ বুকিং' : 'Heritage Venue & Rental'}
-          </p>
-
-          <h2 className="font-serif text-3xl sm:text-5xl md:text-6xl font-bold tracking-tight">
-            {lang === 'bn' ? 'ঐতিহাসিক পরিসরে আপনার বিশেষ আয়োজন' : 'Host Your Moments in Living Heritage'}
-          </h2>
-
-          <p className="text-primary-foreground/80 font-body text-sm md:text-base leading-relaxed font-light max-w-xl mx-auto">
-            {lang === 'bn' 
-              ? 'বিবাহ অনুষ্ঠান, চলচ্চিত্র ও স্থিরচিত্র শুটিং, উচ্চাঙ্গ সঙ্গীত আসর এবং কর্পোরেট সম্মিলনীর জন্য খেলাৎ ভবন এক অনন্য রাজকীয় পটভূমি।' 
-              : 'From traditional Bengali wedding ceremonies and period film shoots to acoustic classical baithaks, Khelat Bhavan offers an authentic 19th-century royal sanctuary.'}
-          </p>
-
-          <div className="pt-4 flex flex-col sm:flex-row items-center justify-center gap-4">
-            <button
-              onClick={onOpenBooking}
-              className="bg-accent text-accent-foreground px-10 py-3.5 text-xs tracking-[0.2em] uppercase font-body font-semibold hover:bg-matte-red transition-colors rounded-sm shadow-lg"
-            >
-              {lang === 'bn' ? 'বুকিং অনুসন্ধান পাঠান' : 'Book Your Event'}
-            </button>
-
-            <button
-              onClick={() => setActiveTab('rental')}
-              className="border border-primary-foreground/40 text-primary-foreground px-8 py-3.5 text-xs tracking-[0.2em] uppercase font-body font-medium hover:bg-white/10 transition-colors rounded-sm"
-            >
-              {lang === 'bn' ? 'ভাড়া সেবা দেখুন' : 'Explore Rental Services'}
-            </button>
-          </div>
-        </div>
-      </section>
-    </div>
+    </main>
   );
 }

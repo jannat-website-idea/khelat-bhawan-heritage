@@ -68,31 +68,23 @@ export default function AboutPage({ lang, setActiveTab, onOpenLightbox, content 
             subtitle={t.lineage.desc}
           />
 
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 mt-12">
+          <div className="royal-family-tree mt-12" aria-label={lang === 'bn' ? 'সাত প্রজন্মের পারিবারিক বৃক্ষ' : 'Seven-generation family tree'}>
+            <div className="royal-family-tree__crown" aria-hidden="true">✦</div>
             {t.lineage.generations.map((gen, idx) => (
               <div
                 key={idx}
-                className="bg-card/70 p-6 rounded-sm border border-border hover:border-accent transition-all duration-300 flex flex-col justify-between"
+                className={`royal-family-tree__generation royal-family-tree__generation--${idx + 1}`}
               >
-                <div>
-                  <div className="h-44 rounded-sm overflow-hidden mb-4 bg-black">
-                    <img src={getAssetUrl(gen.image)} alt={gen.name} className="w-full h-full object-cover" />
-                  </div>
-                  <span className="text-[10px] uppercase tracking-widest text-accent font-body font-semibold block mb-1">
-                    {gen.gen} · {gen.period}
-                  </span>
-                  <h4 className="font-serif text-lg font-bold text-foreground mb-1">
-                    {gen.name}
-                  </h4>
-                  <p className="text-xs text-rose-gold font-body font-medium mb-2">
-                    {gen.role}
-                  </p>
-                  <p className="text-xs text-muted-foreground font-body leading-relaxed">
-                    {gen.desc}
-                  </p>
+                <div className="royal-family-tree__medallion"><span>{idx + 1}</span></div>
+                <div className="royal-family-tree__card">
+                  <span>{gen.gen} · {gen.period}</span>
+                  <h4>{gen.name}</h4>
+                  <p className="royal-family-tree__role">{gen.role}</p>
+                  <p>{gen.desc}</p>
                 </div>
               </div>
             ))}
+            <div className="royal-family-tree__roots" aria-hidden="true"><span /><span /><span /></div>
           </div>
         </div>
 

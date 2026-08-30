@@ -38,8 +38,8 @@ export default {
         'ivory': 'hsl(var(--ivory))',
       },
       fontFamily: {
-        serif: ['"Playfair Display"', 'Georgia', 'serif'],
-        body: ['Inter', 'Helvetica Neue', 'sans-serif'],
+        serif: ['"Cormorant Garamond"', 'Georgia', 'serif'],
+        body: ['Karla', 'Helvetica Neue', 'sans-serif'],
         bengali: ['"Noto Serif Bengali"', '"Hind Siliguri"', 'serif'],
       },
       backgroundImage: {

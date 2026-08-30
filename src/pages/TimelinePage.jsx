@@ -8,74 +8,79 @@ export default function TimelinePage({ lang, setActiveTab, onOpenLightbox, conte
   const milestones = [
     {
       year: "1845",
-      badge: "Foundation",
-      title: lang === 'bn' ? "খেলাৎ ভবনের প্রতিষ্ঠা" : "Establishment of Khelat Bhavan",
-      desc: lang === 'bn' 
-        ? "বাবু খেলাৎ ঘোষ ৪৭ পাথুরিয়াঘাটা স্ট্রিটে এই সুবিশাল ঐতিহ্যবাহী প্রাসাদ প্রতিষ্ঠা করেন।"
-        : "Babu Khelat Ghosh laid the foundation of this majestic heritage mansion at 47 Pathuria Ghata Street, designing a grand estate blending classical neoclassical columns with traditional Bengali courtyard architecture.",
+      badge: lang === 'bn' ? "প্রতিষ্ঠা" : "Establishment",
+      title: lang === 'bn' ? "খেলাৎ ভবনের প্রতিষ্ঠা" : "Founding of Khelat Bhawan",
+      desc: lang === 'bn' ? "খেলাৎ ঘোষ বাংলা ঐতিহ্য সংরক্ষণের সাংস্কৃতিক কেন্দ্র হিসেবে খেলাৎ ভবন প্রতিষ্ঠা করেন।" : "Khelat Ghosh establishes Khelat Bhawan as a cultural center for Bengali heritage preservation.",
       image: "/images/SDP_0344.jpg"
     },
     {
       year: "1855",
-      badge: "Durga Puja",
-      title: lang === 'bn' ? "দুর্গাপূজা পরম্পরার সূচনা" : "Inauguration of the Sacred Durga Puja",
-      desc: lang === 'bn'
-        ? "বার্ষিক সাবেকি পারিবারিক দুর্গোৎসব ও জগদ্ধাত্রী পূজার সূচনা, যা আজ ১৭০+ বছর ধরে নিরবচ্ছিন্নভাবে চলছে।"
-        : "The Ghosh family initiated the annual Durga Puja and Jagadhatri Puja with traditional rituals, establishing a sacred tradition that continues uninterrupted for over 170 continuous years.",
+      badge: lang === 'bn' ? "সাংস্কৃতিক" : "Cultural",
+      title: lang === 'bn' ? "প্রথম দুর্গাপূজা" : "First Durga Puja Celebration",
+      desc: lang === 'bn' ? "খেলাৎ ভবনে প্রথম আনুষ্ঠানিক দুর্গাপূজার সূচনা হয়—যে ঐতিহ্য আজও অব্যাহত।" : "The first formal Durga Puja celebration at Khelat Bhawan establishes a tradition that continues to this day.",
       image: "/images/unnamed_6.webp"
     },
     {
       year: "1881",
-      badge: "Divine Blessing",
-      title: lang === 'bn' ? "শ্রীরামকৃষ্ণ পরমহংসদেবের শুভাগমন" : "Sri Ramakrishna Paramhansa's Historic Visit",
-      desc: lang === 'bn'
-        ? "যুগাবতার শ্রীশ্রীরামকৃষ্ণ পরমহংসদেব খেলাৎ ভবনে শুভাগমন করে সমগ্র প্রাঙ্গণকে পবিত্র ও মহিমান্বিত করেন।"
-        : "The revered mystic and saint Sri Ramakrishna Paramhansa visited and blessed Khelat Bhavan with his divine presence, forever consecrating the house as a sacred spiritual landmark.",
+      badge: lang === 'bn' ? "আধ্যাত্মিক" : "Spiritual",
+      title: lang === 'bn' ? "শ্রীরামকৃষ্ণ পরমহংসদেবের আগমন" : "Visit of Sri Ramakrishna Paramhansa",
+      desc: lang === 'bn' ? "শ্রীরামকৃষ্ণ পরমহংসদেব খেলাৎ ভবনে এসে প্রাঙ্গণকে আশীর্বাদ করেন এবং এর আধ্যাত্মিক তাৎপর্য প্রতিষ্ঠা করেন।" : "Sri Ramakrishna Paramhansa visits Khelat Bhawan, blessing the premises and establishing its spiritual significance.",
       image: "/images/rk01.png"
     },
     {
       year: "1920",
-      badge: "First Formal Trust",
-      title: lang === 'bn' ? "প্রথম প্রাতিষ্ঠানিক ট্রাস্ট গঠন" : "First Formal Heritage Trust",
-      desc: lang === 'bn'
-        ? "পারিবারিক ঐতিহ্য ও দেবোত্তর সম্পত্তি সুরক্ষার জন্য প্রথম আনুষ্ঠানিক ট্রাস্ট দলিল সম্পাদন।"
-        : "The Ghosh family formalized the first trust governance framework to protect Khelat Bhavan's heritage and devotional sanctity.",
+      badge: lang === 'bn' ? "প্রশাসনিক" : "Administrative",
+      title: lang === 'bn' ? "প্রথম ট্রাস্ট প্রতিষ্ঠা" : "Establishment of First Trust",
+      desc: lang === 'bn' ? "ভবিষ্যৎ প্রজন্মের জন্য খেলাৎ ভবনের ঐতিহ্য রক্ষা ও সংরক্ষণে প্রথম আনুষ্ঠানিক ট্রাস্ট প্রতিষ্ঠিত হয়।" : "The first formal trust is established to protect and preserve the Khelat Bhawan heritage for future generations.",
       image: "/images/SDP_0299.jpg"
     },
     {
-      year: "1950s",
-      badge: "Classical Music",
-      title: lang === 'bn' ? "খেলাৎ ঘোষ মেমোরিয়াল ট্রাস্ট" : "Khelat Ghosh Memorial Trust",
-      desc: lang === 'bn'
-        ? "উচ্চাঙ্গ সঙ্গীত আসর, গুণী শিল্পীদের সহায়তা ও সঙ্গীত সংরক্ষণে প্রাতিষ্ঠানিক ট্রাস্ট প্রতিষ্ঠা।"
-        : "Formal trust established to institutionalize support for classical Hindustani musicians, organize heritage baithaks, and preserve rare archival recordings.",
+      year: "1947",
+      badge: lang === 'bn' ? "ঐতিহাসিক" : "Historical",
+      title: lang === 'bn' ? "স্বাধীনতা-পরবর্তী অভিযোজন" : "Independence Era Adaptations",
+      desc: lang === 'bn' ? "সাংস্কৃতিক তাৎপর্য ও ঐতিহ্য বজায় রেখে খেলাৎ ভবন স্বাধীনতা-পরবর্তী সময়ের সঙ্গে মানিয়ে নেয়।" : "Khelat Bhawan adapts to the post-independence era while maintaining its cultural significance and heritage value.",
       image: "/images/SDP_0273.jpg"
     },
     {
       year: "1975",
-      badge: "Restoration",
+      badge: lang === 'bn' ? "সংরক্ষণ" : "Preservation",
       title: lang === 'bn' ? "স্থাপত্য পুনরুদ্ধার ও সংস্কার" : "Major Architectural Conservation",
-      desc: lang === 'bn'
-        ? "ঐতিহাসিক ঠাকুর দালান ও মার্বেল হলঘরের ঐতিহ্যবাহী সংরক্ষণ কাজ সম্পন্ন।"
-        : "Comprehensive restoration project preserving the 19th-century woodwork, Corinthian columns, and courtyard masonry.",
+      desc: lang === 'bn' ? "একটি বিস্তৃত পুনরুদ্ধার প্রকল্প ভবিষ্যৎ প্রজন্মের জন্য খেলাৎ ভবনের স্থাপত্য অখণ্ডতা সংরক্ষণ করে।" : "A comprehensive restoration project preserves the architectural integrity of Khelat Bhawan for future generations.",
       image: "/images/SDP_0291.jpg"
     },
     {
-      year: "2000+",
-      badge: "Arts & Welfare",
-      title: lang === 'bn' ? "আর্টিস্ট নেকটার কাউন্সিল অফ কালচার" : "Artist Nectar Council of Culture",
-      desc: lang === 'bn'
-        ? "মঞ্চশিল্প, সমাজসেবা, শিশুদের শিক্ষা ও স্বাস্থ্য সচেতনতা বিষয়ক বহুমুখী উদ্যোগের বিস্তার।"
-        : "Establishment of the Artist Nectar Council of Culture focusing on performing arts, social service, children's education, and healthcare awareness.",
+      year: "1985",
+      badge: lang === 'bn' ? "সাংস্কৃতিক" : "Cultural",
+      title: lang === 'bn' ? "আর্টিস্ট নেকটার কাউন্সিল গঠন" : "Formation of Artist Nectar Council",
+      desc: lang === 'bn' ? "বাংলা মঞ্চশিল্পের প্রসার এবং শিল্পীদের একটি মঞ্চ প্রদানের জন্য আর্টিস্ট নেকটার কাউন্সিল অফ কালচার গঠিত হয়।" : "The Artist Nectar Council of Culture is formed to promote Bengali performing arts and provide a platform for artists.",
       image: "/images/unnamed_12.webp"
     },
     {
-      year: "Present",
-      badge: "Living Heritage",
-      title: lang === 'bn' ? "জীবন্ত ঐতিহ্য ও সাংস্কৃতিক কেন্দ্র" : "Contemporary Living Heritage",
-      desc: lang === 'bn'
-        ? "সপ্তম প্রজন্মের অভিভাবকত্বে ঐতিহ্য রক্ষা, সাংস্কৃতিক অনুষ্ঠান ও শুটিংয়ের জন্য সংরক্ষিত এক অনন্য পীঠস্থান।"
-        : "Seven generations of custodians actively preserving traditions, opening heritage spaces for wedding ceremonies, cinema shoots, and classical recitals.",
+      year: "2005",
+      badge: lang === 'bn' ? "প্রযুক্তি" : "Technological",
+      title: lang === 'bn' ? "ডিজিটাল আর্কাইভ উদ্যোগ" : "Digital Archives Initiative",
+      desc: lang === 'bn' ? "ঐতিহাসিক নিদর্শন ও নথি সংরক্ষণের জন্য একটি বিস্তৃত ডিজিটাল আর্কাইভ উদ্যোগ শুরু হয়।" : "A digital archiving initiative is launched to document and preserve historical artifacts and records.",
+      image: "/images/SDP_0305.jpg"
+    },
+    {
+      year: "2015",
+      badge: lang === 'bn' ? "পর্যটন" : "Tourism",
+      title: lang === 'bn' ? "হেরিটেজ ট্যুরিজম কর্মসূচি" : "Heritage Tourism Program",
+      desc: lang === 'bn' ? "খেলাৎ ভবন হেরিটেজ পর্যটনের জন্য উন্মুক্ত হয়, যাতে দর্শনার্থীরা এর সাংস্কৃতিক ঐতিহ্য অনুভব করতে পারেন।" : "Khelat Bhawan opens for heritage tourism, allowing visitors to experience its cultural heritage firsthand.",
+      image: "/images/SDP_0359.jpg"
+    },
+    {
+      year: "2020",
+      badge: lang === 'bn' ? "ডিজিটাল" : "Digital",
+      title: lang === 'bn' ? "ভার্চুয়াল অভিজ্ঞতার সূচনা" : "Virtual Experience Launch",
+      desc: lang === 'bn' ? "ভার্চুয়াল ট্যুর ও ডিজিটাল অভিজ্ঞতার সূচনায় এই ঐতিহ্য বিশ্বব্যাপী আরও সহজলভ্য হয়।" : "Virtual tours and digital experiences are launched, making the heritage accessible globally.",
+      image: "/images/SDP_0344.jpg"
+    },
+    {
+      year: "2023",
+      badge: lang === 'bn' ? "কৌশলগত" : "Strategic",
+      title: lang === 'bn' ? "ভবিষ্যৎ দৃষ্টিভঙ্গি উদ্যোগ" : "Future Vision Initiative",
+      desc: lang === 'bn' ? "বাংলার ঐতিহ্যের জন্য টেকসই সংরক্ষণ মডেল ও বিশ্বব্যাপী সচেতনতা কর্মসূচি বাস্তবায়িত হয়।" : "Sustainable preservation models and global awareness campaigns for Bengali heritage are implemented.",
       image: "/images/unnamed_3.webp"
     }
   ];
