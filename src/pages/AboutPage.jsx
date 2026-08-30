@@ -2,6 +2,7 @@ import React from 'react';
 import { Compass, Award, ArrowRight } from 'lucide-react';
 import SectionHeader from '../components/SectionHeader';
 import { getAssetUrl } from '../utils/assetHelper';
+import AlpanaMotif from '../components/AlpanaMotif';
 
 export default function AboutPage({ lang, setActiveTab, onOpenLightbox, content }) {
   const t = content[lang];
@@ -69,13 +70,15 @@ export default function AboutPage({ lang, setActiveTab, onOpenLightbox, content 
           />
 
           <div className="royal-family-tree mt-12" aria-label={lang === 'bn' ? 'সাত প্রজন্মের পারিবারিক বৃক্ষ' : 'Seven-generation family tree'}>
+            <span className="lineage-alpana-rail lineage-alpana-rail--left" aria-hidden="true" />
+            <span className="lineage-alpana-rail lineage-alpana-rail--right" aria-hidden="true" />
             <div className="royal-family-tree__crown" aria-hidden="true">✦</div>
             {t.lineage.generations.map((gen, idx) => (
               <div
                 key={idx}
                 className={`royal-family-tree__generation royal-family-tree__generation--${idx + 1}`}
               >
-                <div className="royal-family-tree__medallion" aria-hidden="true"><span className="folk-rosette" /></div>
+                <div className="royal-family-tree__medallion" aria-hidden="true"><AlpanaMotif variant={idx % 2 === 0 ? 'flower' : 'fish'} /></div>
                 <div className="royal-family-tree__card">
                   <span>{gen.gen} · {gen.period}</span>
                   <h4>{gen.name}</h4>

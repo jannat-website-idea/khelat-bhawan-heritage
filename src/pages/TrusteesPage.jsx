@@ -2,6 +2,7 @@ import React from 'react';
 import { Heart, Music, Users, Check } from 'lucide-react';
 import SectionHeader from '../components/SectionHeader';
 import { getAssetUrl } from '../utils/assetHelper';
+import AlpanaMotif from '../components/AlpanaMotif';
 
 export default function TrusteesPage({ lang, setActiveTab, onOpenLightbox, content }) {
   const t = content[lang];
@@ -161,9 +162,11 @@ export default function TrusteesPage({ lang, setActiveTab, onOpenLightbox, conte
             <p className="text-sm text-muted-foreground mt-4">{lang === 'bn' ? 'সরকারি ওয়েবসাইটে প্রকাশিত ট্রাস্টি পদবি ও সময়কাল। ব্যক্তিগত নাম প্রকাশিত না থাকায় এখানে অনুমান করা হয়নি।' : 'Trustee designations and periods published by the official website. Personal names are not inferred where they are not provided.'}</p>
           </div>
           <div className="trustee-lineage">
+            <span className="lineage-alpana-rail lineage-alpana-rail--left" aria-hidden="true" />
+            <span className="lineage-alpana-rail lineage-alpana-rail--right" aria-hidden="true" />
             {trusteeTimeline.map((trustee, index) => (
               <article key={trustee.period} className="trustee-lineage__item">
-                <div className="trustee-lineage__seal" aria-hidden="true"><span className="folk-rosette" /></div>
+                <div className="trustee-lineage__seal" aria-hidden="true"><AlpanaMotif variant={index % 2 === 0 ? 'flower' : 'fish'} /></div>
                 <div>
                   <span>{trustee.period}</span>
                   <h3>{trustee.name}</h3>
