@@ -1,6 +1,7 @@
 import React from 'react';
-import { ArrowRight, Bird, Drum, Fish, Flower2, Leaf } from 'lucide-react';
+import { ArrowRight } from 'lucide-react';
 import AlpanaDivider from '../components/AlpanaDivider';
+import HeritageFrame from '../components/HeritageFrame';
 import { getAssetUrl } from '../utils/assetHelper';
 import { galleryData } from '../data/galleryData';
 
@@ -24,22 +25,7 @@ export default function HomePage({ lang, setActiveTab, onOpenBooking, onOpenLigh
             fetchPriority="high"
           />
           <div className="heritage-hero__wash" />
-          <div className="heritage-hero__folk-frame" aria-hidden="true">
-            <span className="heritage-hero__folk-band heritage-hero__folk-band--top" />
-            <span className="heritage-hero__folk-band heritage-hero__folk-band--right" />
-            <span className="heritage-hero__folk-band heritage-hero__folk-band--bottom" />
-            <span className="heritage-hero__folk-band heritage-hero__folk-band--left" />
-            <i className="heritage-hero__folk-corner heritage-hero__folk-corner--left" />
-            <i className="heritage-hero__folk-corner heritage-hero__folk-corner--right" />
-            <span className="heritage-hero__folk-art heritage-hero__folk-art--left">
-              <Flower2 /><Bird /><Leaf /><Drum /><Fish /><Leaf />
-            </span>
-            <span className="heritage-hero__folk-art heritage-hero__folk-art--right">
-              <Flower2 /><Bird /><Leaf /><Fish /><Drum /><Leaf />
-            </span>
-          </div>
-          <div className="heritage-hero__corner heritage-hero__corner--left" aria-hidden="true" />
-          <div className="heritage-hero__corner heritage-hero__corner--right" aria-hidden="true" />
+          <HeritageFrame />
 
           <div className="heritage-hero__content">
           <p className="heritage-hero__eyebrow">
@@ -52,7 +38,7 @@ export default function HomePage({ lang, setActiveTab, onOpenBooking, onOpenLigh
           <p className="heritage-hero__lead">
             {isBn
               ? '১৭৫ বছরেরও বেশি সময় ধরে বাংলা সংস্কৃতি, সঙ্গীত ও ভক্তির ঐতিহ্য সংরক্ষণ করে চলেছে খেলাৎ ভবন।'
-              : 'Khelat Bhawan—Pathuria Ghata Ghosh Bari—has preserved Bengali culture, music and devotion for more than 175 years.'}
+              : 'Khelat Bhawan—Pathuria Ghata Ghosh Bari—has preserved Bengal’s culture, music and devotion for more than 175 years.'}
           </p>
           <div className="heritage-hero__actions">
             <button onClick={() => setActiveTab('trustees')} className="heritage-button heritage-button--gold">
