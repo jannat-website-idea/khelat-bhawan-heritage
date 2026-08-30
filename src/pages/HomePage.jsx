@@ -1,7 +1,6 @@
 import React from 'react';
 import { ArrowRight } from 'lucide-react';
 import AlpanaDivider from '../components/AlpanaDivider';
-import HeritageFrame from '../components/HeritageFrame';
 import { getAssetUrl } from '../utils/assetHelper';
 import { galleryData } from '../data/galleryData';
 
@@ -25,7 +24,6 @@ export default function HomePage({ lang, setActiveTab, onOpenBooking, onOpenLigh
             fetchPriority="high"
           />
           <div className="heritage-hero__wash" />
-          <HeritageFrame />
 
           <div className="heritage-hero__content">
           <p className="heritage-hero__eyebrow">
