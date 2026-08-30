@@ -1,12 +1,15 @@
 import React, { useState } from 'react';
 import { X, CheckCircle2, Send } from 'lucide-react';
 
-export default function BookingModal({ isOpen, onClose, lang, content }) {
+export default function BookingModal({ isOpen, onClose, lang, content, initialEvent = '' }) {
+  const t = content[lang].bookingModal;
+  const defaultOption = t.fields.eventTypeOptions ? t.fields.eventTypeOptions[0] : 'Wedding Ceremony';
+
   const [formData, setFormData] = useState({
     name: '',
     email: '',
     phone: '',
-    eventType: 'Wedding Ceremony',
+    eventType: initialEvent || defaultOption,
     preferredDate: '',
     guests: '',
     message: ''
@@ -15,9 +18,13 @@ export default function BookingModal({ isOpen, onClose, lang, content }) {
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [submitted, setSubmitted] = useState(false);
 
-  if (!isOpen) return null;
+  React.useEffect(() => {
+    if (initialEvent) {
+      setFormData(prev => ({ ...prev, eventType: initialEvent }));
+    }
+  }, [initialEvent, isOpen]);
 
-  const t = content[lang].bookingModal;
+  if (!isOpen) return null;
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -36,7 +43,7 @@ export default function BookingModal({ isOpen, onClose, lang, content }) {
       name: '',
       email: '',
       phone: '',
-      eventType: 'Wedding Ceremony',
+      eventType: defaultOption,
       preferredDate: '',
       guests: '',
       message: ''

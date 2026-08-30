@@ -177,7 +177,7 @@ export default function HomePage({ lang, setActiveTab, onOpenBooking, onOpenLigh
         <div className="heritage-booking__content">
           <p className="heritage-kicker">{isBn ? 'হেরিটেজ বুকিং' : 'Heritage enquiries'}</p>
           <h2>{isBn ? 'এক ঐতিহাসিক পরিসরে আপনার বিশেষ আয়োজন' : 'Bring your occasion into a historic setting'}</h2>
-          <p>{isBn ? 'বিবাহ, ফটোগ্রাফি, চলচ্চিত্রায়ন, সাংস্কৃতিক ও কর্পোরেট অনুষ্ঠানের জন্য অনুসন্ধান পাঠান।' : 'Enquire about weddings, photography and film shoots, cultural programmes and corporate events.'}</p>
+          <p>{isBn ? 'বিবাহ, কমার্শিয়াল ব্র্যান্ডিং, ফটোগ্রাফি ও চলচ্চিত্রায়ন, এবং সাংস্কৃতিক অনুষ্ঠানের জন্য অনুসন্ধান পাঠান।' : 'Enquire about weddings, commercial branding campaigns, photography and film shoots, and cultural programmes.'}</p>
           <button className="heritage-button heritage-button--gold" onClick={onOpenBooking}>{isBn ? 'বুকিং অনুসন্ধান' : 'Make a booking enquiry'}</button>
         </div>
       </section>

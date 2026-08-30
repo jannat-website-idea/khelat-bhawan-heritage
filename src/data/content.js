@@ -434,15 +434,16 @@ export const siteData = {
           image: "/images/SDP_0257.jpg"
         },
         {
-          id: "corporate",
-          title: "Corporate Soirees & Heritage Meetings",
-          pricing: "Contact for institutional events",
-          desc: "An unforgettable, distinguished heritage backdrop for corporate retreats, book releases, exclusive dinners, and leadership colloquiums.",
+          id: "commercial-branding",
+          title: "Commercial Branding",
+          pricing: "Commercial & Brand Licensing",
+          desc: "An iconic, prestigious 19th-century aristocratic estate for luxury commercial branding, brand campaigns, flagship product launches, television commercials, and executive brand storytelling amidst timeless royal architecture.",
           features: [
-            "Exclusive private estate ambiance",
-            "Catering and dining coordination in vintage verandas",
-            "High-profile heritage appeal for discerning guests",
-            "Proximity to historic central Kolkata business corridors"
+            "Exclusive commercial branding & brand campaign licensing",
+            "Prestigious heritage backdrop for luxury commercials & ad films",
+            "Flagship product launches, press previews & trademark showcases",
+            "High-amperage production power, VIP hospitality & brand display areas",
+            "Full coordination for print editorials, digital campaigns & corporate identity shoots"
           ],
           image: "/images/SDP_0299.jpg"
         }
@@ -485,6 +486,7 @@ export const siteData = {
         eventTypeOptions: [
           "Heritage Rental — Wedding Ceremony",
           "Heritage Rental — Photography & Film Shoot",
+          "Heritage Rental — Commercial Branding & Campaigns",
           "Heritage Rental — Cultural Event / Concert",
           "Heritage Rental — Corporate Gathering",
           "Heritage Visit / Scholarly Tour",
@@ -946,15 +948,16 @@ export const siteData = {
           image: "/images/SDP_0257.jpg"
         },
         {
-          id: "corporate",
-          title: "কর্পোরেট সম্মেলন ও সম্মাননা অনুষ্ঠান",
-          pricing: "প্রাতিষ্ঠানিক যোগাযোগ প্রযোজ্য",
-          desc: "কর্পোরেট রিট্রিট, বই প্রকাশনা, নৈশভোজ ও উচ্চপর্যায়ের প্রাতিষ্ঠানিক আলোচনার জন্য এক অনন্য আভিজাত্যপূর্ণ পরিবেশ।",
+          id: "commercial-branding",
+          title: "কমার্শিয়াল ব্র্যান্ডিং (Commercial Branding)",
+          pricing: "বাণিজ্যিক ও ব্র্যান্ড লাইসেন্সিং",
+          desc: "লাক্সারি ব্র্যান্ডিং, বাণিজ্যিক বিজ্ঞাপন, ব্র্যান্ড ক্যাম্পেইন, ফ্ল্যাগশিপ প্রডাক্ট লঞ্চ ও কর্পোরেট পরিচিতি প্রচারের জন্য উনিশ শতকের এক অনন্য ঐতিহাসিক রাজকীয় পটভূমি।",
           features: [
-            "একান্ত ব্যক্তিগত ও আভিজাত্যপূর্ণ পরিবেশ",
-            "ঐতিহাসিক বারান্দায় ক্যাটারিং ও আপ্যায়নের সুযোগ",
-            "বিশেষ অতিথিদের কাছে এক অবিস্মরণীয় অভিজ্ঞতা",
-            "উত্তর ও মধ্য কলকাতার প্রধান সংযোগস্থলের নিকটে অবস্থিত"
+            "বাণিজ্যিক ব্র্যান্ড ক্যাম্পেইন ও প্রচারের বিশেষ লাইসেন্সিং সুবিধা",
+            "লাক্সারি ব্র্যান্ড বিজ্ঞাপন ও বিজ্ঞাপনী চলচ্চিত্রের রাজকীয় পটভূমি",
+            "ফ্ল্যাগশিপ প্রডাক্ট লঞ্চ, প্রেস প্রিভিউ ও ব্র্যান্ড শোকেস আয়োজন",
+            "উচ্চক্ষমতাসম্পন্ন বিদ্যুৎ সংযোগ, ভিআইপি লাউঞ্জ ও আধুনিক আপ্যায়ন ব্যবস্থা",
+            "প্রিন্ট মিডিয়া, ডিজিটাল ক্যাম্পেইন ও কর্পোরেট ব্র্যান্ডিংয়ের সার্বিক সমন্বয়"
           ],
           image: "/images/SDP_0299.jpg"
         }
@@ -997,6 +1000,7 @@ export const siteData = {
         eventTypeOptions: [
           "ঐতিহ্য ভাড়া — বিবাহ অনুষ্ঠান",
           "ঐতিহ্য ভাড়া — ফটোগ্রাফি ও চলচ্চিত্র শুটিং",
+          "ঐতিহ্য ভাড়া — কমার্শিয়াল ব্র্যান্ডিং ও প্রচার (Commercial Branding)",
           "ঐতিহ্য ভাড়া — সাংস্কৃতিক অনুষ্ঠান / সঙ্গীত আসর",
           "ঐতিহ্য ভাড়া — কর্পোরেট সম্মেলন",
           "ঐতিহাসিক দর্শন / গবেষণা বিষয়ক সফর",

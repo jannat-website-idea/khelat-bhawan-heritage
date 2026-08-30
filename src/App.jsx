@@ -21,7 +21,13 @@ export default function App() {
   const [lang, setLang] = useState('en');
   const [activeTab, setActiveTab] = useState('home');
   const [isBookingOpen, setIsBookingOpen] = useState(false);
+  const [bookingEvent, setBookingEvent] = useState('');
   const [lightboxItem, setLightboxItem] = useState(null);
+
+  const handleOpenBooking = (eventName = '') => {
+    setBookingEvent(typeof eventName === 'string' ? eventName : '');
+    setIsBookingOpen(true);
+  };
 
   // Sync hash routing so users can link directly to #gallery, #about, #timeline, etc.
   useEffect(() => {
@@ -115,7 +121,7 @@ export default function App() {
         setLang={setLang}
         activeTab={activeTab}
         setActiveTab={handleTabChange}
-        onOpenBooking={() => setIsBookingOpen(true)}
+        onOpenBooking={handleOpenBooking}
         content={siteData}
       />
 
@@ -125,7 +131,7 @@ export default function App() {
           <HomePage
             lang={lang}
             setActiveTab={handleTabChange}
-            onOpenBooking={() => setIsBookingOpen(true)}
+            onOpenBooking={handleOpenBooking}
             onOpenLightbox={(item) => setLightboxItem(item)}
             content={siteData}
           />
@@ -135,7 +141,7 @@ export default function App() {
           <AboutPage
             lang={lang}
             setActiveTab={handleTabChange}
-            onOpenBooking={() => setIsBookingOpen(true)}
+            onOpenBooking={handleOpenBooking}
             onOpenLightbox={(item) => setLightboxItem(item)}
             content={siteData}
           />
@@ -179,7 +185,7 @@ export default function App() {
         {activeTab === 'rental' && (
           <HeritageRentalPage
             lang={lang}
-            onOpenBooking={() => setIsBookingOpen(true)}
+            onOpenBooking={handleOpenBooking}
             onOpenLightbox={(item) => setLightboxItem(item)}
             content={siteData}
           />
@@ -197,16 +203,20 @@ export default function App() {
       <Footer
         lang={lang}
         setActiveTab={handleTabChange}
-        onOpenBooking={() => setIsBookingOpen(true)}
+        onOpenBooking={handleOpenBooking}
         content={siteData}
       />
 
       {/* Booking Enquiry Modal */}
       <BookingModal
         isOpen={isBookingOpen}
-        onClose={() => setIsBookingOpen(false)}
+        onClose={() => {
+          setIsBookingOpen(false);
+          setBookingEvent('');
+        }}
         lang={lang}
         content={siteData}
+        initialEvent={bookingEvent}
       />
 
       {/* Full-Screen Lightbox */}
