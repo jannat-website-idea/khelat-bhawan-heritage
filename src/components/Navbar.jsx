@@ -50,14 +50,32 @@ export default function Navbar({ lang, setLang, activeTab, setActiveTab, onOpenB
             <Globe2 aria-hidden="true" />
             <span>{lang === 'en' ? 'বাংলা' : 'EN'}</span>
           </button>
-          <button className="heritage-menu" onClick={() => setMobileMenuOpen((open) => !open)} aria-label="Toggle navigation" aria-expanded={mobileMenuOpen}>
-            {mobileMenuOpen ? <X /> : <Menu />}
+          <button 
+            className="heritage-menu-btn" 
+            onClick={() => setMobileMenuOpen((open) => !open)} 
+            aria-label="Toggle navigation menu" 
+            aria-expanded={mobileMenuOpen}
+          >
+            {mobileMenuOpen ? <X className="w-3.5 h-3.5" /> : <Menu className="w-3.5 h-3.5" />}
+            <span>{mobileMenuOpen ? (lang === 'bn' ? 'বন্ধ' : 'CLOSE') : (lang === 'bn' ? 'মেনু' : 'MENU')}</span>
           </button>
         </div>
       </div>
 
       {mobileMenuOpen && (
         <div className="heritage-nav__drawer">
+          <div className="heritage-nav__drawer-top">
+            <span className="heritage-nav__drawer-title">
+              {lang === 'bn' ? 'সূচিপত্র' : 'INDEX / MENU'}
+            </span>
+            <button
+              onClick={() => setMobileMenuOpen(false)}
+              className="heritage-nav__drawer-close"
+              aria-label="Close menu"
+            >
+              <X className="w-5 h-5" />
+            </button>
+          </div>
           <div className="heritage-nav__drawer-pattern" aria-hidden="true" />
           {navItems.map((item, index) => (
             <button key={item.id} onClick={() => navigate(item.id)} className={activeTab === item.id ? 'is-active' : ''}>
