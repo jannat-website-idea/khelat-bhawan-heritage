@@ -24,6 +24,14 @@ export default function HomePage({ lang, setActiveTab, onOpenBooking, onOpenLigh
             fetchPriority="high"
           />
           <div className="heritage-hero__wash" />
+          <div className="heritage-hero__folk-frame" aria-hidden="true">
+            <span className="heritage-hero__folk-band heritage-hero__folk-band--top" />
+            <span className="heritage-hero__folk-band heritage-hero__folk-band--right" />
+            <span className="heritage-hero__folk-band heritage-hero__folk-band--bottom" />
+            <span className="heritage-hero__folk-band heritage-hero__folk-band--left" />
+            <i className="heritage-hero__folk-corner heritage-hero__folk-corner--left" />
+            <i className="heritage-hero__folk-corner heritage-hero__folk-corner--right" />
+          </div>
           <div className="heritage-hero__corner heritage-hero__corner--left" aria-hidden="true" />
           <div className="heritage-hero__corner heritage-hero__corner--right" aria-hidden="true" />
 

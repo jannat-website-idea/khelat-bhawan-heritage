@@ -163,7 +163,7 @@ export default function TrusteesPage({ lang, setActiveTab, onOpenLightbox, conte
           <div className="trustee-lineage">
             {trusteeTimeline.map((trustee, index) => (
               <article key={trustee.period} className="trustee-lineage__item">
-                <div className="trustee-lineage__seal" aria-hidden="true">{String(index + 1).padStart(2, '0')}</div>
+                <div className="trustee-lineage__seal" aria-hidden="true"><span className="folk-rosette" /></div>
                 <div>
                   <span>{trustee.period}</span>
                   <h3>{trustee.name}</h3>

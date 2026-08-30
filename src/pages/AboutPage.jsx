@@ -75,7 +75,7 @@ export default function AboutPage({ lang, setActiveTab, onOpenLightbox, content 
                 key={idx}
                 className={`royal-family-tree__generation royal-family-tree__generation--${idx + 1}`}
               >
-                <div className="royal-family-tree__medallion"><span>{idx + 1}</span></div>
+                <div className="royal-family-tree__medallion" aria-hidden="true"><span className="folk-rosette" /></div>
                 <div className="royal-family-tree__card">
                   <span>{gen.gen} · {gen.period}</span>
                   <h4>{gen.name}</h4>
