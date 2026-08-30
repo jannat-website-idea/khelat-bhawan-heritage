@@ -78,7 +78,7 @@ export default function AboutPage({ lang, setActiveTab, onOpenLightbox, content 
                 key={idx}
                 className={`royal-family-tree__generation royal-family-tree__generation--${idx + 1}`}
               >
-                <div className="royal-family-tree__medallion" aria-hidden="true"><AlpanaMotif variant={idx % 2 === 0 ? 'flower' : 'fish'} /></div>
+                <div className="royal-family-tree__medallion" aria-hidden="true"><AlpanaMotif variant={idx % 2 === 0 ? 'kalka' : 'flower'} /></div>
                 <div className="royal-family-tree__card">
                   <span>{gen.gen} · {gen.period}</span>
                   <h4>{gen.name}</h4>

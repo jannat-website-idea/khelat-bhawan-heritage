@@ -166,7 +166,7 @@ export default function TrusteesPage({ lang, setActiveTab, onOpenLightbox, conte
             <span className="lineage-alpana-rail lineage-alpana-rail--right" aria-hidden="true" />
             {trusteeTimeline.map((trustee, index) => (
               <article key={trustee.period} className="trustee-lineage__item">
-                <div className="trustee-lineage__seal" aria-hidden="true"><AlpanaMotif variant={index % 2 === 0 ? 'flower' : 'fish'} /></div>
+                <div className="trustee-lineage__seal" aria-hidden="true"><AlpanaMotif variant={index % 2 === 0 ? 'kalka' : 'flower'} /></div>
                 <div>
                   <span>{trustee.period}</span>
                   <h3>{trustee.name}</h3>
