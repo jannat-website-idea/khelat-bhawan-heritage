@@ -32,10 +32,12 @@ export default function App() {
   // Sync hash routing so users can link directly to #gallery, #about, #timeline, etc.
   useEffect(() => {
     const handleHash = () => {
-      const hash = window.location.hash.replace('#', '');
+      const rawHash = window.location.hash.replace(/^#\/?/, '').trim().toLowerCase();
       const validTabs = ['home', 'heritage', 'timeline', 'founder', 'trustees', 'gallery', 'rental', 'contact'];
-      if (validTabs.includes(hash)) {
-        setActiveTab(hash);
+      if (!rawHash || rawHash === 'home') {
+        setActiveTab('home');
+      } else if (validTabs.includes(rawHash)) {
+        setActiveTab(rawHash);
       }
     };
 
@@ -44,12 +46,33 @@ export default function App() {
     return () => window.removeEventListener('hashchange', handleHash);
   }, []);
 
-  // Update hash when activeTab changes
+  // Update hash and reset scroll when activeTab changes
   const handleTabChange = (tab) => {
     setActiveTab(tab);
-    window.location.hash = tab === 'home' ? '' : tab;
-    window.scrollTo({ top: 0, behavior: 'smooth' });
+    if (tab === 'home') {
+      if (window.location.hash && window.location.hash !== '#' && window.location.hash !== '#home') {
+        try {
+          history.pushState('', document.title, window.location.pathname + window.location.search);
+        } catch {
+          window.location.hash = 'home';
+        }
+      }
+    } else {
+      window.location.hash = tab;
+    }
+    window.__lenis?.scrollTo(0, { immediate: true });
+    window.scrollTo({ top: 0, left: 0, behavior: 'instant' });
+    document.documentElement.scrollTop = 0;
+    document.body.scrollTop = 0;
   };
+
+  // Scroll to top whenever activeTab changes
+  useEffect(() => {
+    window.__lenis?.scrollTo(0, { immediate: true });
+    window.scrollTo({ top: 0, left: 0, behavior: 'instant' });
+    document.documentElement.scrollTop = 0;
+    document.body.scrollTop = 0;
+  }, [activeTab]);
 
   // Sync document title and html lang
   useEffect(() => {
@@ -63,6 +86,7 @@ export default function App() {
   useEffect(() => {
     if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return undefined;
     const lenis = new Lenis({ duration: 1.2, smoothWheel: true, wheelMultiplier: 0.85, touchMultiplier: 1.05 });
+    window.__lenis = lenis;
     let frame;
     const animate = (time) => {
       lenis.raf(time);
@@ -72,6 +96,7 @@ export default function App() {
     return () => {
       cancelAnimationFrame(frame);
       lenis.destroy();
+      window.__lenis = null;
     };
   }, []);
 

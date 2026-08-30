@@ -89,10 +89,11 @@ export default function Lightbox({ item, onClose, onNext, onPrev, hasNext, hasPr
         <p className="text-xs md:text-sm text-primary-foreground/85 font-body leading-relaxed">
           {item.desc}
         </p>
-        <div className="flex flex-wrap items-center justify-center gap-3 text-[11px] text-rose-gold font-body">
-          {item.date && <span>Date: {item.date}</span>}
-          {item.photographer && <span>• Credit: {item.photographer}</span>}
-        </div>
+        {item.photographer && (
+          <div className="flex flex-wrap items-center justify-center gap-3 text-[11px] text-rose-gold font-body">
+            <span>Credit: {item.photographer}</span>
+          </div>
+        )}
       </div>
     </div>
   );

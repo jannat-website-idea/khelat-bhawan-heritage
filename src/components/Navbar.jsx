@@ -26,31 +26,58 @@ export default function Navbar({ lang, setLang, activeTab, setActiveTab, onOpenB
   const navigate = (id) => {
     setActiveTab(id);
     setMobileMenuOpen(false);
-    window.scrollTo({ top: 0, behavior: 'smooth' });
+    if (window.__lenis) {
+      window.__lenis.scrollTo(0, { immediate: true });
+    }
+    window.scrollTo({ top: 0, left: 0, behavior: 'instant' });
+    document.documentElement.scrollTop = 0;
+    document.body.scrollTop = 0;
   };
 
   return (
     <header className={`heritage-nav ${activeTab === 'home' && !scrolled ? 'heritage-nav--hero' : ''} ${scrolled ? 'heritage-nav--scrolled' : ''}`}>
       <div className="heritage-nav__inner">
-        <button className="heritage-brand" onClick={() => navigate('home')} aria-label="Khelat Bhawan home">
+        <button 
+          type="button"
+          className="heritage-brand" 
+          onClick={(e) => {
+            e.preventDefault();
+            navigate('home');
+          }} 
+          aria-label="Khelat Bhawan home"
+        >
           <strong>{lang === 'bn' ? 'খেলাৎ ভবন' : 'KHELAT BHAWAN'}</strong>
           <span>{lang === 'bn' ? 'পাথুরিয়াঘাটা · প্রতিষ্ঠিত ১৮৪৫' : 'PATHURIA GHATA · EST. 1845'}</span>
         </button>
 
         <nav className="heritage-nav__links" aria-label="Primary navigation">
           {navItems.map((item) => (
-            <button key={item.id} onClick={() => navigate(item.id)} className={activeTab === item.id ? 'is-active' : ''}>
+            <button 
+              key={item.id} 
+              type="button"
+              onClick={(e) => {
+                e.preventDefault();
+                navigate(item.id);
+              }} 
+              className={activeTab === item.id ? 'is-active' : ''}
+            >
               {item.label}
             </button>
           ))}
         </nav>
 
         <div className="heritage-nav__actions">
-          <button className="heritage-language" onClick={() => setLang(lang === 'en' ? 'bn' : 'en')} aria-label="Change language">
+          <button 
+            type="button"
+            className="heritage-language" 
+            onClick={() => setLang(lang === 'en' ? 'bn' : 'en')} 
+            aria-label="Change language"
+          >
             <Globe2 aria-hidden="true" />
             <span>{lang === 'en' ? 'বাংলা' : 'EN'}</span>
           </button>
           <button 
+            type="button"
             className="heritage-menu-btn" 
             onClick={() => setMobileMenuOpen((open) => !open)} 
             aria-label="Toggle navigation menu" 
@@ -69,6 +96,7 @@ export default function Navbar({ lang, setLang, activeTab, setActiveTab, onOpenB
               {lang === 'bn' ? 'সূচিপত্র' : 'INDEX / MENU'}
             </span>
             <button
+              type="button"
               onClick={() => setMobileMenuOpen(false)}
               className="heritage-nav__drawer-close"
               aria-label="Close menu"
@@ -78,7 +106,16 @@ export default function Navbar({ lang, setLang, activeTab, setActiveTab, onOpenB
           </div>
           <div className="heritage-nav__drawer-pattern" aria-hidden="true" />
           {navItems.map((item, index) => (
-            <button key={item.id} onClick={() => navigate(item.id)} className={activeTab === item.id ? 'is-active' : ''}>
+            <button 
+              key={item.id} 
+              type="button"
+              onClick={(e) => {
+                e.preventDefault();
+                e.stopPropagation();
+                navigate(item.id);
+              }} 
+              className={activeTab === item.id ? 'is-active' : ''}
+            >
               <span>{String(index + 1).padStart(2, '0')}</span>{item.label}
             </button>
           ))}
