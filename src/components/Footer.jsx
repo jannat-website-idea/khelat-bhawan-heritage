@@ -28,10 +28,10 @@ export default function Footer({ lang, setActiveTab, onOpenBooking, content }) {
             </p>
             <div className="pt-2">
               <button
-                onClick={onOpenBooking}
+                onClick={() => handleNav('contact')}
                 className="bg-accent text-accent-foreground px-5 py-2 text-xs tracking-[0.2em] uppercase font-body font-medium hover:bg-matte-red transition-colors rounded-sm"
               >
-                {t.nav.bookCta}
+                {lang === 'bn' ? 'যোগাযোগ করুন' : 'Contact Us'}
               </button>
             </div>
           </div>

@@ -50,7 +50,6 @@ export default function Navbar({ lang, setLang, activeTab, setActiveTab, onOpenB
             <Globe2 aria-hidden="true" />
             <span>{lang === 'en' ? 'বাংলা' : 'EN'}</span>
           </button>
-          <button className="heritage-nav__book" onClick={onOpenBooking}>{t.bookCta}</button>
           <button className="heritage-menu" onClick={() => setMobileMenuOpen((open) => !open)} aria-label="Toggle navigation" aria-expanded={mobileMenuOpen}>
             {mobileMenuOpen ? <X /> : <Menu />}
           </button>
@@ -65,9 +64,6 @@ export default function Navbar({ lang, setLang, activeTab, setActiveTab, onOpenB
               <span>{String(index + 1).padStart(2, '0')}</span>{item.label}
             </button>
           ))}
-          <button className="heritage-nav__drawer-book" onClick={() => { setMobileMenuOpen(false); onOpenBooking(); }}>
-            {t.bookCta}
-          </button>
         </div>
       )}
     </header>
