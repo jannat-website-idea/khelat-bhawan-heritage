@@ -131,11 +131,6 @@ export default function GalleryPage({ lang, onOpenLightbox, content }) {
                     <p className="text-primary-foreground/75 text-xs font-body line-clamp-2 mt-1">
                       {item.desc}
                     </p>
-                    <div className="flex items-center justify-end mt-2 pt-2 border-t border-white/20 text-[11px] text-rose-gold font-body">
-                      <span className="text-primary-foreground/80 uppercase tracking-wider text-[10px] font-semibold">
-                        {lang === 'bn' ? 'পূর্ণাঙ্গ চিত্র' : 'View High-Res'}
-                      </span>
-                    </div>
                   </div>
                 </div>
               </div>
