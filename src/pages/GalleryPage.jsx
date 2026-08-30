@@ -6,12 +6,11 @@ import { getAssetUrl } from '../utils/assetHelper';
 
 export default function GalleryPage({ lang, onOpenLightbox, content }) {
   const [filter, setFilter] = useState('all');
-  const [visibleCount, setVisibleCount] = useState(24);
 
   const filterButtons = useMemo(() => [
     { 
       id: 'all', 
-      label: lang === 'bn' ? 'সব চিত্র ও ভিডিও' : 'All',
+      label: lang === 'bn' ? 'সব সংকলন' : 'All Highlights',
       count: galleryData.length
     },
     { 
@@ -31,7 +30,7 @@ export default function GalleryPage({ lang, onOpenLightbox, content }) {
     },
     { 
       id: 'wedding', 
-      label: lang === 'bn' ? 'সাবেকি বিবাহ ও ভেন্যু' : 'Heritage Weddings',
+      label: lang === 'bn' ? 'সাবেকি বিবাহ ও ভেন্যু' : 'Heritage Venue',
       count: galleryData.filter(i => i.category === 'wedding').length
     },
     { 
@@ -41,23 +40,21 @@ export default function GalleryPage({ lang, onOpenLightbox, content }) {
     },
   ], [lang]);
 
-  const filteredItems = useMemo(() => {
+  const displayedItems = useMemo(() => {
     if (filter === 'all') return galleryData;
     if (filter === 'video') return galleryData.filter(item => item.type === 'video');
     return galleryData.filter(item => item.category === filter);
   }, [filter]);
 
-  const displayedItems = filteredItems.slice(0, visibleCount);
-
   return (
     <main className="pt-32 pb-24 bg-background min-h-screen">
       <div className="container mx-auto px-6">
-        {/* Lovable Reference Style Section Header */}
+        {/* Curated Client Demo Section Header */}
         <SectionHeader
-          title={lang === 'bn' ? 'আমাদের গ্যালারি' : 'Our Gallery'}
+          title={lang === 'bn' ? 'নির্বাচিত গ্যালারি' : 'Curated Gallery'}
           subtitle={lang === 'bn' 
-            ? 'খেলাৎ ভবন রাজবাড়ির সম্পূর্ণ অফিশিয়াল আর্কাইভ — স্থাপত্য, সাবেকি পূজা, উচ্চাঙ্গ সঙ্গীত ও রাজকীয় উৎসবের ৭২টি অমূল্য চিত্র ও ভিডিও' 
-            : 'The official visual chronicle of Khelat Bhavan Rajbari — 72 high-resolution archival images and video showcasing 175+ years of living heritage'}
+            ? 'খেলাৎ ভবন রাজবাড়ির নির্বাচিত চিত্র-সংগ্রহ — ঐতিহাসিক স্থাপত্য, চিরন্তন ঐতিহ্য ও সাংস্কৃতিক পরিমণ্ডলের এক অনুপম নিদর্শন' 
+            : 'A curated visual showcase of Khelat Bhavan Rajbari — signature architectural perspectives, sacred traditions, and cultural heritage'}
         />
 
         {/* Filter Tabs matching lovable.app style */}
@@ -68,10 +65,7 @@ export default function GalleryPage({ lang, onOpenLightbox, content }) {
             return (
               <button
                 key={btn.id}
-                onClick={() => {
-                  setFilter(btn.id);
-                  setVisibleCount(24);
-                }}
+                onClick={() => setFilter(btn.id)}
                 className={`px-4 sm:px-5 py-2 text-xs tracking-widest uppercase font-body border transition-all rounded-sm flex items-center gap-2 ${
                   isActive
                     ? 'bg-primary text-primary-foreground border-primary shadow-sm font-semibold'
@@ -137,18 +131,6 @@ export default function GalleryPage({ lang, onOpenLightbox, content }) {
             );
           })}
         </div>
-
-        {/* Load More Button */}
-        {visibleCount < filteredItems.length && (
-          <div className="text-center mt-12">
-            <button
-              onClick={() => setVisibleCount(prev => prev + 24)}
-              className="border border-border text-foreground hover:border-accent hover:text-accent px-8 py-3 text-xs tracking-[0.2em] uppercase font-body font-semibold transition-colors rounded-sm bg-card"
-            >
-              {lang === 'bn' ? `আরও চিত্র দেখুন (${filteredItems.length - visibleCount}টি বাকি)` : `Load More Images (${filteredItems.length - visibleCount} remaining)`}
-            </button>
-          </div>
-        )}
       </div>
     </main>
   );
