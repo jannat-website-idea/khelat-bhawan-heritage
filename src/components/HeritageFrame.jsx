@@ -1,88 +1,130 @@
 import React from 'react';
 
-function HorizontalPattern({ position }) {
+function PatternBand({ position }) {
+  const id = `heritage-weave-${position}`;
   return (
-    <svg className={`heritage-frame__band heritage-frame__band--${position}`} viewBox="0 0 1200 44" preserveAspectRatio="none" aria-hidden="true">
+    <svg className={`heritage-frame__band heritage-frame__band--${position}`} viewBox="0 0 1400 58" preserveAspectRatio="none" aria-hidden="true">
       <defs>
-        <pattern id={`folk-band-${position}`} width="48" height="44" patternUnits="userSpaceOnUse">
-          <path d="M0 8h48M0 36h48M2 12l10 18 10-18 10 18 10-18M7 15l5 9 5-9m10 0 5 9 5-9M20 8l4 5 4-5M20 36l4-5 4 5" />
-          <circle cx="2" cy="22" r="1.6" /><circle cx="46" cy="22" r="1.6" />
+        <pattern id={id} width="64" height="58" patternUnits="userSpaceOnUse">
+          <path d="M0 8h64M0 50h64M0 16l8 25 8-25 8 25 8-25 8 25 8-25 8 25 8-25" />
+          <path d="M4 17l4 12 4-12m8 0 4 12 4-12m8 0 4 12 4-12m8 0 4 12 4-12" />
+          <path d="M4 45h56M8 9l6 6m8-6 6 6m8-6 6 6m8-6 6 6" />
+          <circle cx="4" cy="35" r="2.2" /><circle cx="20" cy="35" r="2.2" /><circle cx="36" cy="35" r="2.2" /><circle cx="52" cy="35" r="2.2" />
         </pattern>
       </defs>
-      <rect x="0" y="0" width="1200" height="44" fill={`url(#folk-band-${position})`} stroke="none" />
+      <rect width="1400" height="58" fill={`url(#${id})`} />
     </svg>
   );
 }
 
-function CornerOrnament({ corner }) {
+function Corner({ corner }) {
   return (
-    <svg className={`heritage-frame__corner heritage-frame__corner--${corner}`} viewBox="0 0 60 60" aria-hidden="true">
-      <rect x="3" y="3" width="54" height="54" />
-      <circle cx="30" cy="30" r="4" />
-      <path d="M30 26C20 21 18 13 21 7c7 3 11 9 9 19Zm4 4c5-10 13-12 19-9-3 7-9 11-19 9Zm-4 4c10 5 12 13 9 19-7-3-11-9-9-19Zm-4-4c-5 10-13 12-19 9 3-7 9-11 19-9ZM8 8l10 10M52 8 42 18M8 52l10-10m34 10L42 42" />
+    <svg className={`heritage-frame__corner heritage-frame__corner--${corner}`} viewBox="0 0 72 72" aria-hidden="true">
+      <rect x="3" y="3" width="66" height="66" />
+      <rect x="9" y="9" width="54" height="54" />
+      <circle cx="36" cy="36" r="5" className="folk-solid" />
+      <path className="folk-solid" d="M36 30C23 26 19 17 22 9c10 3 16 10 14 21Zm6 6c4-13 13-18 21-15-2 10-9 16-21 15Zm-6 6c13 4 18 13 15 21-10-2-16-9-15-21Zm-6-6c-4 13-13 18-21 15 2-10 9-16 21-15Z" />
+      <path d="M12 12l12 12M60 12 48 24M12 60l12-12m36 12L48 48" />
     </svg>
   );
 }
 
-function Bird({ transform = '' }) {
-  return <g transform={transform}><path d="M8 31c15-20 35-19 46-3 7-1 13-5 18-11-1 14-8 24-22 29-16 6-31 1-42-15Z" /><path d="M24 31c9-9 19-8 29 2-10 5-20 5-29-2Zm32-6 7-8 3 10m-42 20-3 11m15-10-1 12M17 58h11m2 2h12M12 29C6 26 3 22 2 17c8 2 14 5 18 10" /><circle cx="52" cy="26" r="1.8" /></g>;
+function Leaf({ x, y, scale = 1, flip = false }) {
+  return <g transform={`translate(${x} ${y}) scale(${flip ? -scale : scale} ${scale})`}><path className="folk-solid" d="M0 0C9-19 27-22 38-8 29 7 13 10 0 0Z" /><path className="folk-cut" d="M4-1c11-3 20-5 30-9" /></g>;
 }
 
-function Fish({ transform = '' }) {
-  return <g transform={transform}><path d="M8 31c15-24 42-26 60-4-18 24-44 25-60 4Zm60-4 13-12-2 17 2 17-13-14" /><circle cx="24" cy="28" r="2" /><path d="M31 19c7 8 7 17 0 25m8-29c8 10 8 22 0 33m8-31 9 8-8 8 8 8M18 42c8-5 17-5 27 1M18 19c9 5 18 5 27 0" /></g>;
+function Flower({ x, y, scale = 1 }) {
+  return <g transform={`translate(${x} ${y}) scale(${scale})`}><circle cx="0" cy="0" r="4" className="folk-solid" /><path className="folk-solid" d="M0-5c-9-7-9-15 0-22 9 7 9 15 0 22Zm5 5c7-9 15-9 22 0-7 9-15 9-22 0Zm-5 5c9 7 9 15 0 22-9-7-9-15 0-22Zm-5-5c-7 9-15 9-22 0 7-9 15-9 22 0Z" /></g>;
 }
 
-function Drum({ transform = '' }) {
-  return <g transform={transform}><ellipse cx="38" cy="12" rx="24" ry="8" /><path d="M14 12 20 62c11 7 24 7 36 0l6-50M20 62c12-5 24-5 36 0M20 18l36 38m-34-2 33-35M31 18l-6 39m19-39 7 39" /><ellipse cx="38" cy="12" rx="12" ry="4" /></g>;
-}
-
-function Kalash({ transform = '' }) {
-  return <g transform={transform}><path d="M24 19h31m-28 0c-8 15-6 32 4 46h17c10-14 12-31 4-46M30 65h20M28 29h25M29 48h22M38 17c-6-10-5-16 2-20 5 8 4 15-2 20Zm4 0c5-10 11-13 18-10-2 7-8 11-18 10Zm-7 0c-5-9-11-12-17-8 3 6 8 9 17 8Zm-3 20 7-5 8 5-8 6-7-6Z" /></g>;
-}
-
-function FloralSprig({ transform = '' }) {
-  return <g transform={transform}><path d="M36 112C27 85 31 55 38 8M35 92C23 84 16 74 13 62c12 2 20 10 22 23m1-13c13-7 21-17 24-30-13 3-21 11-24 24m1-17c-9-6-15-14-17-24 10 2 16 8 18 18m1-15c10-6 16-14 17-24-9 2-15 8-18 18M38 8c-8-7-8-14 0-21 8 7 8 14 0 21Z" /><circle cx="13" cy="62" r="2" /><circle cx="60" cy="42" r="2" /><circle cx="20" cy="25" r="2" /></g>;
-}
-
-function Flower({ transform = '' }) {
-  return <g transform={transform}><circle cx="30" cy="30" r="4" /><path d="M30 26c-8-8-8-15 0-22 8 7 8 14 0 22Zm4 4c8-8 15-8 22 0-7 8-14 8-22 0Zm-4 4c8 8 8 15 0 22-8-7-8-14 0-22Zm-4-4c-8 8-15 8-22 0 7-8 14-8 22 0ZM12 12l8 8m28-8-8 8M12 48l8-8m28 8-8-8" /></g>;
-}
-
-function SideRail({ side }) {
-  const isLeft = side === 'left';
+function Bird({ x, y, scale = 1, flip = false }) {
   return (
-    <svg className={`heritage-frame__side-art heritage-frame__side-art--${side}`} viewBox="0 0 94 800" aria-hidden="true">
-      <path className="rail" d={isLeft ? 'M7 0v800M18 0v800M7 12l11 13L7 38l11 13L7 64l11 13L7 90l11 13L7 116' : 'M87 0v800M76 0v800M87 12 76 25l11 13-11 13 11 13-11 13 11 13-11 13'} />
-      {isLeft ? <>
-        <FloralSprig transform="translate(24 34) scale(.8)" />
-        <Bird transform="translate(21 155) scale(.82) rotate(-5 35 30)" />
-        <FloralSprig transform="translate(38 230) scale(.55)" />
-        <Drum transform="translate(18 340) scale(.78) rotate(-15 38 35)" />
-        <Flower transform="translate(35 427) scale(.52)" />
-        <Fish transform="translate(17 493) scale(.82)" />
-        <FloralSprig transform="translate(25 558) scale(.78)" />
-        <Fish transform="translate(8 680) scale(.96) rotate(3 40 30)" />
-        <Flower transform="translate(31 742) scale(.6)" />
-      </> : <>
-        <Kalash transform="translate(18 35) scale(.75)" />
-        <FloralSprig transform="translate(26 116) scale(.78)" />
-        <Bird transform="translate(13 236) scale(.88) rotate(6 35 30)" />
-        <FloralSprig transform="translate(40 310) scale(.5)" />
-        <Fish transform="translate(9 410) scale(.92)" />
-        <FloralSprig transform="translate(23 470) scale(.78)" />
-        <Drum transform="translate(20 598) scale(.72) rotate(8 38 35)" />
-        <Flower transform="translate(28 682) scale(.72)" />
-        <FloralSprig transform="translate(32 720) scale(.55)" />
-      </>}
+    <g transform={`translate(${x} ${y}) scale(${flip ? -scale : scale} ${scale})`}>
+      <path className="folk-solid" d="M2 30C18 4 48 1 64 23c10-2 19-8 27-18-1 20-10 34-30 42C36 57 14 49 2 30Z" />
+      <path className="folk-cut" d="M23 29c12-14 27-13 40 1-13 8-27 8-40-1Zm42-10 13-9 2 14M20 47l-4 15m22-12-1 15M10 28C2 24-3 17-5 8c12 3 21 9 27 17" />
+      <circle cx="62" cy="20" r="2.4" className="folk-cut-fill" />
+      <path className="folk-cut" d="M13 64h15m1 2h17" />
+    </g>
+  );
+}
+
+function Fish({ x, y, scale = 1, flip = false }) {
+  return (
+    <g transform={`translate(${x} ${y}) scale(${flip ? -scale : scale} ${scale})`}>
+      <path className="folk-solid" d="M0 30C20-1 57-4 82 25 59 58 22 60 0 30Zm82-5 20-18-4 23 4 23-20-18Z" />
+      <circle cx="23" cy="25" r="3" className="folk-cut-fill" />
+      <path className="folk-cut" d="M34 10c10 12 10 28 0 41m13-45c12 15 12 34 0 50m9-43 13 11-12 11 12 11M18 45c12-7 26-7 40 1M18 13c13 7 27 7 40 0" />
+    </g>
+  );
+}
+
+function Drum({ x, y, scale = 1, rotate = 0 }) {
+  return (
+    <g transform={`translate(${x} ${y}) rotate(${rotate}) scale(${scale})`}>
+      <path className="folk-solid" d="M6 7C8-2 57-2 60 7l-7 63c-15 9-28 9-41 0L6 7Z" />
+      <ellipse cx="33" cy="7" rx="27" ry="9" className="folk-cut-fill" />
+      <ellipse cx="33" cy="7" rx="15" ry="5" className="folk-solid" />
+      <path className="folk-cut" d="M12 19 53 61M14 61 54 18M24 18l-7 45m25-45 7 45" />
+    </g>
+  );
+}
+
+function Kalash({ x, y, scale = 1 }) {
+  return (
+    <g transform={`translate(${x} ${y}) scale(${scale})`}>
+      <path className="folk-solid" d="M7 22h57C49 42 55 61 61 77 47 89 26 89 11 77c8-20 12-38-4-55Z" />
+      <path className="folk-cut" d="M13 33h46M12 62h48M20 48l16-10 17 10-17 11-16-11Z" />
+      <path className="folk-solid" d="M32 21C21 8 24-2 35-11c8 13 8 23-3 32Zm7 0C47 5 59 2 69 8c-6 11-16 15-30 13Zm-13 0C17 7 6 4-4 11c7 10 16 13 30 10Z" />
+    </g>
+  );
+}
+
+function LeftFolkPanel() {
+  return (
+    <svg className="heritage-frame__side-art heritage-frame__side-art--left" viewBox="0 0 130 820" aria-hidden="true">
+      <path className="folk-vine" d="M91 18C43 73 91 118 53 169S82 271 42 330s35 106 2 167 21 108-3 165 10 103 48 140" />
+      <Flower x="89" y="28" scale=".7" />
+      <Leaf x="66" y="79" scale=".7" /><Leaf x="79" y="111" scale=".55" flip />
+      <Bird x="23" y="148" scale=".9" />
+      <Leaf x="48" y="247" scale=".65" flip /><Leaf x="67" y="276" scale=".56" />
+      <Drum x="25" y="325" scale="1.02" rotate="-14" />
+      <Flower x="83" y="421" scale=".47" />
+      <Fish x="16" y="463" scale=".92" />
+      <Leaf x="58" y="554" scale=".62" flip />
+      <Fish x="8" y="603" scale="1.06" />
+      <Leaf x="51" y="699" scale=".72" /><Leaf x="81" y="731" scale=".58" flip />
+      <path className="folk-botanical" d="M38 793c5-38 23-64 55-78m-49 57c-15-3-26-12-33-27 17-2 29 5 36 20m15-20c4-17 14-28 30-34 2 16-6 29-25 38" />
+    </svg>
+  );
+}
+
+function RightFolkPanel() {
+  return (
+    <svg className="heritage-frame__side-art heritage-frame__side-art--right" viewBox="0 0 130 820" aria-hidden="true">
+      <path className="folk-vine" d="M39 20c46 55 3 103 40 153s-28 100 9 161-31 104 3 163-28 107 4 165-13 104-53 139" />
+      <Kalash x="39" y="25" scale=".72" />
+      <Leaf x="74" y="129" scale=".66" flip /><Leaf x="54" y="160" scale=".5" />
+      <Bird x="103" y="199" scale=".86" flip />
+      <Leaf x="66" y="292" scale=".66" /><Flower x="43" y="337" scale=".48" />
+      <Fish x="111" y="382" scale=".92" flip />
+      <Leaf x="71" y="470" scale=".6" flip /><Leaf x="53" y="510" scale=".53" />
+      <Drum x="42" y="563" scale=".96" rotate="10" />
+      <Flower x="38" y="664" scale=".58" />
+      <Leaf x="78" y="706" scale=".7" flip />
+      <path className="folk-botanical" d="M91 798c-5-38-23-64-55-78m49 57c15-3 26-12 33-27-17-2-29 5-36 20m-15-20c-4-17-14-28-30-34-2 16 6 29 25 38" />
     </svg>
   );
 }
 
 export default function HeritageFrame() {
-  return <div className="heritage-frame" aria-hidden="true">
-    <div className="heritage-frame__outer" /><div className="heritage-frame__inner" />
-    <HorizontalPattern position="top" /><HorizontalPattern position="bottom" />
-    <SideRail side="left" /><SideRail side="right" />
-    <CornerOrnament corner="tl" /><CornerOrnament corner="tr" /><CornerOrnament corner="bl" /><CornerOrnament corner="br" />
-  </div>;
+  return (
+    <div className="heritage-frame" aria-hidden="true">
+      <div className="heritage-frame__side-panel heritage-frame__side-panel--left" />
+      <div className="heritage-frame__side-panel heritage-frame__side-panel--right" />
+      <div className="heritage-frame__outer" /><div className="heritage-frame__inner" />
+      <PatternBand position="top" /><PatternBand position="bottom" />
+      <LeftFolkPanel /><RightFolkPanel />
+      <Corner corner="tl" /><Corner corner="tr" /><Corner corner="bl" /><Corner corner="br" />
+    </div>
+  );
 }
