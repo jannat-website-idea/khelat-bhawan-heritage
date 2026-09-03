@@ -34,7 +34,7 @@ export default function RoyalHero({ lang, setActiveTab }) {
   return (
     <section className="royal-hero" aria-label={bn ? 'খেলাৎ ভবন' : 'Khelat Bhawan'}>
       <div className="royal-hero__media">
-      <img className="royal-hero__backdrop" src={getAssetUrl('/images/SDP_0344.jpg')} alt="" fetchPriority="high" />
+      <img className="royal-hero__backdrop" src={getAssetUrl('/images/SDP_0344.jpg')} alt="" fetchpriority="high" />
       {motion && <video ref={video} key={scene} className="royal-hero__film" muted playsInline autoPlay={!paused} preload="auto"
         poster={getAssetUrl('/images/SDP_0344.jpg')} aria-hidden="true"
         src={getAssetUrl(`/Videos/${scenes[scene]}.mp4`)}
