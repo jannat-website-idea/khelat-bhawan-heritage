@@ -1,5 +1,4 @@
 import React, { useState, useEffect } from 'react';
-import Lenis from 'lenis';
 import Navbar from './components/Navbar';
 import Footer from './components/Footer';
 import BookingModal from './components/BookingModal';
@@ -87,47 +86,8 @@ export default function App() {
       : `Khelat Bhawan | ${tabName}`;
   }, [lang, activeTab]);
 
-  useEffect(() => {
-    if (loading || window.matchMedia('(prefers-reduced-motion: reduce)').matches) return undefined;
-    const lenis = new Lenis({ duration: 1.2, smoothWheel: true, wheelMultiplier: 0.85, touchMultiplier: 1.05 });
-    window.__lenis = lenis;
-    let frame;
-    const animate = (time) => {
-      lenis.raf(time);
-      frame = requestAnimationFrame(animate);
-    };
-    frame = requestAnimationFrame(animate);
-    return () => {
-      cancelAnimationFrame(frame);
-      lenis.destroy();
-      window.__lenis = null;
-    };
-  }, [loading]);
-
-  useEffect(() => {
-    let observer;
-    const frame = requestAnimationFrame(() => {
-      const nodes = document.querySelectorAll('.heritage-section, .heritage-devotion > :not(.heritage-devotion__pattern), .heritage-booking__content');
-      nodes.forEach((node) => node.classList.add('heritage-reveal'));
-      observer = new IntersectionObserver((entries) => {
-        entries.forEach((entry) => {
-          if (entry.isIntersecting) {
-            entry.target.classList.add('is-visible');
-            observer.unobserve(entry.target);
-          }
-        });
-      }, { threshold: 0.08, rootMargin: '0px 0px -8% 0px' });
-      nodes.forEach((node) => observer.observe(node));
-    });
-    return () => {
-      cancelAnimationFrame(frame);
-      observer?.disconnect();
-    };
-  }, [activeTab, lang]);
-
-  // Comprehensive gallery items for lightbox navigation
-  const currentLightboxIndex = lightboxItem 
-    ? galleryData.findIndex(i => i.id === lightboxItem.id) 
+  const currentLightboxIndex = lightboxItem
+    ? galleryData.findIndex(i => i.id === lightboxItem.id)
     : -1;
 
   const handleLightboxNext = () => {
@@ -160,6 +120,7 @@ export default function App() {
       <div className="flex-grow" data-page-content>
         {activeTab === 'home' && (
           <HomePage
+            ready={!loading}
             lang={lang}
             setActiveTab={handleTabChange}
             onOpenBooking={handleOpenBooking}

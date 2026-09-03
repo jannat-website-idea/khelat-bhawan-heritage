@@ -1,12 +1,12 @@
 import React from 'react';
 import RoyalHero from '../components/RoyalHero';
-import Chronicles from '../components/Chronicles';
+import HeritageMilestones from '../components/HeritageMilestones';
 import { ArrowRight } from 'lucide-react';
 import AlpanaDivider from '../components/AlpanaDivider';
 import { getAssetUrl } from '../utils/assetHelper';
 import { galleryData } from '../data/galleryData';
 
-export default function HomePage({ lang, setActiveTab, onOpenBooking, onOpenLightbox, content }) {
+export default function HomePage({ lang, setActiveTab, onOpenBooking, onOpenLightbox, content, ready }) {
   const t = content[lang];
   const isBn = lang === 'bn';
   const milestones = t.timelinePreview.items.slice(0, 3);
@@ -16,7 +16,7 @@ export default function HomePage({ lang, setActiveTab, onOpenBooking, onOpenLigh
 
   return (
     <main className="heritage-home">
-      <RoyalHero lang={lang} setActiveTab={setActiveTab} />
+      <RoyalHero lang={lang} setActiveTab={setActiveTab} ready={ready} />
 
       <section className="royal-legacy-strip" aria-label={isBn ? 'ঐতিহ্যের পরিচয়' : 'Heritage at a glance'}>
         <div className="royal-legacy-strip__intro">
@@ -87,7 +87,7 @@ export default function HomePage({ lang, setActiveTab, onOpenBooking, onOpenLigh
         </button>
       </section>
 
-      <Chronicles lang={lang} milestones={milestones} onExplore={() => setActiveTab("timeline")} onOpenImage={openImage} />
+      <HeritageMilestones lang={lang} milestones={milestones} onExplore={() => setActiveTab('timeline')} onOpenImage={openImage} />
 
       <section className="heritage-devotion">
         <div className="heritage-devotion__pattern heritage-devotion__pattern--top" aria-hidden="true" />

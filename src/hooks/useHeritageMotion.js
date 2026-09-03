@@ -1,6 +1,8 @@
 import { useEffect } from 'react';
+import Lenis from 'lenis';
+import 'lenis/dist/lenis.css';
 
-/** Scroll-driven layers are measured in one batch and never move readable copy. */
+/** One frame clock for scroll and depth; layout is measured only when it changes. */
 export default function useHeritageMotion(route, lang, loading) {
   useEffect(() => {
     if (loading) return;
@@ -11,70 +13,83 @@ export default function useHeritageMotion(route, lang, loading) {
       if (preference.matches) return;
       const root = document.querySelector('[data-page-content]');
       if (!root) return;
-      let frame = 0;
+      const lenis = new Lenis({
+        lerp: .13, smoothWheel: true, wheelMultiplier: 1, syncTouch: false,
+        prevent: node => !!node.closest('[role="dialog"],.heritage-nav__drawer'),
+      });
+      window.__lenis = lenis;
+      let frame, needsMeasure = true, previousY = -1;
       const layers = new Map();
-      const revealed = new Set();
-      const revealObserver = new IntersectionObserver((entries) => {
-        entries.forEach(({ isIntersecting, target }) => {
-          if (isIntersecting) { target.classList.add('motion-visible'); revealObserver.unobserve(target); }
+      const reveals = new Set();
+      const observer = new IntersectionObserver(entries => {
+        entries.forEach(({target,isIntersecting}) => {
+          if (isIntersecting) { target.classList.add('is-revealed'); observer.unobserve(target); }
         });
-      }, { threshold: .06 });
-      const visibleLayers = new Set();
-      const layerObserver = new IntersectionObserver((entries) => {
-        entries.forEach(({ isIntersecting, target }) => {
-          if (isIntersecting) visibleLayers.add(target); else visibleLayers.delete(target);
-        });
-        schedule();
-      }, { rootMargin: '100px' });
-      const update = () => {
-        frame = 0;
-        const height = window.innerHeight;
-        const mobile = window.innerWidth < 768;
-        const positions = [...visibleLayers].filter(node => node.isConnected).map(node => {
-          const item = layers.get(node);
-          const box = item.container.getBoundingClientRect();
-          const ratio = Math.max(-1,Math.min(1,(height / 2 - box.top - box.height / 2) / ((height + box.height) / 2)));
-          const offset = item.hero ? Math.max(0,-box.top) * (mobile ? .1 : .22) : ratio * (mobile ? 14 : 32);
-          return [node, offset];
-        });
-        positions.forEach(([node, offset]) => node.style.setProperty('--parallax-y', `${offset.toFixed(2)}px`));
-      };
-      function schedule() { if (!frame && !document.hidden) frame = requestAnimationFrame(update); }
+      }, { threshold: .12, rootMargin: '0px 0px -4% 0px' });
       const discover = () => {
-        root.querySelectorAll('.royal-hero__media, .chronicles__image:not(:last-child) img, .heritage-story__image img, .heritage-lineage__image img, .heritage-gallery__item img, .heritage-booking > img, main .overflow-hidden > img.object-cover').forEach(node => {
+        root.querySelectorAll('.royal-hero__media,.archive-image img,.heritage-story__image img,.heritage-lineage__image img,.heritage-gallery__item img,main .overflow-hidden > img.object-cover').forEach(node => {
           if (layers.has(node) || node.getAttribute('src')?.includes('rk01')) return;
           const hero = node.classList.contains('royal-hero__media');
-          layers.set(node, { container: hero ? node.closest('.royal-hero') : node.parentElement, hero });
-          node.classList.add(hero ? 'motion-hero-layer' : 'motion-image-layer');
-          layerObserver.observe(node);
+          layers.set(node, {hero, container: hero ? node.closest('.royal-hero') : node.parentElement});
+          node.classList.add(hero ? 'depth-hero' : 'depth-image');
         });
-        root.querySelectorAll('.chronicles__chapter, main > .container > div, .royal-legacy-strip__intro, .heritage-trust-card').forEach(node => {
-          if (revealed.has(node) || node.closest('.royal-hero')) return;
-          revealed.add(node);
-          node.classList.add('motion-reveal');
-          revealObserver.observe(node);
+        root.querySelectorAll('[data-reveal],[data-line-reveal],[data-image-reveal],.heritage-story__copy,.heritage-heading-row,.heritage-lineage__copy,.heritage-booking__content,main > .container > div').forEach(node => {
+          if (reveals.has(node) || node.closest('[data-reveal],[data-image-reveal]') && !node.matches('[data-reveal],[data-image-reveal]')) return;
+          reveals.add(node);
+          node.classList.add('reveal-ready');
+          observer.observe(node);
         });
-        schedule();
+        needsMeasure = true;
       };
       discover();
-      const mutation = new MutationObserver(discover);
-      mutation.observe(root, { childList: true, subtree: true });
-      const resize = new ResizeObserver(schedule);
+      const resize = new ResizeObserver(() => { needsMeasure = true; });
       resize.observe(root);
-      window.addEventListener('scroll', schedule, { passive: true });
-      window.addEventListener('resize', schedule, { passive: true });
-      document.addEventListener('visibilitychange', schedule);
+      const mutation = new MutationObserver(discover);
+      mutation.observe(root, {childList:true,subtree:true});
+      const onResize = () => { needsMeasure = true; };
+      window.addEventListener('resize',onResize,{passive:true});
+      root.addEventListener('load',onResize,true);
+      const heroCopy = root.querySelector('.royal-hero__content');
+      const animate = time => {
+        lenis.raf(time);
+        const y = window.scrollY, height = window.innerHeight, mobile = window.innerWidth < 768;
+        if (needsMeasure) {
+          // Batch geometry reads before any composited writes.
+          layers.forEach(item => {
+            const rect = item.container.getBoundingClientRect();
+            item.top = rect.top + y; item.height = rect.height;
+          });
+          needsMeasure = false; previousY = -1;
+        }
+        if (Math.abs(y - previousY) > .05) {
+          layers.forEach((item,node) => {
+            const top = item.top - y;
+            if (top > height + 80 || top + item.height < -80) return;
+            const range = Math.min(12,item.height * .02);
+            const ratio = Math.max(-1,Math.min(1,(height/2-top-item.height/2)/(height/2+item.height/2)));
+            const offset = item.hero ? Math.max(0,-top) * (mobile ? .06 : .19) : (mobile ? 0 : ratio * range);
+            node.style.setProperty('--depth-y',offset.toFixed(2)+'px');
+            if (item.hero && heroCopy) {
+              const travel = Math.max(0,-top);
+              heroCopy.style.setProperty('--copy-y',(travel * (mobile ? .02 : .075)).toFixed(2)+'px');
+              heroCopy.style.setProperty('--copy-opacity',String(Math.max(.3,1-travel/item.height*.65)));
+            }
+          });
+          previousY = y;
+        }
+        frame = requestAnimationFrame(animate);
+      };
+      frame = requestAnimationFrame(animate);
       dispose = () => {
-        cancelAnimationFrame(frame);
-        mutation.disconnect(); resize.disconnect(); layerObserver.disconnect(); revealObserver.disconnect();
-        window.removeEventListener('scroll', schedule); window.removeEventListener('resize', schedule);
-        document.removeEventListener('visibilitychange', schedule);
-        layers.forEach((_,node) => { node.classList.remove('motion-image-layer','motion-hero-layer'); node.style.removeProperty('--parallax-y'); });
-        revealed.forEach(node => node.classList.remove('motion-reveal','motion-visible'));
+        cancelAnimationFrame(frame); resize.disconnect(); mutation.disconnect(); observer.disconnect();
+        window.removeEventListener('resize',onResize); root.removeEventListener('load',onResize,true);
+        lenis.destroy(); if (window.__lenis === lenis) window.__lenis = null;
+        layers.forEach((_,node) => { node.classList.remove('depth-hero','depth-image'); node.style.removeProperty('--depth-y'); });
+        reveals.forEach(node => node.classList.remove('reveal-ready','is-revealed'));
+        heroCopy?.style.removeProperty('--copy-y'); heroCopy?.style.removeProperty('--copy-opacity');
       };
     };
-    setup();
-    preference.addEventListener('change', setup);
-    return () => { dispose(); preference.removeEventListener('change', setup); };
-  }, [route, lang, loading]);
+    setup(); preference.addEventListener('change',setup);
+    return () => { dispose(); preference.removeEventListener('change',setup); };
+  }, [route,lang,loading]);
 }
