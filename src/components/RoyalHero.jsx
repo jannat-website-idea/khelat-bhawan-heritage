@@ -2,7 +2,8 @@ import React, { useEffect, useRef, useState } from 'react';
 import { ArrowRight, Crown, Pause, Play } from 'lucide-react';
 import { getAssetUrl } from '../utils/assetHelper';
 
-const scenes = ['hero-colonnade', 'hero-doorway', 'hero-courtyard'];
+// Architecture leads the film; the final excerpt shows the bride on the grand stairs.
+const scenes = ['hero-colonnade', 'hero-palace', 'hero-staircase'];
 
 export default function RoyalHero({ lang, setActiveTab }) {
   const bn = lang === 'bn';

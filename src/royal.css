@@ -1,6 +1,6 @@
 /* The cinematic hero and archive share the reference's editorial typography. */
 .royal-hero { position: relative; height: max(680px, calc(100svh - 70px)); margin-top: 70px; background: #140e0c; color: #f5f2df; isolation: isolate; overflow: hidden; }
-.royal-hero__media { position: absolute; inset: -9% 0; }
+.royal-hero__media { position: absolute; inset: -3% 0; }
 .motion-hero-layer { translate: 0 var(--parallax-y,0px); will-change: translate; }
 .motion-image-layer { translate: 0 var(--parallax-y,0px); scale: 1.18; will-change: translate; }
 .motion-reveal { opacity: 0; transform: translateY(36px); transition: opacity 1.1s ease,transform 1.2s cubic-bezier(.2,.65,.2,1); }
