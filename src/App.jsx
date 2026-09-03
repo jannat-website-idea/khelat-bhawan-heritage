@@ -4,6 +4,8 @@ import Navbar from './components/Navbar';
 import Footer from './components/Footer';
 import BookingModal from './components/BookingModal';
 import Lightbox from './components/Lightbox';
+import HeritageLoader from './components/HeritageLoader';
+import useHeritageMotion from './hooks/useHeritageMotion';
 
 import HomePage from './pages/HomePage';
 import AboutPage from './pages/AboutPage';
@@ -18,11 +20,13 @@ import { siteData } from './data/content';
 import { galleryData } from './data/galleryData';
 
 export default function App() {
+  const [loading, setLoading] = useState(true);
   const [lang, setLang] = useState('en');
   const [activeTab, setActiveTab] = useState('home');
   const [isBookingOpen, setIsBookingOpen] = useState(false);
   const [bookingEvent, setBookingEvent] = useState('');
   const [lightboxItem, setLightboxItem] = useState(null);
+  useHeritageMotion(activeTab, lang, loading);
 
   const handleOpenBooking = (eventName = '') => {
     setBookingEvent(typeof eventName === 'string' ? eventName : '');
@@ -84,7 +88,7 @@ export default function App() {
   }, [lang, activeTab]);
 
   useEffect(() => {
-    if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return undefined;
+    if (loading || window.matchMedia('(prefers-reduced-motion: reduce)').matches) return undefined;
     const lenis = new Lenis({ duration: 1.2, smoothWheel: true, wheelMultiplier: 0.85, touchMultiplier: 1.05 });
     window.__lenis = lenis;
     let frame;
@@ -98,7 +102,7 @@ export default function App() {
       lenis.destroy();
       window.__lenis = null;
     };
-  }, []);
+  }, [loading]);
 
   useEffect(() => {
     let observer;
@@ -139,7 +143,9 @@ export default function App() {
   };
 
   return (
-    <div className={`min-h-screen flex flex-col justify-between bg-background text-foreground ${lang === 'bn' ? 'font-bengali-text' : 'font-body'}`}>
+    <>
+    {loading && <HeritageLoader onComplete={setLoading} lang={lang} />}
+    <div inert={loading ? '' : undefined} aria-hidden={loading || undefined} className={`min-h-screen flex flex-col justify-between bg-background text-foreground ${lang === 'bn' ? 'font-bengali-text' : 'font-body'}`}>
       {/* Fixed Glass Navigation */}
       <Navbar
         lang={lang}
@@ -151,7 +157,7 @@ export default function App() {
       />
 
       {/* Main Routed Page Content */}
-      <div className="flex-grow">
+      <div className="flex-grow" data-page-content>
         {activeTab === 'home' && (
           <HomePage
             lang={lang}
@@ -254,5 +260,6 @@ export default function App() {
         hasPrev={currentLightboxIndex > 0}
       />
     </div>
+    </>
   );
 }

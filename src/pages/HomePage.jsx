@@ -1,4 +1,6 @@
 import React from 'react';
+import RoyalHero from '../components/RoyalHero';
+import Chronicles from '../components/Chronicles';
 import { ArrowRight } from 'lucide-react';
 import AlpanaDivider from '../components/AlpanaDivider';
 import { getAssetUrl } from '../utils/assetHelper';
@@ -14,51 +16,22 @@ export default function HomePage({ lang, setActiveTab, onOpenBooking, onOpenLigh
 
   return (
     <main className="heritage-home">
-      <section className="heritage-hero">
-        <div className="heritage-hero__frame">
-          <img
-            src={getAssetUrl('/images/SDP_0344.jpg')}
-            alt="Khelat Bhawan heritage façade"
-            className="heritage-hero__image"
-            loading="eager"
-            fetchPriority="high"
-          />
-          <div className="heritage-hero__wash" />
+      <RoyalHero lang={lang} setActiveTab={setActiveTab} />
 
-          <div className="heritage-hero__container">
-            <div className="heritage-hero__card">
-              <p className="heritage-hero__eyebrow">
-                {isBn ? 'প্রতিষ্ঠিত ১৮৪৫ · ৪৭ পাথুরিয়াঘাটা স্ট্রিট, কলকাতা' : 'Est. 1845 · 47 Pathuria Ghata Street, Kolkata'}
-              </p>
-              <h1>
-                {isBn ? 'এক জীবন্ত উত্তরাধিকার,' : 'A living legacy,'}
-                <em>{isBn ? '১৮৪৫ সাল থেকে সযত্নে রক্ষিত' : 'held in trust since 1845'}</em>
-              </h1>
-              <p className="heritage-hero__lead">
-                {isBn
-                  ? '১৭৫ বছরেরও বেশি সময় ধরে বাংলা সংস্কৃতি, সঙ্গীত ও ভক্তির ঐতিহ্য সংরক্ষণ করে চলেছে খেলাৎ ভবন।'
-                  : 'Khelat Bhawan—Pathuria Ghata Ghosh Bari—has preserved Bengal’s culture, music and devotion for more than 175 years.'}
-              </p>
-              <div className="heritage-hero__actions">
-                <button onClick={() => setActiveTab('trustees')} className="heritage-button heritage-button--gold">
-                  {isBn ? 'ট্রাস্টের বিস্তারিত' : 'Trustee details'}
-                </button>
-                <button onClick={() => setActiveTab('timeline')} className="heritage-button heritage-button--line">
-                  {isBn ? 'ঐতিহ্যের সময়রেখা' : 'Heritage timeline'}
-                </button>
-              </div>
-
-              <div className="heritage-hero__stats" aria-label={isBn ? 'ঐতিহ্যের মূল পরিসংখ্যান' : 'Key heritage figures'}>
-                <div><strong>175+</strong><span>{isBn ? 'বছরের ঐতিহ্য' : 'Years of heritage'}</span></div>
-                <div><strong>170+</strong><span>{isBn ? 'বছরের দুর্গাপূজা' : 'Years of Durga Puja'}</span></div>
-                <div><strong>3</strong><span>{isBn ? 'সক্রিয় ট্রাস্ট' : 'Active trusts'}</span></div>
-              </div>
-            </div>
-          </div>
+      <section className="royal-legacy-strip" aria-label={isBn ? 'ঐতিহ্যের পরিচয়' : 'Heritage at a glance'}>
+        <div className="royal-legacy-strip__intro">
+          <h2>{isBn ? 'এক জীবন্ত উত্তরাধিকার' : 'A living legacy,'}<em>{isBn ? '১৮৪৫ সাল থেকে সযত্নে রক্ষিত' : 'held in trust since 1845'}</em></h2>
+          <p>{isBn ? '১৭৫ বছরেরও বেশি সময় ধরে বাংলা সংস্কৃতি, সঙ্গীত ও ভক্তির ঐতিহ্য সংরক্ষণ করে চলেছে খেলাৎ ভবন।' : 'Khelat Bhawan—Pathuria Ghata Ghosh Bari—has preserved Bengal’s culture, music and devotion for more than 175 years.'}</p>
+          <div><button onClick={() => setActiveTab('trustees')}>{isBn ? 'ট্রাস্টের বিস্তারিত' : 'Trustee details'}<ArrowRight size={16} /></button><button onClick={() => setActiveTab('timeline')}>{isBn ? 'ঐতিহ্যের সময়রেখা' : 'Heritage timeline'}<ArrowRight size={16} /></button></div>
+        </div>
+        <div className="royal-legacy-strip__stats">
+          <div><strong>175+</strong><span>{isBn ? 'বছরের ঐতিহ্য' : 'Years of heritage'}</span></div>
+          <div><strong>170+</strong><span>{isBn ? 'বছরের দুর্গাপূজা' : 'Years of Durga Puja'}</span></div>
+          <div><strong>3</strong><span>{isBn ? 'সক্রিয় ট্রাস্ট' : 'Active trusts'}</span></div>
         </div>
       </section>
 
-      <section className="heritage-story heritage-section">
+      <section id="home-legacy" className="heritage-story heritage-section">
         <div className="heritage-story__copy">
           <p className="heritage-kicker">{isBn ? 'ঐতিহ্য ও উত্তরাধিকার' : 'Heritage & legacy'}</p>
           <h2>
@@ -114,25 +87,7 @@ export default function HomePage({ lang, setActiveTab, onOpenBooking, onOpenLigh
         </button>
       </section>
 
-      <section className="heritage-timeline-band">
-        <div className="heritage-timeline-band__motif" aria-hidden="true" />
-        <div className="heritage-section">
-          <div className="heritage-heading-row heritage-heading-row--light">
-            <div><p className="heritage-kicker">{isBn ? 'সময়ের যাত্রা' : 'Journey through time'}</p><h2>{isBn ? 'ঐতিহ্যের প্রধান অধ্যায়' : 'Defining chapters of the legacy'}</h2></div>
-            <button className="editorial-link editorial-link--light" onClick={() => setActiveTab('timeline')}>{isBn ? 'সম্পূর্ণ সময়রেখা' : 'Full heritage timeline'}<ArrowRight /></button>
-          </div>
-          <div className="heritage-timeline-preview">
-            {milestones.map((item, index) => (
-              <article key={item.year}>
-                <span>{String(index + 1).padStart(2, '0')}</span>
-                <strong>{item.year}</strong>
-                <h3>{item.title}</h3>
-                <p>{item.desc}</p>
-              </article>
-            ))}
-          </div>
-        </div>
-      </section>
+      <Chronicles lang={lang} milestones={milestones} onExplore={() => setActiveTab("timeline")} onOpenImage={openImage} />
 
       <section className="heritage-devotion">
         <div className="heritage-devotion__pattern heritage-devotion__pattern--top" aria-hidden="true" />
