@@ -10,7 +10,7 @@ export default function HeritageLoader({ onComplete, lang }) {
     let disposed = false, assetsReady = false, frame, exitTimer;
     const start = performance.now();
     const reduced = matchMedia('(prefers-reduced-motion: reduce)').matches;
-    const duration = reduced ? 350 : 3800;
+    const duration = reduced ? 350 : 6500;
     const previousOverflow = document.body.style.overflow;
     document.body.style.overflow = 'hidden';
     dialog.current?.focus({ preventScroll: true });
@@ -23,9 +23,9 @@ export default function HeritageLoader({ onComplete, lang }) {
       const elapsed = now - start;
       const sequence = Math.min(1, elapsed / duration);
       const value = Math.floor((sequence * sequence * (3 - 2 * sequence)) * 100);
-      const canOpen = assetsReady || elapsed > 6000;
+      const canOpen = assetsReady || elapsed > 9000;
       setProgress(canOpen ? value : Math.min(value, 96));
-      if (sequence >= 1 && canOpen) { setLeaving(true); exitTimer = setTimeout(() => onComplete(false), reduced ? 0 : 900); }
+      if (sequence >= 1 && canOpen) { setLeaving(true); exitTimer = setTimeout(() => onComplete(false), reduced ? 0 : 1100); }
       else frame = requestAnimationFrame(tick);
     };
     frame = requestAnimationFrame(tick);
@@ -39,9 +39,9 @@ export default function HeritageLoader({ onComplete, lang }) {
     }
   }}>
     <div className="palace-entrance__shutter palace-entrance__shutter--left" aria-hidden="true" /><div className="palace-entrance__shutter palace-entrance__shutter--right" aria-hidden="true" />
+    <div className="palace-entrance__portrait" aria-hidden="true"><img src={getAssetUrl('/images/SDP_0291.jpg')} alt="" /></div>
     <header><span>{bn ? 'খেলাৎ ভবন' : 'Khelat Bhawan'}</span><span>{bn ? 'কলকাতা · ১৮৪৫' : 'Kolkata · 1845'}</span></header>
     <div className="palace-entrance__composition">
-      <div className="palace-entrance__portrait"><img src={getAssetUrl('/images/SDP_0291.jpg')} alt="" /></div>
       <p className="palace-entrance__label">{bn ? 'পাথুরিয়াঘাটা ঘোষ বাড়ি' : 'Pathuria Ghata Ghosh Bari'}</p>
       <h2 id="loading-title">{bn ? 'খেলাৎ' : 'Khelat'}<em>{bn ? 'ভবন' : 'Bhawan'}</em></h2>
       <span className="palace-entrance__caption">{bn ? 'এক জীবন্ত উত্তরাধিকার' : 'A living legacy'}</span>
