@@ -31,21 +31,8 @@ export default function HeritageLoader({ onComplete, lang }) {
     frame = requestAnimationFrame(tick);
     return () => { disposed = true; cancelAnimationFrame(frame); clearTimeout(exitTimer); photo.onload = photo.onerror = null; document.body.style.overflow = previousOverflow; };
   }, [onComplete]);
-  return <div ref={dialog} tabIndex={-1} className={`palace-entrance ${leaving ? 'is-leaving' : ''}`} role="dialog" aria-modal="true" aria-labelledby="loading-title" onKeyDown={(event) => {
-    if (event.key === 'Escape') onComplete(false);
-    if (event.key === 'Tab') {
-      event.preventDefault();
-      dialog.current?.querySelector('button')?.focus();
-    }
-  }}>
-    <div className="palace-entrance__shutter palace-entrance__shutter--left" aria-hidden="true" /><div className="palace-entrance__shutter palace-entrance__shutter--right" aria-hidden="true" />
+  return <div ref={dialog} tabIndex={-1} className={`palace-entrance ${leaving ? 'is-leaving' : ''}`} role="status" aria-label={bn ? 'খেলাৎ ভবন লোড হচ্ছে' : 'Loading Khelat Bhawan'}>
     <div className="palace-entrance__portrait" aria-hidden="true"><img src={getAssetUrl('/images/SDP_0291.jpg')} alt="" /></div>
-    <header><span>{bn ? 'খেলাৎ ভবন' : 'Khelat Bhawan'}</span><span>{bn ? 'কলকাতা · ১৮৪৫' : 'Kolkata · 1845'}</span></header>
-    <div className="palace-entrance__composition">
-      <p className="palace-entrance__label">{bn ? 'পাথুরিয়াঘাটা ঘোষ বাড়ি' : 'Pathuria Ghata Ghosh Bari'}</p>
-      <h2 id="loading-title">{bn ? 'খেলাৎ' : 'Khelat'}<em>{bn ? 'ভবন' : 'Bhawan'}</em></h2>
-      <span className="palace-entrance__caption">{bn ? 'এক জীবন্ত উত্তরাধিকার' : 'A living legacy'}</span>
-    </div>
-    <footer><div className="palace-entrance__progress"><div><span>{bn ? 'স্বাগতম' : 'Entering the house'}</span><output aria-hidden="true">{String(progress).padStart(2,'0')}<small>%</small></output></div><progress aria-label={bn ? 'প্রবেশের অগ্রগতি' : 'Entrance sequence progress'} value={progress} max="100" /></div><button onClick={() => onComplete(false)}>{bn ? 'সরাসরি প্রবেশ করুন' : 'Skip introduction'}</button></footer>
+    <footer><div className="palace-entrance__progress"><div><output aria-hidden="true">{String(progress).padStart(2,'0')}<small>%</small></output></div><progress aria-label={bn ? 'প্রবেশের অগ্রগতি' : 'Entrance sequence progress'} value={progress} max="100" /></div></footer>
   </div>;
 }
