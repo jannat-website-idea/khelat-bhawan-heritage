@@ -32,6 +32,8 @@ export default function HeritageLoader({ onComplete, lang }) {
     return () => { disposed = true; cancelAnimationFrame(frame); clearTimeout(exitTimer); photo.onload = photo.onerror = null; document.body.style.overflow = previousOverflow; };
   }, [onComplete]);
   return <div ref={dialog} tabIndex={-1} className={`palace-entrance ${leaving ? 'is-leaving' : ''}`} role="status" aria-label={bn ? 'খেলাৎ ভবন লোড হচ্ছে' : 'Loading Khelat Bhawan'}>
+    <div className="palace-entrance__shutter palace-entrance__shutter--left" aria-hidden="true" />
+    <div className="palace-entrance__shutter palace-entrance__shutter--right" aria-hidden="true" />
     <div className="palace-entrance__portrait" aria-hidden="true"><img src={getAssetUrl('/images/SDP_0291.jpg')} alt="" /></div>
     <footer><div className="palace-entrance__progress"><div><output aria-hidden="true">{String(progress).padStart(2,'0')}<small>%</small></output></div><progress aria-label={bn ? 'প্রবেশের অগ্রগতি' : 'Entrance sequence progress'} value={progress} max="100" /></div></footer>
   </div>;

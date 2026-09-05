@@ -4,6 +4,9 @@ import { getAssetUrl } from '../utils/assetHelper';
 
 export default function HeritageMilestones({ lang, milestones, onExplore, onOpenImage }) {
   const bn = lang === 'bn';
+  const watermarkWords = bn
+    ? ['সূচনা', 'ভক্তি', 'আশীর্বাদ']
+    : ['ORIGINS', 'DEVOTION', 'BLESSING'];
   return <section className="heritage-archive" aria-labelledby="archive-heading">
     <header className="heritage-archive__heading">
       <p className="archive-label" data-reveal>{bn ? 'সময়ের যাত্রা' : 'Journey through time'}</p>
@@ -14,7 +17,7 @@ export default function HeritageMilestones({ lang, milestones, onExplore, onOpen
     </header>
     <div className="heritage-archive__spread">
       {milestones.map((item, index) => <article className={`archive-entry archive-entry--${index + 1}`} key={item.year}>
-        <span className="archive-entry__watermark" aria-hidden="true">{bn ? 'উত্তরাধিকার' : 'HERITAGE'}</span>
+        <span className="archive-entry__watermark" aria-hidden="true">{watermarkWords[index] || (bn ? 'ঐতিহ্য' : 'LEGACY')}</span>
         <figure className="archive-entry__figure">
           <button className="archive-image" data-image-reveal onClick={() => onOpenImage(item.image, item.title, item.desc)} aria-label={bn ? `${item.title} — ছবি দেখুন` : `View image: ${item.title}`}>
             <img src={getAssetUrl(item.image)} alt={item.title} loading="lazy" />
