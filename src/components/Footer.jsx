@@ -63,6 +63,9 @@ export default function Footer({ lang, setActiveTab, onOpenBooking, content }) {
               <button onClick={() => handleNav('rental')} className="text-left hover:text-rose-gold transition-colors">
                 {t.nav.rental}
               </button>
+              <button onClick={() => handleNav('feedback')} className="text-left hover:text-rose-gold transition-colors">
+                {t.nav.feedback || (lang === 'bn' ? 'মতামত ও পর্যালোচনা' : 'Reviews & Feedback')}
+              </button>
               <button onClick={() => handleNav('contact')} className="text-left hover:text-rose-gold transition-colors">
                 {t.nav.contact}
               </button>

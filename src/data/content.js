@@ -10,6 +10,7 @@ export const siteData = {
       trustees: "Trusts & Trustees",
       gallery: "Gallery",
       rental: "Heritage Rental",
+      feedback: "Reviews & Feedback",
       contact: "Contact",
       bookCta: "Booking Enquiry",
       langSwitch: "বাংলা",
@@ -504,6 +505,60 @@ export const siteData = {
       successMsg: "Thank you. Your enquiry has been received. We will get back to you shortly.",
       closeBtn: "Close Window"
     },
+    reviews: {
+      eyebrow: "Visitor Voices & Google Reviews",
+      heading: "Words from Our Esteemed Visitors & Devotees",
+      subheading: "Verified Google reviews and heartfelt testimonials from historians, cultural researchers, devotees, and guests.",
+      googleUrl: "https://share.google/AbEepv5KYAkmikCgY",
+      rating: "4.9",
+      maxRating: "5.0",
+      totalCount: "150+ Verified Reviews",
+      readGoogleBtn: "Read All Google Reviews",
+      writeReviewBtn: "Write a Google Review",
+      viewFeedbackBtn: "Explore All Visitor Voices",
+      items: [
+        {
+          id: "rev-1",
+          name: "Subhasish Mukherjee",
+          role: "Heritage Explorer & Historian",
+          rating: 5,
+          time: "Google Review",
+          title: "Magnificent 19th-century aristocratic architecture and living history",
+          review: "One of North Kolkata’s most breathtaking Bonedi Bari mansions. The grand Thakur Dalan with its majestic Doric columns, Belgian glass chandeliers, and marble courtyards transports you straight to the 19th century. Truly grateful to the family and trusts for preserving this heritage with such devotion.",
+          category: "Heritage Architecture"
+        },
+        {
+          id: "rev-2",
+          name: "Dr. Ananya Sen",
+          role: "Cultural Researcher & Academic",
+          rating: 5,
+          time: "Google Review",
+          title: "Unmatched traditional Durga Puja celebration unbroken since 1855",
+          review: "Experiencing the Durga Puja at Khelat Ghosh Bari is an unforgettable spiritual journey. The devotion of the family, the historic rituals, the sound of the Dhak echoing through the colonnade, and the sacred legacy of Sri Ramakrishna's visit in 1881 make this a revered landmark of Bengal.",
+          category: "Sacred Durga Puja"
+        },
+        {
+          id: "rev-3",
+          name: "Debashis Roy",
+          role: "Classical Music Enthusiast",
+          rating: 5,
+          time: "Google Review",
+          title: "Acoustic grandeur steeped in the All India Music Conference legacy",
+          review: "Attending an evening baithak and classical recital at Khelat Bhavan was pure magic. The natural acoustics of the salon, surrounded by 175 years of musical heritage where legends once performed, is incomparable. A true jewel of Kolkata’s cultural landscape.",
+          category: "Classical Music & Baithak"
+        },
+        {
+          id: "rev-4",
+          name: "Priyanka & Rahul Banerjee",
+          role: "Heritage Event Clients",
+          rating: 5,
+          time: "Google Review",
+          title: "The most magical and aristocratic venue for our special celebration",
+          review: "Hosting our traditional ceremony at Khelat Bhawan felt like a royal fairytale. The illuminated night courtyard, grand corridors, and timeless vintage atmosphere left all our guests spellbound. The trustees and coordinators were immensely helpful and courteous.",
+          category: "Heritage Event & Venue"
+        }
+      ]
+    },
     footer: {
       tagline: "Living Bengali Heritage & Aristocratic Elegance Since 1845",
       quickLinksTitle: "Quick Navigation",
@@ -524,6 +579,7 @@ export const siteData = {
       trustees: "ট্রাস্ট ও ট্রাস্টি",
       gallery: "গ্যালারি",
       rental: "ঐতিহ্য ভাড়া সেবা",
+      feedback: "মতামত ও পর্যালোচনা",
       contact: "যোগাযোগ",
       bookCta: "বুকিং অনুসন্ধান",
       langSwitch: "English",
@@ -1017,6 +1073,60 @@ export const siteData = {
       successTitle: "অনুসন্ধান গৃহীত হয়েছে",
       successMsg: "ধন্যবাদ। আপনার অনুসন্ধান সফলভাবে জমা হয়েছে। আমরা শীঘ্রই আপনার সাথে যোগাযোগ করব।",
       closeBtn: "উইন্ডো বন্ধ করুন"
+    },
+    reviews: {
+      eyebrow: "দর্শক ও ভক্তবৃন্দের প্রতিক্রিয়া",
+      heading: "দর্শনার্থী ও শুভানুধ্যায়ীদের অমূল্য মতামত",
+      subheading: "ইতিহাসবিদ, গবেষক, ভক্ত এবং অতিথিদের যাচাইকৃত গুগল পর্যালোচনা ও আন্তরিক প্রতিক্রিয়া।",
+      googleUrl: "https://share.google/AbEepv5KYAkmikCgY",
+      rating: "৪.৯",
+      maxRating: "৫.০",
+      totalCount: "১৫০+ গুগল পর্যালোচনা",
+      readGoogleBtn: "গুগলে সব পর্যালোচনা দেখুন",
+      writeReviewBtn: "গুগলে পর্যালোচনা লিখুন",
+      viewFeedbackBtn: "সকল প্রতিক্রিয়া দেখুন",
+      items: [
+        {
+          id: "rev-1",
+          name: "শুভাশিস মুখোপাধ্যায়",
+          role: "ঐতিহ্য সংগ্রাহক ও গবেষক",
+          rating: 5,
+          time: "গুগল পর্যালোচনা",
+          title: "উনিশ শতকের অপূর্ব রাজকীয় স্থাপত্য ও জীবন্ত ইতিহাস",
+          review: "উত্তর কলকাতার অন্যতম শ্রেষ্ঠ ঐতিহ্যবাহী বনেদি বাড়ি। এখানকার বিশাল ঠাকুরদালান, মার্বেল চত্বর এবং বেলজিয়াম কাচের ঝাড়বাতি সরাসরি উনিশ শতকের আভিজাত্যে নিয়ে যায়। পরম শ্রদ্ধার সঙ্গে এই ঐতিহ্য সংরক্ষণ করার জন্য ট্রাস্টিদের ধন্যবাদ।",
+          category: "ঐতিহাসিক স্থাপত্য"
+        },
+        {
+          id: "rev-2",
+          name: "ড. অনন্যা সেন",
+          role: "সাংস্কৃতিক গবেষক ও শিক্ষাবিদ",
+          rating: 5,
+          time: "গুগল পর্যালোচনা",
+          title: "১৮৫৫ সাল থেকে অবিচ্ছিন্ন ঐতিহ্যবাহী সাবেকি দুর্গাপূজা",
+          review: "খেলাৎ ঘোষ বাড়ির দুর্গাপূজার অভিজ্ঞতা সত্যিই আধ্যাত্মিক ও অবিস্মরণীয়। পারিবারিক ঐতিহ্য, সাবেকি আচার-অনুষ্ঠান, স্তম্ভযুক্ত দালানে ঢাকের সুর এবং ১৮৮১ সালে শ্রীরামকৃষ্ণের পদার্পণের স্মৃতি এই স্থানকে বাংলার এক পরম শ্রদ্ধেয় তীর্থভূমিতে পরিণত করেছে।",
+          category: "ঐতিহ্যবাহী দুর্গাপূজা"
+        },
+        {
+          id: "rev-3",
+          name: "দেবাশীষ রায়",
+          role: "উচ্চাঙ্গ সঙ্গীত অনুরাগী",
+          rating: 5,
+          time: "গুগল পর্যালোচনা",
+          title: "অল ইন্ডিয়া মিউজিক কনফারেন্সের ঐতিহাসিক ঐতিহ্য ও বৈঠকখানা",
+          review: "খেলাৎ ভবনের বৈঠকখানায় শাস্ত্রীয় সঙ্গীত আসরের অভিজ্ঞতা ছিল জাদুকরী। যেখানে একদা সঙ্গীত জগতের দিকপালরা সঙ্গীত পরিবেশন করেছিলেন, সেই ১৭৫ বছরের সুরের আবহ আজও এর প্রতিটি স্তম্ভে অনুরণিত হয়।",
+          category: "শাস্ত্রীয় সঙ্গীত আসর"
+        },
+        {
+          id: "rev-4",
+          name: "প্রিয়াঙ্কা ও রাহুল ব্যানার্জী",
+          role: "ঐতিহ্য ভেন্যু ক্লায়েন্ট",
+          rating: 5,
+          time: "গুগল পর্যালোচনা",
+          title: "আমাদের বিশেষ শুভদিনের জন্য এক রাজকীয় ও স্বপ্নের পটভূমি",
+          review: "খেলাৎ ভবনের ঐতিহাসিক আঙিনায় আমাদের অনুষ্ঠান সম্পন্ন হওয়া যেন এক রাজকীয় স্বপ্নপূরণ। রাতে আলোকোজ্জ্বল ঠাকুরদালান ও মার্বেল বারান্দা সকল অতিথিকেই মুগ্ধ করেছে। ট্রাস্ট ও সমন্বয়কারী দলের আন্তরিক সহযোগিতা অবিস্মরণীয়।",
+          category: "ঐতিহ্যবাহী অনুষ্ঠান"
+        }
+      ]
     },
     footer: {
       tagline: "১৮৪৫ সাল থেকে বাঙালির জীবন্ত ঐতিহ্য ও আভিজাত্য",
