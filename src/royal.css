@@ -88,7 +88,7 @@ html { scroll-behavior: auto; }
 .heritage-archive__footer { display: flex; justify-content: space-between; align-items: center; gap: 30px; max-width: 1100px; border-top: 1px solid #c4a35c66; margin: 110px auto 0; padding: 28px 7vw 0; font-size: 12px; letter-spacing: .14em; text-transform: uppercase; color: #d1c8ad; }
 .heritage-archive__footer button { display: inline-flex; gap: 24px; align-items: center; min-height: 44px; color: #f2ead5; }
 /* A photographic palace entrance, without a fabricated crest or monogram. */
-.palace-entrance { position: fixed; inset: 0; z-index: 200; color: #f0e7d5; display: flex; align-items: flex-end; justify-content: center; padding: 28px 4vw 7vh; overflow: hidden; outline: none; isolation: isolate; background: transparent; }
+.palace-entrance { position: fixed; inset: 0; z-index: 200; color: #f0e7d5; display: flex; flex-direction: column; padding: 28px 4vw 5vh; overflow: hidden; outline: none; isolation: isolate; background: transparent; }
 .palace-entrance__shutter { position: absolute; inset-block: 0; width: 50.1%; z-index: 1; pointer-events: none; transition: transform 1.1s cubic-bezier(.76,0,.24,1); }
 .palace-entrance__shutter::after { content: ''; position: absolute; inset: 16px; border: 1px solid #baa16d2b; }
 .palace-entrance__shutter--left { left: 0; background: linear-gradient(90deg,rgba(18,8,10,.34),rgba(38,17,21,.12)); border-right: 1px solid #baa16d20; }
@@ -96,7 +96,13 @@ html { scroll-behavior: auto; }
 .palace-entrance__portrait { position: absolute; inset: 0; z-index: -2; overflow: hidden; background: #1b1012; animation: entrance-aperture 2.4s var(--editorial-ease) both; }
 .palace-entrance__portrait::after { content: ''; position: absolute; inset: 0; background: linear-gradient(180deg,rgba(19,8,10,.26),rgba(23,9,12,.08) 42%,rgba(18,7,9,.75)),radial-gradient(ellipse at 50% 43%,transparent 20%,rgba(18,7,10,.28) 85%); }
 .palace-entrance__portrait img { width: 100%; height: 100%; object-fit: cover; object-position: center 52%; filter: saturate(.7) contrast(1.04) brightness(.76); animation: entrance-photo 7.6s var(--editorial-ease) both; }
-.palace-entrance footer { position: relative; z-index: 2; width: min(540px,82vw); transition: opacity .42s ease,translate .55s ease; }
+.palace-entrance header { position: relative; z-index: 2; display: flex; justify-content: space-between; gap: 24px; text-transform: uppercase; font-size: 11px; letter-spacing: .2em; color: #e2d3b7; }
+.palace-entrance__composition { position: relative; z-index: 2; flex: 1; display: flex; flex-direction: column; align-items: center; justify-content: center; padding: 36px 0; text-align: center; }
+.palace-entrance__label { font-size: 11px; text-transform: uppercase; letter-spacing: .3em; color: #dbc59d; margin-bottom: 24px; }
+.palace-entrance h2 { font: 400 clamp(60px,8vw,124px)/.95 'Playfair Display','Noto Serif Bengali',serif; letter-spacing: .015em; animation: entrance-type 1.8s var(--editorial-ease) both; }
+.palace-entrance h2 em { display: block; font-weight: 400; margin: .12em 0 0 .4em; color: #e2c996; }
+.palace-entrance__caption { font: italic 18px 'Playfair Display','Noto Serif Bengali',serif; color: #ccbaa1; margin-top: 34px; }
+.palace-entrance footer { position: relative; z-index: 2; width: min(760px,100%); margin: 0 auto 15px; transition: opacity .42s ease,translate .55s ease; }
 .palace-entrance__progress { width: 100%; }
 .palace-entrance__progress > div { display: flex; align-items: end; justify-content: space-between; margin-bottom: 16px; }
 .palace-entrance__progress span { font-size: 10px; text-transform: uppercase; letter-spacing: .22em; color: #c6b69a; }
@@ -110,7 +116,8 @@ html { scroll-behavior: auto; }
 .palace-entrance.is-leaving .palace-entrance__shutter--left { transform: translateX(-100%); }
 .palace-entrance.is-leaving .palace-entrance__shutter--right { transform: translateX(100%); }
 .palace-entrance.is-leaving .palace-entrance__portrait { opacity: 0; transition: opacity .9s ease .12s; }
-.palace-entrance.is-leaving footer { opacity: 0; translate: 0 10px; }
+.palace-entrance header,.palace-entrance__composition,.palace-entrance footer { transition: opacity .42s ease,translate .55s ease; }
+.palace-entrance.is-leaving header,.palace-entrance.is-leaving .palace-entrance__composition,.palace-entrance.is-leaving footer { opacity: 0; translate: 0 -10px; }
 @keyframes entrance-aperture { from { opacity: .2; clip-path: inset(7% 5%); } to { opacity: 1; clip-path: inset(0); } }
 @keyframes entrance-photo { from { transform: scale(1.08); } to { transform: scale(1.015); } }
 @keyframes entrance-type { from { opacity: 0; transform: translateY(18px); } to { opacity: 1; transform: none; } }
@@ -156,9 +163,14 @@ html { scroll-behavior: auto; }
   .archive-entry__watermark { left: 0; right: 0; bottom: 2%; font-size: clamp(72px,20vw,132px); letter-spacing: 0; }
   .heritage-archive__footer { display: block; margin: 0 7vw; padding-inline: 0; }
   .heritage-archive__footer button { margin-top: 18px; gap: 15px; text-align: left; }
-  .palace-entrance { padding: 24px 7vw 6vh; }
+  .palace-entrance { padding: 24px 7vw 5vh; }
+  .palace-entrance header { font-size: 9px; letter-spacing: .1em; }
   .palace-entrance__portrait { inset: 0; }
   .palace-entrance__portrait img { object-position: 52% center; }
+  .palace-entrance__composition { padding: 28px 0; }
+  .palace-entrance h2 { font-size: clamp(60px,18vw,90px); }
+  .palace-entrance__label { font-size: 9px; letter-spacing: .12em; }
+  .palace-entrance__caption { margin-top: 26px; font-size: 16px; }
   .palace-entrance footer { width: 100%; }
   .palace-entrance__progress { width: 100%; }
 }

@@ -35,6 +35,15 @@ export default function HeritageLoader({ onComplete, lang }) {
     <div className="palace-entrance__shutter palace-entrance__shutter--left" aria-hidden="true" />
     <div className="palace-entrance__shutter palace-entrance__shutter--right" aria-hidden="true" />
     <div className="palace-entrance__portrait" aria-hidden="true"><img src={getAssetUrl('/images/SDP_0291.jpg')} alt="" /></div>
-    <footer><div className="palace-entrance__progress"><div><output aria-hidden="true">{String(progress).padStart(2,'0')}<small>%</small></output></div><progress aria-label={bn ? 'প্রবেশের অগ্রগতি' : 'Entrance sequence progress'} value={progress} max="100" /></div></footer>
+    <header>
+      <span>{bn ? 'খেলাৎ ভবন' : 'Khelat Bhawan'}</span>
+      <span>{bn ? 'কলকাতা · ১৮৪৫' : 'Kolkata · 1845'}</span>
+    </header>
+    <div className="palace-entrance__composition">
+      <p className="palace-entrance__label">{bn ? 'পাথুরিয়াঘাটা ঘোষ বাড়ি' : 'Pathuria Ghata Ghosh Bari'}</p>
+      <h2>{bn ? 'খেলাৎ' : 'Khelat'}<em>{bn ? 'ভবন' : 'Bhawan'}</em></h2>
+      <span className="palace-entrance__caption">{bn ? 'এক জীবন্ত উত্তরাধিকার' : 'A living legacy'}</span>
+    </div>
+    <footer><div className="palace-entrance__progress"><div><span>{bn ? 'বাড়িতে প্রবেশ' : 'Entering the house'}</span><output aria-hidden="true">{String(progress).padStart(2,'0')}<small>%</small></output></div><progress aria-label={bn ? 'প্রবেশের অগ্রগতি' : 'Entrance sequence progress'} value={progress} max="100" /></div></footer>
   </div>;
 }
