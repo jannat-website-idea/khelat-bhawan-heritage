@@ -470,7 +470,9 @@ export const siteData = {
       email: "councilofculture.ghoshbari47@gmail.com",
       hoursTitle: "Visiting Hours",
       hours: "Daily: 6:00 AM – 10:00 PM (Prior appointment recommended for heritage tours & meetings)",
-      mapTitle: "Location & Heritage Map"
+      mapTitle: "Location & Heritage Map",
+      mapUrl: "https://share.google/TFFurvjijjI8QM8eg",
+      getDirectionsBtn: "Get Exact Location & Directions on Google Maps"
     },
     bookingModal: {
       title: "Booking & Heritage Enquiry",
@@ -1039,7 +1041,9 @@ export const siteData = {
       email: "councilofculture.ghoshbari47@gmail.com",
       hoursTitle: "দর্শনের সময়সীমা",
       hours: "প্রতিদিন: সকাল ৬:০০ টা – রাত ১০:০০ টা (হেরিটেজ ট্যুর ও আলোচনার জন্য পূর্বানুমতি বাঞ্ছনীয়)",
-      mapTitle: "অবস্থান ও মানচিত্র"
+      mapTitle: "অবস্থান ও মানচিত্র",
+      mapUrl: "https://share.google/TFFurvjijjI8QM8eg",
+      getDirectionsBtn: "গুগল ম্যাপে সঠিক দিকনির্দেশনা ও রুট দেখুন"
     },
     bookingModal: {
       title: "বুকিং ও ঐতিহ্য অনুসন্ধান",

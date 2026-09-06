@@ -1,9 +1,10 @@
 import React, { useState } from 'react';
-import { Phone, Mail, MapPin, Clock, Send, CheckCircle } from 'lucide-react';
+import { Phone, Mail, MapPin, Clock, Send, CheckCircle, ExternalLink } from 'lucide-react';
 import SectionHeader from '../components/SectionHeader';
 
 export default function ContactPage({ lang, content }) {
   const t = content[lang];
+  const mapUrl = t.contact.mapUrl || "https://share.google/TFFurvjijjI8QM8eg";
   const [formData, setFormData] = useState({
     name: '',
     email: '',
@@ -36,18 +37,27 @@ export default function ContactPage({ lang, content }) {
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 my-16 text-left">
           {/* Details */}
           <div className="lg:col-span-5 space-y-6">
-            <div className="bg-card p-6 rounded-sm border border-border shadow-sm space-y-2">
-              <div className="flex items-center gap-3 text-foreground font-serif font-bold text-lg">
-                <MapPin className="w-5 h-5 text-accent" />
-                <span>{t.contact.addressTitle}</span>
+            <a 
+              href={mapUrl}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="group block bg-card p-6 rounded-sm border border-border hover:border-accent shadow-sm space-y-2 transition-colors cursor-pointer"
+              aria-label="Open location on Google Maps"
+            >
+              <div className="flex items-center justify-between">
+                <div className="flex items-center gap-3 text-foreground font-serif font-bold text-lg group-hover:text-accent transition-colors">
+                  <MapPin className="w-5 h-5 text-accent" />
+                  <span>{t.contact.addressTitle}</span>
+                </div>
+                <ExternalLink className="w-4 h-4 text-muted-foreground group-hover:text-accent transition-colors" />
               </div>
               <p className="text-sm font-body text-foreground/80 pl-8 leading-relaxed">
                 {t.contact.address}
               </p>
-              <p className="text-xs text-accent font-body pl-8">
-                {t.contact.landmark}
+              <p className="text-xs text-accent font-body pl-8 font-medium">
+                {t.contact.landmark} → <span className="underline">{lang === 'bn' ? 'সরাসরি গুগল ম্যাপে রুট দেখুন' : 'Get Exact Route on Google Maps'}</span>
               </p>
-            </div>
+            </a>
 
             <div className="bg-card p-6 rounded-sm border border-border shadow-sm space-y-3">
               <div className="flex items-center gap-3 text-foreground font-serif font-bold text-lg">
@@ -99,21 +109,21 @@ export default function ContactPage({ lang, content }) {
               </p>
 
               {submitted ? (
-                <div className="py-8 text-center space-y-3">
+                <div className="p-8 rounded-sm bg-accent/10 border border-accent/30 text-center space-y-3">
                   <CheckCircle className="w-12 h-12 text-accent mx-auto" />
-                  <h4 className="font-serif text-xl font-bold text-foreground">
-                    {lang === 'bn' ? 'বার্তা গৃহীত হয়েছে' : 'Message Received'}
+                  <h4 className="font-serif text-xl font-semibold text-foreground">
+                    {lang === 'bn' ? 'আপনার বার্তা সফলভাবে গৃহীত হয়েছে!' : 'Thank you! Your message has been sent.'}
                   </h4>
                   <p className="text-xs text-muted-foreground font-body">
-                    {lang === 'bn' ? 'ধন্যবাদ। আপনার বার্তা সফলভাবে জমা হয়েছে।' : 'Thank you. Your message has been sent to the official Khelat Bhavan council desk.'}
+                    {lang === 'bn' ? 'আমরা অতি শীঘ্রই আপনার সাথে যোগাযোগ করব।' : 'Our representatives will get back to you shortly.'}
                   </p>
                 </div>
               ) : (
-                <form onSubmit={handleSubmit} className="space-y-4 font-body">
-                  <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                <form onSubmit={handleSubmit} className="space-y-4">
+                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                     <div>
                       <label className="block text-xs font-semibold uppercase tracking-wider text-foreground mb-1">
-                        Full Name *
+                        Name *
                       </label>
                       <input
                         type="text"
@@ -127,7 +137,7 @@ export default function ContactPage({ lang, content }) {
 
                     <div>
                       <label className="block text-xs font-semibold uppercase tracking-wider text-foreground mb-1">
-                        Phone Number *
+                        Phone *
                       </label>
                       <input
                         type="tel"
@@ -180,20 +190,49 @@ export default function ContactPage({ lang, content }) {
               )}
             </div>
 
-            {/* Map */}
-            <div className="bg-card p-4 rounded-sm border border-border">
-              <div className="w-full h-64 rounded-sm overflow-hidden bg-black">
+            {/* Map Card */}
+            <div className="bg-card p-5 rounded-sm border border-border shadow-sm space-y-3">
+              <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-2">
+                <div className="flex items-center gap-2 text-foreground font-serif font-bold text-base">
+                  <MapPin className="w-4 h-4 text-accent" />
+                  <span>{t.contact.mapTitle || "Location Map"}</span>
+                </div>
+                <a
+                  href={mapUrl}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="inline-flex items-center gap-1.5 text-xs text-accent font-semibold uppercase tracking-wider hover:underline"
+                >
+                  <span>{t.contact.getDirectionsBtn || "Get Directions"}</span>
+                  <ExternalLink className="w-3.5 h-3.5" />
+                </a>
+              </div>
+
+              <a
+                href={mapUrl}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="group relative block w-full h-72 rounded-sm overflow-hidden bg-black border border-border/60 hover:border-accent transition-all cursor-pointer"
+                aria-label="Open Khelat Bhawan exact location in Google Maps"
+              >
                 <iframe
                   title="Khelat Bhavan Location"
                   src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3683.743048995332!2d88.35338307598858!3d22.588725832360215!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3a0277bd2b883011%3A0x63375eec83088b90!2s47%2C%20Pathuria%20Ghata%20St%2C%20Jorasanko%2C%20Kolkata%2C%20West%20Bengal%20700006!5e0!3m2!1sen!2sin!4v1709123456789!5m2!1sen!2sin"
                   width="100%"
                   height="100%"
-                  style={{ border: 0 }}
-                  allowFullScreen=""
+                  style={{ border: 0, pointerEvents: 'none' }}
                   loading="lazy"
                   referrerPolicy="no-referrer-when-downgrade"
                 ></iframe>
-              </div>
+
+                <div className="absolute inset-0 bg-black/10 group-hover:bg-black/25 transition-colors flex items-end justify-center p-4">
+                  <span className="bg-accent text-accent-foreground px-5 py-2.5 text-xs font-semibold uppercase tracking-widest rounded-sm shadow-2xl flex items-center gap-2 group-hover:scale-105 transition-transform">
+                    <MapPin className="w-3.5 h-3.5" />
+                    <span>{t.contact.getDirectionsBtn || "Get Exact Directions"}</span>
+                    <ExternalLink className="w-3.5 h-3.5" />
+                  </span>
+                </div>
+              </a>
             </div>
           </div>
         </div>

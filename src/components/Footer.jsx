@@ -107,7 +107,15 @@ export default function Footer({ lang, setActiveTab, onOpenBooking, content }) {
             <div className="flex flex-col gap-3 text-xs font-body text-primary-foreground/70">
               <div className="flex items-start gap-2">
                 <MapPin className="w-4 h-4 text-rose-gold mt-0.5 flex-shrink-0" />
-                <span>47, Pathuria Ghata Street, Kolkata – 700006, West Bengal, India</span>
+                <a 
+                  href="https://share.google/TFFurvjijjI8QM8eg"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="hover:text-rose-gold transition-colors underline-offset-2 hover:underline"
+                  aria-label="Open Khelat Bhawan on Google Maps"
+                >
+                  47, Pathuria Ghata Street, Kolkata – 700006, West Bengal, India
+                </a>
               </div>
               <div className="flex items-center gap-2">
                 <Phone className="w-4 h-4 text-rose-gold flex-shrink-0" />

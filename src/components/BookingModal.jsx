@@ -92,7 +92,17 @@ export default function BookingModal({ isOpen, onClose, lang, content, initialEv
               <div className="p-4 bg-background rounded-sm border border-border max-w-md mx-auto text-xs text-foreground/80 space-y-1 mt-4 text-left">
                 <p><strong>Official Contact:</strong> +91 98310 93021 / +91 99031 34231</p>
                 <p><strong>Official Email:</strong> councilofculture.ghoshbari47@gmail.com</p>
-                <p><strong>Address:</strong> 47, Pathuria Ghata Street, Kolkata – 700006</p>
+                <p>
+                  <strong>Address:</strong>{' '}
+                  <a
+                    href="https://share.google/TFFurvjijjI8QM8eg"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="text-accent hover:underline inline-flex items-center gap-1"
+                  >
+                    47, Pathuria Ghata Street, Kolkata – 700006 ↗
+                  </a>
+                </p>
               </div>
 
               <div className="pt-4">
