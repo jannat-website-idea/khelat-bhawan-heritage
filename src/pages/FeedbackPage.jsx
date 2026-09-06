@@ -34,65 +34,7 @@ export default function FeedbackPage({ lang, content }) {
             : 'Authentic reflections and verified Google reviews from scholars, devotees, patrons, and guests experiencing 175+ years of living heritage.'}
         />
 
-        {/* Live Google Reviews Summary Card */}
-        <section className="mb-16 p-8 md:p-10 rounded-sm bg-gradient-to-br from-card via-card/95 to-secondary border border-border shadow-md relative overflow-hidden">
-          <div className="absolute top-0 right-0 w-64 h-64 bg-accent/5 rounded-full blur-3xl pointer-events-none" />
-          
-          <div className="flex flex-col lg:flex-row items-center justify-between gap-8 relative z-10">
-            <div className="flex flex-col sm:flex-row items-center sm:items-start gap-6 text-center sm:text-left">
-              <div className="w-20 h-20 rounded-full bg-white shadow-md border border-border flex items-center justify-center flex-shrink-0 p-3">
-                <svg className="w-12 h-12" viewBox="0 0 24 24">
-                  <path fill="#4285F4" d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z" />
-                  <path fill="#34A853" d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z" />
-                  <path fill="#FBBC05" d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.06H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.94l2.85-2.22.81-.63z" />
-                  <path fill="#EA4335" d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.06l3.66 2.84c.87-2.6 3.3-4.52 6.16-4.52z" />
-                </svg>
-              </div>
-
-              <div>
-                <div className="flex items-center justify-center sm:justify-start gap-2 mb-1">
-                  <span className="text-3xl font-serif font-bold text-foreground">{rev.rating}</span>
-                  <div className="flex items-center text-amber-500">
-                    {[...Array(5)].map((_, i) => (
-                      <Star key={i} className="w-5 h-5 fill-amber-400 text-amber-400" />
-                    ))}
-                  </div>
-                  <span className="text-xs text-muted-foreground font-body">/ {rev.maxRating}</span>
-                </div>
-                <h3 className="font-serif text-lg text-foreground font-medium">
-                  {isBn ? 'গুগল ব্যবসায়িক পর্যালোচনা — খেলাৎ ভবন পাথুরিয়াঘাটা রাজবাড়ি' : 'Google Verified Rating — Khelat Bhavan Pathuriaghata Rajbari'}
-                </h3>
-                <p className="text-xs text-muted-foreground font-body mt-0.5">
-                  {isBn ? '১৫০+ যাচাইকৃত গুগল পর্যালোচনা ও প্রত্যক্ষ ভক্তবৃন্দের মতামত' : 'Based on 150+ verified Google visitor reviews & historical accounts'}
-                </p>
-              </div>
-            </div>
-
-            <div className="flex flex-wrap items-center justify-center gap-3">
-              <a
-                href={rev.googleUrl}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="px-6 py-3 bg-accent text-accent-foreground text-xs uppercase tracking-widest font-body font-semibold rounded-sm hover:bg-matte-red transition-all shadow-sm flex items-center gap-2"
-              >
-                <span>{rev.writeReviewBtn}</span>
-                <ExternalLink className="w-3.5 h-3.5" />
-              </a>
-
-              <a
-                href={rev.googleUrl}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="px-5 py-3 border border-border bg-card text-foreground text-xs uppercase tracking-widest font-body font-semibold rounded-sm hover:border-accent hover:text-accent transition-all flex items-center gap-2"
-              >
-                <span>{rev.readGoogleBtn}</span>
-                <ExternalLink className="w-3.5 h-3.5" />
-              </a>
-            </div>
-          </div>
-        </section>
-
-        {/* 4 Best Featured Google Reviews Grid */}
+        {/* Featured Google Reviews Grid */}
         <section className="mb-20">
           <div className="text-center mb-10">
             <p className="heritage-kicker">{isBn ? 'নির্বাচিত পর্যালোচনা' : 'Featured Google Reviews'}</p>
@@ -149,7 +91,7 @@ export default function FeedbackPage({ lang, content }) {
         </section>
 
         {/* Private Feedback / Message Section */}
-        <section className="p-8 md:p-12 rounded-sm bg-card border border-border shadow-lg">
+        <section className="mb-16 p-8 md:p-12 rounded-sm bg-card border border-border shadow-lg">
           <div className="max-w-2xl mx-auto">
             <div className="text-center mb-8">
               <p className="heritage-kicker">{isBn ? 'সরাসরি মতামত' : 'Direct Message'}</p>
@@ -303,6 +245,64 @@ export default function FeedbackPage({ lang, content }) {
                 </div>
               </form>
             )}
+          </div>
+        </section>
+
+        {/* Live Google Reviews Summary Card (Moved to bottom of page) */}
+        <section className="p-8 md:p-10 rounded-sm bg-gradient-to-br from-card via-card/95 to-secondary border border-border shadow-md relative overflow-hidden">
+          <div className="absolute top-0 right-0 w-64 h-64 bg-accent/5 rounded-full blur-3xl pointer-events-none" />
+          
+          <div className="flex flex-col lg:flex-row items-center justify-between gap-8 relative z-10">
+            <div className="flex flex-col sm:flex-row items-center sm:items-start gap-6 text-center sm:text-left">
+              <div className="w-20 h-20 rounded-full bg-white shadow-md border border-border flex items-center justify-center flex-shrink-0 p-3">
+                <svg className="w-12 h-12" viewBox="0 0 24 24">
+                  <path fill="#4285F4" d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z" />
+                  <path fill="#34A853" d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z" />
+                  <path fill="#FBBC05" d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.06H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.94l2.85-2.22.81-.63z" />
+                  <path fill="#EA4335" d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.06l3.66 2.84c.87-2.6 3.3-4.52 6.16-4.52z" />
+                </svg>
+              </div>
+
+              <div>
+                <div className="flex items-center justify-center sm:justify-start gap-2 mb-1">
+                  <span className="text-3xl font-serif font-bold text-foreground">{rev.rating}</span>
+                  <div className="flex items-center text-amber-500">
+                    {[...Array(5)].map((_, i) => (
+                      <Star key={i} className="w-5 h-5 fill-amber-400 text-amber-400" />
+                    ))}
+                  </div>
+                  <span className="text-xs text-muted-foreground font-body">/ {rev.maxRating}</span>
+                </div>
+                <h3 className="font-serif text-lg text-foreground font-medium">
+                  {isBn ? 'গুগল ব্যবসায়িক পর্যালোচনা — খেলাৎ ভবন পাথুরিয়াঘাটা রাজবাড়ি' : 'Google Verified Rating — Khelat Bhavan Pathuriaghata Rajbari'}
+                </h3>
+                <p className="text-xs text-muted-foreground font-body mt-0.5">
+                  {isBn ? '১৫০+ যাচাইকৃত গুগল পর্যালোচনা ও প্রত্যক্ষ ভক্তবৃন্দের মতামত' : 'Based on 150+ verified Google visitor reviews & historical accounts'}
+                </p>
+              </div>
+            </div>
+
+            <div className="flex flex-wrap items-center justify-center gap-3">
+              <a
+                href={rev.googleUrl}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="px-6 py-3 bg-accent text-accent-foreground text-xs uppercase tracking-widest font-body font-semibold rounded-sm hover:bg-matte-red transition-all shadow-sm flex items-center gap-2"
+              >
+                <span>{rev.writeReviewBtn}</span>
+                <ExternalLink className="w-3.5 h-3.5" />
+              </a>
+
+              <a
+                href={rev.googleUrl}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="px-5 py-3 border border-border bg-card text-foreground text-xs uppercase tracking-widest font-body font-semibold rounded-sm hover:border-accent hover:text-accent transition-all flex items-center gap-2"
+              >
+                <span>{rev.readGoogleBtn}</span>
+                <ExternalLink className="w-3.5 h-3.5" />
+              </a>
+            </div>
           </div>
         </section>
       </div>

@@ -13,6 +13,22 @@ export default function Navbar({ lang, setLang, activeTab, setActiveTab, onOpenB
     return () => window.removeEventListener('scroll', onScroll);
   }, []);
 
+  // Lock body scroll when mobile menu is open
+  useEffect(() => {
+    if (mobileMenuOpen) {
+      const prevOverflow = document.body.style.overflow;
+      document.body.style.overflow = 'hidden';
+      const handleKeyDown = (e) => {
+        if (e.key === 'Escape') setMobileMenuOpen(false);
+      };
+      window.addEventListener('keydown', handleKeyDown);
+      return () => {
+        document.body.style.overflow = prevOverflow;
+        window.removeEventListener('keydown', handleKeyDown);
+      };
+    }
+  }, [mobileMenuOpen]);
+
   const navItems = [
     { id: 'home', label: t.home },
     { id: 'heritage', label: t.heritage },
@@ -20,19 +36,14 @@ export default function Navbar({ lang, setLang, activeTab, setActiveTab, onOpenB
     { id: 'founder', label: t.founder },
     { id: 'trustees', label: t.trustees },
     { id: 'gallery', label: t.gallery },
+    { id: 'rental', label: t.rental || (lang === 'bn' ? 'হেরিটেজ পরিসর' : 'Heritage Rental') },
     { id: 'feedback', label: t.feedback || (lang === 'bn' ? 'মতামত' : 'Feedback') },
     { id: 'contact', label: t.contact },
   ];
 
   const navigate = (id) => {
-    setActiveTab(id);
     setMobileMenuOpen(false);
-    if (window.__lenis) {
-      window.__lenis.scrollTo(0, { immediate: true });
-    }
-    window.scrollTo({ top: 0, left: 0, behavior: 'instant' });
-    document.documentElement.scrollTop = 0;
-    document.body.scrollTop = 0;
+    setActiveTab(id);
   };
 
   return (
@@ -91,7 +102,7 @@ export default function Navbar({ lang, setLang, activeTab, setActiveTab, onOpenB
       </div>
 
       {mobileMenuOpen && (
-        <div className="heritage-nav__drawer">
+        <div className="heritage-nav__drawer" role="dialog" aria-modal="true" aria-label="Navigation Menu">
           <div className="heritage-nav__drawer-top">
             <span className="heritage-nav__drawer-title">
               {lang === 'bn' ? 'সূচিপত্র' : 'INDEX / MENU'}
@@ -106,20 +117,23 @@ export default function Navbar({ lang, setLang, activeTab, setActiveTab, onOpenB
             </button>
           </div>
           <div className="heritage-nav__drawer-pattern" aria-hidden="true" />
-          {navItems.map((item, index) => (
-            <button 
-              key={item.id} 
-              type="button"
-              onClick={(e) => {
-                e.preventDefault();
-                e.stopPropagation();
-                navigate(item.id);
-              }} 
-              className={activeTab === item.id ? 'is-active' : ''}
-            >
-              <span>{String(index + 1).padStart(2, '0')}</span>{item.label}
-            </button>
-          ))}
+          <nav className="heritage-nav__drawer-list" aria-label="Mobile Navigation Menu">
+            {navItems.map((item, index) => (
+              <button 
+                key={item.id} 
+                type="button"
+                onClick={(e) => {
+                  e.preventDefault();
+                  e.stopPropagation();
+                  navigate(item.id);
+                }} 
+                className={activeTab === item.id ? 'is-active' : ''}
+              >
+                <span>{String(index + 1).padStart(2, '0')}</span>
+                {item.label}
+              </button>
+            ))}
+          </nav>
         </div>
       )}
     </header>

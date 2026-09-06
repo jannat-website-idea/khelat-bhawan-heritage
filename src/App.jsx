@@ -51,6 +51,21 @@ export default function App() {
     return () => window.removeEventListener('hashchange', handleHash);
   }, []);
 
+  const scrollToTop = () => {
+    if (window.__lenis) {
+      window.__lenis.scrollTo(0, { immediate: true, force: true });
+    }
+    window.scrollTo({ top: 0, left: 0, behavior: 'instant' });
+    document.documentElement.scrollTop = 0;
+    document.body.scrollTop = 0;
+    requestAnimationFrame(() => {
+      window.__lenis?.scrollTo(0, { immediate: true, force: true });
+      window.scrollTo(0, 0);
+      document.documentElement.scrollTop = 0;
+      document.body.scrollTop = 0;
+    });
+  };
+
   // Update hash and reset scroll when activeTab changes
   const handleTabChange = (tab) => {
     setActiveTab(tab);
@@ -65,18 +80,12 @@ export default function App() {
     } else {
       window.location.hash = tab;
     }
-    window.__lenis?.scrollTo(0, { immediate: true });
-    window.scrollTo({ top: 0, left: 0, behavior: 'instant' });
-    document.documentElement.scrollTop = 0;
-    document.body.scrollTop = 0;
+    scrollToTop();
   };
 
   // Scroll to top whenever activeTab changes
   useEffect(() => {
-    window.__lenis?.scrollTo(0, { immediate: true });
-    window.scrollTo({ top: 0, left: 0, behavior: 'instant' });
-    document.documentElement.scrollTop = 0;
-    document.body.scrollTop = 0;
+    scrollToTop();
   }, [activeTab]);
 
   // Sync document title and html lang
