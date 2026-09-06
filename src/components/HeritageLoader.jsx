@@ -10,32 +10,36 @@ export default function HeritageLoader({ onComplete, onReveal, lang }) {
     let disposed = false, assetsReady = false, finishing = false, frame, holdTimer, exitTimer;
     const start = performance.now();
     const reduced = matchMedia('(prefers-reduced-motion: reduce)').matches;
-    const duration = reduced ? 350 : 6500;
+    const duration = reduced ? 250 : 1500;
     const previousOverflow = document.body.style.overflow;
     document.body.style.overflow = 'hidden';
     window.scrollTo({ top: 0, left: 0, behavior: 'instant' });
+    document.documentElement.scrollTop = 0;
+    document.body.scrollTop = 0;
     dialog.current?.focus({ preventScroll: true });
     const photo = new Image();
     const photoReady = new Promise(resolve => { photo.onload = resolve; photo.onerror = resolve; });
     photo.src = getAssetUrl('/images/SDP_0291.jpg');
     Promise.all([photoReady, document.fonts?.ready || Promise.resolve()]).then(() => { if (!disposed) assetsReady = true; });
-    // Deliberately paced entrance progress, not a simulated download percentage.
+    
     const tick = (now) => {
       const elapsed = now - start;
       const sequence = Math.min(1, elapsed / duration);
       const value = Math.floor((sequence * sequence * (3 - 2 * sequence)) * 100);
-      const canOpen = assetsReady || elapsed > 9000;
-      setProgress(canOpen ? value : Math.min(value, 96));
+      const canOpen = assetsReady || elapsed > 3000;
+      setProgress(canOpen ? value : Math.min(value, 98));
       if (sequence >= 1 && canOpen && !finishing) {
         finishing = true;
         setProgress(100);
         holdTimer = setTimeout(() => {
           if (disposed) return;
           window.scrollTo({ top: 0, left: 0, behavior: 'instant' });
+          document.documentElement.scrollTop = 0;
+          document.body.scrollTop = 0;
           onReveal?.(true);
           setLeaving(true);
-          exitTimer = setTimeout(() => onComplete(false), reduced ? 0 : 1100);
-        }, reduced ? 0 : 250);
+          exitTimer = setTimeout(() => onComplete(false), reduced ? 0 : 500);
+        }, reduced ? 0 : 120);
       }
       else frame = requestAnimationFrame(tick);
     };

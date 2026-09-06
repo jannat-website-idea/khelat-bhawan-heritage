@@ -13,8 +13,8 @@ html { scroll-behavior: auto; }
 [data-image-reveal].is-revealed { clip-path: inset(0); }
 [data-image-reveal].reveal-ready img { scale: 1.055; transition: scale 1.7s var(--editorial-ease); }
 [data-image-reveal].is-revealed img { scale: 1.025; }
-.depth-image { translate: 0 var(--depth-y,0px); scale: 1.05; }
-.depth-hero { transform: translate3d(0,var(--depth-y,0px),0); will-change: transform; }
+.depth-image { transform: translate3d(0, var(--depth-y, 0px), 0) scale(1.04); will-change: transform; transition: transform 0.12s cubic-bezier(0.2, 0.7, 0.2, 1); }
+.depth-hero { transform: translate3d(0, var(--depth-y, 0px), 0); will-change: transform; }
 .royal-hero { position: relative; height: calc(100svh - 88px); min-height: 660px; margin-top: 88px; background: #152021; color: #f3efdf; isolation: isolate; overflow: hidden; opacity: 0; transform: translate3d(0,52px,0); clip-path: inset(5% 0 0); transition: opacity .9s ease .12s,transform 1.15s cubic-bezier(.22,1,.36,1),clip-path 1.15s cubic-bezier(.22,1,.36,1); will-change: transform,opacity,clip-path; }
 .royal-hero.is-entered { opacity: 1; transform: translate3d(0,0,0); clip-path: inset(0); }
 .royal-hero__media { position: absolute; inset: -2% 0; }
@@ -380,8 +380,8 @@ html { scroll-behavior: auto; }
 @media (max-width: 640px) {
   .bento-gallery {
     grid-template-columns: 1fr;
-    grid-auto-rows: 240px;
-    gap: 12px;
+    grid-auto-rows: 250px;
+    gap: 14px;
   }
   .bento-card,
   .bento-card--hero,
@@ -394,5 +394,16 @@ html { scroll-behavior: auto; }
     grid-column: span 1;
     grid-row: span 1;
     border-radius: 14px;
+  }
+  .bento-card__desc {
+    opacity: 0.9;
+    transform: translateY(0);
+    font-size: 11.5px;
+  }
+  .bento-card__title {
+    font-size: 16px;
+  }
+  .bento-card--hero .bento-card__title {
+    font-size: 18px;
   }
 }
