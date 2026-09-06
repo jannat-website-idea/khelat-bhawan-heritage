@@ -6,7 +6,8 @@ import { getAssetUrl } from '../utils/assetHelper';
 const chapters = [0, 5.6, 10.9];
 export default function RoyalHero({ lang, setActiveTab, ready }) {
   const bn = lang === 'bn';
-  const [scene, setScene] = useState(0);
+  // Open on the bride ascending the grand staircase, then continue through the palace film.
+  const [scene, setScene] = useState(2);
   const [paused, setPaused] = useState(false);
   const [motion, setMotion] = useState(false);
   const [filmReady, setFilmReady] = useState(false);
@@ -48,7 +49,7 @@ export default function RoyalHero({ lang, setActiveTab, ready }) {
     <div className="royal-hero__media">
       <img className="royal-hero__backdrop" src={getAssetUrl('/images/SDP_0344.jpg')} alt="" fetchpriority="high" />
       {motion && <video ref={video} className={`royal-hero__film ${filmReady ? 'is-ready' : ''}`} muted playsInline loop preload="auto" aria-hidden="true"
-        src={getAssetUrl('/Videos/hero-palace-film.mp4')} onLoadedData={() => { setFilmReady(true); if (scene && video.current) video.current.currentTime = chapters[scene]; }}
+        src={getAssetUrl('/Videos/hero-palace-film.mp4')} onLoadedData={() => { setFilmReady(true); if (video.current) video.current.currentTime = chapters[scene]; }}
         onTimeUpdate={(e) => { const time = e.currentTarget.currentTime; const next = time >= chapters[2] ? 2 : time >= chapters[1] ? 1 : 0; setScene(previous => previous === next ? previous : next); }}
         onError={() => setMotion(false)} />}
     </div>
