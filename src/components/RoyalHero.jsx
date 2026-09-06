@@ -54,8 +54,13 @@ export default function RoyalHero({ lang, setActiveTab, ready }) {
         onError={() => setMotion(false)} />}
     </div>
     <div className="royal-hero__shade" />
+    
+    {/* Top Right Corner Tag */}
+    <div className="royal-hero__corner-tag">
+      <span>{bn ? 'স্থাপিত ১৮৪৫' : 'ESTABLISHED 1845'}</span>
+    </div>
+
     <div className="royal-hero__content">
-      <p className="royal-hero__eyebrow">{bn ? 'প্রতিষ্ঠিত ১৮৪৫' : 'ESTABLISHED 1845'}</p>
       <h1 aria-label={bn ? 'খেলাৎ ভবন' : 'Khelat Bhawan'}><span className="reveal-line"><span>{bn ? 'খেলাৎ' : 'Khelat'}</span></span>{' '}<span className="reveal-line"><span>{bn ? 'ভবন' : 'Bhawan'}</span></span></h1>
       <p className="royal-hero__subtitle"><span>{bn ? '১৮৪৫ সাল থেকে এক জীবন্ত উত্তরাধিকার' : 'A living legacy since 1845'}</span></p>
       <button className="royal-outline-button" onClick={() => setActiveTab('heritage')}>{bn ? 'ঐতিহ্য আবিষ্কার করুন' : 'Explore heritage'}<ArrowRight size={19} aria-hidden="true" /></button>
