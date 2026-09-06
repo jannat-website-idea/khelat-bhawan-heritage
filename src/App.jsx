@@ -20,6 +20,7 @@ import { galleryData } from './data/galleryData';
 
 export default function App() {
   const [loading, setLoading] = useState(true);
+  const [homeReady, setHomeReady] = useState(false);
   const [lang, setLang] = useState('en');
   const [activeTab, setActiveTab] = useState('home');
   const [isBookingOpen, setIsBookingOpen] = useState(false);
@@ -104,7 +105,7 @@ export default function App() {
 
   return (
     <>
-    {loading && <HeritageLoader onComplete={setLoading} lang={lang} />}
+    {loading && <HeritageLoader onReveal={setHomeReady} onComplete={setLoading} lang={lang} />}
     <div inert={loading ? '' : undefined} aria-hidden={loading || undefined} className={`min-h-screen flex flex-col justify-between bg-background text-foreground ${lang === 'bn' ? 'font-bengali-text' : 'font-body'}`}>
       {/* Fixed Glass Navigation */}
       <Navbar
@@ -114,13 +115,14 @@ export default function App() {
         setActiveTab={handleTabChange}
         onOpenBooking={handleOpenBooking}
         content={siteData}
+        ready={homeReady}
       />
 
       {/* Main Routed Page Content */}
       <div className="flex-grow" data-page-content>
         {activeTab === 'home' && (
           <HomePage
-            ready={!loading}
+            ready={homeReady}
             lang={lang}
             setActiveTab={handleTabChange}
             onOpenBooking={handleOpenBooking}

@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { Globe2, Menu, X } from 'lucide-react';
 
-export default function Navbar({ lang, setLang, activeTab, setActiveTab, onOpenBooking, content }) {
+export default function Navbar({ lang, setLang, activeTab, setActiveTab, onOpenBooking, content, ready = true }) {
   const [scrolled, setScrolled] = useState(false);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const t = content[lang].nav;
@@ -35,7 +35,7 @@ export default function Navbar({ lang, setLang, activeTab, setActiveTab, onOpenB
   };
 
   return (
-    <header className={`heritage-nav ${activeTab === 'home' && !scrolled ? 'heritage-nav--hero' : ''} ${scrolled ? 'heritage-nav--scrolled' : ''}`}>
+    <header className={`heritage-nav ${activeTab === 'home' && !scrolled ? 'heritage-nav--hero' : ''} ${scrolled ? 'heritage-nav--scrolled' : ''} ${ready ? 'is-site-ready' : 'is-site-waiting'}`}>
       <div className="heritage-nav__inner">
         <button 
           type="button"

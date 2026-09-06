@@ -1,18 +1,19 @@
 import React, { useEffect, useRef, useState } from 'react';
 import { getAssetUrl } from '../utils/assetHelper';
 
-export default function HeritageLoader({ onComplete, lang }) {
+export default function HeritageLoader({ onComplete, onReveal, lang }) {
   const [progress, setProgress] = useState(0);
   const [leaving, setLeaving] = useState(false);
   const dialog = useRef(null);
   const bn = lang === 'bn';
   useEffect(() => {
-    let disposed = false, assetsReady = false, frame, exitTimer;
+    let disposed = false, assetsReady = false, finishing = false, frame, holdTimer, exitTimer;
     const start = performance.now();
     const reduced = matchMedia('(prefers-reduced-motion: reduce)').matches;
     const duration = reduced ? 350 : 6500;
     const previousOverflow = document.body.style.overflow;
     document.body.style.overflow = 'hidden';
+    window.scrollTo({ top: 0, left: 0, behavior: 'instant' });
     dialog.current?.focus({ preventScroll: true });
     const photo = new Image();
     const photoReady = new Promise(resolve => { photo.onload = resolve; photo.onerror = resolve; });
@@ -25,15 +26,23 @@ export default function HeritageLoader({ onComplete, lang }) {
       const value = Math.floor((sequence * sequence * (3 - 2 * sequence)) * 100);
       const canOpen = assetsReady || elapsed > 9000;
       setProgress(canOpen ? value : Math.min(value, 96));
-      if (sequence >= 1 && canOpen) { setLeaving(true); exitTimer = setTimeout(() => onComplete(false), reduced ? 0 : 1950); }
+      if (sequence >= 1 && canOpen && !finishing) {
+        finishing = true;
+        setProgress(100);
+        holdTimer = setTimeout(() => {
+          if (disposed) return;
+          window.scrollTo({ top: 0, left: 0, behavior: 'instant' });
+          onReveal?.(true);
+          setLeaving(true);
+          exitTimer = setTimeout(() => onComplete(false), reduced ? 0 : 1100);
+        }, reduced ? 0 : 250);
+      }
       else frame = requestAnimationFrame(tick);
     };
     frame = requestAnimationFrame(tick);
-    return () => { disposed = true; cancelAnimationFrame(frame); clearTimeout(exitTimer); photo.onload = photo.onerror = null; document.body.style.overflow = previousOverflow; };
-  }, [onComplete]);
+    return () => { disposed = true; cancelAnimationFrame(frame); clearTimeout(holdTimer); clearTimeout(exitTimer); photo.onload = photo.onerror = null; document.body.style.overflow = previousOverflow; };
+  }, [onComplete, onReveal]);
   return <div ref={dialog} tabIndex={-1} className={`palace-entrance ${leaving ? 'is-leaving' : ''}`} role="status" aria-label={bn ? 'খেলাৎ ভবন লোড হচ্ছে' : 'Loading Khelat Bhawan'}>
-    <div className="palace-entrance__shutter palace-entrance__shutter--left" aria-hidden="true"><img src={getAssetUrl('/images/SDP_0291.jpg')} alt="" /></div>
-    <div className="palace-entrance__shutter palace-entrance__shutter--right" aria-hidden="true"><img src={getAssetUrl('/images/SDP_0291.jpg')} alt="" /></div>
     <div className="palace-entrance__portrait" aria-hidden="true"><img src={getAssetUrl('/images/SDP_0291.jpg')} alt="" /></div>
     <header>
       <span>{bn ? 'খেলাৎ ভবন' : 'Khelat Bhawan'}</span>
