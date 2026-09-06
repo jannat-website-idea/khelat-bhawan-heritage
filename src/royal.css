@@ -188,6 +188,16 @@ html { scroll-behavior: auto; }
 
 /* Reviews & Testimonials System */
 .heritage-reviews { position: relative; }
+.heritage-testimonials-title {
+  font-family: var(--font-serif, 'Playfair Display', 'Cinzel', serif);
+  font-size: clamp(24px, 3.2vw, 36px);
+  font-weight: 700;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: hsl(var(--foreground));
+  margin: 0;
+  line-height: 1.15;
+}
 .heritage-reviews__google-badge { display: flex; align-items: center; }
 .heritage-google-btn { display: inline-flex; align-items: center; gap: 14px; padding: 10px 18px; border: 1px solid hsl(var(--border)); border-radius: 4px; background: hsl(var(--card)); box-shadow: 0 4px 12px rgba(0,0,0,.04); transition: transform .3s ease, border-color .3s ease, box-shadow .3s ease; }
 .heritage-google-btn:hover { border-color: hsl(var(--accent)); box-shadow: 0 8px 20px rgba(0,0,0,.08); transform: translateY(-2px); }

@@ -216,8 +216,9 @@ export default function HomePage({ lang, setActiveTab, onOpenBooking, onOpenLigh
       <section className="heritage-reviews heritage-section">
         <div className="heritage-heading-row">
           <div>
-            <p className="heritage-kicker">{t.reviews.eyebrow}</p>
-            <h2>{t.reviews.heading}</h2>
+            <h2 className="heritage-testimonials-title">
+              {isBn ? 'মতামত ও অভিজ্ঞতা' : 'TESTIMONIALS'}
+            </h2>
           </div>
           <div className="heritage-reviews__google-badge">
             <a
