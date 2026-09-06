@@ -55,7 +55,7 @@ export default function RoyalHero({ lang, setActiveTab, ready }) {
     </div>
     <div className="royal-hero__shade" />
     <div className="royal-hero__content">
-      <p className="royal-hero__eyebrow">{bn ? 'পাথুরিয়াঘাটা · প্রতিষ্ঠিত ১৮৪৫' : 'Pathuria Ghata · Established 1845'}</p>
+      <p className="royal-hero__eyebrow">{bn ? 'প্রতিষ্ঠিত ১৮৪৫' : 'ESTABLISHED 1845'}</p>
       <h1 aria-label={bn ? 'খেলাৎ ভবন' : 'Khelat Bhawan'}><span className="reveal-line"><span>{bn ? 'খেলাৎ' : 'Khelat'}</span></span>{' '}<span className="reveal-line"><span>{bn ? 'ভবন' : 'Bhawan'}</span></span></h1>
       <p className="royal-hero__subtitle"><span>{bn ? '১৮৪৫ সাল থেকে এক জীবন্ত উত্তরাধিকার' : 'A living legacy since 1845'}</span></p>
       <button className="royal-outline-button" onClick={() => setActiveTab('heritage')}>{bn ? 'ঐতিহ্য আবিষ্কার করুন' : 'Explore heritage'}<ArrowRight size={19} aria-hidden="true" /></button>
@@ -63,10 +63,7 @@ export default function RoyalHero({ lang, setActiveTab, ready }) {
     <div className="royal-hero__bottom">
       <span>{bn ? 'পাথুরিয়াঘাটা · কলকাতা' : 'Pathuria Ghata · Kolkata'}</span>
       <button className="royal-scroll" onClick={discover}>{bn ? 'আরও দেখুন' : 'Scroll'}<i aria-hidden="true" /></button>
-      <div className="royal-hero__film-controls" aria-label={bn ? 'ভিডিও নিয়ন্ত্রণ' : 'Hero film controls'}>
-        {chapters.map((_,index) => <button key={index} className={scene === index ? 'is-active' : ''} aria-label={bn ? `দৃশ্য ${index + 1}` : `Play scene ${index + 1}`} aria-pressed={scene === index} onClick={() => selectScene(index)}><span /></button>)}
-        <button aria-label={paused || !motion ? (bn ? 'ভিডিও চালান' : 'Play hero video') : (bn ? 'ভিডিও থামান' : 'Pause hero video')} onClick={() => { if (!motion) { setMotion(true); setPaused(false); } else setPaused(!paused); }}>{paused || !motion ? <Play size={15} /> : <Pause size={15} />}</button>
-      </div>
+      <span className="text-right">{bn ? 'ঐতিহাসিক রাজবাড়ি' : 'Heritage Rajbari'}</span>
     </div>
   </section>;
 }

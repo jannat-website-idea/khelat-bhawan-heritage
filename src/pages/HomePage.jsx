@@ -1,10 +1,59 @@
-import React from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import RoyalHero from '../components/RoyalHero';
 import HeritageMilestones from '../components/HeritageMilestones';
 import { ArrowRight, Star, ExternalLink, Play } from 'lucide-react';
 import AlpanaDivider from '../components/AlpanaDivider';
 import { getAssetUrl } from '../utils/assetHelper';
 import { galleryData } from '../data/galleryData';
+
+function AnimatedStat({ target, suffix = '', isBn = false, duration = 2000 }) {
+  const [count, setCount] = useState(0);
+  const ref = useRef(null);
+  const animatedRef = useRef(false);
+
+  const toBn = (n) => {
+    const bnDigits = ['০', '১', '২', '৩', '৪', '৫', '৬', '৭', '৮', '৯'];
+    return String(n).replace(/\d/g, (d) => bnDigits[d]);
+  };
+
+  useEffect(() => {
+    const node = ref.current;
+    if (!node) return;
+
+    const observer = new IntersectionObserver(([entry]) => {
+      if (entry.isIntersecting && !animatedRef.current) {
+        animatedRef.current = true;
+        const startTime = performance.now();
+
+        const step = (currentTime) => {
+          const elapsed = currentTime - startTime;
+          const progress = Math.min(elapsed / duration, 1);
+          const easeOut = 1 - Math.pow(2, -10 * progress);
+          const currentCount = Math.round(easeOut * target);
+          setCount(currentCount);
+
+          if (progress < 1) {
+            requestAnimationFrame(step);
+          } else {
+            setCount(target);
+          }
+        };
+
+        requestAnimationFrame(step);
+        observer.unobserve(node);
+      }
+    }, { threshold: 0.15 });
+
+    observer.observe(node);
+    return () => observer.disconnect();
+  }, [target, duration]);
+
+  return (
+    <strong ref={ref} className="tabular-nums">
+      {isBn ? toBn(count) : count}{suffix}
+    </strong>
+  );
+}
 
 export default function HomePage({ lang, setActiveTab, onOpenBooking, onOpenLightbox, content, ready }) {
   const t = content[lang];
@@ -25,9 +74,18 @@ export default function HomePage({ lang, setActiveTab, onOpenBooking, onOpenLigh
           <div><button onClick={() => setActiveTab('trustees')}>{isBn ? 'ট্রাস্টের বিস্তারিত' : 'Trustee details'}<ArrowRight size={16} /></button><button onClick={() => setActiveTab('timeline')}>{isBn ? 'ঐতিহ্যের সময়রেখা' : 'Heritage timeline'}<ArrowRight size={16} /></button></div>
         </div>
         <div className="royal-legacy-strip__stats">
-          <div><strong>175+</strong><span>{isBn ? 'বছরের ঐতিহ্য' : 'Years of heritage'}</span></div>
-          <div><strong>170+</strong><span>{isBn ? 'বছরের দুর্গাপূজা' : 'Years of Durga Puja'}</span></div>
-          <div><strong>3</strong><span>{isBn ? 'সক্রিয় ট্রাস্ট' : 'Active trusts'}</span></div>
+          <div>
+            <AnimatedStat target={175} suffix="+" isBn={isBn} />
+            <span>{isBn ? 'বছরের ঐতিহ্য' : 'Years of heritage'}</span>
+          </div>
+          <div>
+            <AnimatedStat target={170} suffix="+" isBn={isBn} />
+            <span>{isBn ? 'বছরের দুর্গাপূজা' : 'Years of Durga Puja'}</span>
+          </div>
+          <div>
+            <AnimatedStat target={3} suffix="" isBn={isBn} />
+            <span>{isBn ? 'সক্রিয় ট্রাস্ট' : 'Active trusts'}</span>
+          </div>
         </div>
       </section>
 
