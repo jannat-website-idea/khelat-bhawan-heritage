@@ -506,8 +506,8 @@ export const siteData = {
       closeBtn: "Close Window"
     },
     reviews: {
-      eyebrow: "Visitor Voices & Google Reviews",
-      heading: "Words from Our Esteemed Visitors & Devotees",
+      eyebrow: "Testimonials",
+      heading: "Visitor Voices & Testimonials",
       subheading: "Verified Google reviews and heartfelt testimonials from historians, cultural researchers, devotees, and guests.",
       googleUrl: "https://share.google/AbEepv5KYAkmikCgY",
       rating: "4.9",
@@ -1075,8 +1075,8 @@ export const siteData = {
       closeBtn: "উইন্ডো বন্ধ করুন"
     },
     reviews: {
-      eyebrow: "দর্শক ও ভক্তবৃন্দের প্রতিক্রিয়া",
-      heading: "দর্শনার্থী ও শুভানুধ্যায়ীদের অমূল্য মতামত",
+      eyebrow: "প্রশংসাপত্র ও মতামত",
+      heading: "দর্শনার্থী ও বিশিষ্টজনদের অভিজ্ঞতা",
       subheading: "ইতিহাসবিদ, গবেষক, ভক্ত এবং অতিথিদের যাচাইকৃত গুগল পর্যালোচনা ও আন্তরিক প্রতিক্রিয়া।",
       googleUrl: "https://share.google/AbEepv5KYAkmikCgY",
       rating: "৪.৯",

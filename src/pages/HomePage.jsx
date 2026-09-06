@@ -154,12 +154,12 @@ export default function HomePage({ lang, setActiveTab, onOpenBooking, onOpenLigh
         </div>
       </section>
 
-      {/* Verified Google Reviews & Visitor Voices Section */}
+      {/* Testimonials & Verified Google Reviews Section */}
       <section className="heritage-reviews heritage-section">
         <div className="heritage-heading-row">
           <div>
-            <p className="heritage-kicker">{isBn ? 'দর্শক ও ভক্তবৃন্দের প্রতিক্রিয়া' : 'Visitor Voices & Google Reviews'}</p>
-            <h2>{isBn ? 'দর্শনার্থী ও গবেষকদের অভিজ্ঞতা' : 'Words from our distinguished visitors'}</h2>
+            <p className="heritage-kicker">{t.reviews.eyebrow}</p>
+            <h2>{t.reviews.heading}</h2>
           </div>
           <div className="heritage-reviews__google-badge">
             <a
