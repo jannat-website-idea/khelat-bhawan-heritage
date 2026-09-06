@@ -1,7 +1,7 @@
 import React from 'react';
 import RoyalHero from '../components/RoyalHero';
 import HeritageMilestones from '../components/HeritageMilestones';
-import { ArrowRight, Star, ExternalLink } from 'lucide-react';
+import { ArrowRight, Star, ExternalLink, Play } from 'lucide-react';
 import AlpanaDivider from '../components/AlpanaDivider';
 import { getAssetUrl } from '../utils/assetHelper';
 import { galleryData } from '../data/galleryData';
@@ -10,7 +10,7 @@ export default function HomePage({ lang, setActiveTab, onOpenBooking, onOpenLigh
   const t = content[lang];
   const isBn = lang === 'bn';
   const milestones = t.timelinePreview.items.slice(0, 3);
-  const galleryPreview = galleryData.filter((item) => item.type === 'image').slice(0, 5);
+  const galleryPreview = galleryData.slice(0, 5);
 
   const openImage = (src, title, desc = '') => onOpenLightbox({ type: 'image', src, title, desc });
 
@@ -117,13 +117,40 @@ export default function HomePage({ lang, setActiveTab, onOpenBooking, onOpenLigh
           <div><p className="heritage-kicker">{isBn ? 'দৃশ্য-সংগ্রহ' : 'The visual archive'}</p><h2>{isBn ? 'স্থাপত্য, ভক্তি ও সাংস্কৃতিক জীবন' : 'Architecture, devotion & cultural life'}</h2></div>
           <button className="editorial-link" onClick={() => setActiveTab('gallery')}>{isBn ? 'সম্পূর্ণ গ্যালারি' : 'Explore the gallery'}<ArrowRight /></button>
         </div>
-        <div className="heritage-gallery__grid">
-          {galleryPreview.map((item, index) => (
-            <button key={item.id} className={`heritage-gallery__item heritage-gallery__item--${index + 1}`} onClick={() => onOpenLightbox(item)}>
-              <img src={getAssetUrl(item.src)} alt={item.title} loading="lazy" />
-              <span>{item.title}</span>
-            </button>
-          ))}
+        <div className="bento-gallery">
+          {galleryPreview.map((item, index) => {
+            const rawSrc = item.type === 'video' ? (item.poster || '/images/SDP_0344.jpg') : item.src;
+            const finalSrc = getAssetUrl(rawSrc);
+            const bentoClass = index === 0 ? 'bento-card--hero'
+              : index === 1 ? 'bento-card--top-right'
+              : index === 2 ? 'bento-card--square'
+              : index === 3 ? 'bento-card--tall'
+              : 'bento-card--wide-bottom';
+
+            return (
+              <div
+                key={item.id}
+                onClick={() => onOpenLightbox(item)}
+                className={`bento-card ${bentoClass} group`}
+              >
+                <img src={finalSrc} alt={item.title} loading="lazy" />
+                {item.type === 'video' && (
+                  <div className="absolute inset-0 flex items-center justify-center bg-black/30 group-hover:bg-black/15 transition-colors z-10">
+                    <div className="w-14 h-14 rounded-full bg-accent/90 border-2 border-white flex items-center justify-center text-white shadow-2xl group-hover:scale-110 transition-transform">
+                      <Play className="w-5 h-5 fill-current ml-0.5" />
+                    </div>
+                  </div>
+                )}
+                <div className="bento-card__badge">
+                  {item.type === 'video' ? 'VIDEO TOUR' : item.category.toUpperCase()}
+                </div>
+                <div className="bento-card__overlay">
+                  <h3 className="bento-card__title">{item.title}</h3>
+                  <p className="bento-card__desc">{item.desc}</p>
+                </div>
+              </div>
+            );
+          })}
         </div>
       </section>
 

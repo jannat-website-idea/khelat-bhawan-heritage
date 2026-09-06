@@ -9,15 +9,6 @@ export const galleryData = [
     "photographer": "Official Archive"
   },
   {
-    "id": "user-colonnade-corridor",
-    "type": "image",
-    "category": "heritage",
-    "title": "Heritage Colonnaded Corridor & Chandeliers",
-    "desc": "Sun-drenched marble corridor showcasing classic fluted columns, vintage Belgian chandeliers, and high timber-beam ceilings.",
-    "src": "/images/khelat-bhawan-colonnade-corridor.jpg",
-    "photographer": "Official Archive"
-  },
-  {
     "id": "official-video-walkthrough",
     "type": "video",
     "category": "video",
@@ -26,6 +17,24 @@ export const galleryData = [
     "src": "/Videos/khelat-bhawan-video.mp4",
     "poster": "/images/SDP_0344.jpg",
     "photographer": "Khelat Bhawan Heritage Media"
+  },
+  {
+    "id": "official-3",
+    "type": "image",
+    "category": "heritage",
+    "title": "Heritage Architecture Details",
+    "desc": "Intricate architectural details showcasing 175 years of Bengali craftsmanship",
+    "src": "/images/SDP_0282.jpg",
+    "photographer": "Architecture Documentation"
+  },
+  {
+    "id": "user-colonnade-corridor",
+    "type": "image",
+    "category": "heritage",
+    "title": "Heritage Colonnaded Corridor & Chandeliers",
+    "desc": "Sun-drenched marble corridor showcasing classic fluted columns, vintage Belgian chandeliers, and high timber-beam ceilings.",
+    "src": "/images/khelat-bhawan-colonnade-corridor.jpg",
+    "photographer": "Official Archive"
   },
   {
     "id": "official-1",
@@ -44,15 +53,6 @@ export const galleryData = [
     "desc": "Mesmerizing evening of Bengali classical music by renowned artists",
     "src": "/images/SDP_0273.jpg",
     "photographer": "Cultural Events Team"
-  },
-  {
-    "id": "official-3",
-    "type": "image",
-    "category": "heritage",
-    "title": "Heritage Architecture Details",
-    "desc": "Intricate architectural details showcasing 175 years of Bengali craftsmanship",
-    "src": "/images/SDP_0282.jpg",
-    "photographer": "Architecture Documentation"
   },
   {
     "id": "official-4",
