@@ -20,7 +20,7 @@ export default function Navbar({ lang, setLang, activeTab, setActiveTab, onOpenB
     { id: 'founder', label: t.founder },
     { id: 'trustees', label: t.trustees },
     { id: 'gallery', label: t.gallery },
-    { id: 'feedback', label: t.feedback || (lang === 'bn' ? 'মতামত ও পর্যালোচনা' : 'Reviews & Feedback') },
+    { id: 'feedback', label: t.feedback || (lang === 'bn' ? 'মতামত' : 'Feedback') },
     { id: 'contact', label: t.contact },
   ];
 
