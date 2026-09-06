@@ -212,6 +212,99 @@
 .heritage-nav__drawer-list > button span { color: hsl(var(--accent)); font-family: var(--font-body); font-size: 9px; letter-spacing: .2em; }
 .heritage-nav__drawer-pattern { height: 18px; margin-bottom: 20px; background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='48' height='18' viewBox='0 0 48 18' fill='none'%3E%3Cpath d='M0 9 C6 3 14 3 18 9 C22 15 30 15 36 9 C40 5 44 5 48 9' stroke='%23d8ae62' stroke-width='0.8' stroke-opacity='0.5'/%3E%3Cpath d='M18 9 C16 6 12 6 10 9 C9 11 11 13 13 13 C15 13 16 11 15 10' stroke='%23c99a4a' stroke-width='1' fill='%23c99a4a' fill-opacity='0.25'/%3E%3Ccircle cx='13' cy='10' r='0.9' fill='%23d8ae62'/%3E%3Cpath d='M36 9 C34 6 30 6 28 9 C27 11 29 13 31 13 C33 13 34 11 33 10' stroke='%23c99a4a' stroke-width='1' fill='%23c99a4a' fill-opacity='0.25'/%3E%3Ccircle cx='31' cy='10' r='0.9' fill='%23d8ae62'/%3E%3C/svg%3E"); background-repeat: repeat-x; opacity: .75; }
 
+/* ROYAL FULL-SCREEN MENU OVERLAY (100% Solid Dark Palace Heritage) */
+.royal-portal-overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 999999;
+  background-color: #160404 !important;
+  background-image: 
+    radial-gradient(circle at 50% 10%, rgba(216, 174, 98, 0.08) 0%, transparent 60%),
+    linear-gradient(180deg, #180505 0%, #0f0202 100%) !important;
+  color: #f7f1e4 !important;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  padding: clamp(20px, 4vw, 44px) clamp(20px, 6vw, 64px);
+  overflow-y: auto;
+  -webkit-overflow-scrolling: touch;
+  animation: royalFadeIn 0.28s cubic-bezier(0.16, 1, 0.3, 1) both;
+}
+
+@keyframes royalFadeIn {
+  from { opacity: 0; transform: scale(0.99); }
+  to { opacity: 1; transform: scale(1); }
+}
+
+.royal-portal-item {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+  padding: 15px 12px;
+  border: 0;
+  border-bottom: 1px solid rgba(216, 174, 98, 0.2) !important;
+  background: transparent;
+  color: #f7f1e4 !important;
+  text-align: left;
+  cursor: pointer;
+  border-radius: 2px;
+  transition: all 0.25s ease;
+  -webkit-tap-highlight-color: transparent;
+}
+
+.royal-portal-item:hover {
+  background: rgba(216, 174, 98, 0.08) !important;
+  color: #d8ae62 !important;
+  padding-left: 22px;
+}
+
+.royal-portal-item.is-active {
+  background: rgba(216, 174, 98, 0.15) !important;
+  color: #d8ae62 !important;
+  border-left: 3px solid #d8ae62 !important;
+  padding-left: 22px;
+}
+
+.royal-portal-item .item-num {
+  font-family: monospace;
+  font-size: 12px;
+  font-weight: 600;
+  letter-spacing: 0.15em;
+  color: #d8ae62 !important;
+}
+
+.royal-portal-item .item-label {
+  font-family: var(--font-serif, 'Playfair Display', 'Noto Serif Bengali', serif);
+  font-size: clamp(19px, 3vw, 28px);
+  font-weight: 500;
+  letter-spacing: 0.03em;
+  color: inherit !important;
+}
+
+.royal-portal-close {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 8px 18px;
+  border: 1px solid rgba(216, 174, 98, 0.5) !important;
+  background: rgba(30, 8, 8, 0.7) !important;
+  color: #d8ae62 !important;
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  border-radius: 2px;
+  cursor: pointer;
+  transition: all 0.25s ease;
+}
+
+.royal-portal-close:hover {
+  background: #d8ae62 !important;
+  color: #170505 !important;
+  border-color: #d8ae62 !important;
+}
+
 /* HERO SECTION - Anchored Bottom-Left in 100vh Single Display */
 .heritage-hero { 
   position: relative; 

@@ -109,7 +109,7 @@ export default function Navbar({ lang, setLang, activeTab, setActiveTab, onOpenB
       {/* Full-Screen Portal Navigation Overlay with Brand Royal Theme */}
       {mounted && mobileMenuOpen && createPortal(
         <div 
-          className="fixed inset-0 z-[99999] bg-[#160404]/98 text-[#f7f2e7] flex flex-col justify-between p-6 sm:p-10 md:py-12 md:px-16 backdrop-blur-3xl overflow-y-auto animate-fade-in"
+          className="royal-portal-overlay"
           role="dialog"
           aria-modal="true"
           aria-label="Full Navigation Index"
@@ -128,7 +128,7 @@ export default function Navbar({ lang, setLang, activeTab, setActiveTab, onOpenB
             <button
               type="button"
               onClick={() => setMobileMenuOpen(false)}
-              className="px-4 py-2 border border-[#c99a4a]/50 bg-[#280a0a]/50 text-[#d8ae62] hover:bg-[#d8ae62] hover:text-[#160404] transition-all rounded-sm text-xs font-semibold tracking-widest uppercase flex items-center gap-2"
+              className="royal-portal-close"
               aria-label="Close menu"
             >
               <X className="w-4 h-4" />
@@ -141,7 +141,7 @@ export default function Navbar({ lang, setLang, activeTab, setActiveTab, onOpenB
 
           {/* Single-Line Royal Navigation List */}
           <div className="my-auto py-4 max-w-4xl w-full mx-auto">
-            <nav className="flex flex-col divide-y divide-[#c99a4a]/15" aria-label="Royal Directory">
+            <nav className="flex flex-col" aria-label="Royal Directory">
               {navItems.map((item, index) => {
                 const isActive = activeTab === item.id;
                 return (
@@ -152,17 +152,13 @@ export default function Navbar({ lang, setLang, activeTab, setActiveTab, onOpenB
                       e.preventDefault();
                       navigate(item.id);
                     }}
-                    className={`group flex items-center justify-between py-3.5 sm:py-4 px-2 sm:px-4 w-full text-left transition-all duration-300 ${
-                      isActive 
-                        ? 'text-[#d8ae62] pl-6 bg-[#250808]/70 border-l-2 border-l-[#d8ae62]' 
-                        : 'text-[#f5eedf]/90 hover:text-[#d8ae62] hover:pl-5 hover:bg-[#250808]/40'
-                    }`}
+                    className={`royal-portal-item group ${isActive ? 'is-active' : ''}`}
                   >
                     <div className="flex items-baseline gap-4 sm:gap-6">
-                      <span className="font-mono text-[11px] sm:text-xs text-[#d8ae62]/75 font-semibold tracking-widest">
+                      <span className="item-num">
                         {String(index + 1).padStart(2, '0')}
                       </span>
-                      <span className="font-serif text-xl sm:text-2xl md:text-3xl font-medium tracking-wide">
+                      <span className="item-label">
                         {item.label}
                       </span>
                     </div>
@@ -180,7 +176,7 @@ export default function Navbar({ lang, setLang, activeTab, setActiveTab, onOpenB
           </div>
 
           {/* Bottom Royal Footer */}
-          <div className="pt-5 border-t border-[#c99a4a]/30 max-w-4xl w-full mx-auto flex flex-col sm:flex-row items-center justify-between gap-4 text-xs font-body text-[#e6decb]/70">
+          <div className="pt-5 border-t border-[#c99a4a]/30 max-w-4xl w-full mx-auto flex flex-col sm:flex-row items-center justify-between gap-4 text-xs font-body text-[#e6decb]/80">
             <div className="flex items-center gap-2">
               <MapPin className="w-3.5 h-3.5 text-[#d8ae62] flex-shrink-0" />
               <a 
