@@ -19,20 +19,21 @@ export default function FounderPage({ lang, setActiveTab, onOpenLightbox, conten
         />
 
         {/* Main Archival Layout */}
-        <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-14 items-start my-12 md:my-16">
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-14 items-stretch my-12 md:my-16">
           {/* Portrait Column */}
-          <div className="lg:col-span-5 text-center">
-            <div className="relative p-3.5 sm:p-5 bg-card/90 rounded-2xl border-2 border-accent/40 shadow-2xl backdrop-blur-md overflow-hidden group">
-              <div className="absolute top-2 left-2 w-4 h-4 border-t-2 border-l-2 border-accent/70" />
-              <div className="absolute top-2 right-2 w-4 h-4 border-t-2 border-r-2 border-accent/70" />
-              <div className="absolute bottom-2 left-2 w-4 h-4 border-b-2 border-l-2 border-accent/70" />
-              <div className="absolute bottom-2 right-2 w-4 h-4 border-b-2 border-r-2 border-accent/70" />
+          <div className="lg:col-span-5 flex flex-col">
+            <div className="relative p-4 sm:p-6 bg-card/95 rounded-2xl border-2 border-accent/40 shadow-2xl backdrop-blur-md overflow-hidden group flex flex-col justify-between h-full">
+              <div className="absolute top-2.5 left-2.5 w-4 h-4 border-t-2 border-l-2 border-accent/70" />
+              <div className="absolute top-2.5 right-2.5 w-4 h-4 border-t-2 border-r-2 border-accent/70" />
+              <div className="absolute bottom-2.5 left-2.5 w-4 h-4 border-b-2 border-l-2 border-accent/70" />
+              <div className="absolute bottom-2.5 right-2.5 w-4 h-4 border-b-2 border-r-2 border-accent/70" />
               
-              <div className="rounded-xl overflow-hidden bg-black/40 shadow-inner">
+              {/* Bust Image */}
+              <div className="rounded-xl overflow-hidden bg-black/60 shadow-xl border border-accent/30 w-full">
                 <img
                   src={getAssetUrl(t.founder.image)}
                   alt={t.founder.name}
-                  className="w-full h-auto max-h-[520px] object-contain mx-auto transition-transform duration-700 group-hover:scale-105 cursor-pointer"
+                  className="w-full h-[420px] sm:h-[500px] lg:h-[540px] object-cover object-top transition-transform duration-700 group-hover:scale-105 cursor-pointer"
                   onClick={() => onOpenLightbox({
                     type: 'image',
                     title: t.founder.name,
@@ -42,21 +43,46 @@ export default function FounderPage({ lang, setActiveTab, onOpenLightbox, conten
                 />
               </div>
 
-              <div className="mt-4 pt-4 border-t border-border/70 text-center">
-                <span className="text-[10px] uppercase tracking-[0.25em] text-accent font-body font-bold block">
-                  {bn ? 'ঐতিহাসিক মার্বেল ভাস্কর্য প্রতিকৃতি' : 'Historical Sculptural Archival Portrait'}
-                </span>
-                <h4 className="font-serif text-2xl font-bold text-foreground mt-1">{t.founder.name}</h4>
-                <p className="text-xs uppercase tracking-widest text-accent/90 font-body mt-0.5 font-semibold">1775 – 1845</p>
-                <p className="text-xs text-muted-foreground font-body mt-1">
-                  {bn ? 'প্রতিষ্ঠাতা · পাথুরিয়াঘাটা ঘোষ বাড়ি' : 'Founder · Pathuria Ghata Ghosh Bari'}
+              {/* Founder Details on Left */}
+              <div className="mt-5 pt-4 border-t border-accent/30 text-center space-y-3">
+                <div>
+                  <span className="text-[10.5px] uppercase tracking-[0.25em] text-accent font-body font-bold block">
+                    {bn ? 'ঐতিহাসিক মার্বেল ভাস্কর্য প্রতিকৃতি' : 'Historical Sculptural Archival Portrait'}
+                  </span>
+                  <h4 className="font-serif text-2xl sm:text-3xl font-bold text-foreground mt-1">{t.founder.name}</h4>
+                  <p className="text-xs uppercase tracking-widest text-accent font-body mt-0.5 font-semibold">1775 – 1845</p>
+                </div>
+
+                <div className="grid grid-cols-2 gap-2 text-left bg-background/60 p-3 rounded-lg border border-border/70 text-xs">
+                  <div>
+                    <span className="text-[9.5px] uppercase tracking-wider text-accent block font-semibold">
+                      {bn ? 'উপাধি ও ভূমিকা' : 'Title & Role'}
+                    </span>
+                    <span className="text-foreground/90 font-medium">
+                      {bn ? 'প্রতিষ্ঠাতা ও অভিজাত ব্যক্তিত্ব' : 'Founder & Aristocratic Visionary'}
+                    </span>
+                  </div>
+                  <div>
+                    <span className="text-[9.5px] uppercase tracking-wider text-accent block font-semibold">
+                      {bn ? 'ঐতিহাসিক এস্টেট' : 'Historic Estate'}
+                    </span>
+                    <span className="text-foreground/90 font-medium">
+                      {bn ? '৪৭ পাথুরিয়াঘাটা স্ট্রিট' : '47 Pathuria Ghata St, Kolkata'}
+                    </span>
+                  </div>
+                </div>
+
+                <p className="text-xs text-muted-foreground font-body italic">
+                  {bn 
+                    ? 'বাংলার নবজাগরণের অন্যতম শ্রেষ্ঠ মানবহিতৈষী ও উচ্চাঙ্গ সঙ্গীতের পৃষ্ঠপোষক।' 
+                    : 'Visionary patriarch who established Khelat Bhawan in 1845 and shaped its enduring legacy.'}
                 </p>
               </div>
             </div>
           </div>
 
           {/* Biography & Vision Column */}
-          <div className="lg:col-span-7 space-y-6 text-left">
+          <div className="lg:col-span-7 flex flex-col justify-between space-y-6 text-left">
             <div className="inline-flex items-center gap-2 px-3.5 py-1 rounded-full bg-accent/15 border border-accent/30 text-accent text-xs tracking-[0.2em] uppercase font-body font-semibold">
               <Sparkles className="w-3.5 h-3.5" />
               <span>{bn ? 'ঐতিহাসিক প্রামাণ্য বিবরণ' : 'Historical Archival Profile'}</span>

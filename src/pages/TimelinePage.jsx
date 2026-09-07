@@ -86,8 +86,8 @@ export default function TimelinePage({ lang, setActiveTab, onOpenLightbox, conte
   ];
 
   return (
-    <main className="pt-32 pb-24 bg-background min-h-screen">
-      <div className="container mx-auto px-6 max-w-4xl">
+    <main className="pt-28 md:pt-36 pb-24 bg-background min-h-screen">
+      <div className="w-full max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <SectionHeader
           title={lang === 'bn' ? 'ঐতিহ্যের সময়রেখা' : 'Heritage Timeline'}
           subtitle={lang === 'bn' 
@@ -95,56 +95,64 @@ export default function TimelinePage({ lang, setActiveTab, onOpenLightbox, conte
             : 'Tracing over 175 years of grandeur, devotion, and cultural legacy'}
         />
 
-        {/* Timeline Items */}
-        <div className="space-y-12 my-16">
-          {milestones.map((item, idx) => (
-            <div
-              key={idx}
-              className="grid grid-cols-1 md:grid-cols-12 gap-8 items-center bg-card/60 p-6 md:p-8 rounded-sm border border-border hover:border-accent transition-all duration-300 shadow-sm"
-            >
-              <div className="md:col-span-3 text-left">
-                <span className="text-[10px] uppercase tracking-widest text-accent font-body font-semibold block">
-                  {item.badge}
-                </span>
-                <span className="font-serif text-3xl md:text-4xl font-bold text-foreground block mt-1">
-                  {item.year}
-                </span>
-              </div>
+        {/* Alternating Timeline Items */}
+        <div className="space-y-8 md:space-y-10 my-12 md:my-16">
+          {milestones.map((item, idx) => {
+            const isEven = idx % 2 === 0;
 
-              <div className="md:col-span-5 text-left space-y-2">
-                <h3 className="font-serif text-xl font-bold text-foreground">
-                  {item.title}
-                </h3>
-                <p className="text-xs md:text-sm text-muted-foreground font-body leading-relaxed">
-                  {item.desc}
-                </p>
-              </div>
+            return (
+              <div
+                key={idx}
+                className="grid grid-cols-1 md:grid-cols-12 gap-6 md:gap-10 items-center bg-card/85 p-6 md:p-8 rounded-2xl border border-accent/35 hover:border-accent hover:shadow-xl transition-all duration-500 shadow-md backdrop-blur-sm"
+              >
+                {/* Details Section */}
+                <div className={`md:col-span-8 flex flex-col md:flex-row gap-6 md:gap-8 items-start md:items-center text-left ${isEven ? 'order-1 md:order-1' : 'order-1 md:order-2'}`}>
+                  <div className="min-w-[130px] flex-shrink-0">
+                    <span className="text-[10px] uppercase tracking-widest text-accent font-body font-semibold block">
+                      {item.badge}
+                    </span>
+                    <span className="font-serif text-3xl md:text-5xl font-bold text-foreground block mt-1 leading-none">
+                      {item.year}
+                    </span>
+                  </div>
 
-              <div className="md:col-span-4">
-                <div className="h-44 rounded-sm overflow-hidden bg-black">
-                  <img
-                    src={getAssetUrl(item.image)}
-                    alt={item.title}
-                    className="w-full h-full object-cover hover:scale-105 transition-transform duration-500 cursor-pointer"
-                    onClick={() => onOpenLightbox({
-                      type: 'image',
-                      title: `${item.year} — ${item.title}`,
-                      desc: item.desc,
-                      src: item.image
-                    })}
-                  />
+                  <div className="space-y-2 border-l-0 md:border-l border-border/80 md:pl-8 flex-1">
+                    <h3 className="font-serif text-xl md:text-2xl font-bold text-foreground">
+                      {item.title}
+                    </h3>
+                    <p className="text-xs md:text-sm text-muted-foreground font-body leading-relaxed">
+                      {item.desc}
+                    </p>
+                  </div>
+                </div>
+
+                {/* Image Section */}
+                <div className={`md:col-span-4 ${isEven ? 'order-2 md:order-2' : 'order-2 md:order-1'}`}>
+                  <div className="h-48 md:h-52 rounded-xl overflow-hidden bg-black/60 border border-accent/25 shadow-md group">
+                    <img
+                      src={getAssetUrl(item.image)}
+                      alt={item.title}
+                      className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700 cursor-pointer"
+                      onClick={() => onOpenLightbox({
+                        type: 'image',
+                        title: `${item.year} — ${item.title}`,
+                        desc: item.desc,
+                        src: item.image
+                      })}
+                    />
+                  </div>
                 </div>
               </div>
-            </div>
-          ))}
+            );
+          })}
         </div>
 
         <div className="text-center pt-8">
           <button
             onClick={() => setActiveTab('founder')}
-            className="border border-foreground/20 text-foreground px-8 py-3 text-xs tracking-[0.2em] uppercase font-body font-medium hover:bg-foreground hover:text-background transition-colors rounded-sm"
+            className="inline-flex items-center gap-2 bg-primary text-primary-foreground px-8 py-3.5 text-xs tracking-[0.2em] uppercase font-body font-semibold hover:bg-foreground transition-all duration-300 rounded-full shadow-lg hover:scale-105"
           >
-            {lang === 'bn' ? 'প্রতিষ্ঠাতা বাবু খেলাৎ ঘোষ সম্পর্কে জানুন' : 'Discover Founder Babu Khelat Ghosh'}
+            <span>{lang === 'bn' ? 'প্রতিষ্ঠাতা বাবু খেলাৎ ঘোষ সম্পর্কে জানুন' : 'Discover Founder Babu Khelat Ghosh'}</span>
           </button>
         </div>
       </div>
