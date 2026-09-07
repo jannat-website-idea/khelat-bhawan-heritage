@@ -117,7 +117,7 @@ export const siteData = {
       bio1: "Babu Khelat Ghosh was a distinguished Bengali nobleman, eminent businessman, and prominent philanthropist of 19th-century Calcutta. In 1845, he established Khelat Bhawan at 47 Pathuria Ghata Street as a magnificent seat of aristocratic heritage, music, and philanthropy.",
       bio2: "His profound appreciation for Hindustani classical music, traditional Bengali craftsmanship, and spiritual service established the values that have guided seven generations of the Ghosh family. Through his patronage, Khelat Bhawan became a vibrant salon for scholars, musicians, and devotees during the Bengal Renaissance.",
       cta: "Discover the Founder's Full Story",
-      image: "/images/SDP_0273.jpg",
+      image: "/images/babu_khelat_ghosh_bust.png",
       quote: "A heritage preserved with devotion becomes an eternal beacon of culture for future generations."
     },
     trusts: {
@@ -146,12 +146,12 @@ export const siteData = {
           num: "02",
           est: "Est. 1950s",
           title: "Khelat Ghosh Memorial Trust",
-          focus: "Classical Music & Cultural Patronage",
-          desc: "Dedicated to perpetuating the founder's passion for classical music, preserving authentic Hindustani musical traditions, and honoring master artists.",
+          focus: "Classical Arts & Heritage Music",
+          desc: "Carrying forward the founder's profound passion for Hindustani classical music through concerts, artist welfare, and archival preservation.",
           activities: [
-            "Hindustani classical music concerts & soirees",
-            "Support and stipends for traditional musicians",
-            "Music education initiatives and workshops",
+            "Patronage and welfare support for traditional musicians",
+            "Organization of classical Baithak and Sangeet Sammelans",
+            "Classical music scholarship and youth training support",
             "Heritage arts documentation and preservation",
             "Annual cultural awards for excellence in music"
           ],
@@ -186,7 +186,7 @@ export const siteData = {
           period: "1775 – 1845",
           role: "Founder",
           desc: "Established Khelat Bhawan in 1845, prominent businessman, philanthropist, and founder of the cultural estate.",
-          image: "/images/SDP_0273.jpg"
+          image: "/images/babu_khelat_ghosh_bust.png"
         },
         {
           gen: "2nd Generation",
@@ -687,7 +687,7 @@ export const siteData = {
       bio1: "বাবু খেলাৎ ঘোষ ছিলেন উনিশ শতকের কলকাতার এক বিশিষ্ট বাঙালি অভিজাত ব্যক্তিত্ব, সফল ব্যবসায়ী এবং উদার সমাজহিতৈষী। ১৮৪৫ সালে তিনি ৪৭ পাথুরিয়াঘাটা স্ট্রিটে খেলাৎ ভবন প্রতিষ্ঠা করে এক অমর সাংস্কৃতিক ঐতিহ্যের ভিত্তিপ্রস্তর স্থাপন করেন।",
       bio2: "উচ্চাঙ্গ সঙ্গীত, ঐতিহ্যবাহী হস্তশিল্প এবং আধ্যাত্মিক সেবার প্রতি তাঁর গভীর অনুরাগ সাত প্রজন্ম ধরে ঘোষ পরিবারের প্রতিটি সদস্যকে অনুপ্রাণিত করেছে। তাঁর পৃষ্ঠপোষকতায় বাংলার নবজাগরণের যুগে খেলাৎ ভবন পণ্ডিত, সঙ্গীতশিল্পী ও সাধকদের এক মহামিলনমেলায় পরিণত হয়।",
       cta: "প্রতিষ্ঠাতার সম্পূর্ণ জীবনী দেখুন",
-      image: "/images/SDP_0273.jpg",
+      image: "/images/babu_khelat_ghosh_bust.png",
       quote: "শ্রদ্ধা ও নিষ্ঠার সাথে সংরক্ষিত ঐতিহ্য ভবিষ্যৎ প্রজন্মের জন্য সংস্কৃতির এক চিরন্তন আলোকবর্তিকা হয়ে ওঠে।"
     },
     trusts: {
@@ -756,7 +756,7 @@ export const siteData = {
           period: "১৭৭৫ – ১৮৪৫",
           role: "প্রতিষ্ঠাতা",
           desc: "১৮৪৫ সালে খেলাৎ ভবনের প্রতিষ্ঠা করেন; বিশিষ্ট ব্যবসায়ী, দানশীল ব্যক্তি এবং এই সাংস্কৃতিক এস্টেটের স্রষ্টা।",
-          image: "/images/SDP_0273.jpg"
+          image: "/images/babu_khelat_ghosh_bust.png"
         },
         {
           gen: "দ্বিতীয় প্রজন্ম",

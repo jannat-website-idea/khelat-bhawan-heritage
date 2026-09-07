@@ -61,8 +61,8 @@ export default function TrusteesPage({ lang, setActiveTab, onOpenLightbox, conte
   ];
 
   return (
-    <main className="pt-32 pb-24 bg-background min-h-screen">
-      <div className="container mx-auto px-6 max-w-6xl">
+    <main className="pt-28 md:pt-36 pb-24 bg-background min-h-screen">
+      <div className="w-full max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <SectionHeader
           title={lang === 'bn' ? 'সাংস্কৃতিক ট্রাস্ট ও ট্রাস্টি' : 'Trusts & Trustees'}
           subtitle={lang === 'bn'

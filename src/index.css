@@ -612,61 +612,93 @@
 .heritage-lineage__image:hover img { transform: scale(1.035); }
 .heritage-lineage > div > p:not(.heritage-kicker) { max-width: 520px; }
 
-/* Royal family tree: a restrained archival interpretation, without invented portraits. */
-.royal-family-tree { position: relative; display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 42px 110px; max-width: 980px; margin-inline: auto; padding: 72px 28px 105px; background-color: #fcf6e9; background-image: radial-gradient(circle at 12px 12px,rgba(182,139,70,.08) 1.5px,transparent 1.7px); background-size: 24px 24px; border: 1px solid hsl(var(--accent) / .48); box-shadow: inset 0 0 0 8px hsl(var(--background)), inset 0 0 0 9px hsl(var(--accent) / .28), 0 28px 70px rgba(63,25,17,.08); overflow: hidden; }
-.royal-family-tree:before { content: ""; position: absolute; top: 72px; bottom: 93px; left: 50%; width: 1px; background: linear-gradient(hsl(var(--accent) / 0),hsl(var(--accent)),hsl(var(--accent))); }
-.royal-family-tree__crown { position: absolute; top: 23px; left: 50%; width: 46px; height: 46px; transform: translateX(-50%) rotate(45deg); display: grid; place-items: center; border: 1px solid hsl(var(--accent)); background: hsl(var(--background)); color: hsl(var(--accent)); font-size: 16px; }
+/* Royal family tree: an expansive, panoramic archival scroll */
+.royal-family-tree { 
+  position: relative; 
+  display: grid; 
+  grid-template-columns: repeat(2, minmax(0, 1fr)); 
+  gap: 46px clamp(40px, 5.5vw, 115px); 
+  width: 100%; 
+  max-width: min(1380px, 96vw); 
+  margin-inline: auto; 
+  padding: 85px clamp(24px, 4vw, 68px) 115px; 
+  background-color: #fcf6e9; 
+  background-image: radial-gradient(circle at 12px 12px,rgba(182,139,70,.08) 1.5px,transparent 1.7px); 
+  background-size: 24px 24px; 
+  border: 1.5px solid hsl(var(--accent) / .55); 
+  border-radius: 20px;
+  box-shadow: inset 0 0 0 8px hsl(var(--background)), inset 0 0 0 10px hsl(var(--accent) / .35), 0 28px 70px rgba(63,25,17,.08); 
+  overflow: hidden; 
+}
+.royal-family-tree:before { content: ""; position: absolute; top: 72px; bottom: 93px; left: 50%; width: 1.5px; background: linear-gradient(hsl(var(--accent) / 0),hsl(var(--accent)),hsl(var(--accent))); }
+.royal-family-tree__crown { position: absolute; top: 23px; left: 50%; width: 50px; height: 50px; transform: translateX(-50%) rotate(45deg); display: grid; place-items: center; border: 1.5px solid hsl(var(--accent)); background: hsl(var(--background)); color: hsl(var(--accent)); font-size: 18px; box-shadow: 0 4px 12px rgba(0,0,0,0.06); }
 .royal-family-tree__crown::first-letter { transform: rotate(-45deg); }
-.royal-family-tree__generation { position: relative; display: flex; align-items: center; gap: 18px; min-height: 142px; }
+.royal-family-tree__generation { position: relative; display: flex; align-items: center; gap: 20px; min-height: 142px; }
 .royal-family-tree__generation:nth-of-type(even) { grid-column: 2; }
 .royal-family-tree__generation:nth-of-type(odd) { grid-column: 1; flex-direction: row-reverse; text-align: right; }
-.royal-family-tree__generation:after { content: ""; position: absolute; top: 50%; width: 56px; height: 1px; background: hsl(var(--accent) / .72); }
-.royal-family-tree__generation:nth-of-type(odd):after { right: -56px; }
-.royal-family-tree__generation:nth-of-type(even):after { left: -56px; }
-.royal-family-tree__generation--1 { grid-column: 1 / -1 !important; width: 48%; justify-self: center; flex-direction: column !important; text-align: center !important; margin-bottom: 5px; }
-.royal-family-tree__generation--1:after { top: auto !important; bottom: -24px; left: 50% !important; width: 1px; height: 24px; }
-.royal-family-tree__medallion { flex: 0 0 70px; height: 82px; padding: 8px; display: grid; place-items: center; border: 1px solid hsl(var(--accent)); border-radius: 50%; background: hsl(var(--primary)); box-shadow: inset 0 0 0 4px hsl(var(--background)), inset 0 0 0 5px hsl(var(--accent) / .65); color: #f3d798; }
-.royal-family-tree__medallion svg { width: 52px; height: 52px; }
+.royal-family-tree__generation:after { content: ""; position: absolute; top: 50%; width: clamp(36px, 4vw, 64px); height: 1.5px; background: hsl(var(--accent) / .75); }
+.royal-family-tree__generation:nth-of-type(odd):after { right: calc(-1 * clamp(36px, 4vw, 64px)); }
+.royal-family-tree__generation:nth-of-type(even):after { left: calc(-1 * clamp(36px, 4vw, 64px)); }
+.royal-family-tree__generation--1 { grid-column: 1 / -1 !important; width: min(600px, 90%); justify-self: center; flex-direction: column !important; text-align: center !important; margin-bottom: 8px; }
+.royal-family-tree__generation--1:after { top: auto !important; bottom: -24px; left: 50% !important; width: 1.5px; height: 24px; }
+.royal-family-tree__medallion { flex: 0 0 76px; height: 88px; padding: 8px; display: grid; place-items: center; border: 1.5px solid hsl(var(--accent)); border-radius: 50%; background: hsl(var(--primary)); box-shadow: inset 0 0 0 4px hsl(var(--background)), inset 0 0 0 6px hsl(var(--accent) / .75); color: #f3d798; }
+.royal-family-tree__medallion svg { width: 56px; height: 56px; }
 .royal-family-tree__card { 
   position: relative;
   flex: 1; 
-  padding: 22px 24px; 
+  padding: 24px 28px; 
   border: 1px solid hsl(var(--border)); 
-  background: hsl(var(--card) / .94); 
-  box-shadow: 0 4px 20px rgba(47,14,10,.05);
+  border-radius: 12px;
+  background: hsl(var(--card) / .96); 
+  box-shadow: 0 6px 24px rgba(47,14,10,.06);
 }
 .royal-family-tree__card:before {
   content: "";
   position: absolute;
-  top: 8px;
-  right: 8px;
-  width: 26px;
-  height: 26px;
+  top: 10px;
+  right: 10px;
+  width: 28px;
+  height: 28px;
   background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='26' height='26' viewBox='0 0 100 100' fill='none'%3E%3Ccircle cx='50' cy='50' r='46' stroke='%23d8ae62' stroke-width='2' opacity='0.7'/%3E%3Ccircle cx='50' cy='50' r='36.5' stroke='%23d8ae62' stroke-width='2' stroke-dasharray='3 8' stroke-linecap='round' opacity='0.8'/%3E%3Ccircle cx='50' cy='50' r='10.5' stroke='%23d8ae62' stroke-width='2' fill='%23d8ae62' fill-opacity='0.25'/%3E%3Ccircle cx='50' cy='50' r='4' fill='%23d8ae62'/%3E%3Cg stroke='%23d8ae62' stroke-width='2' fill='%23d8ae62' fill-opacity='0.15'%3E%3Cpath d='M50 39.5 C43.8 34.5 43.8 24.5 50 19.5 C56.2 24.5 56.2 34.5 50 39.5 Z'/%3E%3Ccircle cx='50' cy='18' r='2' fill='%23d8ae62'/%3E%3Cpath d='M50 60.5 C43.8 65.5 43.8 75.5 50 80.5 C56.2 75.5 56.2 65.5 50 60.5 Z'/%3E%3Ccircle cx='50' cy='82' r='2' fill='%23d8ae62'/%3E%3Cpath d='M39.5 50 C34.5 43.8 24.5 43.8 19.5 50 C24.5 56.2 34.5 56.2 39.5 50 Z'/%3E%3Ccircle cx='18' cy='50' r='2' fill='%23d8ae62'/%3E%3Cpath d='M60.5 50 C65.5 43.8 75.5 43.8 80.5 50 C75.5 56.2 65.5 56.2 60.5 50 Z'/%3E%3Ccircle cx='82' cy='50' r='2' fill='%23d8ae62'/%3E%3Cpath d='M42.6 42.6 C35.5 39 28.5 46 31.5 53 C38.5 50 45.5 43 42.6 42.6 Z' transform='rotate(45 50 50)'/%3E%3Cpath d='M42.6 42.6 C35.5 39 28.5 46 31.5 53 C38.5 50 45.5 43 42.6 42.6 Z' transform='rotate(135 50 50)'/%3E%3Cpath d='M42.6 42.6 C35.5 39 28.5 46 31.5 53 C38.5 50 45.5 43 42.6 42.6 Z' transform='rotate(225 50 50)'/%3E%3Cpath d='M42.6 42.6 C35.5 39 28.5 46 31.5 53 C38.5 50 45.5 43 42.6 42.6 Z' transform='rotate(315 50 50)'/%3E%3C/g%3E%3C/svg%3E");
   background-size: contain;
   background-repeat: no-repeat;
-  opacity: 0.6;
+  opacity: 0.65;
   pointer-events: none;
 }
 .royal-family-tree__generation:nth-of-type(odd) .royal-family-tree__card:before {
   right: auto;
-  left: 8px;
+  left: 10px;
   transform: scaleX(-1);
 }
-.royal-family-tree__card > span { color: hsl(var(--accent)); font-size: 9px; font-weight: 700; letter-spacing: .16em; text-transform: uppercase; }
-.royal-family-tree__card h4 { margin: 5px 0 1px; color: hsl(var(--foreground)); font-family: var(--font-serif); font-size: 22px; font-weight: 500; }
-.royal-family-tree__card p { margin: 7px 0 0; color: hsl(var(--muted-foreground)); font-size: 12px; line-height: 1.62; }
-.royal-family-tree__card .royal-family-tree__role { margin-top: 1px; color: hsl(var(--primary)); font-size: 10px; font-weight: 700; letter-spacing: .08em; text-transform: uppercase; }
-.royal-family-tree__roots { position: absolute; bottom: 40px; left: 50%; width: 150px; height: 42px; transform: translateX(-50%); }
-.royal-family-tree__roots span { position: absolute; top: 0; left: 50%; width: 76px; height: 36px; border-bottom: 1px solid hsl(var(--accent)); border-radius: 50%; transform-origin: top left; }
+.royal-family-tree__card > span { color: hsl(var(--accent)); font-size: 9.5px; font-weight: 700; letter-spacing: .18em; text-transform: uppercase; }
+.royal-family-tree__card h4 { margin: 6px 0 2px; color: hsl(var(--foreground)); font-family: var(--font-serif); font-size: 24px; font-weight: 600; }
+.royal-family-tree__card p { margin: 8px 0 0; color: hsl(var(--muted-foreground)); font-size: 13px; line-height: 1.68; }
+.royal-family-tree__card .royal-family-tree__role { margin-top: 2px; color: hsl(var(--primary)); font-size: 10.5px; font-weight: 700; letter-spacing: .08em; text-transform: uppercase; }
+.royal-family-tree__roots { position: absolute; bottom: 40px; left: 50%; width: 160px; height: 44px; transform: translateX(-50%); }
+.royal-family-tree__roots span { position: absolute; top: 0; left: 50%; width: 80px; height: 38px; border-bottom: 1.5px solid hsl(var(--accent)); border-radius: 50%; transform-origin: top left; }
 .royal-family-tree__roots span:nth-child(1) { transform: rotate(12deg); }
 .royal-family-tree__roots span:nth-child(2) { transform: rotate(42deg); }
 .royal-family-tree__roots span:nth-child(3) { transform: rotate(76deg); }
-.trustee-lineage { position: relative; max-width: 900px; margin: 0 auto; padding: 26px 58px; border: 1px solid hsl(var(--accent) / .32); background-color: hsl(var(--background)); background-image: radial-gradient(circle,hsl(var(--accent) / .1) 1.2px,transparent 1.5px); background-size: 24px 24px; box-shadow: inset 0 0 0 7px hsl(var(--background)), inset 0 0 0 8px hsl(var(--accent) / .2); overflow: hidden; }
-.trustee-lineage:before { content: ""; position: absolute; top: 24px; bottom: 24px; left: 87px; width: 1px; background: linear-gradient(hsl(var(--accent) / .2),hsl(var(--accent)),hsl(var(--accent) / .2)); }
-.trustee-lineage__item { position: relative; display: grid; grid-template-columns: 60px 1fr; gap: 27px; align-items: start; padding: 0 0 42px; }
-.trustee-lineage__seal { z-index: 1; width: 64px; height: 64px; display: grid; place-items: center; border: 1px solid hsl(var(--accent)); border-radius: 50%; background: hsl(var(--primary)); box-shadow: inset 0 0 0 4px hsl(var(--background)), inset 0 0 0 5px hsl(var(--accent) / .55); color: #f3d798; }
-.trustee-lineage__seal svg { width: 48px; height: 48px; }
+
+/* Trustee Lineage: Panoramic Royal Decree Scroll */
+.trustee-lineage { 
+  position: relative; 
+  width: 100%; 
+  max-width: min(1380px, 96vw); 
+  margin: 0 auto; 
+  padding: 42px clamp(28px, 5vw, 75px); 
+  border: 1.5px solid hsl(var(--accent) / .45); 
+  border-radius: 20px;
+  background-color: hsl(var(--background)); 
+  background-image: radial-gradient(circle,hsl(var(--accent) / .1) 1.2px,transparent 1.5px); 
+  background-size: 24px 24px; 
+  box-shadow: inset 0 0 0 8px hsl(var(--background)), inset 0 0 0 10px hsl(var(--accent) / .28), 0 28px 70px rgba(63,25,17,.08); 
+  overflow: hidden; 
+}
+.trustee-lineage:before { content: ""; position: absolute; top: 32px; bottom: 32px; left: calc(clamp(28px, 5vw, 75px) + 36px); width: 1.5px; background: linear-gradient(hsl(var(--accent) / .2),hsl(var(--accent)),hsl(var(--accent) / .2)); }
+.trustee-lineage__item { position: relative; display: grid; grid-template-columns: 72px 1fr; gap: 32px; align-items: start; padding: 0 0 46px; }
+.trustee-lineage__seal { z-index: 1; width: 72px; height: 72px; display: grid; place-items: center; border: 1.5px solid hsl(var(--accent)); border-radius: 50%; background: hsl(var(--primary)); box-shadow: inset 0 0 0 4px hsl(var(--background)), inset 0 0 0 6px hsl(var(--accent) / .65); color: #f3d798; }
+.trustee-lineage__seal svg { width: 54px; height: 54px; }
 
 /* Minimalist, Clean Bengali Kalka Border Rails */
 .lineage-alpana-rail { 
@@ -674,7 +706,7 @@
   z-index: 1; 
   top: 20px; 
   bottom: 20px; 
-  width: 22px; 
+  width: 24px; 
   background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='22' height='72' viewBox='0 0 22 72' fill='none'%3E%3Cpath d='M11 0 C15 11, 15 25, 11 36 C7 47, 7 61, 11 72' stroke='%23c5a155' stroke-width='1' stroke-linecap='round' fill='none' opacity='0.7'/%3E%3Cpath d='M12.8 19 C18 15.5, 19 8, 13.5 6 C12 10.5, 12.5 15, 12.8 19 Z' fill='%23d8ae62' fill-opacity='0.35' stroke='%23c5a155' stroke-width='0.85'/%3E%3Cpath d='M13.5 6 C14.5 4.5, 16 5.5, 15.5 7 C15 8.5, 13.8 8, 13.5 7' stroke='%23c5a155' stroke-width='0.75' fill='none'/%3E%3Cpath d='M10 23 C6.5 21, 5.5 16, 8 15 C8.8 17.5, 9.5 20.5, 10 23 Z' fill='%23d8ae62' fill-opacity='0.3' stroke='%23c5a155' stroke-width='0.75'/%3E%3Ccircle cx='11' cy='36' r='1.6' fill='%23d8ae62'/%3E%3Ccircle cx='11' cy='36' r='3.4' stroke='%23c5a155' stroke-width='0.65' stroke-dasharray='1.2 1.8' fill='none'/%3E%3Cpath d='M9.2 55 C4 51.5, 3 44, 8.5 42 C10 46.5, 9.5 51, 9.2 55 Z' fill='%23d8ae62' fill-opacity='0.35' stroke='%23c5a155' stroke-width='0.85'/%3E%3Cpath d='M8.5 42 C7.5 40.5, 6 41.5, 6.5 43 C7 44.5, 8.2 44, 8.5 43' stroke='%23c5a155' stroke-width='0.75' fill='none'/%3E%3Cpath d='M12 59 C15.5 57, 16.5 52, 14 51 C13.2 53.5, 12.5 56.5, 12 59 Z' fill='%23d8ae62' fill-opacity='0.3' stroke='%23c5a155' stroke-width='0.75'/%3E%3Ccircle cx='11' cy='0' r='1.2' fill='%23d8ae62'/%3E%3Ccircle cx='11' cy='72' r='1.2' fill='%23d8ae62'/%3E%3C/svg%3E");
   background-repeat: repeat-y;
   background-position: center;
@@ -685,25 +717,25 @@
 .lineage-alpana-rail--right { right: 16px; transform: scaleX(-1); }
 .trustee-lineage__item > div:last-child { 
   position: relative;
-  padding: 6px 0 30px; 
+  padding: 8px 0 34px; 
   border-bottom: 1px solid hsl(var(--border)); 
 }
 .trustee-lineage__item:before {
   content: "";
   position: absolute;
-  top: 4px;
+  top: 6px;
   right: 0;
-  width: 24px;
-  height: 24px;
+  width: 28px;
+  height: 28px;
   background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='24' height='24' viewBox='0 0 100 100' fill='none'%3E%3Ccircle cx='50' cy='50' r='46' stroke='%23d8ae62' stroke-width='2' opacity='0.7'/%3E%3Ccircle cx='50' cy='50' r='36.5' stroke='%23d8ae62' stroke-width='2' stroke-dasharray='3 8' stroke-linecap='round' opacity='0.8'/%3E%3Ccircle cx='50' cy='50' r='10.5' stroke='%23d8ae62' stroke-width='2' fill='%23d8ae62' fill-opacity='0.25'/%3E%3Ccircle cx='50' cy='50' r='4' fill='%23d8ae62'/%3E%3Cg stroke='%23d8ae62' stroke-width='2' fill='%23d8ae62' fill-opacity='0.15'%3E%3Cpath d='M50 39.5 C43.8 34.5 43.8 24.5 50 19.5 C56.2 24.5 56.2 34.5 50 39.5 Z'/%3E%3Ccircle cx='50' cy='18' r='2' fill='%23d8ae62'/%3E%3Cpath d='M50 60.5 C43.8 65.5 43.8 75.5 50 80.5 C56.2 75.5 56.2 65.5 50 60.5 Z'/%3E%3Ccircle cx='50' cy='82' r='2' fill='%23d8ae62'/%3E%3Cpath d='M39.5 50 C34.5 43.8 24.5 43.8 19.5 50 C24.5 56.2 34.5 56.2 39.5 50 Z'/%3E%3Ccircle cx='18' cy='50' r='2' fill='%23d8ae62'/%3E%3Cpath d='M60.5 50 C65.5 43.8 75.5 43.8 80.5 50 C75.5 56.2 65.5 56.2 60.5 50 Z'/%3E%3Ccircle cx='82' cy='50' r='2' fill='%23d8ae62'/%3E%3Cpath d='M42.6 42.6 C35.5 39 28.5 46 31.5 53 C38.5 50 45.5 43 42.6 42.6 Z' transform='rotate(45 50 50)'/%3E%3Cpath d='M42.6 42.6 C35.5 39 28.5 46 31.5 53 C38.5 50 45.5 43 42.6 42.6 Z' transform='rotate(135 50 50)'/%3E%3Cpath d='M42.6 42.6 C35.5 39 28.5 46 31.5 53 C38.5 50 45.5 43 42.6 42.6 Z' transform='rotate(225 50 50)'/%3E%3Cpath d='M42.6 42.6 C35.5 39 28.5 46 31.5 53 C38.5 50 45.5 43 42.6 42.6 Z' transform='rotate(315 50 50)'/%3E%3C/g%3E%3C/svg%3E");
   background-size: contain;
   background-repeat: no-repeat;
-  opacity: 0.55;
+  opacity: 0.6;
   pointer-events: none;
 }
-.trustee-lineage__item span { color: hsl(var(--accent)); font-size: 10px; font-weight: 700; letter-spacing: .18em; text-transform: uppercase; }
-.trustee-lineage__item h3 { margin: 4px 0 6px; color: hsl(var(--foreground)); font-family: var(--font-serif); font-size: 29px; font-weight: 500; }
-.trustee-lineage__item p { max-width: 700px; margin: 0; color: hsl(var(--muted-foreground)); font-size: 13px; line-height: 1.7; }
+.trustee-lineage__item span { color: hsl(var(--accent)); font-size: 10.5px; font-weight: 700; letter-spacing: .2em; text-transform: uppercase; }
+.trustee-lineage__item h3 { margin: 6px 0 8px; color: hsl(var(--foreground)); font-family: var(--font-serif); font-size: clamp(24px, 2.3vw, 34px); font-weight: 600; }
+.trustee-lineage__item p { max-width: 950px; margin: 0; color: hsl(var(--muted-foreground)); font-size: 14.5px; line-height: 1.75; }
 
 .heritage-gallery { width: 100%; max-width: none; padding-inline: max(6vw,calc((100vw - 1230px)/2)); background: hsl(var(--secondary)); }
 .heritage-gallery__grid { display: grid; grid-template-columns: 1.45fr .75fr 1fr; grid-template-rows: 300px 300px; gap: 17px; }

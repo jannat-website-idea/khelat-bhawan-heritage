@@ -8,8 +8,8 @@ export default function AboutPage({ lang, setActiveTab, onOpenLightbox, content 
   const t = content[lang];
 
   return (
-    <main className="pt-32 pb-24 bg-background min-h-screen">
-      <div className="container mx-auto px-6">
+    <main className="pt-28 md:pt-36 pb-24 bg-background min-h-screen">
+      <div className="w-full max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <SectionHeader
           title={lang === 'bn' ? 'ঐতিহ্য ও উত্তরাধিকার' : 'Heritage & Legacy'}
           subtitle={lang === 'bn' 
@@ -18,23 +18,23 @@ export default function AboutPage({ lang, setActiveTab, onOpenLightbox, content 
         />
 
         {/* Origin Story Grid */}
-        <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 items-center max-w-6xl mx-auto my-16">
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-14 items-center w-full my-14 md:my-20">
           <div className="lg:col-span-6 space-y-6 text-left">
             <span className="text-xs uppercase tracking-[0.25em] text-accent font-body font-semibold">
               Established 1845
             </span>
-            <h3 className="font-serif text-3xl md:text-4xl font-bold text-foreground leading-snug">
+            <h3 className="font-serif text-3xl md:text-4xl lg:text-5xl font-bold text-foreground leading-snug">
               {lang === 'bn' ? 'পাথুরিয়াঘাটা ঘোষ বাড়ির ইতিহাস' : 'The Legacy of Pathuria Ghata Ghosh Bari'}
             </h3>
-            <p className="text-foreground/80 font-body text-base leading-relaxed font-light">
+            <p className="text-foreground/85 font-body text-base md:text-lg leading-relaxed font-light">
               {t.intro.p1}
             </p>
             <p className="text-muted-foreground font-body text-sm md:text-base leading-relaxed">
               {t.intro.p2}
             </p>
 
-            <div className="p-5 rounded-sm bg-card border-l-2 border-accent">
-              <h4 className="font-serif font-bold text-foreground text-base mb-1">
+            <div className="p-6 rounded-xl bg-card border-l-4 border-accent shadow-md">
+              <h4 className="font-serif font-bold text-foreground text-base md:text-lg mb-1.5">
                 {lang === 'bn' ? 'শ্রী শ্রী রামকৃষ্ণ পরমহংসদেবের পুণ্য পদার্পণ (১৮৮১)' : 'Sanctified by Sri Ramakrishna Paramhansa (1881)'}
               </h4>
               <p className="text-xs md:text-sm text-muted-foreground font-body leading-relaxed">
@@ -46,11 +46,11 @@ export default function AboutPage({ lang, setActiveTab, onOpenLightbox, content 
           </div>
 
           <div className="lg:col-span-6">
-            <div className="rounded-sm overflow-hidden shadow-xl aspect-[4/3] bg-black">
+            <div className="rounded-2xl overflow-hidden shadow-2xl aspect-[4/3] bg-black border-2 border-accent/40 group">
               <img
                 src={getAssetUrl('/images/SDP_0282.jpg')}
                 alt="Colonnaded Arches of Khelat Bhavan"
-                className="w-full h-full object-cover hover:scale-105 transition-transform duration-700 cursor-pointer"
+                className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700 cursor-pointer"
                 onClick={() => onOpenLightbox({
                   type: 'image',
                   title: 'Colonnaded Arches of Khelat Bhavan',
@@ -63,7 +63,7 @@ export default function AboutPage({ lang, setActiveTab, onOpenLightbox, content 
         </div>
 
         {/* Seven Generations Lineage */}
-        <div className="my-24 max-w-6xl mx-auto">
+        <div className="my-20 md:my-28 w-full">
           <SectionHeader
             title={t.lineage.heading}
             subtitle={t.lineage.desc}
