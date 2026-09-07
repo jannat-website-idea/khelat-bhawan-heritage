@@ -58,7 +58,7 @@ function AnimatedStat({ target, suffix = '', isBn = false, duration = 2000 }) {
 export default function HomePage({ lang, setActiveTab, onOpenBooking, onOpenLightbox, content, ready }) {
   const t = content[lang];
   const isBn = lang === 'bn';
-  const milestones = t.timelinePreview.items.slice(0, 5);
+  const milestones = t.timelinePreview.items;
   const galleryPreview = galleryData.slice(0, 5);
 
   const openImage = (src, title, desc = '') => onOpenLightbox({ type: 'image', src, title, desc });
