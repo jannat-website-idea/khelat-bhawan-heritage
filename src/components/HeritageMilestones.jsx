@@ -5,8 +5,8 @@ import { getAssetUrl } from '../utils/assetHelper';
 export default function HeritageMilestones({ lang, milestones, onExplore, onOpenImage }) {
   const bn = lang === 'bn';
   const watermarkWords = bn
-    ? ['সূচনা', 'ভক্তি', 'আশীর্বাদ']
-    : ['ORIGINS', 'DEVOTION', 'BLESSING'];
+    ? ['সূচনা', 'ভক্তি', 'আশীর্বাদ', 'সংস্কৃতি', 'উত্তরাধিকার']
+    : ['ORIGINS', 'DEVOTION', 'SANCTITY', 'CULTURE', 'LIVING'];
   return <section className="heritage-archive" aria-labelledby="archive-heading">
     <header className="heritage-archive__heading">
       <p className="archive-label" data-reveal>{bn ? 'সময়ের যাত্রা' : 'Journey through time'}</p>

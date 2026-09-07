@@ -107,7 +107,7 @@ html { scroll-behavior: auto; }
 .archive-entry:nth-child(even) .archive-entry__copy { grid-column: 1; grid-row: 1; justify-self: end; padding: 0 3.6vw 0 6vw; }
 .archive-entry::after { content: ''; position: absolute; z-index: 3; top: 50%; left: calc(50% - 7px); width: 14px; height: 14px; translate: 0 -50%; border-radius: 50%; background: #c6941b; box-shadow: 0 0 0 6px #364751; }
 .archive-entry__year { display: block; font-family: 'Playfair Display',serif; font-size: clamp(64px,6.6vw,104px); font-weight: 600; color: #9a8c5b66; letter-spacing: .04em; line-height: 1; margin: 0 0 24px; }
-.archive-image { width: 100%; aspect-ratio: 1.68; display: block; overflow: hidden; background: #283942; border-radius: 0; }
+.archive-image { width: 100%; aspect-ratio: 1.68; display: block; overflow: hidden; background: #283942; border-radius: 14px; box-shadow: 0 16px 36px rgba(0, 0, 0, 0.3); border: 1px solid rgba(216, 174, 98, 0.2); }
 .archive-image img { display: block; width: 100%; height: 100%; object-fit: cover; filter: saturate(.74) contrast(1.03) brightness(.88); }
 .archive-entry figcaption { display: none; }
 .archive-entry__copy h3 { font: 600 clamp(31px,3vw,48px)/1.18 'Playfair Display','Noto Serif Bengali',serif; color: #f5f0dc; letter-spacing: .005em; margin-bottom: 26px; text-wrap: balance; }
@@ -183,7 +183,7 @@ html { scroll-behavior: auto; }
   .archive-entry__copy,.archive-entry:nth-child(even) .archive-entry__copy { width: 100%; order: 2; padding: 34px 8vw 0 5vw; }
   .archive-entry::after { left: calc(7vw - 6px); width: 12px; height: 12px; box-shadow: 0 0 0 5px #364751; }
   .archive-entry__year { margin-bottom: 18px; font-size: 62px; }
-  .archive-image { aspect-ratio: 1.22; }
+  .archive-image { aspect-ratio: 1.22; border-radius: 10px; }
   .archive-entry__copy h3 { font-size: 29px; }
   .heritage-home .archive-entry__copy p { font-size: 17px; line-height: 1.7; }
   .archive-entry__watermark { left: 0; right: 0; bottom: 2%; font-size: clamp(72px,20vw,132px); letter-spacing: 0; }

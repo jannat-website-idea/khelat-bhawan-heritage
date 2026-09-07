@@ -73,38 +73,32 @@ export const siteData = {
       items: [
         {
           year: "1845",
-          title: "Establishment of Khelat Bhawan",
-          desc: "Babu Khelat Ghosh establishes the grand mansion at 47 Pathuria Ghata Street, founding an enduring cultural estate.",
+          title: "Bari Establishment",
+          desc: "Khelat Bhawan was established as a grand Bengali heritage mansion by the visionary Ghosh family at 47 Pathuria Ghata Street, marking the beginning of an enduring cultural legacy.",
           image: "/images/SDP_0344.jpg"
         },
         {
           year: "1855",
-          title: "Durga Puja Tradition Inaugurated",
-          desc: "Commencement of the sacred annual Durga and Jagadhatri Puja celebrations that continue unbroken for over 170 years.",
+          title: "Durga Puja Begins",
+          desc: "Started the sacred tradition of Durga Puja that continues uninterrupted for 170+ years, becoming one of Kolkata's oldest and most revered aristocratic celebrations.",
           image: "/images/unnamed_6.webp"
         },
         {
           year: "1881",
-          title: "Sri Ramakrishna Paramhansa's Visit",
-          desc: "The revered mystic and saint Sri Ramakrishna Paramhansa visits and blesses Khelat Bhawan, elevating its spiritual significance.",
+          title: "Sri Ramakrishna Visit",
+          desc: "The great saint and mystic Sri Ramakrishna Paramhansa blessed this house with his divine presence, sanctifying the premises forever.",
           image: "/images/rk01.png"
         },
         {
-          year: "1950s",
-          title: "Khelat Ghosh Memorial Trust",
-          desc: "Formal trust established to promote Bengali classical music, traditional musicians, artist welfare, and cultural awards.",
-          image: "/images/SDP_0273.jpg"
-        },
-        {
           year: "2000+",
-          title: "Artist Nectar Council of Culture",
-          desc: "Expansion into comprehensive performing arts, social service, children's education, and healthcare awareness programs.",
+          title: "Council of Culture",
+          desc: "Establishment of Artist Nectar Council of Culture for comprehensive artist welfare, classical arts preservation, and cultural initiatives.",
           image: "/images/unnamed_12.webp"
         },
         {
           year: "Present",
-          title: "Living Heritage & Cultural Hub",
-          desc: "Seven generations of custodians continuing to preserve traditions while welcoming heritage enthusiasts, events, and shoots.",
+          title: "Cultural Hub",
+          desc: "Continuing as an active cultural hub, hosting traditional events, supporting the arts, and welcoming visitors to experience living Bengali heritage.",
           image: "/images/unnamed_3.webp"
         }
       ]
@@ -645,37 +639,31 @@ export const siteData = {
         {
           year: "১৮৪৫",
           title: "খেলাৎ ভবনের প্রতিষ্ঠা",
-          desc: "বাবু খেলাৎ ঘোষ ৪৭ পাথুরিয়াঘাটা স্ট্রিটে এই সুবিশাল ঐতিহ্যবাহী প্রাসাদ প্রতিষ্ঠা করেন।",
+          desc: "ঘোষ পরিবারের দূরদর্শী উদ্যোগে ৪৭ পাথুরিয়াঘাটা স্ট্রিটে এক রাজকীয় ঐতিহ্যবাহী প্রাসাদ হিসেবে খেলাৎ ভবনের প্রতিষ্ঠা, যা এক অবিস্মরণীয় সাংস্কৃতিক ঐতিহ্যের সূচনা করে।",
           image: "/images/SDP_0344.jpg"
         },
         {
           year: "১৮৫৫",
           title: "দুর্গাপূজার শুভ সূচনা",
-          desc: "ঐতিহাসিক পারিবারিক দুর্গোৎসব ও জগদ্ধাত্রী পূজার সূচনা, যা আজ ১৭০+ বছর ধরে অবিরাম চলছে।",
+          desc: "ঐতিহাসিক পারিবারিক দুর্গোৎসবের শুভ সূচনা যা আজ ১৭০+ বছর ধরে অবিরাম উদযাপিত হচ্ছে এবং কলকাতার অন্যতম প্রাচীন ও সম্ভ্রান্ত উৎসব হিসেবে পরিগণিত।",
           image: "/images/unnamed_6.webp"
         },
         {
           year: "১৮৮১",
           title: "শ্রীরামকৃষ্ণ পরমহংসদেবের শুভাগমন",
-          desc: "যুগাবতার শ্রীশ্রীরামকৃষ্ণ পরমহংসদেব খেলাৎ ভবনে শুভাগমন করে সমগ্র প্রাঙ্গণকে পবিত্র ও মহিমান্বিত করেন।",
+          desc: "যুগাবতার শ্রীশ্রীরামকৃষ্ণ পরমহংসদেব তাঁর দিব্য উপস্থিতিতে খেলাৎ ভবনের প্রাঙ্গণকে চিরতরে পবিত্র ও মহিমান্বিত করেন।",
           image: "/images/rk01.png"
         },
         {
-          year: "১৯৫০-এর দশক",
-          title: "খেলাৎ ঘোষ মেমোরিয়াল ট্রাস্ট",
-          desc: "বাঙালি উচ্চাঙ্গ সঙ্গীত, গুণী শিল্পীদের সহায়তা ও সাংস্কৃতিক প্রসারের উদ্দেশ্যে প্রাতিষ্ঠানিক ট্রাস্ট গঠন।",
-          image: "/images/SDP_0273.jpg"
-        },
-        {
           year: "২০০০+",
-          title: "আর্টিস্ট নেকটার কাউন্সিল অফ কালচার",
-          desc: "মঞ্চশিল্প, সমাজসেবা, শিশুদের শিক্ষা ও স্বাস্থ্য সচেতনতা বিষয়ক বহুমুখী উদ্যোগের বিস্তার।",
+          title: "কাউন্সিল অফ কালচার",
+          desc: "শিল্পী কল্যাণ, উচ্চাঙ্গ শিল্পকলার সংরক্ষণ এবং বহুমুখী সাংস্কৃতিক ও সমাজকল্যাণমূলক উদ্যোগের প্রসারে আর্টিস্ট নেকটার কাউন্সিল অফ কালচারের প্রতিষ্ঠা।",
           image: "/images/unnamed_12.webp"
         },
         {
           year: "বর্তমান",
-          title: "জীবন্ত ঐতিহ্য ও সাংস্কৃতিক কেন্দ্র",
-          desc: "সপ্তম প্রজন্মের অভিভাবকত্বে ঐতিহ্য রক্ষা, সাংস্কৃতিক অনুষ্ঠান ও শুটিংয়ের জন্য সংরক্ষিত এক অনন্য পীঠস্থান।",
+          title: "সাংস্কৃতিক কেন্দ্র",
+          desc: "একটি সক্রিয় সাংস্কৃতিক কেন্দ্র হিসেবে ঐতিহ্যবাহী অনুষ্ঠান উদযাপন, শিল্পকলাকে সহায়তা এবং দর্শনার্থীদের কাছে জীবন্ত ঐতিহ্য তুলে ধরার অবিরাম ধারা।",
           image: "/images/unnamed_3.webp"
         }
       ]
