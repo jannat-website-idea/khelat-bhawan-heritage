@@ -1,11 +1,13 @@
-import React, { useEffect, useRef } from 'react';
-import { ArrowRight } from 'lucide-react';
+import React, { useEffect, useRef, useState } from 'react';
+import { ArrowRight, Play } from 'lucide-react';
 import { getAssetUrl } from '../utils/assetHelper';
 
 export default function RoyalHero({ lang, setActiveTab, ready }) {
   const bn = lang === 'bn';
   const video = useRef(null);
   const hasStarted = useRef(false);
+  const [filmPlaying, setFilmPlaying] = useState(false);
+  const [autoplayBlocked, setAutoplayBlocked] = useState(false);
 
   useEffect(() => {
     const el = video.current;
@@ -48,7 +50,11 @@ export default function RoyalHero({ lang, setActiveTab, ready }) {
       el.defaultMuted = true;
       const promise = el.play();
       promise?.then(() => {
-        if (active) hasStarted.current = true;
+        if (active) {
+          hasStarted.current = true;
+          setFilmPlaying(true);
+          setAutoplayBlocked(false);
+        }
       }).catch(() => {
         // Strict mobile power-saving modes require the first touch; the
         // interaction listeners below retry playback in that user gesture.
@@ -70,10 +76,14 @@ export default function RoyalHero({ lang, setActiveTab, ready }) {
 
     // The last retry runs after the entrance overlay has fully unmounted.
     const retries = [0, 350, 1450].map(delay => window.setTimeout(attemptPlay, delay));
+    const blockedTimer = window.setTimeout(() => {
+      if (active && el.paused) setAutoplayBlocked(true);
+    }, 2300);
 
     return () => {
       active = false;
       retries.forEach(window.clearTimeout);
+      window.clearTimeout(blockedTimer);
       el.removeEventListener('canplay', attemptPlay);
       el.removeEventListener('loadeddata', attemptPlay);
       document.removeEventListener('visibilitychange', resumeWhenVisible);
@@ -83,6 +93,18 @@ export default function RoyalHero({ lang, setActiveTab, ready }) {
       window.removeEventListener('pointerdown', resumeFromInteraction);
     };
   }, [ready]);
+
+  const playFilm = () => {
+    const el = video.current;
+    if (!el) return;
+    el.muted = true;
+    el.defaultMuted = true;
+    el.play().then(() => {
+      hasStarted.current = true;
+      setFilmPlaying(true);
+      setAutoplayBlocked(false);
+    }).catch(() => setAutoplayBlocked(true));
+  };
 
   const discover = () => {
     const target = document.getElementById('home-legacy');
@@ -108,11 +130,25 @@ export default function RoyalHero({ lang, setActiveTab, ready }) {
           aria-hidden="true"
           src={getAssetUrl('/Videos/hero-palace-film.mp4')}
           poster={getAssetUrl('/images/SDP_0344.jpg')}
+          onPlaying={() => {
+            hasStarted.current = true;
+            setFilmPlaying(true);
+            setAutoplayBlocked(false);
+          }}
+          onPause={() => setFilmPlaying(false)}
+          onError={() => setAutoplayBlocked(true)}
         >
           Your browser does not support background video.
         </video>
       </div>
       <div className="royal-hero__shade" />
+
+      {autoplayBlocked && !filmPlaying && (
+        <button className="royal-hero__play-film" type="button" onClick={playFilm} aria-label={bn ? 'প্রাসাদের চলচ্চিত্র চালান' : 'Play the palace film'}>
+          <span><Play size={16} fill="currentColor" aria-hidden="true" /></span>
+          {bn ? 'প্রাসাদের চলচ্চিত্র চালান' : 'Play palace film'}
+        </button>
+      )}
       
       {/* Top Right Corner Tag */}
       <div className="royal-hero__corner-tag">
