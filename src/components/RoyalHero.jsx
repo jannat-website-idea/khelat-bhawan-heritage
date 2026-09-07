@@ -1,10 +1,9 @@
-import React, { useEffect, useRef, useState } from 'react';
+import React, { useEffect, useRef } from 'react';
 import { ArrowRight } from 'lucide-react';
 import { getAssetUrl } from '../utils/assetHelper';
 
 export default function RoyalHero({ lang, setActiveTab, ready }) {
   const bn = lang === 'bn';
-  const [filmReady, setFilmReady] = useState(false);
   const video = useRef(null);
 
   useEffect(() => {
@@ -14,17 +13,28 @@ export default function RoyalHero({ lang, setActiveTab, ready }) {
     el.muted = true;
     el.defaultMuted = true;
     el.playsInline = true;
-    el.setAttribute('playsinline', '');
-    el.setAttribute('webkit-playsinline', '');
+    el.setAttribute('playsinline', 'true');
+    el.setAttribute('webkit-playsinline', 'true');
+    el.setAttribute('x5-playsinline', 'true');
+
+    const setBrideScene = () => {
+      try {
+        if (el.currentTime < 1) {
+          el.currentTime = 10.9;
+        }
+      } catch (e) {}
+    };
+
+    if (el.readyState >= 1) {
+      setBrideScene();
+    } else {
+      el.addEventListener('loadedmetadata', setBrideScene, { once: true });
+    }
 
     const attemptPlay = () => {
-      const playPromise = el.play();
-      if (playPromise !== undefined) {
-        playPromise.then(() => {
-          setFilmReady(true);
-        }).catch(() => {
-          // Autoplay was prevented by mobile browser power mode
-        });
+      const p = el.play();
+      if (p !== undefined) {
+        p.catch(() => {});
       }
     };
 
@@ -32,9 +42,7 @@ export default function RoyalHero({ lang, setActiveTab, ready }) {
 
     // Trigger video play on first user interaction if blocked by mobile battery saver / strict policy
     const handleFirstInteraction = () => {
-      if (el.paused) {
-        attemptPlay();
-      }
+      attemptPlay();
       window.removeEventListener('touchstart', handleFirstInteraction);
       window.removeEventListener('click', handleFirstInteraction);
       window.removeEventListener('scroll', handleFirstInteraction);
@@ -58,24 +66,22 @@ export default function RoyalHero({ lang, setActiveTab, ready }) {
   };
 
   return (
-    <section className={`royal-hero is-entered`} aria-label={bn ? 'খেলাৎ ভবন' : 'Khelat Bhawan'}>
+    <section className="royal-hero is-entered" aria-label={bn ? 'খেলাৎ ভবন' : 'Khelat Bhawan'}>
       <div className="royal-hero__media">
         <img className="royal-hero__backdrop" src={getAssetUrl('/images/SDP_0344.jpg')} alt="" fetchpriority="high" />
         <video
           ref={video}
-          className={`royal-hero__film ${filmReady ? 'is-ready' : ''}`}
+          className="royal-hero__film"
           autoPlay
           muted
           playsInline
           loop
           preload="auto"
           aria-hidden="true"
-          src={getAssetUrl('/Videos/hero-palace-film.mp4')}
-          onCanPlay={() => setFilmReady(true)}
-          onPlaying={() => setFilmReady(true)}
-          onLoadedData={() => setFilmReady(true)}
-          onLoadedMetadata={() => setFilmReady(true)}
-        />
+          poster={getAssetUrl('/images/SDP_0344.jpg')}
+        >
+          <source src={getAssetUrl('/Videos/hero-palace-film.mp4')} type="video/mp4" />
+        </video>
       </div>
       <div className="royal-hero__shade" />
       
