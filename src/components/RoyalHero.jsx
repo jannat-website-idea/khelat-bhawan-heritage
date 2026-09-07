@@ -5,6 +5,7 @@ import { getAssetUrl } from '../utils/assetHelper';
 export default function RoyalHero({ lang, setActiveTab, ready }) {
   const bn = lang === 'bn';
   const video = useRef(null);
+  const hasStarted = useRef(false);
 
   useEffect(() => {
     const el = video.current;
@@ -19,7 +20,7 @@ export default function RoyalHero({ lang, setActiveTab, ready }) {
 
     const setBrideScene = () => {
       try {
-        if (el.currentTime < 1) {
+        if (!hasStarted.current && el.duration > 11) {
           el.currentTime = 10.9;
         }
       } catch (e) {}
@@ -31,33 +32,57 @@ export default function RoyalHero({ lang, setActiveTab, ready }) {
       el.addEventListener('loadedmetadata', setBrideScene, { once: true });
     }
 
-    const attemptPlay = () => {
-      const p = el.play();
-      if (p !== undefined) {
-        p.catch(() => {});
-      }
-    };
-
-    attemptPlay();
-
-    // Trigger video play on first user interaction if blocked by mobile battery saver / strict policy
-    const handleFirstInteraction = () => {
-      attemptPlay();
-      window.removeEventListener('touchstart', handleFirstInteraction);
-      window.removeEventListener('click', handleFirstInteraction);
-      window.removeEventListener('scroll', handleFirstInteraction);
-    };
-
-    window.addEventListener('touchstart', handleFirstInteraction, { passive: true, once: true });
-    window.addEventListener('click', handleFirstInteraction, { passive: true, once: true });
-    window.addEventListener('scroll', handleFirstInteraction, { passive: true, once: true });
-
     return () => {
-      window.removeEventListener('touchstart', handleFirstInteraction);
-      window.removeEventListener('click', handleFirstInteraction);
-      window.removeEventListener('scroll', handleFirstInteraction);
+      el.removeEventListener('loadedmetadata', setBrideScene);
     };
   }, []);
+
+  useEffect(() => {
+    const el = video.current;
+    if (!el || !ready) return;
+    let active = true;
+
+    const attemptPlay = () => {
+      if (!active || document.hidden) return;
+      el.muted = true;
+      el.defaultMuted = true;
+      const promise = el.play();
+      promise?.then(() => {
+        if (active) hasStarted.current = true;
+      }).catch(() => {
+        // Strict mobile power-saving modes require the first touch; the
+        // interaction listeners below retry playback in that user gesture.
+      });
+    };
+
+    const resumeWhenVisible = () => {
+      if (!document.hidden) attemptPlay();
+    };
+    const resumeFromInteraction = () => attemptPlay();
+
+    el.addEventListener('canplay', attemptPlay);
+    el.addEventListener('loadeddata', attemptPlay);
+    document.addEventListener('visibilitychange', resumeWhenVisible);
+    window.addEventListener('pageshow', attemptPlay);
+    window.addEventListener('focus', attemptPlay);
+    window.addEventListener('touchstart', resumeFromInteraction, { passive: true });
+    window.addEventListener('pointerdown', resumeFromInteraction, { passive: true });
+
+    // The last retry runs after the entrance overlay has fully unmounted.
+    const retries = [0, 350, 1450].map(delay => window.setTimeout(attemptPlay, delay));
+
+    return () => {
+      active = false;
+      retries.forEach(window.clearTimeout);
+      el.removeEventListener('canplay', attemptPlay);
+      el.removeEventListener('loadeddata', attemptPlay);
+      document.removeEventListener('visibilitychange', resumeWhenVisible);
+      window.removeEventListener('pageshow', attemptPlay);
+      window.removeEventListener('focus', attemptPlay);
+      window.removeEventListener('touchstart', resumeFromInteraction);
+      window.removeEventListener('pointerdown', resumeFromInteraction);
+    };
+  }, [ready]);
 
   const discover = () => {
     const target = document.getElementById('home-legacy');
@@ -66,7 +91,7 @@ export default function RoyalHero({ lang, setActiveTab, ready }) {
   };
 
   return (
-    <section className="royal-hero is-entered" aria-label={bn ? 'খেলাৎ ভবন' : 'Khelat Bhawan'}>
+    <section className={`royal-hero ${ready ? 'is-entered' : ''}`} aria-label={bn ? 'খেলাৎ ভবন' : 'Khelat Bhawan'}>
       <div className="royal-hero__media">
         <img className="royal-hero__backdrop" src={getAssetUrl('/images/SDP_0344.jpg')} alt="" fetchpriority="high" />
         <video
@@ -74,13 +99,17 @@ export default function RoyalHero({ lang, setActiveTab, ready }) {
           className="royal-hero__film"
           autoPlay
           muted
+          defaultMuted
           playsInline
           loop
           preload="auto"
+          disablePictureInPicture
+          controlsList="nodownload nofullscreen noremoteplayback"
           aria-hidden="true"
+          src={getAssetUrl('/Videos/hero-palace-film.mp4')}
           poster={getAssetUrl('/images/SDP_0344.jpg')}
         >
-          <source src={getAssetUrl('/Videos/hero-palace-film.mp4')} type="video/mp4" />
+          Your browser does not support background video.
         </video>
       </div>
       <div className="royal-hero__shade" />
