@@ -87,7 +87,7 @@ export default function TimelinePage({ lang, setActiveTab, onOpenLightbox, conte
 
   return (
     <main className="pt-28 md:pt-36 pb-24 bg-background min-h-screen">
-      <div className="w-full max-w-[96%] xl:max-w-[95%] 2xl:max-w-[1850px] mx-auto px-2 sm:px-4 md:px-6 lg:px-8">
+      <div className="w-full max-w-[96%] xl:max-w-[92%] 2xl:max-w-[1700px] mx-auto px-4 sm:px-6 lg:px-8">
         <SectionHeader
           title={lang === 'bn' ? 'ঐতিহ্যের সময়রেখা' : 'Heritage Timeline'}
           subtitle={lang === 'bn' 
@@ -95,51 +95,66 @@ export default function TimelinePage({ lang, setActiveTab, onOpenLightbox, conte
             : 'Tracing over 175 years of grandeur, devotion, and cultural legacy'}
         />
 
-        {/* Alternating Timeline Items - Full Width with Zero Blank Space */}
-        <div className="space-y-6 md:space-y-8 my-8 md:my-12">
+        {/* Editorial Full-Width Split-Row Timeline */}
+        <div className="divide-y divide-border/60 my-10 md:my-16">
           {milestones.map((item, idx) => {
             const isEven = idx % 2 === 0;
+            const numStr = String(idx + 1).padStart(2, '0');
 
             return (
               <div
                 key={idx}
-                className="grid grid-cols-1 lg:grid-cols-12 gap-6 lg:gap-8 items-center bg-card/90 p-5 sm:p-6 md:p-8 lg:p-10 rounded-2xl border border-accent/35 hover:border-accent hover:shadow-2xl transition-all duration-500 shadow-md backdrop-blur-md"
+                className="py-12 md:py-16 lg:py-20 first:pt-4 last:pb-8"
               >
-                {/* Details Section */}
-                <div className={`lg:col-span-7 xl:col-span-8 flex flex-col md:flex-row gap-6 md:gap-8 items-start md:items-center text-left ${isEven ? 'order-1 lg:order-1' : 'order-1 lg:order-2'}`}>
-                  <div className="min-w-[120px] md:min-w-[140px] flex-shrink-0">
-                    <span className="text-[10.5px] uppercase tracking-widest text-accent font-body font-bold block">
-                      {item.badge}
-                    </span>
-                    <span className="font-serif text-3xl sm:text-4xl md:text-5xl font-bold text-foreground block mt-1 leading-none">
-                      {item.year}
-                    </span>
-                  </div>
+                <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-14 xl:gap-20 items-center">
+                  {/* Text Section */}
+                  <div
+                    className={`lg:col-span-5 flex flex-col justify-center space-y-4 md:space-y-5 text-left ${
+                      isEven ? 'order-1 lg:order-1' : 'order-1 lg:order-2'
+                    }`}
+                  >
+                    <div className="flex items-center gap-3">
+                      <span className="text-xs sm:text-sm font-mono tracking-widest text-accent font-bold">
+                        {numStr}
+                      </span>
+                      <span className="text-muted-foreground/50 text-xs">/</span>
+                      <span className="text-xs sm:text-sm tracking-[0.2em] uppercase text-accent font-body font-semibold">
+                        {item.badge}
+                      </span>
+                      <span className="text-muted-foreground/50 text-xs">·</span>
+                      <span className="text-xs sm:text-sm font-serif font-bold text-foreground/80 tracking-wide">
+                        {item.year}
+                      </span>
+                    </div>
 
-                  <div className="space-y-2 border-l-0 md:border-l border-border/80 md:pl-8 flex-1">
-                    <h3 className="font-serif text-xl sm:text-2xl md:text-3xl font-bold text-foreground">
+                    <h3 className="font-serif text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-bold text-foreground leading-[1.15] tracking-tight uppercase">
                       {item.title}
                     </h3>
-                    <p className="text-xs sm:text-sm md:text-base text-muted-foreground font-body leading-relaxed">
+
+                    <p className="text-sm sm:text-base md:text-lg text-muted-foreground font-body leading-relaxed">
                       {item.desc}
                     </p>
                   </div>
-                </div>
 
-                {/* Image Section */}
-                <div className={`lg:col-span-5 xl:col-span-4 ${isEven ? 'order-2 lg:order-2' : 'order-2 lg:order-1'}`}>
-                  <div className="h-52 sm:h-60 md:h-64 lg:h-72 w-full rounded-xl overflow-hidden bg-black/60 border border-accent/25 shadow-lg group">
-                    <img
-                      src={getAssetUrl(item.image)}
-                      alt={item.title}
-                      className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700 cursor-pointer"
-                      onClick={() => onOpenLightbox({
-                        type: 'image',
-                        title: `${item.year} — ${item.title}`,
-                        desc: item.desc,
-                        src: item.image
-                      })}
-                    />
+                  {/* Image Section */}
+                  <div
+                    className={`lg:col-span-7 ${
+                      isEven ? 'order-2 lg:order-2' : 'order-2 lg:order-1'
+                    }`}
+                  >
+                    <div className="w-full h-[260px] sm:h-[360px] md:h-[420px] lg:h-[460px] rounded-2xl md:rounded-3xl overflow-hidden bg-black/40 border border-accent/20 shadow-2xl group">
+                      <img
+                        src={getAssetUrl(item.image)}
+                        alt={item.title}
+                        className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700 cursor-pointer"
+                        onClick={() => onOpenLightbox({
+                          type: 'image',
+                          title: `${item.year} — ${item.title}`,
+                          desc: item.desc,
+                          src: item.image
+                        })}
+                      />
+                    </div>
                   </div>
                 </div>
               </div>
