@@ -66,39 +66,44 @@ export const siteData = {
       }
     ],
     timelinePreview: {
-      eyebrow: "Chronicle of Elegance",
+      eyebrow: "Our Legacy Timeline",
       heading: "Key Historical Milestones",
-      desc: "A glimpse through 175+ years of cultural preservation, devotion, and aristocratic patronage.",
+      desc: "Journey through 175+ years of cultural preservation, spiritual devotion, and community service",
       viewFull: "View Full Heritage Timeline",
       items: [
         {
           year: "1845",
           title: "Bari Establishment",
           desc: "Khelat Bhawan was established as a grand Bengali heritage mansion by the visionary Ghosh family at 47 Pathuria Ghata Street, marking the beginning of an enduring cultural legacy.",
+          highlight: "The foundation stone was laid with traditional Bengali architectural elements, featuring intricate woodwork and terracotta designs.",
           image: "/images/SDP_0344.jpg"
         },
         {
           year: "1855",
           title: "Durga Puja Begins",
           desc: "Started the sacred tradition of Durga Puja that continues uninterrupted for 170+ years, becoming one of Kolkata's oldest and most revered aristocratic celebrations.",
+          highlight: "The first Durga Puja was celebrated with great devotion, establishing rituals that are followed to this day.",
           image: "/images/unnamed_6.webp"
         },
         {
           year: "1881",
           title: "Sri Ramakrishna Visit",
           desc: "The great saint and mystic Sri Ramakrishna Paramhansa blessed this house with his divine presence, sanctifying the premises forever.",
+          highlight: "This historic visit elevated the spiritual significance of Khelat Bhawan, making it a pilgrimage site for devotees.",
           image: "/images/rk01.png"
         },
         {
           year: "2000+",
           title: "Council of Culture",
           desc: "Establishment of Artist Nectar Council of Culture for comprehensive artist welfare, classical arts preservation, and cultural initiatives.",
+          highlight: "Modern initiatives to support artists while maintaining traditional values and cultural authenticity.",
           image: "/images/unnamed_12.webp"
         },
         {
           year: "Present",
           title: "Cultural Hub",
           desc: "Continuing as an active cultural hub, hosting traditional events, supporting the arts, and welcoming visitors to experience living Bengali heritage.",
+          highlight: "A living monument to Bengali culture, bridging the past and future through continuous cultural engagement.",
           image: "/images/unnamed_3.webp"
         }
       ]
@@ -631,39 +636,44 @@ export const siteData = {
       }
     ],
     timelinePreview: {
-      eyebrow: "ইতিহাসের পথচলা",
+      eyebrow: "আমাদের ঐতিহ্যের সময়রেখা",
       heading: "ঐতিহাসিক মাইলফলক",
-      desc: "১৭৫ বছরেরও বেশি সময় ধরে সাংস্কৃতিক সংরক্ষণ, ভক্তি ও আভিজাত্যের এক অবিস্মরণীয় যাত্রা।",
+      desc: "১৭৫+ বছরের সাংস্কৃতিক সংরক্ষণ, আধ্যাত্মিক ভক্তি এবং সমাজসেবার ঐতিহ্যময় পথচলা",
       viewFull: "সম্পূর্ণ ইতিহাস সময়রেখা দেখুন",
       items: [
         {
           year: "১৮৪৫",
           title: "খেলাৎ ভবনের প্রতিষ্ঠা",
           desc: "ঘোষ পরিবারের দূরদর্শী উদ্যোগে ৪৭ পাথুরিয়াঘাটা স্ট্রিটে এক রাজকীয় ঐতিহ্যবাহী প্রাসাদ হিসেবে খেলাৎ ভবনের প্রতিষ্ঠা, যা এক অবিস্মরণীয় সাংস্কৃতিক ঐতিহ্যের সূচনা করে।",
+          highlight: "ঐতিহ্যবাহী বাংলা স্থাপত্যের ছোঁয়া, নিখুঁত কাঠের কারুকাজ ও পোড়ামাটির নকশায় ভিত্তিস্থাপন করা হয়।",
           image: "/images/SDP_0344.jpg"
         },
         {
           year: "১৮৫৫",
           title: "দুর্গাপূজার শুভ সূচনা",
           desc: "ঐতিহাসিক পারিবারিক দুর্গোৎসবের শুভ সূচনা যা আজ ১৭০+ বছর ধরে অবিরাম উদযাপিত হচ্ছে এবং কলকাতার অন্যতম প্রাচীন ও সম্ভ্রান্ত উৎসব হিসেবে পরিগণিত।",
+          highlight: "গভীর ভক্তির সাথে প্রথম দুর্গাপূজা উদযাপিত হয় এবং আজ পর্যন্ত অক্ষুণ্ণ থাকা পবিত্র রীতিনীতির সূচনা হয়।",
           image: "/images/unnamed_6.webp"
         },
         {
           year: "১৮৮১",
           title: "শ্রীরামকৃষ্ণ পরমহংসদেবের শুভাগমন",
           desc: "যুগাবতার শ্রীশ্রীরামকৃষ্ণ পরমহংসদেব তাঁর দিব্য উপস্থিতিতে খেলাৎ ভবনের প্রাঙ্গণকে চিরতরে পবিত্র ও মহিমান্বিত করেন।",
+          highlight: "এই ঐতিহাসিক আগমন খেলাৎ ভবনের আধ্যাত্মিক মহিমাকে এক অনন্য উচ্চতায় নিয়ে যায় এবং ভক্তদের তীর্থস্থানে পরিণত করে।",
           image: "/images/rk01.png"
         },
         {
           year: "২০০০+",
           title: "কাউন্সিল অফ কালচার",
           desc: "শিল্পী কল্যাণ, উচ্চাঙ্গ শিল্পকলার সংরক্ষণ এবং বহুমুখী সাংস্কৃতিক ও সমাজকল্যাণমূলক উদ্যোগের প্রসারে আর্টিস্ট নেকটার কাউন্সিল অফ কালচারের প্রতিষ্ঠা।",
+          highlight: "ঐতিহ্যগত মূল্যবোধ অক্ষুণ্ণ রেখে আধুনিক যুগে গুণী শিল্পীদের পৃষ্ঠপোষকতায় সময়োপযোগী উদ্যোগ।",
           image: "/images/unnamed_12.webp"
         },
         {
           year: "বর্তমান",
           title: "সাংস্কৃতিক কেন্দ্র",
           desc: "একটি সক্রিয় সাংস্কৃতিক কেন্দ্র হিসেবে ঐতিহ্যবাহী অনুষ্ঠান উদযাপন, শিল্পকলাকে সহায়তা এবং দর্শনার্থীদের কাছে জীবন্ত ঐতিহ্য তুলে ধরার অবিরাম ধারা।",
+          highlight: "বাঙালি সংস্কৃতির এক জীবন্ত নিদর্শন, যা অতীত ও ভবিষ্যৎকে নিরবচ্ছিন্ন সাংস্কৃতিক মেলবন্ধনে যুক্ত করে রেখেছে।",
           image: "/images/unnamed_3.webp"
         }
       ]

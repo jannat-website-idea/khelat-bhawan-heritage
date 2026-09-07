@@ -145,7 +145,14 @@ export default function HomePage({ lang, setActiveTab, onOpenBooking, onOpenLigh
         </button>
       </section>
 
-      <HeritageMilestones lang={lang} milestones={milestones} onExplore={() => setActiveTab('timeline')} onOpenImage={openImage} />
+      <HeritageMilestones
+        lang={lang}
+        milestones={milestones}
+        onExplore={() => setActiveTab('timeline')}
+        onOpenImage={openImage}
+        eyebrow={t.timelinePreview.eyebrow}
+        subtitle={t.timelinePreview.desc}
+      />
 
       <section className="heritage-devotion">
         <div className="heritage-devotion__pattern heritage-devotion__pattern--top" aria-hidden="true" />

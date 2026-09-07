@@ -110,8 +110,11 @@ html { scroll-behavior: auto; }
 .archive-image { width: 100%; aspect-ratio: 1.68; display: block; overflow: hidden; background: #283942; border-radius: 14px; box-shadow: 0 16px 36px rgba(0, 0, 0, 0.3); border: 1px solid rgba(216, 174, 98, 0.2); }
 .archive-image img { display: block; width: 100%; height: 100%; object-fit: cover; filter: saturate(.74) contrast(1.03) brightness(.88); }
 .archive-entry figcaption { display: none; }
-.archive-entry__copy h3 { font: 600 clamp(31px,3vw,48px)/1.18 'Playfair Display','Noto Serif Bengali',serif; color: #f5f0dc; letter-spacing: .005em; margin-bottom: 26px; text-wrap: balance; }
-.heritage-home .archive-entry__copy p { font: italic 400 clamp(17px,1.35vw,22px)/1.75 'Karla','Hind Siliguri',sans-serif; color: #d1cdbb; max-width: 570px; }
+.heritage-home .archive-subtitle { max-width: 760px; margin: 24px auto 0; font: italic 400 clamp(16px,1.25vw,20px)/1.6 'Karla','Hind Siliguri',sans-serif; color: #d4caa8; }
+.archive-entry__copy h3 { font: 600 clamp(31px,3vw,48px)/1.18 'Playfair Display','Noto Serif Bengali',serif; color: #f5f0dc; letter-spacing: .005em; margin-bottom: 20px; text-wrap: balance; }
+.heritage-home .archive-entry__copy p { font: italic 400 clamp(16px,1.25vw,20px)/1.75 'Karla','Hind Siliguri',sans-serif; color: #d1cdbb; max-width: 570px; }
+.archive-entry__highlight { margin-top: 18px; padding: 14px 18px; background: rgba(216, 174, 98, 0.08); border-left: 3px solid #d8ae62; border-radius: 0 8px 8px 0; max-width: 570px; }
+.archive-entry__highlight p { font-size: 14px !important; line-height: 1.6 !important; color: #f0e6cb !important; margin: 0 !important; font-style: italic; }
 .archive-entry__watermark { position: absolute; z-index: 0; left: 0; right: 0; bottom: 2%; color: #dce0d914; font-family: 'Playfair Display','Noto Serif Bengali',serif; font-size: clamp(112px,14vw,240px); line-height: .82; letter-spacing: .015em; text-align: center; white-space: nowrap; pointer-events: none; }
 .heritage-archive__footer { display: flex; justify-content: space-between; align-items: center; gap: 30px; max-width: 1100px; border-top: 1px solid #c4a35c66; margin: 110px auto 0; padding: 28px 7vw 0; font-size: 12px; letter-spacing: .14em; text-transform: uppercase; color: #d1c8ad; }
 .heritage-archive__footer button { display: inline-flex; gap: 24px; align-items: center; min-height: 44px; color: #f2ead5; }
@@ -176,6 +179,7 @@ html { scroll-behavior: auto; }
   .heritage-archive__heading { margin-bottom: 75px; padding: 0 7vw; }
   .heritage-home .archive-label { margin: 0 0 30px; padding-inline: 18px; font-size: 11px; }
   .heritage-home .heritage-archive h2 { font-size: clamp(48px,13.3vw,70px); line-height: 1.04; }
+  .heritage-home .archive-subtitle { font-size: 15px; margin-top: 18px; }
   .heritage-archive__spread::before { left: 7vw; }
   .archive-entry,.archive-entry--1 { display: flex; flex-direction: column; align-items: stretch; min-height: 0; padding: 40px 0 90px 13vw; margin: 0; }
   .archive-entry:nth-child(even) { flex-direction: column; }
