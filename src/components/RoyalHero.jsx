@@ -54,7 +54,7 @@ export default function RoyalHero({ lang, setActiveTab, ready }) {
   return (
     <section className={`royal-hero ${ready ? 'is-entered' : 'is-entered'}`} aria-label={bn ? 'খেলাৎ ভবন' : 'Khelat Bhawan'}>
       <div className="royal-hero__media">
-        <img className="royal-hero__backdrop" src={getAssetUrl('/images/SDP_0344.jpg')} alt="" fetchpriority="high" />
+        <img className="royal-hero__backdrop" src={getAssetUrl('/images/hero-staircase-poster.jpg')} alt="" fetchpriority="high" />
         <video
           ref={video}
           className="royal-hero__film"
@@ -67,7 +67,7 @@ export default function RoyalHero({ lang, setActiveTab, ready }) {
           disablePictureInPicture
           controlsList="nodownload nofullscreen noremoteplayback"
           aria-hidden="true"
-          poster={getAssetUrl('/images/SDP_0344.jpg')}
+          poster={getAssetUrl('/images/hero-staircase-poster.jpg')}
         >
           <source src={getAssetUrl('/Videos/hero-palace-film-mobile.mp4')} type="video/mp4" media="(max-width: 768px)" />
           <source src={getAssetUrl('/Videos/hero-palace-film-mobile.m4v')} type="video/mp4" media="(max-width: 768px)" />
