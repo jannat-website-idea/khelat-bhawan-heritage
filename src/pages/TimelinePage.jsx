@@ -87,7 +87,7 @@ export default function TimelinePage({ lang, setActiveTab, onOpenLightbox, conte
 
   return (
     <main className="pt-28 md:pt-36 pb-24 bg-background min-h-screen">
-      <div className="w-full max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div className="w-full max-w-[1440px] xl:max-w-[1550px] 2xl:max-w-[1680px] mx-auto px-4 sm:px-6 lg:px-10">
         <SectionHeader
           title={lang === 'bn' ? 'ঐতিহ্যের সময়রেখা' : 'Heritage Timeline'}
           subtitle={lang === 'bn' 
@@ -96,17 +96,16 @@ export default function TimelinePage({ lang, setActiveTab, onOpenLightbox, conte
         />
 
         {/* Sleek Editorial Split-Row Timeline */}
-        <div className="divide-y divide-border/50 my-8 md:my-12">
+        <div className="divide-y divide-border/50 my-8 md:my-14">
           {milestones.map((item, idx) => {
             const isEven = idx % 2 === 0;
-            const numStr = String(idx + 1).padStart(2, '0');
 
             return (
               <div
                 key={idx}
-                className="py-8 sm:py-10 md:py-12 first:pt-2 last:pb-4"
+                className="py-8 sm:py-10 md:py-12 lg:py-14 first:pt-2 last:pb-4"
               >
-                <div className="grid grid-cols-1 md:grid-cols-12 gap-6 md:gap-10 lg:gap-12 items-center">
+                <div className="grid grid-cols-1 md:grid-cols-12 gap-6 sm:gap-8 md:gap-10 lg:gap-14 items-center">
                   {/* Text Section */}
                   <div
                     className={`md:col-span-5 flex flex-col justify-center space-y-2.5 sm:space-y-3 text-left ${
@@ -114,24 +113,20 @@ export default function TimelinePage({ lang, setActiveTab, onOpenLightbox, conte
                     }`}
                   >
                     <div className="flex items-center gap-2">
-                      <span className="text-[11px] sm:text-xs font-mono tracking-widest text-accent font-bold">
-                        {numStr}
-                      </span>
-                      <span className="text-muted-foreground/40 text-[10px]">/</span>
-                      <span className="text-[11px] sm:text-xs tracking-[0.18em] uppercase text-accent font-body font-semibold">
+                      <span className="text-[11px] sm:text-xs tracking-[0.2em] uppercase text-accent font-body font-bold">
                         {item.badge}
                       </span>
                       <span className="text-muted-foreground/40 text-[10px]">·</span>
-                      <span className="text-[11px] sm:text-xs font-serif font-bold text-foreground/80 tracking-wider">
+                      <span className="text-[11px] sm:text-xs font-serif font-bold text-foreground/85 tracking-wider">
                         {item.year}
                       </span>
                     </div>
 
-                    <h3 className="font-serif text-lg sm:text-xl md:text-2xl font-bold text-foreground leading-snug tracking-tight uppercase">
+                    <h3 className="font-serif text-lg sm:text-xl md:text-2xl lg:text-3xl font-bold text-foreground leading-snug tracking-tight uppercase">
                       {item.title}
                     </h3>
 
-                    <p className="text-xs sm:text-sm text-muted-foreground font-body leading-relaxed max-w-lg">
+                    <p className="text-xs sm:text-sm md:text-base text-muted-foreground font-body leading-relaxed max-w-xl">
                       {item.desc}
                     </p>
                   </div>
@@ -142,7 +137,7 @@ export default function TimelinePage({ lang, setActiveTab, onOpenLightbox, conte
                       isEven ? 'order-2 md:order-2' : 'order-2 md:order-1'
                     }`}
                   >
-                    <div className="w-full h-48 sm:h-56 md:h-64 lg:h-72 rounded-xl sm:rounded-2xl overflow-hidden bg-black/40 border border-accent/25 shadow-xl group">
+                    <div className="w-full h-52 sm:h-64 md:h-72 lg:h-80 xl:h-[350px] rounded-xl sm:rounded-2xl overflow-hidden bg-black/40 border border-accent/25 shadow-xl group">
                       <img
                         src={getAssetUrl(item.image)}
                         alt={item.title}
