@@ -87,7 +87,7 @@ export default function TimelinePage({ lang, setActiveTab, onOpenLightbox, conte
 
   return (
     <main className="pt-28 md:pt-36 pb-24 bg-background min-h-screen">
-      <div className="w-full max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div className="w-full max-w-[96%] xl:max-w-[95%] 2xl:max-w-[1850px] mx-auto px-2 sm:px-4 md:px-6 lg:px-8">
         <SectionHeader
           title={lang === 'bn' ? 'ঐতিহ্যের সময়রেখা' : 'Heritage Timeline'}
           subtitle={lang === 'bn' 
@@ -95,40 +95,40 @@ export default function TimelinePage({ lang, setActiveTab, onOpenLightbox, conte
             : 'Tracing over 175 years of grandeur, devotion, and cultural legacy'}
         />
 
-        {/* Alternating Timeline Items */}
-        <div className="space-y-8 md:space-y-10 my-12 md:my-16">
+        {/* Alternating Timeline Items - Full Width with Zero Blank Space */}
+        <div className="space-y-6 md:space-y-8 my-8 md:my-12">
           {milestones.map((item, idx) => {
             const isEven = idx % 2 === 0;
 
             return (
               <div
                 key={idx}
-                className="grid grid-cols-1 md:grid-cols-12 gap-6 md:gap-10 items-center bg-card/85 p-6 md:p-8 rounded-2xl border border-accent/35 hover:border-accent hover:shadow-xl transition-all duration-500 shadow-md backdrop-blur-sm"
+                className="grid grid-cols-1 lg:grid-cols-12 gap-6 lg:gap-8 items-center bg-card/90 p-5 sm:p-6 md:p-8 lg:p-10 rounded-2xl border border-accent/35 hover:border-accent hover:shadow-2xl transition-all duration-500 shadow-md backdrop-blur-md"
               >
                 {/* Details Section */}
-                <div className={`md:col-span-8 flex flex-col md:flex-row gap-6 md:gap-8 items-start md:items-center text-left ${isEven ? 'order-1 md:order-1' : 'order-1 md:order-2'}`}>
-                  <div className="min-w-[130px] flex-shrink-0">
-                    <span className="text-[10px] uppercase tracking-widest text-accent font-body font-semibold block">
+                <div className={`lg:col-span-7 xl:col-span-8 flex flex-col md:flex-row gap-6 md:gap-8 items-start md:items-center text-left ${isEven ? 'order-1 lg:order-1' : 'order-1 lg:order-2'}`}>
+                  <div className="min-w-[120px] md:min-w-[140px] flex-shrink-0">
+                    <span className="text-[10.5px] uppercase tracking-widest text-accent font-body font-bold block">
                       {item.badge}
                     </span>
-                    <span className="font-serif text-3xl md:text-5xl font-bold text-foreground block mt-1 leading-none">
+                    <span className="font-serif text-3xl sm:text-4xl md:text-5xl font-bold text-foreground block mt-1 leading-none">
                       {item.year}
                     </span>
                   </div>
 
                   <div className="space-y-2 border-l-0 md:border-l border-border/80 md:pl-8 flex-1">
-                    <h3 className="font-serif text-xl md:text-2xl font-bold text-foreground">
+                    <h3 className="font-serif text-xl sm:text-2xl md:text-3xl font-bold text-foreground">
                       {item.title}
                     </h3>
-                    <p className="text-xs md:text-sm text-muted-foreground font-body leading-relaxed">
+                    <p className="text-xs sm:text-sm md:text-base text-muted-foreground font-body leading-relaxed">
                       {item.desc}
                     </p>
                   </div>
                 </div>
 
                 {/* Image Section */}
-                <div className={`md:col-span-4 ${isEven ? 'order-2 md:order-2' : 'order-2 md:order-1'}`}>
-                  <div className="h-48 md:h-52 rounded-xl overflow-hidden bg-black/60 border border-accent/25 shadow-md group">
+                <div className={`lg:col-span-5 xl:col-span-4 ${isEven ? 'order-2 lg:order-2' : 'order-2 lg:order-1'}`}>
+                  <div className="h-52 sm:h-60 md:h-64 lg:h-72 w-full rounded-xl overflow-hidden bg-black/60 border border-accent/25 shadow-lg group">
                     <img
                       src={getAssetUrl(item.image)}
                       alt={item.title}

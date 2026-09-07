@@ -10,7 +10,7 @@ export default function FounderPage({ lang, setActiveTab, onOpenLightbox, conten
 
   return (
     <main className="pt-28 md:pt-36 pb-24 bg-background min-h-screen">
-      <div className="w-full max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div className="w-full max-w-[96%] xl:max-w-[95%] 2xl:max-w-[1850px] mx-auto px-2 sm:px-4 md:px-6 lg:px-8">
         <SectionHeader
           title={t.founder.name}
           subtitle={bn 
