@@ -1,0 +1,527 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Khelat Bhawan — Brand Identity & Design System</title>
+  
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400;1,600&family=Cormorant+Garamond:ital,wght@0,400;0,600;0,700;1,400&family=Hind+Siliguri:wght@400;500;600&family=Karla:wght@300;400;500;600;700&family=Noto+Serif+Bengali:wght@500;600;700&display=swap" rel="stylesheet">
+  
+  <style>
+    :root {
+      --maroon: #2A0E0A;
+      --warm-gold: #D4AF37;
+      --dark-gold: #A88427;
+      --ivory: #FDFBF7;
+      --cream: #F4EFE6;
+      --charcoal: #281B16;
+      --sepia: #6E5C54;
+      --rose-gold: #BE7964;
+      --slate: #152021;
+      --border: #E2D7C3;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      font-family: 'Karla', sans-serif;
+      background-color: var(--ivory);
+      color: var(--charcoal);
+      line-height: 1.6;
+      padding: 40px 20px;
+    }
+
+    .container {
+      max-width: 1000px;
+      margin: 0 auto;
+      background: #ffffff;
+      border: 1px solid var(--border);
+      box-shadow: 0 15px 45px rgba(42, 14, 10, 0.08);
+      padding: 60px;
+      border-radius: 4px;
+      position: relative;
+    }
+
+    .gold-frame {
+      border: 1px solid var(--warm-gold);
+      padding: 40px;
+      position: relative;
+    }
+
+    .corner-bracket {
+      position: absolute;
+      width: 12px;
+      height: 12px;
+      border-color: var(--dark-gold);
+      border-style: solid;
+    }
+    .corner-tl { top: -1px; left: -1px; border-width: 3px 0 0 3px; }
+    .corner-tr { top: -1px; right: -1px; border-width: 3px 3px 0 0; }
+    .corner-bl { bottom: -1px; left: -1px; border-width: 0 0 3px 3px; }
+    .corner-br { bottom: -1px; right: -1px; border-width: 0 3px 3px 0; }
+
+    header {
+      text-align: center;
+      margin-bottom: 40px;
+      border-bottom: 1px solid var(--border);
+      padding-bottom: 30px;
+    }
+
+    .brand-eyebrow {
+      font-size: 11px;
+      text-transform: uppercase;
+      letter-spacing: 0.25em;
+      color: var(--dark-gold);
+      font-weight: 600;
+      margin-bottom: 8px;
+    }
+
+    h1 {
+      font-family: 'Playfair Display', serif;
+      font-size: 38px;
+      font-weight: 700;
+      color: var(--maroon);
+      letter-spacing: 0.05em;
+      margin-bottom: 6px;
+    }
+
+    .brand-subtitle {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 18px;
+      font-style: italic;
+      color: var(--sepia);
+    }
+
+    .actions-bar {
+      display: flex;
+      justify-content: flex-end;
+      gap: 12px;
+      margin-bottom: 30px;
+    }
+
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 10px 20px;
+      font-size: 11px;
+      font-weight: 600;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      text-decoration: none;
+      border-radius: 2px;
+      cursor: pointer;
+      transition: all 0.3s;
+    }
+
+    .btn-primary {
+      background: var(--maroon);
+      color: #fff;
+      border: 1px solid var(--maroon);
+    }
+
+    .btn-primary:hover {
+      background: var(--warm-gold);
+      color: var(--maroon);
+      border-color: var(--warm-gold);
+    }
+
+    .btn-outline {
+      background: transparent;
+      color: var(--maroon);
+      border: 1px solid var(--warm-gold);
+    }
+
+    .btn-outline:hover {
+      background: var(--cream);
+    }
+
+    section {
+      margin-bottom: 45px;
+    }
+
+    h2 {
+      font-family: 'Playfair Display', serif;
+      font-size: 20px;
+      color: var(--maroon);
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      border-bottom: 1px solid var(--warm-gold);
+      padding-bottom: 8px;
+      margin-bottom: 20px;
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-bottom: 20px;
+      font-size: 13px;
+    }
+
+    th, td {
+      padding: 12px 16px;
+      border: 1px solid var(--border);
+      text-align: left;
+    }
+
+    th {
+      background: var(--maroon);
+      color: var(--ivory);
+      font-weight: 600;
+      font-size: 11px;
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+    }
+
+    tr:nth-child(even) {
+      background: var(--cream);
+    }
+
+    .color-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+      gap: 16px;
+      margin-bottom: 20px;
+    }
+
+    .color-card {
+      border: 1px solid var(--border);
+      border-radius: 4px;
+      overflow: hidden;
+      background: #fff;
+    }
+
+    .color-swatch {
+      height: 75px;
+      width: 100%;
+      display: flex;
+      align-items: flex-end;
+      padding: 8px;
+      color: #fff;
+      font-size: 10px;
+      font-weight: 700;
+      letter-spacing: 0.1em;
+      text-shadow: 0 1px 3px rgba(0,0,0,0.5);
+    }
+
+    .color-details {
+      padding: 12px;
+      font-size: 12px;
+    }
+
+    .color-name {
+      font-weight: 700;
+      color: var(--maroon);
+      margin-bottom: 4px;
+      font-size: 13px;
+    }
+
+    .color-hex {
+      font-family: monospace;
+      font-size: 11px;
+      color: var(--sepia);
+    }
+
+    .color-role {
+      font-size: 11px;
+      color: var(--charcoal);
+      margin-top: 4px;
+      line-height: 1.4;
+    }
+
+    .type-specimen {
+      background: var(--cream);
+      border: 1px solid var(--border);
+      padding: 24px;
+      border-radius: 4px;
+      margin-bottom: 16px;
+    }
+
+    .specimen-label {
+      font-size: 10.5px;
+      text-transform: uppercase;
+      letter-spacing: 0.2em;
+      color: var(--dark-gold);
+      font-weight: 700;
+      margin-bottom: 6px;
+    }
+
+    .specimen-sample-playfair {
+      font-family: 'Playfair Display', serif;
+      font-size: 32px;
+      color: var(--maroon);
+      line-height: 1.2;
+      margin-bottom: 6px;
+    }
+
+    .specimen-sample-garamond {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 24px;
+      color: var(--charcoal);
+      line-height: 1.3;
+      margin-bottom: 6px;
+    }
+
+    .specimen-sample-bengali {
+      font-family: 'Noto Serif Bengali', serif;
+      font-size: 24px;
+      color: var(--maroon);
+      margin-bottom: 6px;
+    }
+
+    .specimen-meta {
+      font-size: 12px;
+      color: var(--sepia);
+    }
+
+    footer {
+      border-top: 1px solid var(--border);
+      padding-top: 20px;
+      text-align: center;
+      font-size: 11px;
+      color: var(--sepia);
+      letter-spacing: 0.05em;
+    }
+
+    @media print {
+      body {
+        padding: 0;
+        background: #fff;
+      }
+      .actions-bar {
+        display: none;
+      }
+      .container {
+        box-shadow: none;
+        border: none;
+        padding: 0;
+      }
+      .gold-frame {
+        padding: 20px;
+      }
+      .page-break {
+        page-break-before: always;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <div class="container">
+    <div class="actions-bar">
+      <a href="/Khelat_Bhawan_Brand_Guidelines.pdf" download class="btn btn-primary">⬇ Download PDF Document</a>
+      <button onclick="window.print()" class="btn btn-outline">🖨 Print / Save as PDF</button>
+    </div>
+
+    <div class="gold-frame">
+      <div class="corner-bracket corner-tl"></div>
+      <div class="corner-bracket corner-tr"></div>
+      <div class="corner-bracket corner-bl"></div>
+      <div class="corner-bracket corner-br"></div>
+
+      <header>
+        <div class="brand-eyebrow">ESTABLISHED 1845 · PATHURIA GHATA GHOSH BARI</div>
+        <h1>KHELAT BHAWAN</h1>
+        <div class="brand-subtitle">Official Brand Identity, Typography Hierarchy & Design System Specifications</div>
+      </header>
+
+      <!-- 1. Executive Summary -->
+      <section>
+        <h2>1. Executive Summary & Estate Foundation</h2>
+        <table>
+          <tbody>
+            <tr>
+              <td style="font-weight: 700; width: 25%; color: var(--maroon);">Property Name</td>
+              <td><strong>Khelat Bhawan (খেলাৎ ভবন)</strong> — Pathuria Ghata Ghosh Bari</td>
+            </tr>
+            <tr>
+              <td style="font-weight: 700; color: var(--maroon);">Established / Era</td>
+              <td><strong>1845</strong> · 19th-Century Bengal Renaissance Aristocracy (175+ Years of Living Heritage)</td>
+            </tr>
+            <tr>
+              <td style="font-weight: 700; color: var(--maroon);">Founder</td>
+              <td><strong>Babu Khelat Chandra Ghosh (1775 – 1845)</strong>, Merchant Prince, Philanthropist & Patron of Indian Classical Arts</td>
+            </tr>
+            <tr>
+              <td style="font-weight: 700; color: var(--maroon);">Historic Location</td>
+              <td>47 Pathuria Ghata Street, Kolkata 700006, West Bengal, India</td>
+            </tr>
+            <tr>
+              <td style="font-weight: 700; color: var(--maroon);">Core Pillars</td>
+              <td>Living Rajbari Heritage, Durga Puja Tradition (since 1855), Visit of Sri Ramakrishna Paramhansa (1881), Classical Music Patronage</td>
+            </tr>
+          </tbody>
+        </table>
+      </section>
+
+      <!-- 2. Official Color Palette -->
+      <section>
+        <h2>2. Official Color Palette & Swatches</h2>
+        <div class="color-grid">
+          <div class="color-card">
+            <div class="color-swatch" style="background-color: #2A0E0A;">#2A0E0A</div>
+            <div class="color-details">
+              <div class="color-name">Imperial Maroon</div>
+              <div class="color-hex">hsl(7, 55%, 12%)</div>
+              <div class="color-role">Primary brand marks, headers, royal contrast accents.</div>
+            </div>
+          </div>
+
+          <div class="color-card">
+            <div class="color-swatch" style="background-color: #D4AF37; color: #2A0E0A; text-shadow: none;">#D4AF37</div>
+            <div class="color-details">
+              <div class="color-name">Warm Heritage Gold</div>
+              <div class="color-hex">hsl(38, 56%, 57%)</div>
+              <div class="color-role">Borders, royal badges, timeline milestones, button frames.</div>
+            </div>
+          </div>
+
+          <div class="color-card">
+            <div class="color-swatch" style="background-color: #F9F7F2; color: #2A0E0A; text-shadow: none; border-bottom: 1px solid var(--border);">#F9F7F2</div>
+            <div class="color-details">
+              <div class="color-name">Palace Ivory</div>
+              <div class="color-hex">hsl(43, 35%, 96%)</div>
+              <div class="color-role">Main website background (warm parchment aesthetic).</div>
+            </div>
+          </div>
+
+          <div class="color-card">
+            <div class="color-swatch" style="background-color: #F0EBD9; color: #2A0E0A; text-shadow: none; border-bottom: 1px solid var(--border);">#F0EBD9</div>
+            <div class="color-details">
+              <div class="color-name">Surface Cream</div>
+              <div class="color-hex">hsl(40, 30%, 91%)</div>
+              <div class="color-role">Cards, modal panels, glassmorphism surfaces.</div>
+            </div>
+          </div>
+
+          <div class="color-card">
+            <div class="color-swatch" style="background-color: #281B16;">#281B16</div>
+            <div class="color-details">
+              <div class="color-name">Charcoal Ebony</div>
+              <div class="color-hex">hsl(10, 42%, 15%)</div>
+              <div class="color-role">High-contrast readable body typography.</div>
+            </div>
+          </div>
+
+          <div class="color-card">
+            <div class="color-swatch" style="background-color: #6E5C54;">#6E5C54</div>
+            <div class="color-details">
+              <div class="color-name">Muted Sepia</div>
+              <div class="color-hex">hsl(16, 14%, 40%)</div>
+              <div class="color-role">Secondary body descriptions, archival labels, subtitles.</div>
+            </div>
+          </div>
+
+          <div class="color-card">
+            <div class="color-swatch" style="background-color: #BE7964;">#BE7964</div>
+            <div class="color-details">
+              <div class="color-name">Rose Gold</div>
+              <div class="color-hex">hsl(18, 40%, 58%)</div>
+              <div class="color-role">Interactive highlights, text selection backgrounds.</div>
+            </div>
+          </div>
+
+          <div class="color-card">
+            <div class="color-swatch" style="background-color: #152021;">#152021</div>
+            <div class="color-details">
+              <div class="color-name">Night Slate</div>
+              <div class="color-hex">rgba(21, 32, 33, 1)</div>
+              <div class="color-role">Hero video shading and heritage archive dark sections.</div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <div class="page-break"></div>
+
+      <!-- 3. Typography Hierarchy -->
+      <section>
+        <h2>3. Typography Hierarchy & Font Specifications</h2>
+
+        <div class="type-specimen">
+          <div class="specimen-label">Primary Display Font — Playfair Display</div>
+          <div class="specimen-sample-playfair">Khelat <em>Bhawan</em> · 1845</div>
+          <div class="specimen-meta">Weights: 700 (Bold), 600 (SemiBold), 400 (Italic) · Used for Hero headlines and main page titles.</div>
+        </div>
+
+        <div class="type-specimen">
+          <div class="specimen-label">Editorial Archival Font — Cormorant Garamond</div>
+          <div class="specimen-sample-garamond">The Living Rajbari Heritage of Pathuria Ghata Ghosh Bari</div>
+          <div class="specimen-meta">Weights: 400 (Regular), 500 (Medium), 600 (SemiBold), 700 (Bold) · Used for milestone titles and quotes.</div>
+        </div>
+
+        <div class="type-specimen">
+          <div class="specimen-label">Primary Body Font — Karla</div>
+          <p style="font-size: 14px; margin-bottom: 6px;">
+            Khelat Ghosh established Khelat Bhawan as a cultural sanctuary for Bengali heritage preservation. Today, it stands as an active center for cultural events, spiritual devotion, and heritage rental.
+          </p>
+          <div class="specimen-meta">Weights: 300 (Light), 400 (Regular), 500 (Medium), 600 (SemiBold) · Used for paragraphs, navigation, and buttons.</div>
+        </div>
+
+        <div class="type-specimen">
+          <div class="specimen-label">Bilingual Bengali Typography — Noto Serif Bengali & Hind Siliguri</div>
+          <div class="specimen-sample-bengali">খেলাৎ ভবন — ১৮৪৫ সাল থেকে এক জীবন্ত উত্তরাধিকার</div>
+          <div class="specimen-meta">Headings: Noto Serif Bengali (500, 600, 700) · Body: Hind Siliguri (400, 500, 600)</div>
+        </div>
+      </section>
+
+      <!-- 4. Design Principles -->
+      <section>
+        <h2>4. Design Principles & Layout Architecture</h2>
+        <table>
+          <tbody>
+            <tr>
+              <td style="font-weight: 700; width: 28%; color: var(--maroon);">Editorial Split Grid</td>
+              <td>12-column responsive layout (5 cols content + 7 cols visual) with alternating Left/Right rhythm to eliminate blank side space.</td>
+            </tr>
+            <tr>
+              <td style="font-weight: 700; color: var(--maroon);">Glassmorphism Accents</td>
+              <td>Frosted ivory glass surfaces (<code>backdrop-filter: blur(10px)</code>) paired with hairline gold borders and 4-corner ornamental brackets.</td>
+            </tr>
+            <tr>
+              <td style="font-weight: 700; color: var(--maroon);">FastStart Video Hero</td>
+              <td>Cinematic streams opening directly with the bride ascending the grand staircase (0:00) with instant mobile autoplay.</td>
+            </tr>
+            <tr>
+              <td style="font-weight: 700; color: var(--maroon);">Bengali Filigree Motifs</td>
+              <td>Traditional Alpana artwork integrated into section dividers and subtle archival background watermarks.</td>
+            </tr>
+          </tbody>
+        </table>
+      </section>
+
+      <!-- 5. Digital Infrastructure -->
+      <section>
+        <h2>5. Digital Infrastructure & Live Production</h2>
+        <table>
+          <tbody>
+            <tr>
+              <td style="font-weight: 700; width: 28%; color: var(--maroon);">Live Production URL</td>
+              <td><a href="https://khelat-bhawan-heritage.vercel.app" target="_blank" style="color: var(--maroon); font-weight: 600;">https://khelat-bhawan-heritage.vercel.app</a></td>
+            </tr>
+            <tr>
+              <td style="font-weight: 700; color: var(--maroon);">GitHub Repository</td>
+              <td><a href="https://github.com/jannat-website-idea/khelat-bhawan-heritage" target="_blank" style="color: var(--maroon); font-weight: 600;">jannat-website-idea/khelat-bhawan-heritage</a></td>
+            </tr>
+            <tr>
+              <td style="font-weight: 700; color: var(--maroon);">Technology Stack</td>
+              <td>React 18 · Tailwind CSS · Vite 8 · ReportLab PDF Generator · Lenis Smooth Scroll</td>
+            </tr>
+          </tbody>
+        </table>
+      </section>
+
+      <footer>
+        © 1845 – 2026 Khelat Bhawan Trust · Pathuria Ghata Ghosh Bari · Confidential Client Brand Guidelines Document
+      </footer>
+    </div>
+  </div>
+
+</body>
+</html>
