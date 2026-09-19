@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useRef } from 'react';
 import RoyalHero from '../components/RoyalHero';
 import HeritageMilestones from '../components/HeritageMilestones';
-import { ArrowRight, Star, ExternalLink, Play } from 'lucide-react';
+import { ArrowRight, Star, ExternalLink, Play, Quote } from 'lucide-react';
 import AlpanaDivider from '../components/AlpanaDivider';
 import { getAssetUrl } from '../utils/assetHelper';
 import { galleryData } from '../data/galleryData';
@@ -55,11 +55,12 @@ function AnimatedStat({ target, suffix = '', isBn = false, duration = 2000 }) {
   );
 }
 
-export default function HomePage({ lang, setActiveTab, onOpenBooking, onOpenLightbox, content, ready }) {
+export default function HomePage({ lang = 'en', setActiveTab, onOpenBooking, onOpenLightbox, content, ready }) {
   const t = content[lang];
   const isBn = lang === 'bn';
   const milestones = t.timelinePreview.items;
-  const galleryPreview = galleryData.slice(0, 5);
+  const galleryPreview = galleryData.slice(0, 6);
+  const reviews = t.reviews.items || [];
 
   const openImage = (src, title, desc = '') => onOpenLightbox({ type: 'image', src, title, desc });
 
@@ -67,11 +68,15 @@ export default function HomePage({ lang, setActiveTab, onOpenBooking, onOpenLigh
     <main className="heritage-home">
       <RoyalHero lang={lang} setActiveTab={setActiveTab} ready={ready} />
 
+      {/* Legacy Statistics Strip */}
       <section className="royal-legacy-strip" aria-label={isBn ? 'ঐতিহ্যের পরিচয়' : 'Heritage at a glance'}>
         <div className="royal-legacy-strip__intro">
           <h2>{isBn ? 'এক জীবন্ত উত্তরাধিকার' : 'A living legacy,'}<em>{isBn ? '১৮৪৫ সাল থেকে সযত্নে রক্ষিত' : 'held in trust since 1845'}</em></h2>
           <p>{isBn ? '১৭৫ বছরেরও বেশি সময় ধরে বাংলা সংস্কৃতি, সঙ্গীত ও ভক্তির ঐতিহ্য সংরক্ষণ করে চলেছে খেলাৎ ভবন।' : 'Khelat Bhawan—Pathuria Ghata Ghosh Bari—has preserved Bengal’s culture, music and devotion for more than 175 years.'}</p>
-          <div><button onClick={() => setActiveTab('trustees')}>{isBn ? 'ট্রাস্টের বিস্তারিত' : 'Trustee details'}<ArrowRight size={16} /></button><button onClick={() => setActiveTab('timeline')}>{isBn ? 'ঐতিহ্যের সময়রেখা' : 'Heritage timeline'}<ArrowRight size={16} /></button></div>
+          <div>
+            <button onClick={() => setActiveTab('trustees')}>{isBn ? 'ট্রাস্টের বিস্তারিত' : 'Trustee details'}<ArrowRight size={16} /></button>
+            <button onClick={() => setActiveTab('timeline')}>{isBn ? 'ঐতিহ্যের সময়রেখা' : 'Heritage timeline'}<ArrowRight size={16} /></button>
+          </div>
         </div>
         <div className="royal-legacy-strip__stats">
           <div>
@@ -89,6 +94,7 @@ export default function HomePage({ lang, setActiveTab, onOpenBooking, onOpenLigh
         </div>
       </section>
 
+      {/* Heritage Narrative Section */}
       <section id="home-legacy" className="heritage-story heritage-section">
         <div className="heritage-story__copy">
           <p className="heritage-kicker">{isBn ? 'ঐতিহ্য ও উত্তরাধিকার' : 'Heritage & legacy'}</p>
@@ -121,6 +127,7 @@ export default function HomePage({ lang, setActiveTab, onOpenBooking, onOpenLigh
         </button>
       </section>
 
+      {/* Item 3: Three Cultural Trust Cards with Rounded Corners and Deep Luxury Shadows */}
       <section className="heritage-trusts heritage-section heritage-pattern-field">
         <div className="heritage-heading-row">
           <div>
@@ -129,22 +136,45 @@ export default function HomePage({ lang, setActiveTab, onOpenBooking, onOpenLigh
           </div>
           <p>{isBn ? 'ভক্তি, শিল্প ও সেবার মাধ্যমে বাংলা ঐতিহ্য সংরক্ষণে তিনটি ট্রাস্ট একসঙ্গে কাজ করে।' : 'United in purpose and distinct in mission, three trusts preserve Bengali heritage through devotion, arts and service.'}</p>
         </div>
-        <div className="heritage-trust-grid">
+        
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-8 max-w-7xl mx-auto">
           {t.trusts.list.map((trust) => (
-            <article key={trust.id} className="heritage-trust-card">
-              <div className="heritage-trust-card__top"><span>{trust.num}</span><small>{trust.est}</small></div>
-              <p className="heritage-kicker">{trust.focus}</p>
-              <h3>{trust.title}</h3>
-              <p>{trust.desc}</p>
-              <ul>{trust.activities.slice(0, 4).map((activity) => <li key={activity}>{activity}</li>)}</ul>
+            <article
+              key={trust.id}
+              className="bg-card/90 rounded-3xl border border-primary/30 p-8 sm:p-10 shadow-2xl hover:shadow-[0_24px_50px_rgba(216,174,98,0.2)] hover:-translate-y-2 transition-all duration-500 flex flex-col justify-between relative overflow-hidden backdrop-blur-sm"
+            >
+              <div>
+                <div className="flex items-baseline justify-between mb-8 pb-4 border-b border-border/40">
+                  <span className="font-serif text-4xl text-primary font-bold">{trust.num}</span>
+                  <span className="text-[10px] uppercase font-semibold tracking-widest text-muted-foreground">{trust.est}</span>
+                </div>
+                <p className="text-[11px] uppercase tracking-[0.2em] font-semibold text-primary mb-2">{trust.focus}</p>
+                <h3 className="font-serif text-2xl text-foreground font-semibold mb-4 leading-tight">{trust.title}</h3>
+                <p className="text-muted-foreground text-xs sm:text-sm font-sans leading-relaxed mb-6">{trust.desc}</p>
+              </div>
+
+              <div className="pt-4 border-t border-border/40">
+                <ul className="space-y-2">
+                  {trust.activities.slice(0, 4).map((activity, idx) => (
+                    <li key={idx} className="text-xs text-foreground/80 flex items-start gap-2">
+                      <span className="text-primary font-bold mt-0.5">✦</span>
+                      <span>{activity}</span>
+                    </li>
+                  ))}
+                </ul>
+              </div>
             </article>
           ))}
         </div>
-        <button className="heritage-button heritage-button--dark" onClick={() => setActiveTab('trustees')}>
-          {isBn ? 'ট্রাস্ট ও ট্রাস্টি দেখুন' : 'View trusts & trustees'}
-        </button>
+
+        <div className="text-center mt-12">
+          <button className="heritage-button heritage-button--dark mx-auto" onClick={() => setActiveTab('trustees')}>
+            {isBn ? 'ট্রাস্ট ও ট্রাস্টি দেখুন' : 'View trusts & trustees'}
+          </button>
+        </div>
       </section>
 
+      {/* Item 4: Key Milestones with Responsive Margins */}
       <HeritageMilestones
         lang={lang}
         milestones={milestones}
@@ -154,16 +184,36 @@ export default function HomePage({ lang, setActiveTab, onOpenBooking, onOpenLigh
         subtitle={t.timelinePreview.desc}
       />
 
-      <section className="heritage-devotion">
-        <div className="heritage-devotion__pattern heritage-devotion__pattern--top" aria-hidden="true" />
-        <p className="heritage-kicker">{isBn ? 'ভক্তি' : 'Devotion'}</p>
-        <h2>{isBn ? '১৮৫৫ সাল থেকে অবিচ্ছিন্ন দুর্গাপূজা' : 'Durga Puja, unbroken since 1855'}</h2>
-        <AlpanaDivider light />
-        <p>{isBn ? 'প্রজন্মের পর প্রজন্ম ধরে ভক্তি ও ঐতিহ্যবাহী আচার সংরক্ষিত হয়ে চলেছে।' : 'A sacred annual tradition carried forward with devotion across generations.'}</p>
-        <button className="heritage-button heritage-button--gold" onClick={() => setActiveTab('heritage')}>{isBn ? 'ঐতিহ্য জানুন' : 'Explore the tradition'}</button>
-        <div className="heritage-devotion__pattern heritage-devotion__pattern--bottom" aria-hidden="true" />
+      {/* Item 5: Durga Puja Segment with Atmospheric Faded Idol Background Overlay */}
+      <section className="heritage-devotion relative overflow-hidden py-24 px-6 text-center">
+        <div 
+          className="absolute inset-0 z-0 bg-cover bg-center bg-fixed opacity-30 pointer-events-none scale-105 transition-transform duration-1000"
+          style={{ backgroundImage: `url(${getAssetUrl('/images/unnamed_6.webp')})` }}
+        />
+        <div className="absolute inset-0 z-0 bg-gradient-to-t from-black via-black/85 to-black/90 pointer-events-none" />
+
+        <div className="relative z-10 max-w-3xl mx-auto space-y-6">
+          <div className="heritage-devotion__pattern heritage-devotion__pattern--top" aria-hidden="true" />
+          <p className="heritage-kicker text-primary">{isBn ? 'ভক্তি ও ঐতিহ্য' : 'Sacred Devotion'}</p>
+          <h2 className="text-3xl sm:text-5xl font-serif font-bold text-[#fff8eb] tracking-wide">
+            {isBn ? '১৮৫৫ সাল থেকে অবিচ্ছিন্ন দুর্গাপূজা' : 'Durga Puja, unbroken since 1855'}
+          </h2>
+          <AlpanaDivider light />
+          <p className="text-sm sm:text-base text-[#f0e6d2]/80 leading-relaxed font-sans">
+            {isBn
+              ? 'পাথুরিয়াঘাটা ঘোষ বাড়ির ঠাকুর দালানে ১৭১ বছর ধরে অবিচ্ছিন্ন নিষ্ঠায় অনুষ্ঠিত হচ্ছে ঐতিহ্যবাহী একচালা ডাকের সাজের দেবী দুর্গাপূজা ও নিত্য সেবা।'
+              : 'For over 171 consecutive years, the sacred Thakur Dalan of Pathuria Ghata Ghosh Bari has witnessed unbroken traditional Durga Puja, sandhi puja, and community Prasad distribution.'}
+          </p>
+          <div className="pt-4">
+            <button className="heritage-button heritage-button--gold" onClick={() => setActiveTab('events')}>
+              {isBn ? 'পূজা ও উৎসব সূচি দেখুন' : 'Explore Festival & Puja Calendar'}
+            </button>
+          </div>
+          <div className="heritage-devotion__pattern heritage-devotion__pattern--bottom" aria-hidden="true" />
+        </div>
       </section>
 
+      {/* Seven Generations Lineage Preview */}
       <section className="heritage-lineage heritage-section">
         <button className="heritage-lineage__image" onClick={() => openImage('/images/SDP_0359.jpg', 'Khelat Bhawan architectural archive')}>
           <img src={getAssetUrl('/images/SDP_0359.jpg')} alt="Architectural view of Khelat Bhawan" loading="lazy" />
@@ -172,46 +222,67 @@ export default function HomePage({ lang, setActiveTab, onOpenBooking, onOpenLigh
           <p className="heritage-kicker">{isBn ? 'পারিবারিক আর্কাইভ' : 'The family archive'}</p>
           <h2>{isBn ? 'সাত প্রজন্মের তত্ত্বাবধান' : 'Seven generations of custodians'}</h2>
           <AlpanaDivider className="heritage-lineage__divider" />
-          <p>{isBn ? 'Khelat Ghosh থেকে বর্তমান প্রজন্ম পর্যন্ত, পরিবারের সাত প্রজন্ম এই উত্তরাধিকার সংরক্ষণ করেছে। অপ্রকাশিত নাম বা প্রতিকৃতি অনুমান করা হয়নি।' : 'From Khelat Ghosh to the present generation, seven generations have carried the responsibility of preserving this heritage. Unpublished names and portraits remain respectfully unstated.'}</p>
-          <button className="editorial-link" onClick={() => setActiveTab('heritage')}>{isBn ? 'পারিবারিক উত্তরাধিকার দেখুন' : 'Explore the family lineage'}<ArrowRight /></button>
+          <p>{isBn ? 'বাবু খেলাৎ ঘোষ থেকে বর্তমান প্রজন্ম পর্যন্ত, পরিবারের সাত প্রজন্ম এই উত্তরাধিকার সংরক্ষণ করেছে।' : 'From Babu Khelat Chandra Ghosh to the present day, seven unbroken generations have carried the stewardship of this monumental estate.'}</p>
+          <button className="editorial-link" onClick={() => setActiveTab('timeline')}>
+            {isBn ? 'পারিবারিক বংশতালিকা ও সময়রেখা' : 'Explore Family Tree & Timeline'}<ArrowRight />
+          </button>
         </div>
       </section>
 
+      {/* Item 6: Modern Dynamic Luxury Masonry Gallery Spread */}
       <section className="heritage-gallery heritage-section">
         <div className="heritage-heading-row">
-          <div><p className="heritage-kicker">{isBn ? 'দৃশ্য-সংগ্রহ' : 'The visual archive'}</p><h2>{isBn ? 'স্থাপত্য, ভক্তি ও সাংস্কৃতিক জীবন' : 'Architecture, devotion & cultural life'}</h2></div>
-          <button className="editorial-link" onClick={() => setActiveTab('gallery')}>{isBn ? 'সম্পূর্ণ গ্যালারি' : 'Explore the gallery'}<ArrowRight /></button>
+          <div>
+            <p className="heritage-kicker">{isBn ? 'দৃশ্য-সংগ্রহ' : 'The visual archive'}</p>
+            <h2>{isBn ? 'স্থাপত্য, ভক্তি ও সাংস্কৃতিক জীবন' : 'Architecture, devotion & cultural life'}</h2>
+          </div>
+          <button className="editorial-link" onClick={() => setActiveTab('gallery')}>
+            {isBn ? 'সম্পূর্ণ গ্যালারি' : 'Explore the gallery'}<ArrowRight />
+          </button>
         </div>
-        <div className="bento-gallery">
+
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
           {galleryPreview.map((item, index) => {
             const rawSrc = item.type === 'video' ? (item.poster || '/images/SDP_0344.jpg') : item.src;
             const finalSrc = getAssetUrl(rawSrc);
-            const bentoClass = index === 0 ? 'bento-card--hero'
-              : index === 1 ? 'bento-card--top-right'
-              : index === 2 ? 'bento-card--square'
-              : index === 3 ? 'bento-card--tall'
-              : 'bento-card--wide-bottom';
 
             return (
               <div
                 key={item.id}
                 onClick={() => onOpenLightbox(item)}
-                className={`bento-card ${bentoClass} group`}
+                className={`group relative overflow-hidden rounded-2xl border border-border/50 bg-card/40 cursor-pointer shadow-lg hover:shadow-2xl hover:border-primary/50 transition-all duration-500 ${
+                  index === 0 ? 'sm:col-span-2 aspect-[16/9]' : 'aspect-[4/3]'
+                }`}
               >
-                <img src={finalSrc} alt={item.title} loading="lazy" />
+                <img
+                  src={finalSrc}
+                  alt={item.title}
+                  loading="lazy"
+                  className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700"
+                />
+                <div className="absolute inset-0 bg-gradient-to-t from-black/85 via-black/30 to-transparent opacity-80 group-hover:opacity-95 transition-opacity" />
+
                 {item.type === 'video' && (
-                  <div className="absolute inset-0 flex items-center justify-center bg-black/30 group-hover:bg-black/15 transition-colors z-10">
-                    <div className="w-14 h-14 rounded-full bg-accent/90 border-2 border-white flex items-center justify-center text-white shadow-2xl group-hover:scale-110 transition-transform">
-                      <Play className="w-5 h-5 fill-current ml-0.5" />
+                  <div className="absolute inset-0 flex items-center justify-center z-10">
+                    <div className="w-14 h-14 rounded-full bg-primary/90 text-primary-foreground flex items-center justify-center shadow-xl group-hover:scale-110 transition-transform">
+                      <Play className="w-6 h-6 fill-current ml-1" />
                     </div>
                   </div>
                 )}
-                <div className="bento-card__badge">
-                  {item.type === 'video' ? 'VIDEO TOUR' : item.category.toUpperCase()}
+
+                <div className="absolute top-4 left-4 z-10">
+                  <span className="px-3 py-1 rounded-full bg-black/60 backdrop-blur-md text-[10px] uppercase tracking-wider font-semibold text-primary border border-primary/30">
+                    {item.type === 'video' ? 'VIDEO TOUR' : item.category?.toUpperCase() || 'ARCHIVE'}
+                  </span>
                 </div>
-                <div className="bento-card__overlay">
-                  <h3 className="bento-card__title">{item.title}</h3>
-                  <p className="bento-card__desc">{item.desc}</p>
+
+                <div className="absolute bottom-4 left-4 right-4 z-10 text-white">
+                  <h3 className="font-serif text-lg sm:text-xl font-semibold mb-1 group-hover:text-primary transition-colors">
+                    {item.title}
+                  </h3>
+                  <p className="text-xs text-muted-foreground font-sans line-clamp-2">
+                    {item.desc}
+                  </p>
                 </div>
               </div>
             );
@@ -219,101 +290,112 @@ export default function HomePage({ lang, setActiveTab, onOpenBooking, onOpenLigh
         </div>
       </section>
 
-      {/* Testimonials & Verified Google Reviews Section */}
-      <section className="heritage-reviews heritage-section">
-        <div className="heritage-heading-row">
+      {/* Item 7: 8 Verified Testimonials with Continuous Smooth Left-to-Right Marquee Scroll */}
+      <section className="heritage-reviews py-20 bg-card/40 border-y border-border/50 overflow-hidden">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 mb-12 flex flex-col md:flex-row md:items-end justify-between gap-6">
           <div>
-            <h2 className="heritage-testimonials-title">
-              {isBn ? 'মতামত ও অভিজ্ঞতা' : 'TESTIMONIALS'}
+            <div className="flex items-center gap-2 text-primary text-xs uppercase tracking-[0.25em] font-sans font-semibold mb-2">
+              <Star className="w-3.5 h-3.5 fill-current" />
+              <span>{isBn ? 'সত্যায়িত অভিজ্ঞতা' : 'Verified Google Reviews & Voices'}</span>
+            </div>
+            <h2 className="font-serif text-3xl sm:text-4xl lg:text-5xl text-foreground font-bold">
+              {isBn ? 'অতিথি ও বিশেষজ্ঞদের মতামত' : 'Guest Testimonials & Praise'}
             </h2>
           </div>
-          <div className="heritage-reviews__google-badge">
-            <a
-              href={t.reviews.googleUrl}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="heritage-google-btn"
-              aria-label="View Google Reviews for Khelat Bhavan"
-            >
-              <div className="heritage-google-btn__stars">
-                <span className="font-serif font-bold text-base text-foreground">{t.reviews.rating}</span>
-                <div className="flex text-amber-500">
-                  {[...Array(5)].map((_, i) => (
-                    <Star key={i} className="w-3.5 h-3.5 fill-amber-400 text-amber-400" />
-                  ))}
-                </div>
+
+          <div className="flex items-center gap-4 bg-background/80 px-5 py-3 rounded-2xl border border-border/80 shadow-md">
+            <div className="text-center">
+              <span className="font-serif text-2xl font-bold text-foreground">4.9</span>
+              <span className="text-xs text-muted-foreground">/5.0</span>
+            </div>
+            <div className="h-8 w-px bg-border/60" />
+            <div>
+              <div className="flex text-amber-500">
+                {[...Array(5)].map((_, i) => (
+                  <Star key={i} className="w-4 h-4 fill-amber-400 text-amber-400" />
+                ))}
               </div>
-              <span className="heritage-google-btn__label">
-                {isBn ? 'গুগলে ১৫০+ পর্যালোচনা' : '150+ Verified Reviews'} →
-              </span>
-            </a>
+              <a
+                href={t.reviews.googleUrl}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="text-xs text-primary font-medium hover:underline flex items-center gap-1 mt-0.5"
+              >
+                <span>{isBn ? '১৫০+ গুগল রিভিউ' : '150+ Google Reviews'}</span>
+                <ExternalLink className="w-3 h-3" />
+              </a>
+            </div>
           </div>
         </div>
 
-        <div className="heritage-reviews__grid">
-          {t.reviews.items.map((item) => (
-            <a
-              key={item.id}
-              href={t.reviews.googleUrl}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="heritage-review-card"
-              aria-label={`Read ${item.name}'s review on Google`}
-            >
-              <div className="heritage-review-card__header">
-                <div className="heritage-review-card__stars">
-                  {[...Array(item.rating)].map((_, i) => (
-                    <Star key={i} className="w-3.5 h-3.5 fill-amber-400 text-amber-400" />
-                  ))}
-                </div>
-              </div>
-
-              <h3 className="heritage-review-card__title">
-                “{item.title}”
-              </h3>
-
-              <p className="heritage-review-card__text">
-                {item.review}
-              </p>
-
-              <div className="heritage-review-card__author">
-                <div className="heritage-review-card__avatar">
-                  {item.name.charAt(0)}
-                </div>
+        {/* Continuous Smooth Horizontal Ribbon Carousel */}
+        <div className="testimonials-marquee-container py-4">
+          <div className="testimonials-marquee-track">
+            {/* Duplicated 8 items twice for continuous infinite loop */}
+            {[...reviews, ...reviews].map((item, idx) => (
+              <div
+                key={`${item.id}-${idx}`}
+                className="w-[320px] sm:w-[380px] bg-background/90 rounded-2xl border border-border/70 p-6 shadow-xl flex flex-col justify-between shrink-0 hover:border-primary/50 transition-all duration-300"
+              >
                 <div>
-                  <strong>{item.name}</strong>
+                  <div className="flex items-center justify-between mb-4">
+                    <div className="flex text-amber-500">
+                      {[...Array(item.rating || 5)].map((_, i) => (
+                        <Star key={i} className="w-3.5 h-3.5 fill-amber-400 text-amber-400" />
+                      ))}
+                    </div>
+                    <span className="text-[10px] uppercase tracking-wider px-2 py-0.5 rounded-full bg-primary/10 text-primary font-medium">
+                      {item.category || 'Heritage'}
+                    </span>
+                  </div>
+
+                  <h4 className="font-serif text-base font-semibold text-foreground mb-2 line-clamp-1">
+                    “{item.title}”
+                  </h4>
+
+                  <p className="text-muted-foreground text-xs sm:text-sm font-sans leading-relaxed line-clamp-4 mb-6">
+                    {item.review}
+                  </p>
+                </div>
+
+                <div className="flex items-center gap-3 pt-4 border-t border-border/40">
+                  <div className="w-9 h-9 rounded-full bg-primary/20 text-primary font-serif font-bold text-sm flex items-center justify-center border border-primary/30 shrink-0">
+                    {item.name.charAt(0)}
+                  </div>
+                  <div className="overflow-hidden">
+                    <strong className="block text-xs font-semibold text-foreground truncate">{item.name}</strong>
+                    <span className="block text-[10px] text-muted-foreground truncate">{item.role}</span>
+                  </div>
                 </div>
               </div>
-            </a>
-          ))}
+            ))}
+          </div>
         </div>
 
-        <div className="heritage-reviews__footer">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 mt-10 text-center">
           <a
             href={t.reviews.googleUrl}
             target="_blank"
             rel="noopener noreferrer"
-            className="heritage-button heritage-button--dark"
+            className="inline-flex items-center gap-2 px-6 py-3 rounded-full bg-primary text-primary-foreground text-xs font-semibold tracking-wider uppercase hover:bg-primary/90 transition-all shadow-md"
           >
-            {isBn ? 'গুগলে সব পর্যালোচনা দেখুন (১৫০+)' : 'Read All 150+ Reviews on Google'}
+            <span>{isBn ? 'গুগলে সব পর্যালোচনা দেখুন' : 'Read All 150+ Reviews on Google'}</span>
+            <ExternalLink className="w-3.5 h-3.5" />
           </a>
-          <button
-            onClick={() => setActiveTab('feedback')}
-            className="editorial-link"
-          >
-            {isBn ? 'মতামত পৃষ্ঠা ও অভিজ্ঞতা লিখুন' : 'Feedback Page & Share Experience'}<ArrowRight />
-          </button>
         </div>
       </section>
 
+      {/* Official Booking CTA Band */}
       <section className="heritage-booking">
         <img src={getAssetUrl('/images/SDP_0344.jpg')} alt="Khelat Bhawan courtyard" loading="lazy" />
         <div className="heritage-booking__wash" />
         <div className="heritage-booking__content">
-          <p className="heritage-kicker">{isBn ? 'পরিদর্শন ও যোগাযোগ' : 'Official Enquiries'}</p>
+          <p className="heritage-kicker">{isBn ? 'পরিদর্শন ও বুকিং' : 'Official Enquiries'}</p>
           <h2>{isBn ? 'এক ঐতিহাসিক পরিসরে আপনার বিশেষ আয়োজন' : 'Bring your occasion into a historic setting'}</h2>
-          <p>{isBn ? 'বিবাহ, চলচ্চিত্রায়ন, ফটোগ্রাফি, এবং সাংস্কৃতিক ও বিশেষ অনুষ্ঠানের জন্য যোগাযোগ করুন।' : 'Connect with us for heritage visits, film shoots, photography, weddings, and cultural programmes.'}</p>
-          <button className="heritage-button heritage-button--gold" onClick={() => setActiveTab('contact')}>{isBn ? 'যোগাযোগ করুন' : 'Contact Us'}</button>
+          <p>{isBn ? 'বিবাহ, চলচ্চিত্রায়ন, ফটোগ্রাফি, এবং সাংস্কৃতিক ও বিশেষ অনুষ্ঠানের জন্য রিজার্ভেশন ও বুকিং করুন।' : 'Connect with us for heritage visits, film shoots, photography, weddings, and cultural programmes.'}</p>
+          <button className="heritage-button heritage-button--gold" onClick={() => onOpenBooking()}>
+            {isBn ? 'তারিখ রিজার্ভ করুন' : 'Book a Date'}
+          </button>
         </div>
       </section>
     </main>

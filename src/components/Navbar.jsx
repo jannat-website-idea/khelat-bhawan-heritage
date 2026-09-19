@@ -39,7 +39,8 @@ export default function Navbar({ lang, setLang, activeTab, setActiveTab, onOpenB
     { id: 'founder', label: t.founder },
     { id: 'trustees', label: t.trustees },
     { id: 'gallery', label: t.gallery },
-    { id: 'rental', label: t.rental || (lang === 'bn' ? 'হেরিটেজ পরিসর' : 'Heritage Rental') },
+    { id: 'events', label: t.events || (lang === 'bn' ? 'ইভেন্ট ও উৎসব' : 'Events') },
+    { id: 'rental', label: t.rental || (lang === 'bn' ? 'রিজার্ভেশন ও বুকিং' : 'Reservations / Bookings') },
     { id: 'feedback', label: t.feedback || (lang === 'bn' ? 'মতামত' : 'Feedback') },
     { id: 'contact', label: t.contact },
   ];

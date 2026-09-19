@@ -1,168 +1,313 @@
-import React from 'react';
+import React, { useState } from 'react';
 import SectionHeader from '../components/SectionHeader';
 import { getAssetUrl } from '../utils/assetHelper';
+import { familyTreeData } from '../data/familyTreeData';
+import { Clock, Users, Calendar, ArrowRight, Sparkles, CheckCircle2, ChevronDown, ChevronUp } from 'lucide-react';
 
-export default function TimelinePage({ lang, setActiveTab, onOpenLightbox, content }) {
-  const t = content[lang];
+export default function TimelinePage({ lang = 'en', setActiveTab, onOpenLightbox, content }) {
+  const [activeView, setActiveView] = useState('timeline'); // 'timeline' | 'family-tree'
+  const [expandedGen, setExpandedGen] = useState(1);
+
+  const isBn = lang === 'bn';
 
   const milestones = [
     {
       year: "1845",
-      badge: lang === 'bn' ? "প্রতিষ্ঠা" : "Establishment",
-      title: lang === 'bn' ? "খেলাৎ ভবনের প্রতিষ্ঠা" : "Founding of Khelat Bhawan",
-      desc: lang === 'bn' ? "খেলাৎ ঘোষ বাংলা ঐতিহ্য সংরক্ষণের সাংস্কৃতিক কেন্দ্র হিসেবে খেলাৎ ভবন প্রতিষ্ঠা করেন।" : "Khelat Ghosh establishes Khelat Bhawan as a cultural center for Bengali heritage preservation.",
+      badge: isBn ? "প্রতিষ্ঠা" : "Estate Foundation",
+      title: isBn ? "খেলাৎ ভবনের প্রতিষ্ঠা ও রাজপ্রাসাদ নির্মাণ" : "Founding of Khelat Bhawan Palace",
+      desc: isBn 
+        ? "বাবু খেলাৎ চন্দ্র ঘোষ উত্তর কলকাতার পাথুরিয়াঘাটায় গ্র্যান্ড করিন্থিয়ান স্তম্ভ, মার্বেল চত্বর এবং বেলজিয়ান ঝাড়বাতি শোভিত এই ঐতিহাসিক প্রাসাদ নির্মাণ করেন।"
+        : "Babu Khelat Chandra Ghosh commissions the monumental palatial mansion at 47 Pathuria Ghata Street, synthesizing Doric and Corinthian classical architecture with traditional Bengali courtyards.",
       image: "/images/SDP_0344.jpg"
     },
     {
       year: "1855",
-      badge: lang === 'bn' ? "সাংস্কৃতিক" : "Cultural",
-      title: lang === 'bn' ? "প্রথম দুর্গাপূজা" : "First Durga Puja Celebration",
-      desc: lang === 'bn' ? "খেলাৎ ভবনে প্রথম আনুষ্ঠানিক দুর্গাপূজার সূচনা হয়—যে ঐতিহ্য আজও অব্যাহত।" : "The first formal Durga Puja celebration at Khelat Bhawan establishes a tradition that continues to this day.",
+      badge: isBn ? "সাংস্কৃতিক ভক্তি" : "Durga Puja Inauguration",
+      title: isBn ? "প্রথম দুর্গাপূজা ও নিত্য দেবসেবার সূচনা" : "Inauguration of Historic Durga Puja",
+      desc: isBn 
+        ? "খেলাৎ ভবনে প্রথম আনুষ্ঠানিক একচালা ডাকের সাজের দেবী দুর্গাপূজার সূচনা হয়—যে পবিত্র ঐতিহ্য ১৭১ বছর ধরে আজ পর্যন্ত অব্যাহত।"
+        : "The first formal Durga Puja celebration is consecrated at Thakur Dalan. An unbroken 171-year sacred ritual begins with traditional Ekchala Daker Saaj idol and 108 lotus sandhi puja.",
       image: "/images/unnamed_6.webp"
     },
     {
       year: "1881",
-      badge: lang === 'bn' ? "আধ্যাত্মিক" : "Spiritual",
-      title: lang === 'bn' ? "শ্রীরামকৃষ্ণ পরমহংসদেবের আগমন" : "Visit of Sri Ramakrishna Paramhansa",
-      desc: lang === 'bn' ? "শ্রীরামকৃষ্ণ পরমহংসদেব খেলাৎ ভবনে এসে প্রাঙ্গণকে আশীর্বাদ করেন এবং এর আধ্যাত্মিক তাৎপর্য প্রতিষ্ঠা করেন।" : "Sri Ramakrishna Paramhansa visits Khelat Bhawan, blessing the premises and establishing its spiritual significance.",
+      badge: isBn ? "আধ্যাত্মিক আশীর্বাদ" : "Spiritual Visitation",
+      title: isBn ? "শ্রীরামকৃষ্ণ পরমহংসদেবের ঐতিহাসিক আগমন" : "Historic Visit of Sri Ramakrishna Paramhansa",
+      desc: isBn 
+        ? "শ্রীরামকৃষ্ণ পরমহংসদেব খেলাৎ ভবনে শুভাগমন করেন, সঙ্গীত ও ভক্তিমূলক আলোচনায় অংশ নেন এবং প্রাঙ্গণকে চিরতরে পবিত্র করেন।"
+        : "Sri Ramakrishna Paramhansa sanctifies Khelat Bhawan with his presence in 1881, as chronicled in the Ramakrishna Kathamrita, blessing the household's devotion and cultural patronage.",
       image: "/images/rk01.png"
     },
     {
       year: "1920",
-      badge: lang === 'bn' ? "প্রশাসনিক" : "Administrative",
-      title: lang === 'bn' ? "প্রথম ট্রাস্ট প্রতিষ্ঠা" : "Establishment of First Trust",
-      desc: lang === 'bn' ? "ভবিষ্যৎ প্রজন্মের জন্য খেলাৎ ভবনের ঐতিহ্য রক্ষা ও সংরক্ষণে প্রথম আনুষ্ঠানিক ট্রাস্ট প্রতিষ্ঠিত হয়।" : "The first formal trust is established to protect and preserve the Khelat Bhawan heritage for future generations.",
+      badge: isBn ? "ট্রাস্ট প্রশাসন" : "Legal Trust Formalization",
+      title: isBn ? "প্রথম আনুষ্ঠানিক হেরিটেজ ট্রাস্ট প্রতিষ্ঠা" : "Formalization of First Heritage Trusts",
+      desc: isBn 
+        ? "পারিবারিক দেবসেবা, শিক্ষাবৃত্তি এবং দানশীল সমাজকল্যাণ স্থায়ী করতে প্রথম বিধিবদ্ধ ট্রাস্ট দলিল সম্পাদিত হয়।"
+        : "The family establishes formal legal trusts to permanently safeguard the estate properties, ritual endowments, and ongoing philanthropic commitments.",
       image: "/images/SDP_0299.jpg"
     },
     {
       year: "1947",
-      badge: lang === 'bn' ? "ঐতিহাসিক" : "Historical",
-      title: lang === 'bn' ? "স্বাধীনতা-পরবর্তী অভিযোজন" : "Independence Era Adaptations",
-      desc: lang === 'bn' ? "সাংস্কৃতিক তাৎপর্য ও ঐতিহ্য বজায় রেখে খেলাৎ ভবন স্বাধীনতা-পরবর্তী সময়ের সঙ্গে মানিয়ে নেয়।" : "Khelat Bhawan adapts to the post-independence era while maintaining its cultural significance and heritage value.",
+      badge: isBn ? "স্বাধীনতা যুগ" : "Independence Era",
+      title: isBn ? "স্বাধীনতা-পরবর্তী সাংস্কৃতিক রূপান্তর" : "Post-Independence Cultural Renaissance",
+      desc: isBn 
+        ? "স্বাধীন ভারতের রূপান্তরের সাথে সামঞ্জস্য রেখে পরিবারের উত্তরসূরিগণ উত্তর কলকাতার ভারতীয় ধ্রুপদী সঙ্গীত ও সমাজসেবাকে এগিয়ে নিয়ে যান।"
+        : "Khelat Bhawan navigates the transition of post-independence Bengal while expanding support for classical Indian vocalists, sitarists, and vernacular literature.",
       image: "/images/SDP_0273.jpg"
     },
     {
       year: "1975",
-      badge: lang === 'bn' ? "সংরক্ষণ" : "Preservation",
-      title: lang === 'bn' ? "স্থাপত্য পুনরুদ্ধার ও সংস্কার" : "Major Architectural Conservation",
-      desc: lang === 'bn' ? "একটি বিস্তৃত পুনরুদ্ধার প্রকল্প ভবিষ্যৎ প্রজন্মের জন্য খেলাৎ ভবনের স্থাপত্য অখণ্ডতা সংরক্ষণ করে।" : "A comprehensive restoration project preserves the architectural integrity of Khelat Bhawan for future generations.",
+      badge: isBn ? "স্থাপত্য পুনরুদ্ধার" : "Architectural Conservation",
+      title: isBn ? "ঐতিহাসিক অট্টালিকার প্রধান সংরক্ষণ ও সংস্কার" : "Major Estate Conservation & Restoration",
+      desc: isBn 
+        ? "প্রাসাদের করিন্থিয়ান থাম, কাঠের অলঙ্কৃত বারান্দা এবং মার্বেল প্রাঙ্গণকে সযত্নে সংস্কার করে স্থাপত্য অক্ষুণ্ণ রাখা হয়।"
+        : "Comprehensive structural conservation safeguards the antique teak woodwork, cast-iron railings, marble courtyard, and sanctified alcoves for upcoming generations.",
       image: "/images/SDP_0291.jpg"
     },
     {
       year: "1985",
-      badge: lang === 'bn' ? "সাংস্কৃতিক" : "Cultural",
-      title: lang === 'bn' ? "আর্টিস্ট নেকটার কাউন্সিল গঠন" : "Formation of Artist Nectar Council",
-      desc: lang === 'bn' ? "বাংলা মঞ্চশিল্পের প্রসার এবং শিল্পীদের একটি মঞ্চ প্রদানের জন্য আর্টিস্ট নেকটার কাউন্সিল অফ কালচার গঠিত হয়।" : "The Artist Nectar Council of Culture is formed to promote Bengali performing arts and provide a platform for artists.",
+      badge: isBn ? "সাংস্কৃতিক প্রসার" : "Performing Arts Council",
+      title: isBn ? "আর্টিস্ট নেকটার কাউন্সিল অফ কালচার প্রতিষ্ঠা" : "Foundation of Artist Nectar Council",
+      desc: isBn 
+        ? "বাংলা নাটক, মার্গ সঙ্গীত ও যুব শিল্পীদের উৎসাহ দিতে আর্টিস্ট নেকটার কাউন্সিল প্রতিষ্ঠিত হয়।"
+        : "Formation of Artist Nectar Council of Culture to mentor emerging classical musicians, host cultural workshops, and organize heritage theatrical productions.",
       image: "/images/unnamed_12.webp"
     },
     {
       year: "2005",
-      badge: lang === 'bn' ? "প্রযুক্তি" : "Technological",
-      title: lang === 'bn' ? "ডিজিটাল আর্কাইভ উদ্যোগ" : "Digital Archives Initiative",
-      desc: lang === 'bn' ? "ঐতিহাসিক নিদর্শন ও নথি সংরক্ষণের জন্য একটি বিস্তৃত ডিজিটাল আর্কাইভ উদ্যোগ শুরু হয়।" : "A digital archiving initiative is launched to document and preserve historical artifacts and records.",
+      badge: isBn ? "ডিজিটাল সংরক্ষণ" : "Archival Digitization",
+      title: isBn ? "পারিবারিক পান্ডুলিপি ও ডিজিটাল আর্কাইভ উদ্যোগ" : "Manuscript & Photography Digital Archives",
+      desc: isBn 
+        ? "ঊনবিংশ শতাব্দীর দুষ্প্রাপ্য দলিল, ছবি ও সঙ্গীত পাণ্ডুলিপি সংরক্ষণের জন্য ডিজিটাল আর্কাইভ চালু হয়।"
+        : "Launch of specialized digital preservation initiative documenting 19th-century royal family portraits, ancestral records, and vintage Calcutta photography.",
       image: "/images/SDP_0305.jpg"
     },
     {
       year: "2015",
-      badge: lang === 'bn' ? "পর্যটন" : "Tourism",
-      title: lang === 'bn' ? "হেরিটেজ ট্যুরিজম কর্মসূচি" : "Heritage Tourism Program",
-      desc: lang === 'bn' ? "খেলাৎ ভবন হেরিটেজ পর্যটনের জন্য উন্মুক্ত হয়, যাতে দর্শনার্থীরা এর সাংস্কৃতিক ঐতিহ্য অনুভব করতে পারেন।" : "Khelat Bhawan opens for heritage tourism, allowing visitors to experience its cultural heritage firsthand.",
+      badge: isBn ? "পর্যটন ও চলচ্চিত্রায়ন" : "Heritage Tourism & Cinema",
+      title: isBn ? "হেরিটেজ ট্যুর ও কালচারাল ফিল্ম শুটিং এর সূচনা" : "Curated Heritage Tours & Period Productions",
+      desc: isBn 
+        ? "আন্তর্জাতিক ও জাতীয় চলচ্চিত্রের শুটিং এবং ঐতিহ্যপ্রেমীদের জন্য নিয়ন্ত্রিত হেরিটেজ ট্যুরের দ্বার উন্মুক্ত হয়।"
+        : "Opening of Khelat Bhawan for curated heritage walks, architectural studies, prestigious period cinema filming, and aristocratic celebrations.",
       image: "/images/SDP_0359.jpg"
     },
     {
-      year: "2020",
-      badge: lang === 'bn' ? "ডিজিটাল" : "Digital",
-      title: lang === 'bn' ? "ভার্চুয়াল অভিজ্ঞতার সূচনা" : "Virtual Experience Launch",
-      desc: lang === 'bn' ? "ভার্চুয়াল ট্যুর ও ডিজিটাল অভিজ্ঞতার সূচনায় এই ঐতিহ্য বিশ্বব্যাপী আরও সহজলভ্য হয়।" : "Virtual tours and digital experiences are launched, making the heritage accessible globally.",
-      image: "/images/SDP_0344.jpg"
-    },
-    {
-      year: "2023",
-      badge: lang === 'bn' ? "কৌশলগত" : "Strategic",
-      title: lang === 'bn' ? "ভবিষ্যৎ দৃষ্টিভঙ্গি উদ্যোগ" : "Future Vision Initiative",
-      desc: lang === 'bn' ? "বাংলার ঐতিহ্যের জন্য টেকসই সংরক্ষণ মডেল ও বিশ্বব্যাপী সচেতনতা কর্মসূচি বাস্তবায়িত হয়।" : "Sustainable preservation models and global awareness campaigns for Bengali heritage are implemented.",
-      image: "/images/unnamed_3.webp"
+      year: "2026",
+      badge: isBn ? "ভবিষ্যৎ দৃষ্টিভঙ্গি" : "Present & Future",
+      title: isBn ? "১৭১তম বার্ষিক মহোৎসব ও গ্লোবাল হেরিটেজ পোর্টাল" : "171st Festive Gala & Global Heritage Stewardship",
+      desc: isBn 
+        ? "ডিজিটাল বুকিং, আন্তর্জাতিক সাংস্কৃতিক সম্মেলন এবং বাংলার সমৃদ্ধ আভিজাত্য সংরক্ষণের টেকসই আধুনিক মডেল।"
+        : "Unveiling modern digital reservations, high-definition visual chronicles, interactive family archives, and sustainable global heritage outreach.",
+      image: "/images/SDP_0368.jpg"
     }
   ];
 
   return (
-    <main className="pt-28 md:pt-36 pb-24 bg-background min-h-screen">
-      <div className="w-full max-w-[1440px] xl:max-w-[1550px] 2xl:max-w-[1680px] mx-auto px-4 sm:px-6 lg:px-10">
+    <main className="pt-28 md:pt-36 pb-24 bg-background min-h-screen text-foreground">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <SectionHeader
-          title={lang === 'bn' ? 'ঐতিহ্যের সময়রেখা' : 'Heritage Timeline'}
-          subtitle={lang === 'bn' 
-            ? '১৮৪৫ সাল থেকে আজ পর্যন্ত খেলাৎ ভবনের ঐতিহাসিক পথচলা' 
-            : 'Tracing over 175 years of grandeur, devotion, and cultural legacy'}
+          title={isBn ? 'ঐতিহ্যের ইতিহাস ও পারিবারিক বংশতালিকা' : 'Chronological Timeline & Family Tree'}
+          subtitle={isBn 
+            ? '১৮৪৫ সাল থেকে আজ পর্যন্ত খেলাৎ ভবনের গৌরবময় পথচলা এবং সাত প্রজন্মের ঐতিহ্যবাহী অভিভাবকত্ব' 
+            : 'Tracing 175+ years of architectural splendor, spiritual sanctity, and 7 unbroken generations of custodianship'}
         />
 
-        {/* Sleek Editorial Split-Row Timeline */}
-        <div className="divide-y divide-border/50 my-8 md:my-14">
-          {milestones.map((item, idx) => {
-            const isEven = idx % 2 === 0;
+        {/* View Switcher Tabs */}
+        <div className="flex justify-center gap-3 my-8">
+          <button
+            onClick={() => setActiveView('timeline')}
+            className={`flex items-center gap-2 px-6 py-3 rounded-full text-xs sm:text-sm font-sans tracking-wider uppercase transition-all duration-300 shadow-md ${
+              activeView === 'timeline'
+                ? 'bg-primary text-primary-foreground font-semibold ring-2 ring-primary/40'
+                : 'bg-card text-muted-foreground border border-border/80 hover:text-foreground'
+            }`}
+          >
+            <Clock className="w-4 h-4" />
+            <span>{isBn ? 'ঐতিহাসিক সময়রেখা (১৮৪৫ – ২০২৬)' : 'Chronological Milestones (1845–2026)'}</span>
+          </button>
 
-            return (
+          <button
+            onClick={() => setActiveView('family-tree')}
+            className={`flex items-center gap-2 px-6 py-3 rounded-full text-xs sm:text-sm font-sans tracking-wider uppercase transition-all duration-300 shadow-md ${
+              activeView === 'family-tree'
+                ? 'bg-primary text-primary-foreground font-semibold ring-2 ring-primary/40'
+                : 'bg-card text-muted-foreground border border-border/80 hover:text-foreground'
+            }`}
+          >
+            <Users className="w-4 h-4" />
+            <span>{isBn ? '৭ প্রজন্মের পারিবারিক বংশতালিকা' : '7-Generation Family Tree'}</span>
+          </button>
+        </div>
+
+        {/* VIEW 1: STACKED CHRONOLOGICAL TIMELINE (Items 8, 16) */}
+        {activeView === 'timeline' && (
+          <div className="space-y-12 my-12 animate-in fade-in duration-300">
+            {milestones.map((item, idx) => (
               <div
                 key={idx}
-                className="py-8 sm:py-10 md:py-12 lg:py-14 first:pt-2 last:pb-4"
+                className="bg-card/70 border border-border/70 rounded-3xl p-6 sm:p-10 shadow-xl hover:shadow-2xl hover:border-primary/50 transition-all duration-500 backdrop-blur-sm"
               >
-                <div className="grid grid-cols-1 md:grid-cols-12 gap-6 sm:gap-8 md:gap-10 lg:gap-14 items-center">
-                  {/* Text Section */}
-                  <div
-                    className={`md:col-span-5 flex flex-col justify-center space-y-2.5 sm:space-y-3 text-left ${
-                      isEven ? 'order-1 md:order-1' : 'order-1 md:order-2'
-                    }`}
-                  >
-                    <div className="flex items-center gap-2">
-                      <span className="text-[11px] sm:text-xs tracking-[0.2em] uppercase text-accent font-body font-bold">
-                        {item.badge}
-                      </span>
-                      <span className="text-muted-foreground/40 text-[10px]">·</span>
-                      <span className="text-[11px] sm:text-xs font-serif font-bold text-foreground/85 tracking-wider">
-                        {item.year}
-                      </span>
+                <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-center">
+                  {/* Left Column: Prominent Year Badge & Metadata */}
+                  <div className="lg:col-span-4 space-y-4">
+                    <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-primary/10 text-primary text-xs uppercase font-sans font-semibold tracking-widest border border-primary/20">
+                      <Calendar className="w-3.5 h-3.5" />
+                      <span>{item.badge}</span>
                     </div>
 
-                    <h3 className="font-serif text-lg sm:text-xl md:text-2xl lg:text-3xl font-bold text-foreground leading-snug tracking-tight uppercase">
+                    {/* Prominent High-Contrast Year Badge (Item 16) */}
+                    <div className="text-4xl sm:text-6xl lg:text-7xl font-serif font-bold text-primary tracking-tight">
+                      {item.year}
+                    </div>
+
+                    <h3 className="font-serif text-2xl sm:text-3xl font-bold text-foreground leading-snug">
                       {item.title}
                     </h3>
-
-                    <p className="text-xs sm:text-sm md:text-base text-muted-foreground font-body leading-relaxed max-w-xl">
-                      {item.desc}
-                    </p>
                   </div>
 
-                  {/* Image Section */}
-                  <div
-                    className={`md:col-span-7 ${
-                      isEven ? 'order-2 md:order-2' : 'order-2 md:order-1'
-                    }`}
-                  >
-                    <div className="w-full h-52 sm:h-64 md:h-72 lg:h-80 xl:h-[350px] rounded-xl sm:rounded-2xl overflow-hidden bg-black/40 border border-accent/25 shadow-xl group">
+                  {/* Middle Column: Narrative Description */}
+                  <div className="lg:col-span-4 space-y-4">
+                    <p className="text-muted-foreground text-xs sm:text-base font-sans leading-relaxed">
+                      {item.desc}
+                    </p>
+                    <div className="pt-2">
+                      <span className="text-[11px] uppercase tracking-widest text-primary font-semibold flex items-center gap-1.5">
+                        <Sparkles className="w-3.5 h-3.5 text-primary" />
+                        {isBn ? 'পাথুরিয়াঘাটা ঘোষ বাড়ি আর্কাইভ' : 'Pathuria Ghata Ghosh Bari Archives'}
+                      </span>
+                    </div>
+                  </div>
+
+                  {/* Right Column: Archival Photography Card */}
+                  <div className="lg:col-span-4">
+                    <div
+                      onClick={() => onOpenLightbox({
+                        type: 'image',
+                        title: `${item.year} — ${item.title}`,
+                        desc: item.desc,
+                        src: item.image
+                      })}
+                      className="group relative aspect-[16/10] rounded-2xl overflow-hidden bg-black/60 border border-primary/30 shadow-lg cursor-pointer"
+                    >
                       <img
                         src={getAssetUrl(item.image)}
                         alt={item.title}
-                        className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700 cursor-pointer"
-                        onClick={() => onOpenLightbox({
-                          type: 'image',
-                          title: `${item.year} — ${item.title}`,
-                          desc: item.desc,
-                          src: item.image
-                        })}
+                        loading="lazy"
+                        className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700"
                       />
+                      <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent opacity-60 group-hover:opacity-80 transition-opacity" />
+                      <div className="absolute bottom-3 right-3 bg-black/70 backdrop-blur-md px-3 py-1 rounded-full text-[10px] text-primary uppercase tracking-wider font-semibold border border-primary/20">
+                        {isBn ? 'ছবি দেখুন' : 'View Archive ↗'}
+                      </div>
                     </div>
                   </div>
                 </div>
               </div>
-            );
-          })}
-        </div>
+            ))}
+          </div>
+        )}
 
-        <div className="text-center pt-8">
+        {/* VIEW 2: 7-GENERATION INTERACTIVE FAMILY TREE (Item 8) */}
+        {activeView === 'family-tree' && (
+          <div className="my-12 space-y-8 animate-in fade-in duration-300">
+            <div className="bg-card/50 rounded-2xl p-6 border border-border/60 text-center max-w-3xl mx-auto mb-10">
+              <h3 className="font-serif text-2xl font-bold text-foreground mb-2">
+                {isBn ? 'সাত প্রজন্মের অবিচ্ছিন্ন তত্ত্বাবধান' : 'Seven Generations of Unbroken Custodianship'}
+              </h3>
+              <p className="text-muted-foreground text-xs sm:text-sm font-sans leading-relaxed">
+                {isBn
+                  ? '১৮৪৫ সাল থেকে বর্তমান পর্যন্ত পরিবার ও ট্রাস্টি মণ্ডলীর বংশানুক্রমিক অভিভাবকত্ব ও অবদান।'
+                  : 'Explore the genealogical stewardship of Babu Khelat Chandra Ghosh and his successors across 170+ years of Bengali cultural leadership.'}
+              </p>
+            </div>
+
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+              {familyTreeData.map((gen) => {
+                const isSelected = expandedGen === gen.gen;
+
+                return (
+                  <div
+                    key={gen.gen}
+                    onClick={() => setExpandedGen(gen.gen)}
+                    className={`bg-card rounded-3xl border p-6 sm:p-8 shadow-xl transition-all duration-300 flex flex-col justify-between cursor-pointer relative overflow-hidden ${
+                      isSelected
+                        ? 'border-primary ring-2 ring-primary/40 shadow-2xl scale-[1.02]'
+                        : 'border-border/70 hover:border-primary/50'
+                    }`}
+                  >
+                    <div>
+                      {/* Badge & Generation Header */}
+                      <div className="flex items-center justify-between pb-4 mb-4 border-b border-border/40">
+                        <span className="text-xs uppercase tracking-widest font-semibold text-primary">
+                          {gen.generationLabel[lang] || gen.generationLabel.en}
+                        </span>
+                        <span className="px-2.5 py-1 rounded-full bg-primary/10 text-primary text-[11px] font-mono font-bold">
+                          Gen #{gen.gen}
+                        </span>
+                      </div>
+
+                      {/* Portrait */}
+                      <div className="relative aspect-[16/10] rounded-2xl overflow-hidden bg-black/40 mb-4 border border-border/50">
+                        <img
+                          src={getAssetUrl(gen.image)}
+                          alt={gen.name[lang] || gen.name.en}
+                          className="w-full h-full object-cover"
+                          loading="lazy"
+                        />
+                        <div className="absolute top-2 right-2 px-2.5 py-0.5 rounded-full bg-black/80 text-[10px] text-white font-mono">
+                          {gen.years}
+                        </div>
+                      </div>
+
+                      <h4 className="font-serif text-xl sm:text-2xl font-bold text-foreground mb-1">
+                        {gen.name[lang] || gen.name.en}
+                      </h4>
+                      <p className="text-xs uppercase tracking-wider text-primary font-semibold mb-3">
+                        {gen.title[lang] || gen.title.en}
+                      </p>
+
+                      <p className="text-muted-foreground text-xs sm:text-sm font-sans leading-relaxed mb-4">
+                        {gen.bio[lang] || gen.bio.en}
+                      </p>
+                    </div>
+
+                    {/* Contributions List */}
+                    <div className="pt-4 border-t border-border/40">
+                      <p className="text-[11px] uppercase tracking-wider font-semibold text-foreground mb-2">
+                        {isBn ? 'মূল অবদানসমূহ:' : 'Key Contributions:'}
+                      </p>
+                      <ul className="space-y-1.5">
+                        {(gen.contributions[lang] || gen.contributions.en).map((c, i) => (
+                          <li key={i} className="text-xs text-muted-foreground flex items-start gap-2">
+                            <CheckCircle2 className="w-3.5 h-3.5 text-emerald-500 shrink-0 mt-0.5" />
+                            <span>{c}</span>
+                          </li>
+                        ))}
+                      </ul>
+                    </div>
+                  </div>
+                );
+              })}
+            </div>
+          </div>
+        )}
+
+        {/* Bottom CTA */}
+        <div className="text-center pt-12 border-t border-border/40 mt-12 flex flex-wrap justify-center gap-4">
           <button
             onClick={() => setActiveTab('founder')}
-            className="inline-flex items-center gap-2 bg-primary text-primary-foreground px-8 py-3.5 text-xs tracking-[0.2em] uppercase font-body font-semibold hover:bg-foreground transition-all duration-300 rounded-full shadow-lg hover:scale-105"
+            className="inline-flex items-center gap-2 bg-primary text-primary-foreground px-8 py-3.5 text-xs tracking-[0.2em] uppercase font-sans font-semibold hover:bg-primary/90 transition-all duration-300 rounded-full shadow-lg"
           >
-            <span>{lang === 'bn' ? 'প্রতিষ্ঠাতা বাবু খেলাৎ ঘোষ সম্পর্কে জানুন' : 'Discover Founder Babu Khelat Ghosh'}</span>
+            <span>{isBn ? 'প্রতিষ্ঠাতা বাবু খেলাৎ ঘোষ সম্পর্কে জানুন' : 'Read Founder Babu Khelat Ghosh Biography'}</span>
+            <ArrowRight className="w-4 h-4" />
+          </button>
+          
+          <button
+            onClick={() => setActiveTab('trustees')}
+            className="inline-flex items-center gap-2 bg-card text-foreground border border-border/80 px-8 py-3.5 text-xs tracking-[0.2em] uppercase font-sans font-semibold hover:bg-background transition-all duration-300 rounded-full shadow-md"
+          >
+            <span>{isBn ? 'ট্রাস্ট ও ট্রাস্টি মণ্ডলী' : 'Explore Current Trustees'}</span>
           </button>
         </div>
       </div>

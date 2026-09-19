@@ -9,7 +9,8 @@ export const siteData = {
       founder: "Founder",
       trustees: "Trusts & Trustees",
       gallery: "Gallery",
-      rental: "Heritage Rental",
+      events: "Events",
+      rental: "Reservations / Bookings",
       feedback: "Feedback",
       contact: "Contact",
       bookCta: "Booking Enquiry",
@@ -557,6 +558,86 @@ export const siteData = {
           title: "The most magical and aristocratic venue for our special celebration",
           review: "Hosting our traditional ceremony at Khelat Bhawan felt like a royal fairytale. The illuminated night courtyard, grand corridors, and timeless vintage atmosphere left all our guests spellbound. The trustees and coordinators were immensely helpful and courteous.",
           category: "Heritage Event & Venue"
+        },
+        {
+          id: "rev-5",
+          name: "Somnath Chatterjee",
+          role: "Heritage Photographer & Visual Archivist",
+          rating: 5,
+          time: "Google Review",
+          title: "A dreamscape for vintage architectural documentation and period photography",
+          review: "Photographing Khelat Bhawan during the golden hour is breathtaking. The play of light on the Corinthian capitals, the cast-iron filigree balconies, and the grand courtyard create a cinematic time-capsule of 19th-century Calcutta.",
+          category: "Heritage Photography"
+        },
+        {
+          id: "rev-6",
+          name: "Arundhati Dasgupta",
+          role: "Art Historian & Author",
+          rating: 5,
+          time: "Google Review",
+          title: "The living museum of the Bengal Renaissance; immaculate archival preservation",
+          review: "The custodians of Pathuria Ghata Ghosh Bari have maintained an authentic living heritage where traditions are genuinely practiced, not merely displayed. An indispensable treasure of Bengal's cultural identity.",
+          category: "Cultural Living Heritage"
+        },
+        {
+          id: "rev-7",
+          name: "Indranil Sengupta",
+          role: "Devotee & Cultural Pilgrim",
+          rating: 5,
+          time: "Google Review",
+          title: "The Sandhi Puja and Aarti at Thakur Dalan bring immense spiritual peace",
+          review: "Visiting Khelat Bhawan during the Durga Puja immersion and Sandhi Puja is a sacred experience. Walking in the footsteps of Sri Ramakrishna Paramhansa on this sanctified premise is truly elevating.",
+          category: "Spiritual Pilgrimage"
+        },
+        {
+          id: "rev-8",
+          name: "Sourav & Madhumita Sen",
+          role: "Cinema Producers & Creative Directors",
+          rating: 5,
+          time: "Google Review",
+          title: "Top-tier location support for period cinematic shoots and royal Bengali framing",
+          review: "We filmed our period sequence here and the grandeur of the high-ceilinged halls, pristine marble floors, and vintage furniture was unmatched. The administrative team provided flawless hospitality and coordination.",
+          category: "Cinema & Film Production"
+        },
+        {
+          id: "rev-5",
+          name: "সোমনাথ চট্টোপাধ্যায়",
+          role: "ঐতিহাসিক আলোকচিত্রী ও আর্কাইভিস্ট",
+          rating: 5,
+          time: "গুগল রিভিউ",
+          title: "উনিশ শতকের কলকাতার স্থাপত্য ক্যামেরাবন্দী করার শ্রেষ্ঠ অভিজ্ঞতা",
+          review: "খেলাৎ ভবনের পড়ন্ত রোদের করিন্থিয়ান স্তম্ভ ও কারুকাজময় বারান্দা প্রাচীন কলকাতার রাজকীয় রূপকে মূর্ত করে তোলে। আলোকচিত্রীদের জন্য এক অনন্য তীর্থক্ষেত্র।",
+          category: "ঐতিহাসিক স্থাপত্য"
+        },
+        {
+          id: "rev-6",
+          name: "অরুন্ধতী দাশগুপ্ত",
+          role: "শিল্পকলার ইতিহাসবিদ ও গবেষক",
+          rating: 5,
+          time: "গুগল রিভিউ",
+          title: "বাংলার নবজাগরণের এক জীবন্ত প্রতীক ও অমূল্য সাংস্কৃতিক নিদর্শন",
+          review: "পাথুরিয়াঘাটা ঘোষ বাড়ির ট্রাস্টিগণ যেভাবে ১৭৫ বছরের পারিবারিক আচার ও শিল্পকলার পৃষ্ঠপোষকতা সংরক্ষণ করে আসছেন, তা অত্যন্ত প্রশংসনীয়।",
+          category: "সাংস্কৃতিক ঐতিহ্য"
+        },
+        {
+          id: "rev-7",
+          name: "ইন্দ্রনীল সেনগুপ্ত",
+          role: "ভক্ত ও দর্শনার্থী",
+          rating: 5,
+          time: "গুগল রিভিউ",
+          title: "ঠাকুর দালানের সন্ধিপূজা ও আরতি মনকে পরম শান্তিতে ভরিয়ে তোলে",
+          review: "১৮৮১ সালে শ্রীশ্রীরামকৃষ্ণদেবের পুণ্য পদধূলিধন্য এই ভবনে পূজার সময় কাটানো এক অবিস্মরণীয় আধ্যাত্মিক অনুভূতি।",
+          category: "আধ্যাত্মিক ভক্তি"
+        },
+        {
+          id: "rev-8",
+          name: "সৌরভ ও মধুমিতা সেন",
+          role: "চলচ্চিত্র প্রযোজক ও পরিচালক",
+          rating: 5,
+          time: "গুগল রিভিউ",
+          title: "পিরিয়ড চলচ্চিত্র ও রাজকীয় দৃশ্য ধারণের জন্য অতুলনীয় রাজপ্রাসাদ",
+          review: "মার্বেলের মেঝে, উঁচু ছাদ ও প্রাচীন আসবাবপত্রে ঘেরা খেলাৎ ভবন আমাদের শুটিংয়ের মানকে বহুগুণ বাড়িয়ে দিয়েছে। ট্রাস্টের সহযোগিতা ছিল অসাধারণ।",
+          category: "চলচ্চিত্র নির্মাণ ও ভেন্যু"
         }
       ]
     },
@@ -579,7 +660,8 @@ export const siteData = {
       founder: "প্রতিষ্ঠাতা",
       trustees: "ট্রাস্ট ও ট্রাস্টি",
       gallery: "গ্যালারি",
-      rental: "ঐতিহ্য ভাড়া সেবা",
+      events: "ইভেন্টস ও অনুষ্ঠান",
+      rental: "রিজার্ভেশন ও বুকিং",
       feedback: "মতামত",
       contact: "যোগাযোগ",
       bookCta: "বুকিং অনুসন্ধান",

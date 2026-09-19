@@ -1,39 +1,32 @@
 import React from 'react';
 import SectionHeader from '../components/SectionHeader';
 import { getAssetUrl } from '../utils/assetHelper';
-import AlpanaMotif from '../components/AlpanaMotif';
-import { ArrowRight, Music, Landmark, Sparkles } from 'lucide-react';
+import { ArrowRight, Music, Landmark, Sparkles, BookOpen, HeartHandshake, Users, ShieldCheck } from 'lucide-react';
 
-export default function FounderPage({ lang, setActiveTab, onOpenLightbox, content }) {
+export default function FounderPage({ lang = 'en', setActiveTab, onOpenLightbox, content }) {
   const t = content[lang];
   const bn = lang === 'bn';
 
   return (
-    <main className="pt-28 md:pt-36 pb-24 bg-background min-h-screen">
-      <div className="w-full max-w-[96%] xl:max-w-[95%] 2xl:max-w-[1850px] mx-auto px-2 sm:px-4 md:px-6 lg:px-8">
+    <main className="pt-28 md:pt-36 pb-24 bg-background min-h-screen text-foreground">
+      <div className="w-full max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-20">
         <SectionHeader
           title={t.founder.name}
           subtitle={bn 
             ? '১৮৪৫ সালে খেলাৎ ভবনের দূরদর্শী প্রতিষ্ঠাতা, বিশিষ্ট দানশীল ও বাঙালি সংস্কৃতির অমর অভিভাবক' 
-            : `${t.founder.years} · Founder & Aristocratic Visionary of Pathuria Ghata Ghosh Bari`}
+            : `${t.founder.years} · Founder, Philanthropist & Cultural Patriarch of Pathuria Ghata Ghosh Bari`}
         />
 
-        {/* Main Archival Layout */}
-        <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-14 items-stretch my-12 md:my-16">
+        {/* Hero Archival Layout */}
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-14 items-center">
           {/* Portrait Column */}
           <div className="lg:col-span-5 flex flex-col">
-            <div className="relative p-4 sm:p-6 bg-card/95 rounded-2xl border-2 border-accent/40 shadow-2xl backdrop-blur-md overflow-hidden group flex flex-col justify-between h-full">
-              <div className="absolute top-2.5 left-2.5 w-4 h-4 border-t-2 border-l-2 border-accent/70" />
-              <div className="absolute top-2.5 right-2.5 w-4 h-4 border-t-2 border-r-2 border-accent/70" />
-              <div className="absolute bottom-2.5 left-2.5 w-4 h-4 border-b-2 border-l-2 border-accent/70" />
-              <div className="absolute bottom-2.5 right-2.5 w-4 h-4 border-b-2 border-r-2 border-accent/70" />
-              
-              {/* Bust Image */}
-              <div className="rounded-xl overflow-hidden bg-black/60 shadow-xl border border-accent/30 w-full">
+            <div className="relative p-6 bg-card/95 rounded-3xl border border-primary/40 shadow-2xl backdrop-blur-md overflow-hidden group">
+              <div className="rounded-2xl overflow-hidden bg-black/60 shadow-xl border border-primary/30 w-full aspect-[4/5]">
                 <img
                   src={getAssetUrl(t.founder.image)}
                   alt={t.founder.name}
-                  className="w-full h-[420px] sm:h-[500px] lg:h-[540px] object-cover object-top transition-transform duration-700 group-hover:scale-105 cursor-pointer"
+                  className="w-full h-full object-cover object-top transition-transform duration-700 group-hover:scale-105 cursor-pointer"
                   onClick={() => onOpenLightbox({
                     type: 'image',
                     title: t.founder.name,
@@ -43,95 +36,52 @@ export default function FounderPage({ lang, setActiveTab, onOpenLightbox, conten
                 />
               </div>
 
-              {/* Founder Details on Left */}
-              <div className="mt-5 pt-4 border-t border-accent/30 text-center space-y-3">
-                <div>
-                  <span className="text-[10.5px] uppercase tracking-[0.25em] text-accent font-body font-bold block">
-                    {bn ? 'ঐতিহাসিক মার্বেল ভাস্কর্য প্রতিকৃতি' : 'Historical Sculptural Archival Portrait'}
-                  </span>
-                  <h4 className="font-serif text-2xl sm:text-3xl font-bold text-foreground mt-1">{t.founder.name}</h4>
-                  <p className="text-xs uppercase tracking-widest text-accent font-body mt-0.5 font-semibold">1775 – 1845</p>
-                </div>
-
-                <div className="grid grid-cols-2 gap-2 text-left bg-background/60 p-3 rounded-lg border border-border/70 text-xs">
-                  <div>
-                    <span className="text-[9.5px] uppercase tracking-wider text-accent block font-semibold">
-                      {bn ? 'উপাধি ও ভূমিকা' : 'Title & Role'}
-                    </span>
-                    <span className="text-foreground/90 font-medium">
-                      {bn ? 'প্রতিষ্ঠাতা ও অভিজাত ব্যক্তিত্ব' : 'Founder & Aristocratic Visionary'}
-                    </span>
-                  </div>
-                  <div>
-                    <span className="text-[9.5px] uppercase tracking-wider text-accent block font-semibold">
-                      {bn ? 'ঐতিহাসিক এস্টেট' : 'Historic Estate'}
-                    </span>
-                    <span className="text-foreground/90 font-medium">
-                      {bn ? '৪৭ পাথুরিয়াঘাটা স্ট্রিট' : '47 Pathuria Ghata St, Kolkata'}
-                    </span>
-                  </div>
-                </div>
-
-                <p className="text-xs text-muted-foreground font-body italic">
-                  {bn 
-                    ? 'বাংলার নবজাগরণের অন্যতম শ্রেষ্ঠ মানবহিতৈষী ও উচ্চাঙ্গ সঙ্গীতের পৃষ্ঠপোষক।' 
-                    : 'Visionary patriarch who established Khelat Bhawan in 1845 and shaped its enduring legacy.'}
-                </p>
+              <div className="mt-5 pt-4 border-t border-border/40 text-center space-y-2">
+                <span className="text-[11px] uppercase tracking-[0.25em] text-primary font-sans font-bold block">
+                  {bn ? 'ঐতিহাসিক মার্বেল ভাস্কর্য প্রতিকৃতি' : 'Historical Sculptural Archival Portrait'}
+                </span>
+                <h4 className="font-serif text-2xl font-bold text-foreground">{t.founder.name}</h4>
+                <p className="text-xs uppercase tracking-widest text-muted-foreground font-mono">1775 – 1845</p>
               </div>
             </div>
           </div>
 
-          {/* Biography & Vision Column */}
-          <div className="lg:col-span-7 flex flex-col justify-between space-y-6 text-left">
-            <div className="inline-flex items-center gap-2 px-3.5 py-1 rounded-full bg-accent/15 border border-accent/30 text-accent text-xs tracking-[0.2em] uppercase font-body font-semibold">
+          {/* Biography Intro Column */}
+          <div className="lg:col-span-7 space-y-6 text-left">
+            <div className="inline-flex items-center gap-2 px-3.5 py-1 rounded-full bg-primary/10 border border-primary/30 text-primary text-xs tracking-[0.2em] uppercase font-sans font-semibold">
               <Sparkles className="w-3.5 h-3.5" />
               <span>{bn ? 'ঐতিহাসিক প্রামাণ্য বিবরণ' : 'Historical Archival Profile'}</span>
             </div>
 
-            <h3 className="font-serif text-3xl sm:text-4xl md:text-5xl font-bold text-foreground leading-tight">
-              {bn ? 'এক অমর সাংস্কৃতিক ঐতিহ্যের পথিকৃৎ' : 'The Beginning of a 175-Year Heritage'}
-            </h3>
+            <h2 className="font-serif text-3xl sm:text-4xl md:text-5xl font-bold text-foreground leading-tight">
+              {bn ? 'এক অমর সাংস্কৃতিক ঐতিহ্যের পথিকৃৎ' : 'The Patriarch of a 175-Year Living Legacy'}
+            </h2>
 
-            <p className="text-foreground/90 font-body text-base md:text-lg leading-relaxed font-light">
+            <p className="text-foreground/90 font-sans text-base leading-relaxed font-light">
               {t.founder.bio1}
             </p>
 
-            <p className="text-muted-foreground font-body text-sm md:text-base leading-relaxed">
+            <p className="text-muted-foreground font-sans text-sm leading-relaxed">
               {t.founder.bio2}
             </p>
 
-            {/* Classical Music Callout */}
-            <div className="p-6 rounded-xl bg-card/80 border-l-4 border-accent shadow-md">
-              <div className="flex items-center gap-3 mb-2">
-                <Music className="w-5 h-5 text-accent" />
-                <h4 className="font-serif font-bold text-foreground text-lg">
-                  {bn ? 'উচ্চাঙ্গ সঙ্গীত ও সংস্কৃতির পৃষ্ঠপোষকতা' : 'Patron of Hindustani Classical Music'}
-                </h4>
-              </div>
-              <p className="text-xs md:text-sm text-muted-foreground font-body leading-relaxed">
-                {bn
-                  ? 'বাবু খেলাৎ ঘোষের উচ্চাঙ্গ সঙ্গীতের প্রতি গভীর অনুরাগ খেলাৎ ভবনকে ভারতীয় মার্গ সঙ্গীতের এক পীঠস্থানে পরিণত করে, যা আজও ট্রাস্টের মাধ্যমে অক্ষুণ্ণ রয়েছে।'
-                  : 'Known for his deep appreciation of Hindustani classical music, Babu Khelat Ghosh welcomed leading maestros, laying the groundwork for the enduring Khelat Ghosh Memorial Trust.'}
-              </p>
-            </div>
-
             {/* Quote Box */}
-            <blockquote className="relative p-6 sm:p-8 rounded-xl bg-accent/10 border border-accent/30 italic font-serif text-foreground text-base md:text-lg shadow-sm">
-              <span className="text-4xl text-accent/40 absolute top-2 left-4 font-serif leading-none">“</span>
+            <blockquote className="relative p-6 rounded-2xl bg-card border border-primary/30 italic font-serif text-foreground text-base shadow-sm">
+              <span className="text-4xl text-primary/40 absolute top-2 left-4 font-serif leading-none">“</span>
               <p className="relative z-10 pl-4">{t.founder.quote}</p>
             </blockquote>
 
             <div className="pt-2 flex flex-wrap gap-4">
               <button
                 onClick={() => setActiveTab('trustees')}
-                className="inline-flex items-center gap-2 bg-primary text-primary-foreground px-8 py-3.5 text-xs tracking-[0.2em] uppercase font-body font-semibold hover:bg-foreground transition-all duration-300 rounded-full shadow-lg hover:scale-105"
+                className="inline-flex items-center gap-2 bg-primary text-primary-foreground px-8 py-3.5 text-xs tracking-[0.2em] uppercase font-sans font-semibold hover:bg-primary/90 transition-all rounded-full shadow-lg"
               >
                 <span>{bn ? 'সাংস্কৃতিক ট্রাস্টসমূহ দেখুন' : 'Explore Cultural Trusts'}</span>
                 <ArrowRight className="w-4 h-4" />
               </button>
               <button
                 onClick={() => setActiveTab('heritage')}
-                className="inline-flex items-center gap-2 bg-transparent text-foreground border border-accent/50 px-8 py-3.5 text-xs tracking-[0.2em] uppercase font-body font-semibold hover:bg-accent/15 transition-all duration-300 rounded-full shadow-sm"
+                className="inline-flex items-center gap-2 bg-card text-foreground border border-border/80 px-8 py-3.5 text-xs tracking-[0.2em] uppercase font-sans font-semibold hover:bg-background transition-all rounded-full shadow-sm"
               >
                 <span>{bn ? '৭ প্রজন্মের ঐতিহ্য' : 'Seven Generations Lineage'}</span>
                 <ArrowRight className="w-4 h-4" />
@@ -140,43 +90,89 @@ export default function FounderPage({ lang, setActiveTab, onOpenLightbox, conten
           </div>
         </div>
 
-        {/* 3 Archival Legacy Pillars */}
-        <div className="mt-16 pt-12 border-t border-accent/25 grid grid-cols-1 md:grid-cols-3 gap-6">
-          <div className="p-6 rounded-xl bg-card border border-border/80 shadow-md">
-            <Landmark className="w-7 h-7 text-accent mb-3" />
-            <h4 className="font-serif font-bold text-lg text-foreground mb-1.5">
-              {bn ? '১৮৪৫ স্থাপত্যের প্রতিষ্ঠা' : '1845 Architectural Founding'}
-            </h4>
-            <p className="text-xs md:text-sm text-muted-foreground font-body leading-relaxed">
-              {bn
-                ? '৪৭ পাথুরিয়াঘাটা স্ট্রিটে মার্বেল দালান ও ঐতিহ্যবাহী বাংলা প্রাসাদের নান্দনিক নকশায় খেলাৎ ভবনের প্রতিষ্ঠা।'
-                : 'Founded at 47 Pathuria Ghata Street with classical colonnades, marble courtyards, and grand Bengal Renaissance architecture.'}
-            </p>
+        {/* 4 COMPREHENSIVE SECTIONS (Item 10) */}
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-8 pt-8 border-t border-border/50">
+          
+          {/* Pillar 1: Life & Vision */}
+          <div className="bg-card/70 p-8 sm:p-10 rounded-3xl border border-border/80 shadow-xl space-y-4 flex flex-col justify-between">
+            <div className="space-y-4">
+              <div className="w-12 h-12 rounded-2xl bg-primary/10 text-primary flex items-center justify-center border border-primary/20">
+                <Landmark className="w-6 h-6" />
+              </div>
+              <span className="text-[11px] uppercase tracking-widest text-primary font-semibold block">
+                {bn ? '১. জীবন ও দূরদৃষ্টি' : '1. Life & Vision'}
+              </span>
+              <h3 className="font-serif text-2xl font-bold text-foreground">
+                {bn ? 'স্থাপত্য প্রতিষ্ঠা ও রাজবাড়ির দূরদৃষ্টি' : 'Architectural Founding & Grand Vision'}
+              </h3>
+              <p className="text-muted-foreground text-xs sm:text-sm font-sans leading-relaxed">
+                {bn
+                  ? '১৮৪৫ সালে বাবু খেলাৎ চন্দ্র ঘোষ উত্তর কলকাতার পাথুরিয়াঘাটায় ইউরোপীয় ও প্রাচ্য রীতির সমন্বয়ে এই অনন্য প্রাসাদ গড়ে তোলেন। শুধু একটি পারিবারিক বাসস্থান নয়, এটিকে বাংলার সাংস্কৃতিক ও আধ্যাত্মিক কেন্দ্র হিসেবে গড়ে তোলাই ছিল তাঁর দূরদর্শী লক্ষ্য।'
+                  : 'In 1845, Babu Khelat Ghosh commissioned the grand mansion synthesizing Greco-Roman Corinthian columns with traditional Bengali courtyard layouts. Designed not merely as an aristocratic mansion, but as a perpetual sanctuary for devotion, arts, and community gatherings.'}
+              </p>
+            </div>
           </div>
 
-          <div className="p-6 rounded-xl bg-card border border-border/80 shadow-md">
-            <Music className="w-7 h-7 text-accent mb-3" />
-            <h4 className="font-serif font-bold text-lg text-foreground mb-1.5">
-              {bn ? 'মার্গ সঙ্গীতের বৈঠক' : 'Classical Sangeet Baithaks'}
-            </h4>
-            <p className="text-xs md:text-sm text-muted-foreground font-body leading-relaxed">
-              {bn
-                ? 'ভারতের প্রথিতযশা উচ্চাঙ্গ সঙ্গীত শিল্পীদের নিয়মিত সমাগম ও সঙ্গীতের অমর ঐতিহ্যের লালন।'
-                : 'A revered salon hosting celebrated maestros of Hindustani classical music, preserving authentic traditions.'}
-            </p>
+          {/* Pillar 2: Family & Ancestral Lineage */}
+          <div className="bg-card/70 p-8 sm:p-10 rounded-3xl border border-border/80 shadow-xl space-y-4 flex flex-col justify-between">
+            <div className="space-y-4">
+              <div className="w-12 h-12 rounded-2xl bg-primary/10 text-primary flex items-center justify-center border border-primary/20">
+                <Users className="w-6 h-6" />
+              </div>
+              <span className="text-[11px] uppercase tracking-widest text-primary font-semibold block">
+                {bn ? '২. বংশানুক্রমিক আভিজাত্য' : '2. Family & Ancestral Lineage'}
+              </span>
+              <h3 className="font-serif text-2xl font-bold text-foreground">
+                {bn ? 'পাথুরিয়াঘাটা ঘোষ বংশের সাবেকি ঐতিহ্য' : 'Ancestral Heritage of the Ghosh Dynasty'}
+              </h3>
+              <p className="text-muted-foreground text-xs sm:text-sm font-sans leading-relaxed">
+                {bn
+                  ? 'উত্তর কলকাতার অন্যতম সম্ভ্রান্ত কায়স্থ পরিবার হিসেবে ঘোষ বংশ বাণিজ্য, বিদ্যাচর্চা ও সমাজকল্যাণে অসামান্য ভূমিকা পালন করেছে। পরবর্তী সাত প্রজন্ম ধরে তাঁর প্রতিষ্ঠিত আদর্শ ও পারিবারিক পূজা-পার্বণ অব্যাহত রয়েছে।'
+                  : 'One of the foremost aristocratic families of North Calcutta, the Ghosh lineage played a pivotal role in trade, education, and social reform. Across seven generations, his descendants have preserved the ancestral rituals and public service without compromise.'}
+              </p>
+            </div>
           </div>
 
-          <div className="p-6 rounded-xl bg-card border border-border/80 shadow-md">
-            <Sparkles className="w-7 h-7 text-accent mb-3" />
-            <h4 className="font-serif font-bold text-lg text-foreground mb-1.5">
-              {bn ? 'অবিচ্ছিন্ন ট্রাস্ট ধারা' : 'Unbroken Trust Continuity'}
-            </h4>
-            <p className="text-xs md:text-sm text-muted-foreground font-body leading-relaxed">
-              {bn
-                ? 'তিনটি সক্রিয় ট্রাস্টের মাধ্যমে ৭ প্রজন্ম ধরে ভক্তি, শিল্পকলা ও সমাজসেবার অক্ষুণ্ণ ধারা।'
-                : 'Institutionalized across three dedicated trusts safeguarding spiritual worship, classical arts, and social service.'}
-            </p>
+          {/* Pillar 3: Contributions to Bengali Society */}
+          <div className="bg-card/70 p-8 sm:p-10 rounded-3xl border border-border/80 shadow-xl space-y-4 flex flex-col justify-between">
+            <div className="space-y-4">
+              <div className="w-12 h-12 rounded-2xl bg-primary/10 text-primary flex items-center justify-center border border-primary/20">
+                <HeartHandshake className="w-6 h-6" />
+              </div>
+              <span className="text-[11px] uppercase tracking-widest text-primary font-semibold block">
+                {bn ? '৩. সমাজে ঐতিহাসিক অবদান' : '3. Contributions to Bengali Society'}
+              </span>
+              <h3 className="font-serif text-2xl font-bold text-foreground">
+                {bn ? 'নবজাগরণ ও সমাজকল্যাণমূলক কর্মকাণ্ড' : 'Philanthropy & Bengal Renaissance Leadership'}
+              </h3>
+              <p className="text-muted-foreground text-xs sm:text-sm font-sans leading-relaxed">
+                {bn
+                  ? 'বাবু খেলাৎ ঘোষ শিক্ষার প্রসারে বিদ্যায়তন স্থাপন, দুর্ভিক্ষ ও মহামারীতে ত্রাণ বিতরণ এবং দরিদ্রদের চিকিৎসায় প্রভূত অর্থ দান করেছিলেন। ১৮৮১ সালে শ্রীরামকৃষ্ণদেবের শুভাগমন পরিবারের সামাজিক ও আধ্যাত্মিক উচ্চতাকে শীর্ষবিন্দুতে পৌঁছে দেয়।'
+                  : 'Babu Khelat Ghosh endowed educational initiatives, distributed extensive relief during famines, and supported public healthcare clinics. The household was sanctified in 1881 by the visit of Sri Ramakrishna Paramhansa, permanently embedding spiritual philanthropy into the family charter.'}
+              </p>
+            </div>
           </div>
+
+          {/* Pillar 4: Patronage of Classical Music & Literature */}
+          <div className="bg-card/70 p-8 sm:p-10 rounded-3xl border border-border/80 shadow-xl space-y-4 flex flex-col justify-between">
+            <div className="space-y-4">
+              <div className="w-12 h-12 rounded-2xl bg-primary/10 text-primary flex items-center justify-center border border-primary/20">
+                <Music className="w-6 h-6" />
+              </div>
+              <span className="text-[11px] uppercase tracking-widest text-primary font-semibold block">
+                {bn ? '৪. সঙ্গীত ও সাহিত্যের পৃষ্ঠপোষকতা' : '4. Music & Literature Preservation'}
+              </span>
+              <h3 className="font-serif text-2xl font-bold text-foreground">
+                {bn ? 'ভারতীয় মার্গসঙ্গীত ও পাণ্ডুলিপির পীঠস্থান' : 'Hindustani Classical Sangeet & Archival Salon'}
+              </h3>
+              <p className="text-muted-foreground text-xs sm:text-sm font-sans leading-relaxed">
+                {bn
+                  ? 'তাঁর আমলে খেলাৎ ভবন ছিল ভারতের শীর্ষস্থানীয় ধ্রুপদ, খেয়াল, পাখোয়াজ ও সেতার শিল্পীদের অন্যতম প্রধান বৈঠকখানা। এই ঐতিহ্যই পরবর্তীকালে অল ইন্ডিয়া মিউজিক কনফারেন্স এবং বর্তমানের খেলাৎ ঘোষ মেমোরিয়াল ট্রাস্টের ভিত্তি স্থাপন করে।'
+                  : 'Under his patronage, Khelat Bhawan became the premier salon for eminent ustads and pandits of Dhrupad, Khayal, and Sitar. This musical lineage paved the way for North Calcutta\'s famed music conferences and today\'s Khelat Ghosh Memorial Trust.'}
+              </p>
+            </div>
+          </div>
+
         </div>
       </div>
     </main>

@@ -12,6 +12,7 @@ import TimelinePage from './pages/TimelinePage';
 import FounderPage from './pages/FounderPage';
 import TrusteesPage from './pages/TrusteesPage';
 import GalleryPage from './pages/GalleryPage';
+import EventsPage from './pages/EventsPage';
 import HeritageRentalPage from './pages/HeritageRentalPage';
 import FeedbackPage from './pages/FeedbackPage';
 import ContactPage from './pages/ContactPage';
@@ -38,7 +39,7 @@ export default function App() {
   useEffect(() => {
     const handleHash = () => {
       const rawHash = window.location.hash.replace(/^#\/?/, '').trim().toLowerCase();
-      const validTabs = ['home', 'heritage', 'timeline', 'founder', 'trustees', 'gallery', 'rental', 'feedback', 'contact'];
+      const validTabs = ['home', 'heritage', 'timeline', 'founder', 'trustees', 'gallery', 'events', 'rental', 'feedback', 'contact'];
       if (!rawHash || rawHash === 'home') {
         setActiveTab('home');
       } else if (validTabs.includes(rawHash)) {
@@ -183,6 +184,14 @@ export default function App() {
             lang={lang}
             onOpenLightbox={(item) => setLightboxItem(item)}
             content={siteData}
+          />
+        )}
+
+        {activeTab === 'events' && (
+          <EventsPage
+            lang={lang}
+            setActiveTab={handleTabChange}
+            onOpenBooking={handleOpenBooking}
           />
         )}
 
