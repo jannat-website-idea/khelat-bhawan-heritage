@@ -1692,5 +1692,376 @@
   }
 }
 
+/* ==========================================================================
+   HERITAGE FAMILY TREE — 7-GENERATION BOTANICAL LINEAGE
+   Strictly following Khelat Bhawan Brand Architecture
+   ========================================================================== */
+
+.heritage-tree-wrapper {
+  background: #fdfbf7;
+  border: 1px solid rgba(182, 138, 50, 0.35);
+  border-radius: 32px;
+  box-shadow: 0 20px 60px rgba(50, 27, 23, 0.08), inset 0 0 80px rgba(182, 138, 50, 0.03);
+  overflow: hidden;
+}
+
+/* Background watermark and subtle botanical framing */
+.heritage-tree-canvas-bg {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  z-index: 0;
+  overflow: hidden;
+}
+
+.heritage-tree-palace-watermark {
+  position: absolute;
+  inset: 0;
+  background-image: url('/images/SDP_0282.jpg');
+  background-size: cover;
+  background-position: center 20%;
+  opacity: 0.06;
+  filter: sepia(0.8) contrast(1.1);
+  mix-blend-mode: multiply;
+}
+
+.heritage-tree-botanical-corner {
+  position: absolute;
+  width: 140px;
+  height: 140px;
+  opacity: 0.15;
+  background-repeat: no-repeat;
+  background-size: contain;
+}
+
+.heritage-tree-botanical-corner--tl {
+  top: 16px;
+  left: 16px;
+  border-top: 2px solid #b68a32;
+  border-left: 2px solid #b68a32;
+  border-top-left-radius: 20px;
+}
+
+.heritage-tree-botanical-corner--tr {
+  top: 16px;
+  right: 16px;
+  border-top: 2px solid #b68a32;
+  border-right: 2px solid #b68a32;
+  border-top-right-radius: 20px;
+}
+
+.heritage-tree-botanical-corner--bl {
+  bottom: 16px;
+  left: 16px;
+  border-bottom: 2px solid #b68a32;
+  border-left: 2px solid #b68a32;
+  border-bottom-left-radius: 20px;
+}
+
+.heritage-tree-botanical-corner--br {
+  bottom: 16px;
+  right: 16px;
+  border-bottom: 2px solid #b68a32;
+  border-right: 2px solid #b68a32;
+  border-bottom-right-radius: 20px;
+}
+
+/* Header Typography */
+.heritage-tree-eyebrow {
+  display: inline-block;
+  font-family: var(--font-body);
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.28em;
+  text-transform: uppercase;
+  color: #8c6e4e;
+  margin-bottom: 4px;
+}
+
+.heritage-tree-main-title {
+  font-family: var(--font-serif);
+  font-size: clamp(2rem, 3.8vw, 3.25rem);
+  font-weight: 500;
+  font-style: italic;
+  line-height: 1.15;
+  color: #321b17;
+  letter-spacing: -0.01em;
+}
+
+.heritage-tree-filigree {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+  margin: 10px auto;
+}
+
+.heritage-tree-filigree-line {
+  width: 48px;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, #b68a32, transparent);
+}
+
+.heritage-tree-filigree-gem {
+  color: #b68a32;
+  font-size: 12px;
+}
+
+.heritage-tree-subtitle {
+  font-family: var(--font-serif);
+  font-size: clamp(0.95rem, 1.4vw, 1.15rem);
+  font-style: normal;
+  color: #6e554d;
+  line-height: 1.5;
+}
+
+/* Flanking Side Quotes */
+.heritage-tree-quote {
+  position: absolute;
+  top: 140px;
+  width: 170px;
+  z-index: 10;
+}
+
+.heritage-tree-quote--left {
+  left: 28px;
+  text-align: left;
+}
+
+.heritage-tree-quote--right {
+  right: 28px;
+  text-align: right;
+}
+
+.heritage-tree-quote-text {
+  font-family: var(--font-serif);
+  font-size: 1.05rem;
+  font-style: italic;
+  color: #4a2c20;
+  line-height: 1.35;
+}
+
+.heritage-tree-quote-rule {
+  display: block;
+  width: 36px;
+  height: 1.5px;
+  background: #b68a32;
+  margin-top: 8px;
+}
+
+.heritage-tree-quote--right .heritage-tree-quote-rule {
+  margin-left: auto;
+}
+
+/* Desktop Tree Canvas */
+.heritage-tree-stage {
+  min-height: 1380px;
+}
+
+.heritage-tree-svg {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+}
+
+/* Generation Node in Tree */
+.heritage-tree-node {
+  width: 200px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+}
+
+.heritage-tree-node--apex {
+  width: 230px;
+}
+
+/* Oval Gilded Medallion Frame */
+.heritage-tree-medallion-outer {
+  position: relative;
+  width: 130px;
+  height: 165px;
+  border-radius: 50% / 50%;
+  padding: 4px;
+  background: linear-gradient(135deg, #d4af37 0%, #8c6426 40%, #f3e5ab 70%, #996515 100%);
+  box-shadow: 0 10px 28px rgba(50, 27, 23, 0.22), 0 2px 6px rgba(0, 0, 0, 0.12);
+  transition: transform 0.35s cubic-bezier(0.2, 0.8, 0.2, 1), box-shadow 0.35s ease;
+}
+
+.heritage-tree-node--apex .heritage-tree-medallion-outer {
+  width: 145px;
+  height: 185px;
+  box-shadow: 0 14px 36px rgba(50, 27, 23, 0.28), 0 0 24px rgba(212, 175, 55, 0.3);
+}
+
+.heritage-tree-medallion-ring {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  border-radius: 50% / 50%;
+  padding: 3px;
+  background: #2c1611;
+  border: 1px dashed rgba(255, 235, 170, 0.7);
+}
+
+.heritage-tree-medallion-inner {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  border-radius: 50% / 50%;
+  overflow: hidden;
+  background: #1a0e0b;
+}
+
+.heritage-tree-portrait-img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  filter: sepia(0.22) contrast(1.08) brightness(0.98);
+  transition: transform 0.4s ease, filter 0.4s ease;
+}
+
+.group:hover .heritage-tree-portrait-img {
+  transform: scale(1.06);
+  filter: sepia(0.08) contrast(1.12) brightness(1.02);
+}
+
+.heritage-tree-portrait-vignette {
+  position: absolute;
+  inset: 0;
+  border-radius: 50% / 50%;
+  background: radial-gradient(circle, transparent 50%, rgba(44, 22, 17, 0.4) 95%);
+  pointer-events: none;
+}
+
+.heritage-tree-medallion-cue {
+  position: absolute;
+  bottom: -4px;
+  right: -4px;
+  width: 28px;
+  height: 28px;
+  border-radius: 50%;
+  background: #321b17;
+  border: 1.5px solid #d4af37;
+  display: grid;
+  place-items: center;
+  opacity: 0;
+  transform: scale(0.7);
+  transition: opacity 0.25s ease, transform 0.25s ease;
+  box-shadow: 0 4px 10px rgba(0,0,0,0.3);
+}
+
+.group:hover .heritage-tree-medallion-cue {
+  opacity: 1;
+  transform: scale(1);
+}
+
+/* Parchment Scroll Banner */
+.heritage-tree-parchment-scroll {
+  position: relative;
+  margin-top: -16px;
+  z-index: 10;
+  width: 100%;
+  background: linear-gradient(180deg, #fefcf8 0%, #f4ecde 100%);
+  border: 1px solid #cbb288;
+  border-radius: 12px;
+  padding: 14px 12px 10px;
+  box-shadow: 0 8px 20px rgba(50, 27, 23, 0.12), inset 0 1px 0 rgba(255, 255, 255, 0.9);
+  transition: box-shadow 0.3s ease, border-color 0.3s ease;
+}
+
+.group:hover .heritage-tree-parchment-scroll {
+  border-color: #8c6426;
+  box-shadow: 0 12px 28px rgba(50, 27, 23, 0.18);
+}
+
+.heritage-tree-gen-badge {
+  position: absolute;
+  top: -10px;
+  left: 50%;
+  transform: translateX(-50%);
+  background: #321b17;
+  color: #f3e5ab;
+  border: 1px solid #d4af37;
+  font-family: var(--font-body);
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  padding: 1px 9px;
+  border-radius: 9999px;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.25);
+}
+
+.heritage-tree-node-name {
+  font-family: var(--font-serif);
+  font-size: 13px;
+  font-weight: 700;
+  color: #321b17;
+  line-height: 1.25;
+  margin-top: 2px;
+}
+
+.heritage-tree-node-years {
+  font-family: var(--font-body);
+  font-size: 10px;
+  font-weight: 600;
+  color: #8c6e4e;
+  letter-spacing: 0.04em;
+  margin: 3px 0 2px;
+}
+
+.heritage-tree-node-role {
+  font-family: var(--font-serif);
+  font-size: 11px;
+  font-style: italic;
+  color: #553d35;
+  line-height: 1.2;
+}
+
+/* Footer Plaque */
+.heritage-tree-legacy-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 16px;
+}
+
+.heritage-tree-legacy-line {
+  width: 60px;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, #b68a32, transparent);
+}
+
+.heritage-tree-legacy-text {
+  font-family: var(--font-serif);
+  font-size: 14px;
+  font-weight: 700;
+  letter-spacing: 0.25em;
+  color: #8c6e4e;
+  text-transform: uppercase;
+}
+
+/* Modal Styling */
+.heritage-tree-modal-portrait {
+  position: relative;
+  width: 190px;
+  height: 240px;
+  border-radius: 50% / 50%;
+  padding: 4px;
+  background: linear-gradient(135deg, #d4af37 0%, #8c6426 40%, #f3e5ab 70%, #996515 100%);
+  box-shadow: 0 12px 32px rgba(50, 27, 23, 0.25);
+  overflow: hidden;
+}
+
+.heritage-tree-modal-portrait img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  border-radius: 50% / 50%;
+  filter: sepia(0.15) contrast(1.08);
+}
+
+
 
 
