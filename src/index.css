@@ -767,73 +767,136 @@
 .heritage-lineage__image:hover img { transform: scale(1.035); }
 .heritage-lineage > div > p:not(.heritage-kicker) { max-width: 520px; }
 
-/* Royal family tree: an expansive, panoramic archival scroll */
+/* Seven-generation heritage pyramid */
 .royal-family-tree {
   position: relative;
-  display: grid;
-  grid-template-columns: repeat(2, minmax(0, 1fr));
-  gap: 46px clamp(40px, 5.5vw, 115px);
   width: 100%;
-  max-width: min(1380px, 96vw);
+  max-width: 1240px;
   margin-inline: auto;
-  padding: 85px clamp(24px, 4vw, 68px) 115px;
-  background-color: #fcf6e9;
-  background-image: radial-gradient(circle at 12px 12px,rgba(182,139,70,.08) 1.5px,transparent 1.7px);
-  background-size: 24px 24px;
-  border: 1.5px solid hsl(var(--accent) / .55);
-  border-radius: 20px;
-  box-shadow: inset 0 0 0 8px hsl(var(--background)), inset 0 0 0 10px hsl(var(--accent) / .35), 0 28px 70px rgba(63,25,17,.08);
+  padding: 116px clamp(18px, 4vw, 64px) 58px;
+  background:
+    radial-gradient(circle at 50% 0, rgba(213, 169, 86, .14), transparent 42%),
+    linear-gradient(145deg, #2a0d0b 0%, #160706 58%, #230b09 100%);
+  border: 1px solid rgba(201, 154, 74, .55);
+  border-radius: 34px;
+  box-shadow: inset 0 0 0 8px rgba(16, 4, 4, .62), inset 0 0 0 9px rgba(201, 154, 74, .22), 0 34px 80px rgba(47, 14, 10, .2);
   overflow: hidden;
+  isolation: isolate;
 }
-.royal-family-tree:before { content: ""; position: absolute; top: 72px; bottom: 93px; left: 50%; width: 1.5px; background: linear-gradient(hsl(var(--accent) / 0),hsl(var(--accent)),hsl(var(--accent))); }
-.royal-family-tree__crown { position: absolute; top: 23px; left: 50%; width: 50px; height: 50px; transform: translateX(-50%) rotate(45deg); display: grid; place-items: center; border: 1.5px solid hsl(var(--accent)); background: hsl(var(--background)); color: hsl(var(--accent)); font-size: 18px; box-shadow: 0 4px 12px rgba(0,0,0,0.06); }
-.royal-family-tree__crown::first-letter { transform: rotate(-45deg); }
-.royal-family-tree__generation { position: relative; display: flex; align-items: center; gap: 20px; min-height: 142px; }
-.royal-family-tree__generation:nth-of-type(even) { grid-column: 2; }
-.royal-family-tree__generation:nth-of-type(odd) { grid-column: 1; flex-direction: row-reverse; text-align: right; }
-.royal-family-tree__generation:after { content: ""; position: absolute; top: 50%; width: clamp(36px, 4vw, 64px); height: 1.5px; background: hsl(var(--accent) / .75); }
-.royal-family-tree__generation:nth-of-type(odd):after { right: calc(-1 * clamp(36px, 4vw, 64px)); }
-.royal-family-tree__generation:nth-of-type(even):after { left: calc(-1 * clamp(36px, 4vw, 64px)); }
-.royal-family-tree__generation--1 { grid-column: 1 / -1 !important; width: min(600px, 90%); justify-self: center; flex-direction: column !important; text-align: center !important; margin-bottom: 8px; }
-.royal-family-tree__generation--1:after { top: auto !important; bottom: -24px; left: 50% !important; width: 1.5px; height: 24px; }
-.royal-family-tree__medallion { flex: 0 0 76px; height: 88px; padding: 8px; display: grid; place-items: center; border: 1.5px solid hsl(var(--accent)); border-radius: 50%; background: hsl(var(--primary)); box-shadow: inset 0 0 0 4px hsl(var(--background)), inset 0 0 0 6px hsl(var(--accent) / .75); color: #f3d798; }
-.royal-family-tree__medallion svg { width: 56px; height: 56px; }
-.royal-family-tree__card {
-  position: relative;
-  flex: 1;
-  padding: 24px 28px;
-  border: 1px solid hsl(var(--border));
-  border-radius: 12px;
-  background: hsl(var(--card) / .96);
-  box-shadow: 0 6px 24px rgba(47,14,10,.06);
-}
-.royal-family-tree__card:before {
+.royal-family-tree:before,
+.royal-family-tree:after {
   content: "";
   position: absolute;
-  top: 10px;
-  right: 10px;
-  width: 28px;
-  height: 28px;
-  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='26' height='26' viewBox='0 0 100 100' fill='none'%3E%3Ccircle cx='50' cy='50' r='46' stroke='%23d8ae62' stroke-width='2' opacity='0.7'/%3E%3Ccircle cx='50' cy='50' r='36.5' stroke='%23d8ae62' stroke-width='2' stroke-dasharray='3 8' stroke-linecap='round' opacity='0.8'/%3E%3Ccircle cx='50' cy='50' r='10.5' stroke='%23d8ae62' stroke-width='2' fill='%23d8ae62' fill-opacity='0.25'/%3E%3Ccircle cx='50' cy='50' r='4' fill='%23d8ae62'/%3E%3Cg stroke='%23d8ae62' stroke-width='2' fill='%23d8ae62' fill-opacity='0.15'%3E%3Cpath d='M50 39.5 C43.8 34.5 43.8 24.5 50 19.5 C56.2 24.5 56.2 34.5 50 39.5 Z'/%3E%3Ccircle cx='50' cy='18' r='2' fill='%23d8ae62'/%3E%3Cpath d='M50 60.5 C43.8 65.5 43.8 75.5 50 80.5 C56.2 75.5 56.2 65.5 50 60.5 Z'/%3E%3Ccircle cx='50' cy='82' r='2' fill='%23d8ae62'/%3E%3Cpath d='M39.5 50 C34.5 43.8 24.5 43.8 19.5 50 C24.5 56.2 34.5 56.2 39.5 50 Z'/%3E%3Ccircle cx='18' cy='50' r='2' fill='%23d8ae62'/%3E%3Cpath d='M60.5 50 C65.5 43.8 75.5 43.8 80.5 50 C75.5 56.2 65.5 56.2 60.5 50 Z'/%3E%3Ccircle cx='82' cy='50' r='2' fill='%23d8ae62'/%3E%3Cpath d='M42.6 42.6 C35.5 39 28.5 46 31.5 53 C38.5 50 45.5 43 42.6 42.6 Z' transform='rotate(45 50 50)'/%3E%3Cpath d='M42.6 42.6 C35.5 39 28.5 46 31.5 53 C38.5 50 45.5 43 42.6 42.6 Z' transform='rotate(135 50 50)'/%3E%3Cpath d='M42.6 42.6 C35.5 39 28.5 46 31.5 53 C38.5 50 45.5 43 42.6 42.6 Z' transform='rotate(225 50 50)'/%3E%3Cpath d='M42.6 42.6 C35.5 39 28.5 46 31.5 53 C38.5 50 45.5 43 42.6 42.6 Z' transform='rotate(315 50 50)'/%3E%3C/g%3E%3C/svg%3E");
-  background-size: contain;
-  background-repeat: no-repeat;
-  opacity: 0.65;
-  pointer-events: none;
+  inset-inline: 9%;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, rgba(216, 174, 98, .72), transparent);
 }
-.royal-family-tree__generation:nth-of-type(odd) .royal-family-tree__card:before {
-  right: auto;
-  left: 10px;
-  transform: scaleX(-1);
+.royal-family-tree:before { top: 86px; }
+.royal-family-tree:after { bottom: 35px; }
+.royal-family-tree__crown {
+  position: absolute;
+  top: 28px;
+  left: 50%;
+  width: 46px;
+  height: 46px;
+  transform: translateX(-50%) rotate(45deg);
+  display: grid;
+  place-items: center;
+  border: 1px solid rgba(225, 185, 94, .82);
+  background: #210907;
+  color: #e1b95e;
+  box-shadow: 0 10px 30px rgba(0,0,0,.22);
 }
-.royal-family-tree__card > span { color: hsl(var(--accent)); font-size: 9.5px; font-weight: 700; letter-spacing: .18em; text-transform: uppercase; }
-.royal-family-tree__card h4 { margin: 6px 0 2px; color: hsl(var(--foreground)); font-family: var(--font-serif); font-size: 24px; font-weight: 600; }
-.royal-family-tree__card p { margin: 8px 0 0; color: hsl(var(--muted-foreground)); font-size: 13px; line-height: 1.68; }
-.royal-family-tree__card .royal-family-tree__role { margin-top: 2px; color: hsl(var(--primary)); font-size: 10.5px; font-weight: 700; letter-spacing: .08em; text-transform: uppercase; }
-.royal-family-tree__roots { position: absolute; bottom: 40px; left: 50%; width: 160px; height: 44px; transform: translateX(-50%); }
-.royal-family-tree__roots span { position: absolute; top: 0; left: 50%; width: 80px; height: 38px; border-bottom: 1.5px solid hsl(var(--accent)); border-radius: 50%; transform-origin: top left; }
-.royal-family-tree__roots span:nth-child(1) { transform: rotate(12deg); }
-.royal-family-tree__roots span:nth-child(2) { transform: rotate(42deg); }
-.royal-family-tree__roots span:nth-child(3) { transform: rotate(76deg); }
+.royal-family-tree__crown span { transform: rotate(-45deg); font-size: 16px; }
+.royal-family-tree__eyebrow {
+  margin: 0 0 32px;
+  color: #d7b879;
+  font-size: 10px;
+  font-weight: 600;
+  letter-spacing: .3em;
+  text-align: center;
+  text-transform: uppercase;
+}
+.royal-family-tree__generation {
+  position: relative;
+  width: var(--tier-width);
+  margin: 0 auto 4px;
+  padding: 1px;
+  background: linear-gradient(90deg, rgba(184, 134, 61, .5), #e1b95e, rgba(184, 134, 61, .5));
+  clip-path: polygon(18px 0, calc(100% - 18px) 0, 100% 100%, 0 100%);
+  filter: drop-shadow(0 12px 18px rgba(0, 0, 0, .13));
+}
+.royal-family-tree__card {
+  min-height: 112px;
+  display: grid;
+  grid-template-columns: 56px minmax(0, 1fr) auto;
+  align-items: center;
+  gap: clamp(14px, 2vw, 28px);
+  padding: 18px clamp(28px, 4vw, 52px);
+  background: linear-gradient(105deg, rgba(77, 25, 20, .98), rgba(42, 12, 10, .98));
+  clip-path: polygon(18px 0, calc(100% - 18px) 0, 100% 100%, 0 100%);
+}
+.royal-family-tree__generation:nth-of-type(even) .royal-family-tree__card {
+  background: linear-gradient(105deg, rgba(50, 16, 13, .99), rgba(86, 29, 22, .96));
+}
+.royal-family-tree__number {
+  color: rgba(225, 185, 94, .82);
+  font-family: var(--font-serif);
+  font-size: clamp(28px, 3vw, 42px);
+  font-style: italic;
+  line-height: 1;
+}
+.royal-family-tree__copy { min-width: 0; text-align: center; }
+.royal-family-tree__label {
+  color: #d7b879;
+  font-size: 9px;
+  font-weight: 700;
+  letter-spacing: .22em;
+  text-transform: uppercase;
+}
+.royal-family-tree__card h4 {
+  margin: 3px 0 1px;
+  color: #f4efe5;
+  font-family: var(--font-serif);
+  font-size: clamp(18px, 2vw, 26px);
+  font-weight: 500;
+  line-height: 1.15;
+}
+.royal-family-tree__card p { margin: 0; }
+.royal-family-tree__card .royal-family-tree__role {
+  color: #e1b95e;
+  font-size: 9px;
+  font-weight: 700;
+  letter-spacing: .14em;
+  text-transform: uppercase;
+}
+.royal-family-tree__card .royal-family-tree__description {
+  max-width: 720px;
+  margin: 6px auto 0;
+  color: rgba(244, 239, 229, .68);
+  font-size: 11px;
+  line-height: 1.5;
+}
+.royal-family-tree__period {
+  color: rgba(244, 239, 229, .68);
+  font-family: var(--font-serif);
+  font-size: 13px;
+  letter-spacing: .08em;
+  white-space: nowrap;
+}
+.royal-family-tree__foundation {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 14px;
+  margin-top: 24px;
+  color: #d7b879;
+  font-family: var(--font-serif);
+  font-size: 15px;
+  letter-spacing: .18em;
+}
+.royal-family-tree__foundation span { width: min(160px, 22vw); height: 1px; background: rgba(201, 154, 74, .5); }
+.royal-family-tree__foundation i { font-style: normal; }
 
 /* Trustee Lineage: Panoramic Royal Decree Scroll */
 .trustee-lineage {
@@ -913,10 +976,9 @@
 @media (max-width: 900px) {
   .heritage-story,.heritage-lineage { grid-template-columns: 1fr; gap: 65px; }
   .heritage-story__image,.heritage-lineage__image { height: 560px; }
-  .royal-family-tree { gap: 34px 70px; }
-  .royal-family-tree__generation:after { width: 36px; }
-  .royal-family-tree__generation:nth-of-type(odd):after { right: -36px; }
-  .royal-family-tree__generation:nth-of-type(even):after { left: -36px; }
+  .royal-family-tree { padding-inline: 16px; }
+  .royal-family-tree__generation { width: min(calc(var(--tier-width) + 8%), 98%); }
+  .royal-family-tree__card { grid-template-columns: 44px minmax(0, 1fr) auto; padding-inline: 28px; }
   .heritage-trust-grid { grid-template-columns: 1fr; }
   .heritage-trust-card { min-height: 0; }
   .heritage-heading-row { align-items: start; flex-direction: column; gap: 24px; }
@@ -929,13 +991,18 @@
   .heritage-section { width: 88vw; padding-block: 92px; }
   .heritage-home h2 { font-size: 44px; }
   .heritage-story__image,.heritage-lineage__image { height: 470px; }
-  .royal-family-tree { display: block; padding: 80px 18px 88px; }
-  .royal-family-tree:before { left: 49px; }
-  .royal-family-tree__generation,.royal-family-tree__generation:nth-of-type(odd),.royal-family-tree__generation:nth-of-type(even),.royal-family-tree__generation--1 { width: auto; min-height: 0; margin: 0 0 24px; display: grid; grid-template-columns: 62px 1fr; gap: 14px; text-align: left !important; }
-  .royal-family-tree__generation:after,.royal-family-tree__generation--1:after { display: none; }
-  .royal-family-tree__medallion { align-self: start; }
-  .royal-family-tree__card { padding: 18px; }
-  .royal-family-tree__roots { left: 49px; }
+  .royal-family-tree { padding: 104px 6px 44px; border-radius: 24px; }
+  .royal-family-tree__eyebrow { margin-bottom: 22px; font-size: 8px; letter-spacing: .19em; }
+  .royal-family-tree__generation { width: var(--mobile-tier-width); clip-path: polygon(8px 0, calc(100% - 8px) 0, 100% 100%, 0 100%); }
+  .royal-family-tree__card { min-height: 0; grid-template-columns: 34px minmax(0, 1fr); gap: 9px; padding: 15px 18px; clip-path: polygon(8px 0, calc(100% - 8px) 0, 100% 100%, 0 100%); }
+  .royal-family-tree__number { font-size: 25px; }
+  .royal-family-tree__copy { text-align: left; }
+  .royal-family-tree__label { font-size: 7px; letter-spacing: .14em; }
+  .royal-family-tree__card h4 { font-size: 16px; }
+  .royal-family-tree__card .royal-family-tree__role { font-size: 7px; letter-spacing: .1em; }
+  .royal-family-tree__card .royal-family-tree__description { display: none; }
+  .royal-family-tree__period { grid-column: 2; font-size: 10px; }
+  .royal-family-tree__foundation { margin-top: 18px; font-size: 12px; }
   .trustee-lineage { padding: 24px 35px; }
   .trustee-lineage:before { left: 64px; }
   .lineage-alpana-rail { width: 18px; background-size: 18px 58px; }
