@@ -127,50 +127,51 @@ export default function HomePage({ lang = 'en', setActiveTab, onOpenBooking, onO
         </button>
       </section>
 
-      {/* Item 3: Three Cultural Trust Cards with Rounded Corners and Deep Luxury Shadows */}
-      <section className="heritage-trusts heritage-section heritage-pattern-field">
-        <div className="heritage-heading-row">
-          <div>
-            <p className="heritage-kicker">{isBn ? 'তত্ত্বাবধান' : 'Custodianship'}</p>
-            <h2>{isBn ? 'আমাদের তিন সাংস্কৃতিক ট্রাস্ট' : 'Our three cultural trusts'}</h2>
+      {/* Item 3: Three Cultural Trust Cards with Full-Screen Span, Rounded Corners and Deep Luxury Shadows */}
+      <section className="heritage-trusts-fullscreen heritage-pattern-field">
+        <div className="max-w-[1550px] w-full mx-auto flex flex-col justify-between h-full">
+          <div className="heritage-heading-row">
+            <div>
+              <p className="heritage-kicker">{isBn ? 'তত্ত্বাবধান' : 'Custodianship'}</p>
+              <h2>{isBn ? 'আমাদের তিন সাংস্কৃতিক ট্রাস্ট' : 'Our three cultural trusts'}</h2>
+            </div>
+            <p>{isBn ? 'ভক্তি, শিল্প ও সেবার মাধ্যমে বাংলা ঐতিহ্য সংরক্ষণে তিনটি ট্রাস্ট একসঙ্গে কাজ করে।' : 'United in purpose and distinct in mission, three trusts preserve Bengali heritage through devotion, arts and service.'}</p>
           </div>
-          <p>{isBn ? 'ভক্তি, শিল্প ও সেবার মাধ্যমে বাংলা ঐতিহ্য সংরক্ষণে তিনটি ট্রাস্ট একসঙ্গে কাজ করে।' : 'United in purpose and distinct in mission, three trusts preserve Bengali heritage through devotion, arts and service.'}</p>
-        </div>
-        
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-8 max-w-7xl mx-auto">
-          {t.trusts.list.map((trust) => (
-            <article
-              key={trust.id}
-              className="bg-card/90 rounded-3xl border border-primary/30 p-8 sm:p-10 shadow-2xl hover:shadow-[0_24px_50px_rgba(216,174,98,0.2)] hover:-translate-y-2 transition-all duration-500 flex flex-col justify-between relative overflow-hidden backdrop-blur-sm"
-            >
-              <div>
-                <div className="flex items-baseline justify-between mb-8 pb-4 border-b border-border/40">
-                  <span className="font-serif text-4xl text-primary font-bold">{trust.num}</span>
-                  <span className="text-[10px] uppercase font-semibold tracking-widest text-muted-foreground">{trust.est}</span>
+          
+          <div className="heritage-trust-grid my-auto">
+            {t.trusts.list.map((trust) => (
+              <article
+                key={trust.id}
+                className="heritage-trust-card"
+              >
+                <div>
+                  <div className="heritage-trust-card__top">
+                    <span className="font-serif text-4xl text-primary font-bold">{trust.num}</span>
+                    <small className="text-[10px] uppercase font-semibold tracking-widest text-muted-foreground">{trust.est}</small>
+                  </div>
+                  <p className="text-[11px] uppercase tracking-[0.2em] font-semibold text-primary mb-2 font-sans">{trust.focus}</p>
+                  <h3 className="font-serif text-2xl lg:text-3xl text-foreground font-semibold mb-4 leading-tight">{trust.title}</h3>
+                  <p className="text-muted-foreground text-xs sm:text-sm font-sans leading-relaxed mb-4">{trust.desc}</p>
                 </div>
-                <p className="text-[11px] uppercase tracking-[0.2em] font-semibold text-primary mb-2">{trust.focus}</p>
-                <h3 className="font-serif text-2xl text-foreground font-semibold mb-4 leading-tight">{trust.title}</h3>
-                <p className="text-muted-foreground text-xs sm:text-sm font-sans leading-relaxed mb-6">{trust.desc}</p>
-              </div>
 
-              <div className="pt-4 border-t border-border/40">
-                <ul className="space-y-2">
-                  {trust.activities.slice(0, 4).map((activity, idx) => (
-                    <li key={idx} className="text-xs text-foreground/80 flex items-start gap-2">
-                      <span className="text-primary font-bold mt-0.5">✦</span>
-                      <span>{activity}</span>
-                    </li>
-                  ))}
-                </ul>
-              </div>
-            </article>
-          ))}
-        </div>
+                <div className="pt-4 border-t border-border/40 mt-auto">
+                  <ul className="space-y-2">
+                    {trust.activities.slice(0, 4).map((activity, idx) => (
+                      <li key={idx} className="text-xs text-foreground/80 flex items-start gap-2">
+                        <span>{activity}</span>
+                      </li>
+                    ))}
+                  </ul>
+                </div>
+              </article>
+            ))}
+          </div>
 
-        <div className="text-center mt-12">
-          <button className="heritage-button heritage-button--dark mx-auto" onClick={() => setActiveTab('trustees')}>
-            {isBn ? 'ট্রাস্ট ও ট্রাস্টি দেখুন' : 'View trusts & trustees'}
-          </button>
+          <div className="text-center mt-10">
+            <button className="heritage-button heritage-button--dark mx-auto" onClick={() => setActiveTab('trustees')}>
+              {isBn ? 'ট্রাস্ট ও ট্রাস্টি দেখুন' : 'View trusts & trustees'}
+            </button>
+          </div>
         </div>
       </section>
 
