@@ -146,18 +146,18 @@ export default function HomePage({ lang = 'en', setActiveTab, onOpenBooking, onO
               >
                 <div>
                   <div className="heritage-trust-card__top">
-                    <span className="font-serif text-4xl text-primary font-bold">{trust.num}</span>
-                    <small className="text-[10px] uppercase font-semibold tracking-widest text-muted-foreground">{trust.est}</small>
+                    <span>{trust.num}</span>
+                    <small>{trust.est}</small>
                   </div>
-                  <p className="text-[11px] uppercase tracking-[0.2em] font-semibold text-primary mb-2 font-sans">{trust.focus}</p>
-                  <h3 className="font-serif text-2xl lg:text-3xl text-foreground font-semibold mb-4 leading-tight">{trust.title}</h3>
-                  <p className="text-muted-foreground text-xs sm:text-sm font-sans leading-relaxed mb-4">{trust.desc}</p>
+                  <p className="heritage-kicker">{trust.focus}</p>
+                  <h3>{trust.title}</h3>
+                  <p>{trust.desc}</p>
                 </div>
 
-                <div className="pt-4 border-t border-border/40 mt-auto">
+                <div className="mt-auto pt-6">
                   <ul className="space-y-2">
                     {trust.activities.slice(0, 4).map((activity, idx) => (
-                      <li key={idx} className="text-xs text-foreground/80 flex items-start gap-2">
+                      <li key={idx}>
                         <span>{activity}</span>
                       </li>
                     ))}
