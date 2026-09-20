@@ -1693,17 +1693,18 @@
 }
 
 /* ==========================================================================
-   HERITAGE GENEALOGICAL LINEAGE CHART — 7 GENERATIONS
+   THE KHELAT BHAWAN LINEAGE — EXACT EDITORIAL GENEALOGICAL CHART
    Strictly following Khelat Bhawan Brand Architecture
    ========================================================================== */
 
-.heritage-tree-chart-wrapper {
+.heritage-lineage-layout {
   background: #fbf8f0;
   border: 1px solid rgba(182, 138, 50, 0.45);
-  box-shadow: 0 20px 60px rgba(50, 27, 23, 0.08), inset 0 0 80px rgba(182, 138, 50, 0.03);
+  border-radius: 28px;
+  box-shadow: 0 20px 60px rgba(50, 27, 23, 0.07), inset 0 0 80px rgba(182, 138, 50, 0.03);
 }
 
-.heritage-tree-chart-bg {
+.heritage-lineage-bg {
   position: absolute;
   inset: 0;
   pointer-events: none;
@@ -1711,80 +1712,94 @@
   overflow: hidden;
 }
 
-.heritage-tree-palace-backdrop {
+.heritage-lineage-watermark-facade {
   position: absolute;
   inset: 0;
   background-image: url('/images/SDP_0282.jpg');
   background-size: cover;
   background-position: center 25%;
-  opacity: 0.08;
+  opacity: 0.07;
   filter: sepia(0.85) contrast(1.15);
   mix-blend-mode: multiply;
 }
 
-.heritage-tree-lotus-engraving {
-  position: absolute;
-  bottom: 0;
-  left: 0;
-  width: 280px;
-  height: 280px;
-  background-image: radial-gradient(circle at 0% 100%, rgba(182, 138, 50, 0.12) 0%, transparent 70%);
-  pointer-events: none;
-}
-
-/* Oval Gilded Medallion Frames */
-.heritage-chart-oval-frame {
+/* Apex Oval Gilded Medallion Frame */
+.heritage-lineage-oval-frame {
   position: relative;
-  width: 110px;
-  height: 145px;
+  width: 135px;
+  height: 175px;
   border-radius: 50% / 50%;
-  padding: 3.5px;
+  padding: 4px;
   background: linear-gradient(135deg, #d4af37 0%, #8c6426 40%, #f3e5ab 70%, #996515 100%);
-  box-shadow: 0 10px 24px rgba(50, 27, 23, 0.2), 0 2px 6px rgba(0, 0, 0, 0.1);
+  box-shadow: 0 12px 30px rgba(50, 27, 23, 0.22), 0 0 15px rgba(212, 175, 55, 0.2);
   transition: transform 0.35s cubic-bezier(0.2, 0.8, 0.2, 1), box-shadow 0.35s ease;
 }
 
-.heritage-chart-oval-frame--lg {
+.heritage-lineage-oval-frame--lg {
   width: 180px;
   height: 235px;
   box-shadow: 0 16px 40px rgba(50, 27, 23, 0.28);
 }
 
-.heritage-chart-oval-ring {
+.heritage-lineage-oval-ring {
   position: relative;
   width: 100%;
   height: 100%;
   border-radius: 50% / 50%;
   overflow: hidden;
   background: #1a0e0b;
-  border: 1.5px solid rgba(255, 235, 170, 0.65);
+  border: 1.5px solid rgba(255, 235, 170, 0.7);
 }
 
-.heritage-chart-portrait-img {
+/* Tiers Circular / Round Gilded Medallion Frame */
+.heritage-lineage-round-frame {
+  position: relative;
+  width: 145px;
+  height: 145px;
+  border-radius: 50%;
+  aspect-ratio: 1 / 1;
+  padding: 4px;
+  background: linear-gradient(135deg, #d4af37 0%, #8c6426 40%, #f3e5ab 70%, #996515 100%);
+  box-shadow: 0 10px 28px rgba(50, 27, 23, 0.2), 0 0 12px rgba(212, 175, 55, 0.15);
+  transition: transform 0.35s cubic-bezier(0.2, 0.8, 0.2, 1), box-shadow 0.35s ease;
+}
+
+.heritage-lineage-round-ring {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  border-radius: 50%;
+  overflow: hidden;
+  background: #1a0e0b;
+  border: 1.5px solid rgba(255, 235, 170, 0.7);
+}
+
+/* Common Image & Vignette Styling */
+.heritage-lineage-img {
   width: 100%;
   height: 100%;
   object-fit: cover;
-  filter: sepia(0.22) contrast(1.08) brightness(0.98);
+  filter: sepia(0.2) contrast(1.08) brightness(0.98);
   transition: transform 0.4s ease, filter 0.4s ease;
 }
 
-.group:hover .heritage-chart-portrait-img {
+.group:hover .heritage-lineage-img {
   transform: scale(1.06);
-  filter: sepia(0.08) contrast(1.12) brightness(1.02);
+  filter: sepia(0.06) contrast(1.12) brightness(1.02);
 }
 
-.heritage-chart-portrait-vignette {
+.heritage-lineage-vignette {
   position: absolute;
   inset: 0;
-  border-radius: 50% / 50%;
-  background: radial-gradient(circle, transparent 50%, rgba(44, 22, 17, 0.38) 95%);
+  border-radius: inherit;
+  background: radial-gradient(circle, transparent 52%, rgba(44, 22, 17, 0.36) 95%);
   pointer-events: none;
 }
 
-.heritage-chart-inspect-badge {
+.heritage-lineage-cue-badge {
   position: absolute;
-  bottom: -2px;
-  right: -2px;
+  bottom: 0;
+  right: 0;
   width: 26px;
   height: 26px;
   border-radius: 50%;
@@ -1798,42 +1813,11 @@
   box-shadow: 0 4px 10px rgba(0,0,0,0.3);
 }
 
-.group:hover .heritage-chart-inspect-badge {
+.group:hover .heritage-lineage-cue-badge {
   opacity: 1;
   transform: scale(1);
 }
 
-/* Golden Tree Lineage Connectors */
-.heritage-chart-connector-trunk-apex {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  margin-top: 14px;
-}
-
-.heritage-chart-connector-trunk-mid {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  margin: 14px 0 6px;
-}
-
-.heritage-chart-line-vert {
-  width: 1.5px;
-  background: #c29b38;
-  display: block;
-}
-
-.heritage-chart-node-dot {
-  width: 8px;
-  height: 8px;
-  border-radius: 50%;
-  background: #b68a32;
-  border: 1.5px solid #fbf8f0;
-  box-shadow: 0 0 8px rgba(182, 138, 50, 0.6);
-  margin-top: -3px;
-  z-index: 5;
-}
 
 
 

@@ -9,7 +9,8 @@ import {
   CheckCircle2, 
   Calendar,
   ExternalLink,
-  BookOpen
+  BookOpen,
+  Landmark
 } from 'lucide-react';
 
 export default function HeritageFamilyTree({ lang = 'en', setActiveTab, onOpenLightbox }) {
@@ -17,7 +18,7 @@ export default function HeritageFamilyTree({ lang = 'en', setActiveTab, onOpenLi
   const [selectedGenIndex, setSelectedGenIndex] = useState(null);
   const [hoveredGen, setHoveredGen] = useState(null);
 
-  // Generation specific editorial data matching the exact reference image
+  // Exact generation editorial data and images matching the latest visual reference
   const genEditorialData = [
     {
       gen: 1,
@@ -29,7 +30,8 @@ export default function HeritageFamilyTree({ lang = 'en', setActiveTab, onOpenLi
         en: 'Founded Khelat Bhawan and laid the foundation for a legacy of devotion, art and philanthropy.',
         bn: 'খেলাৎ ভবনের প্রতিষ্ঠা এবং ভক্তি, মার্গসঙ্গীত ও সমাজসেবার অমর ঐতিহ্যের ভিত্তিপ্রস্তর স্থাপন করেন।'
       },
-      image: '/images/babu_khelat_ghosh_bust.png'
+      image: '/images/babu_khelat_ghosh_bust.png',
+      isOval: true
     },
     {
       gen: 2,
@@ -41,7 +43,8 @@ export default function HeritageFamilyTree({ lang = 'en', setActiveTab, onOpenLi
         en: 'Expanded the estate, strengthened cultural patronage and institutionalized key traditions.',
         bn: 'সম্পত্তি ও ট্রাস্টের প্রসার, সংস্কৃতি ও মার্গসঙ্গীতের পৃষ্ঠপোষকতা এবং পারিবারিক দেবসেবা সুদৃঢ় করেন।'
       },
-      image: '/images/SDP_0299.jpg'
+      image: '/images/SDP_0305.jpg',
+      isOval: false
     },
     {
       gen: 3,
@@ -53,7 +56,8 @@ export default function HeritageFamilyTree({ lang = 'en', setActiveTab, onOpenLi
         en: 'Nurtured the arts, supported classical music and maintained the architectural grandeur of Khelat Bhawan.',
         bn: 'বাংলার শিল্পকলা ও উচ্চাঙ্গ সঙ্গীতের পৃষ্ঠপোষকতা এবং প্রাসাদের স্থাপত্যের অনন্য সংরক্ষণ করেন।'
       },
-      image: '/images/SDP_0273.jpg'
+      image: '/images/SDP_0273.jpg',
+      isOval: false
     },
     {
       gen: 4,
@@ -62,10 +66,11 @@ export default function HeritageFamilyTree({ lang = 'en', setActiveTab, onOpenLi
       name: { en: 'Babu Khelat Ghosh', bn: 'বাবু খেলাৎ ঘোষ ট্রাস্টিগণ' },
       years: '1950 — 1975',
       summary: {
-        en: 'Formalized legal trusts to protect the estate, its properties and community initiatives.',
+        en: 'Formalized legal trusts to protect the estate, its properties and its continued service to society.',
         bn: 'পারিবারিক দেবসেবা, গৃহসম্পত্তি ও সমাজকল্যাণকে স্থায়ী করতে প্রথম বিধিবদ্ধ ট্রাস্ট গঠন করেন।'
       },
-      image: '/images/SDP_0305.jpg'
+      image: '/images/SDP_0308.jpg',
+      isOval: false
     },
     {
       gen: 5,
@@ -74,10 +79,11 @@ export default function HeritageFamilyTree({ lang = 'en', setActiveTab, onOpenLi
       name: { en: 'Siddhartha Ghosh', bn: 'সিদ্ধার্থ ঘোষ' },
       years: '1975 — 1985',
       summary: {
-        en: 'Carried out extensive structural restoration, supported the Artist Nectar Council and expanded public welfare initiatives.',
-        bn: 'ঐতিহাসিক প্রাসাদের বৃহৎ স্থাপত্য সংস্কার সম্পন্ন করেন এবং আর্টিস্ট নেকটার কাউন্সিল গঠন করেন।'
+        en: 'Carried out extensive structural restoration, supported the community and ensured continuity of the family\'s values.',
+        bn: 'ঐতিহাসিক প্রাসাদের বৃহৎ স্থাপত্য সংস্কার সম্পন্ন করেন এবং পরিবারের সাংস্কৃতিক ঐতিহ্যের ধারাবাহিকতা রক্ষা করেন।'
       },
-      image: '/images/SDP_0291.jpg'
+      image: '/images/SDP_0291.jpg',
+      isOval: false
     },
     {
       gen: 6,
@@ -89,7 +95,8 @@ export default function HeritageFamilyTree({ lang = 'en', setActiveTab, onOpenLi
         en: 'Initiated digital archives, opened the estate for heritage tourism and preserved centuries-old manuscripts and artefacts.',
         bn: 'ডিজিটাল আর্কাইভের সূচনা, আন্তর্জাতিক হেরিটেজ পর্যটন ও শতবর্ষ প্রাচীন নথি-স্মারক সংরক্ষণ করেন।'
       },
-      image: '/images/SDP_0344.jpg'
+      image: '/images/SDP_0344.jpg',
+      isOval: false
     },
     {
       gen: 7,
@@ -101,11 +108,12 @@ export default function HeritageFamilyTree({ lang = 'en', setActiveTab, onOpenLi
         en: 'Continuing the legacy through preservation, education, digital access and community engagement for future generations.',
         bn: 'টেকসই ঐতিহ্য সংরক্ষণ, ডিজিটাল জীবন্ত মিউজিয়াম ও ভবিষ্যৎ প্রজন্মের মাঝে ঐতিহ্যকে বাঁচিয়ে রাখা।'
       },
-      image: '/images/SDP_0359.jpg'
+      image: '/images/SDP_0359.jpg',
+      isOval: false
     }
   ];
 
-  // Close modal on ESC key or arrow navigation
+  // Close modal on ESC key
   useEffect(() => {
     const handleKeyDown = (e) => {
       if (e.key === 'Escape') setSelectedGenIndex(null);
@@ -126,88 +134,65 @@ export default function HeritageFamilyTree({ lang = 'en', setActiveTab, onOpenLi
 
   return (
     <section 
-      className="heritage-tree-chart-wrapper relative my-8 max-w-7xl mx-auto px-4 sm:px-8 lg:px-12 py-10 sm:py-16 text-[#321b17] z-10 animate-in fade-in duration-500 overflow-hidden rounded-3xl"
-      aria-label={isBn ? 'খেলাৎ ভবন বংশলতিকা' : 'Khelat Bhawan Lineage Chart'}
+      className="heritage-lineage-layout relative my-8 max-w-7xl mx-auto px-4 sm:px-8 lg:px-12 py-10 sm:py-16 text-[#321b17] z-10 animate-in fade-in duration-500 overflow-hidden"
+      aria-label={isBn ? 'খেলাৎ ভবন বংশধারা' : 'The Khelat Bhawan Lineage'}
     >
-      {/* ================= BACKGROUND WATERMARKS & ARCHITECTURAL ENGRAVINGS ================= */}
-      <div className="heritage-tree-chart-bg" aria-hidden="true">
-        {/* Architectural Facade Watermark */}
-        <div className="heritage-tree-palace-backdrop" />
-        {/* Botanical Lotus Engraving at bottom-left */}
-        <div className="heritage-tree-lotus-engraving" />
+      {/* ================= CONTINUOUS FAINT PALACE ARCHITECTURAL WATERMARK ================= */}
+      <div className="heritage-lineage-bg" aria-hidden="true">
+        <div className="heritage-lineage-watermark-facade" />
       </div>
 
       {/* =========================================================================
-          HERITAGE CHART HEADER (Strictly matching reference)
+          1. HEADER (Strictly matching reference layout)
          ========================================================================= */}
-      <header className="heritage-chart-header relative grid grid-cols-1 md:grid-cols-12 gap-6 items-start pb-12 sm:pb-16 z-10">
-        {/* Top-Left: Brand & Script Quote */}
-        <div className="md:col-span-3 text-left space-y-3">
-          <div>
-            <span className="font-serif font-bold text-base tracking-[0.25em] text-[#321b17] block">
-              KHELAT BHAWAN
-            </span>
-            <span className="text-[10px] tracking-[0.22em] text-[#8c6e4e] uppercase font-sans font-medium block">
-              PATHURIA GHATA • EST. 1845
-            </span>
+      <header className="heritage-lineage-header relative grid grid-cols-1 md:grid-cols-12 gap-6 items-start pb-12 sm:pb-16 z-10">
+        {/* Top-Left: "ROOTED IN HISTORY / GUIDED BY GENERATIONS" */}
+        <div className="md:col-span-3 text-left space-y-2 hidden md:block">
+          <div className="font-serif text-xs uppercase tracking-[0.24em] text-[#8c6e4e] font-semibold leading-relaxed">
+            <div>ROOTED</div>
+            <div>IN HISTORY</div>
+            <div>GUIDED</div>
+            <div>BY GENERATIONS</div>
           </div>
-
-          <div className="pt-2">
-            <span className="font-serif italic text-2xl text-[#8c6426] block leading-tight">
-              A legacy<br />that lives<br />on...
-            </span>
-            <div className="w-12 h-0.5 bg-[#b68a32] mt-1" />
-          </div>
+          <div className="w-10 h-[1.5px] bg-[#b68a32] mt-2" />
         </div>
 
-        {/* Top-Center: Eyebrow, Main Title, Subtitle */}
-        <div className="md:col-span-6 text-center space-y-2.5">
+        {/* Top-Center: Eyebrow, Main Title, Landmark Icon, Sub-tagline */}
+        <div className="md:col-span-6 text-center space-y-2">
           <span className="text-[11px] sm:text-xs tracking-[0.28em] uppercase font-sans font-bold text-[#8c6e4e] block">
-            {isBn ? 'খেলাৎ ভবন বংশধারা' : 'THE KHELAT BHAWAN LINEAGE'}
+            {isBn ? 'প্রজন্ম থেকে প্রজন্মান্তরে' : 'A LEGACY ACROSS GENERATIONS'}
           </span>
-          <h2 className="font-serif text-3xl sm:text-4xl lg:text-5xl font-normal text-[#321b17] leading-tight">
-            <span className="italic font-normal">Seven Generations</span><br />
-            <span>of Unbroken Custodianship</span>
+          <h2 className="font-serif text-3xl sm:text-4xl lg:text-5xl font-medium text-[#321b17] tracking-tight">
+            {isBn ? 'খেলাৎ ভবন বংশধারা' : 'The Khelat Bhawan Lineage'}
           </h2>
 
-          {/* Ornate Gold Filigree */}
-          <div className="flex items-center justify-center gap-3 py-1" aria-hidden="true">
-            <span className="w-12 h-[1px] bg-gradient-to-r from-transparent to-[#b68a32]" />
-            <span className="text-xs text-[#b68a32]">✦</span>
-            <span className="w-12 h-[1px] bg-gradient-to-l from-transparent to-[#b68a32]" />
+          {/* Architectural Landmark Icon with Gold Rules */}
+          <div className="flex items-center justify-center gap-3 py-1 text-[#b68a32]" aria-hidden="true">
+            <span className="w-14 h-[1px] bg-[#b68a32]/60" />
+            <Landmark className="w-4 h-4 text-[#b68a32]" />
+            <span className="w-14 h-[1px] bg-[#b68a32]/60" />
           </div>
 
-          <p className="font-serif text-sm sm:text-base text-[#6e554d] max-w-lg mx-auto leading-relaxed">
-            {isBn 
-              ? '১৮৪৫ সাল থেকে ঐতিহ্য, শিল্প, সংস্কৃতি ও মানবসেবায় নিবেদিত এক অমর বংশধারা।'
-              : 'A family devoted to heritage, art, culture and community since 1845.'}
+          <p className="text-[10px] sm:text-xs tracking-[0.24em] font-sans font-semibold uppercase text-[#6e554d]">
+            {isBn ? 'ব্যক্তিত্ব • পৃষ্ঠপোষকতা • চিরন্তন ঐতিহ্য' : 'PEOPLE • PATRONAGE • A LASTING LEGACY'}
           </p>
         </div>
 
-        {/* Top-Right: Bengali Script Stack + Past. Present. Future */}
-        <div className="md:col-span-3 text-right hidden md:block space-y-3">
-          <div className="font-bengali-text text-sm text-[#321b17] leading-relaxed space-y-0.5">
-            <div>ঐতিহ্য</div>
-            <div>সংস্কৃতি</div>
-            <div>সমাজ</div>
-            <div>আগামী প্রজন্ম</div>
-          </div>
-          <div className="w-10 h-[1px] bg-[#b68a32] ml-auto" />
-          <div className="font-serif italic text-base text-[#321b17] space-y-0.5 leading-snug">
-            <div>Past.</div>
-            <div>Present.</div>
-            <div>Future.</div>
-          </div>
+        {/* Top-Right: Script Quote: "A heritage that lives on." */}
+        <div className="md:col-span-3 text-right hidden md:block pt-2">
+          <span className="font-serif italic text-lg sm:text-xl text-[#8c6426] leading-tight block">
+            {isBn ? '“এক অমর ঐতিহ্যের প্রবাহ।”' : '“A heritage that lives on.”'}
+          </span>
         </div>
       </header>
 
       {/* =========================================================================
-          THE GOLDEN LINEAGE TREE HIERARCHY (Matching Reference Exactly)
+          2. THE LINEAGE TREE HIERARCHY (Apex + Symmetrical Tiers)
          ========================================================================= */}
-      <div className="relative z-10 max-w-5xl mx-auto">
+      <div className="relative z-10 max-w-5xl mx-auto space-y-10 sm:space-y-12">
         
         {/* =========================================================================
-            TIER 0: APEX (GENERATION 01 — BABU KHELAT CHANDRA GHOSH)
+            APEX: GENERATION 01 (Babu Khelat Chandra Ghosh)
            ========================================================================= */}
         <div className="flex flex-col items-center relative">
           <div 
@@ -216,23 +201,23 @@ export default function HeritageFamilyTree({ lang = 'en', setActiveTab, onOpenLi
             onMouseLeave={() => setHoveredGen(null)}
             className="group cursor-pointer flex flex-col sm:flex-row items-center gap-6 sm:gap-8 bg-transparent transition-transform duration-300 hover:scale-[1.02] max-w-xl mx-auto"
           >
-            {/* Oval Portrait Medallion */}
-            <div className="heritage-chart-oval-frame shadow-xl shrink-0">
-              <div className="heritage-chart-oval-ring">
+            {/* Oval Gilded Medallion */}
+            <div className="heritage-lineage-oval-frame shadow-2xl shrink-0">
+              <div className="heritage-lineage-oval-ring">
                 <img
                   src={getAssetUrl(genEditorialData[0].image)}
                   alt={genEditorialData[0].name[lang] || genEditorialData[0].name.en}
-                  className="heritage-chart-portrait-img"
+                  className="heritage-lineage-img"
                   loading="lazy"
                 />
-                <div className="heritage-chart-portrait-vignette" />
+                <div className="heritage-lineage-vignette" />
               </div>
-              <div className="heritage-chart-inspect-badge">
+              <div className="heritage-lineage-cue-badge">
                 <BookOpen className="w-3.5 h-3.5 text-[#f3e5ab]" />
               </div>
             </div>
 
-            {/* Editorial Text to the Right of Apex Oval */}
+            {/* Editorial Text to the Right of Oval */}
             <div className="text-center sm:text-left space-y-1 max-w-sm">
               <div className="text-[10px] tracking-[0.2em] font-sans font-bold text-[#8c6426] uppercase">
                 {genEditorialData[0].tag[lang] || genEditorialData[0].tag.en}
@@ -252,31 +237,48 @@ export default function HeritageFamilyTree({ lang = 'en', setActiveTab, onOpenLi
             </div>
           </div>
 
-          {/* Lineage Connector: Apex to Tier 1 */}
-          <div className="heritage-chart-connector-trunk-apex" aria-hidden="true">
-            <span className="heritage-chart-line-vert h-12" />
-            <span className="heritage-chart-node-dot" />
+          {/* Apex to Tier 1 Vertical Connector Line & Gold Node */}
+          <div className="flex flex-col items-center mt-6" aria-hidden="true">
+            <span className="w-[1.5px] h-10 bg-[#c29b38]" />
+            <span className="w-2.5 h-2.5 rounded-full bg-[#b68a32] border-2 border-[#fdfbf7] shadow-sm -mt-1" />
           </div>
         </div>
 
         {/* =========================================================================
             TIER 1 (GENERATION 02 & GENERATION 03)
+            Left: Circle Medallion -> Text
+            Right: Text -> Circle Medallion
            ========================================================================= */}
-        <div className="relative pt-2 pb-6">
-          {/* Horizontal Spanning Branch Line for Tier 1 */}
-          <div className="hidden lg:block absolute top-0 left-[24%] right-[24%] h-[1.5px] bg-[#c29b38]" aria-hidden="true">
+        <div className="relative">
+          {/* Horizontal Spanning Branch Line */}
+          <div className="hidden lg:block absolute -top-4 left-[22%] right-[22%] h-[1.5px] bg-[#c29b38]" aria-hidden="true">
             <span className="absolute left-0 top-0 w-[1.5px] h-6 bg-[#c29b38]" />
             <span className="absolute right-0 top-0 w-[1.5px] h-6 bg-[#c29b38]" />
           </div>
 
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-16 items-center">
-            {/* Gen 02 (Left): Text on Left, Oval on Right */}
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-14 items-center">
+            {/* Gen 02 (Left): Circular Medallion on Left, Text on Right */}
             <div 
               onClick={() => setSelectedGenIndex(1)}
               onMouseEnter={() => setHoveredGen(2)}
               onMouseLeave={() => setHoveredGen(null)}
-              className="group cursor-pointer flex flex-col-reverse sm:flex-row items-center justify-end gap-6 text-center sm:text-right transition-transform duration-300 hover:scale-[1.02]"
+              className="group cursor-pointer flex flex-col sm:flex-row items-center gap-5 sm:gap-6 text-center sm:text-left transition-transform duration-300 hover:scale-[1.02]"
             >
+              <div className="heritage-lineage-round-frame shadow-xl shrink-0">
+                <div className="heritage-lineage-round-ring">
+                  <img
+                    src={getAssetUrl(genEditorialData[1].image)}
+                    alt={genEditorialData[1].name[lang] || genEditorialData[1].name.en}
+                    className="heritage-lineage-img"
+                    loading="lazy"
+                  />
+                  <div className="heritage-lineage-vignette" />
+                </div>
+                <div className="heritage-lineage-cue-badge">
+                  <BookOpen className="w-3.5 h-3.5 text-[#f3e5ab]" />
+                </div>
+              </div>
+
               <div className="space-y-1 max-w-xs">
                 <div className="text-[10px] tracking-[0.2em] font-sans font-bold text-[#8c6426] uppercase">
                   {genEditorialData[1].tag[lang] || genEditorialData[1].tag.en}
@@ -294,45 +296,15 @@ export default function HeritageFamilyTree({ lang = 'en', setActiveTab, onOpenLi
                   {genEditorialData[1].summary[lang] || genEditorialData[1].summary.en}
                 </p>
               </div>
-
-              <div className="heritage-chart-oval-frame shadow-xl shrink-0">
-                <div className="heritage-chart-oval-ring">
-                  <img
-                    src={getAssetUrl(genEditorialData[1].image)}
-                    alt={genEditorialData[1].name[lang] || genEditorialData[1].name.en}
-                    className="heritage-chart-portrait-img"
-                    loading="lazy"
-                  />
-                  <div className="heritage-chart-portrait-vignette" />
-                </div>
-                <div className="heritage-chart-inspect-badge">
-                  <BookOpen className="w-3.5 h-3.5 text-[#f3e5ab]" />
-                </div>
-              </div>
             </div>
 
-            {/* Gen 03 (Right): Oval on Left, Text on Right */}
+            {/* Gen 03 (Right): Text on Left, Circular Medallion on Right */}
             <div 
               onClick={() => setSelectedGenIndex(2)}
               onMouseEnter={() => setHoveredGen(3)}
               onMouseLeave={() => setHoveredGen(null)}
-              className="group cursor-pointer flex flex-col sm:flex-row items-center justify-start gap-6 text-center sm:text-left transition-transform duration-300 hover:scale-[1.02]"
+              className="group cursor-pointer flex flex-col-reverse sm:flex-row items-center justify-end gap-5 sm:gap-6 text-center sm:text-right transition-transform duration-300 hover:scale-[1.02]"
             >
-              <div className="heritage-chart-oval-frame shadow-xl shrink-0">
-                <div className="heritage-chart-oval-ring">
-                  <img
-                    src={getAssetUrl(genEditorialData[2].image)}
-                    alt={genEditorialData[2].name[lang] || genEditorialData[2].name.en}
-                    className="heritage-chart-portrait-img"
-                    loading="lazy"
-                  />
-                  <div className="heritage-chart-portrait-vignette" />
-                </div>
-                <div className="heritage-chart-inspect-badge">
-                  <BookOpen className="w-3.5 h-3.5 text-[#f3e5ab]" />
-                </div>
-              </div>
-
               <div className="space-y-1 max-w-xs">
                 <div className="text-[10px] tracking-[0.2em] font-sans font-bold text-[#8c6426] uppercase">
                   {genEditorialData[2].tag[lang] || genEditorialData[2].tag.en}
@@ -350,34 +322,66 @@ export default function HeritageFamilyTree({ lang = 'en', setActiveTab, onOpenLi
                   {genEditorialData[2].summary[lang] || genEditorialData[2].summary.en}
                 </p>
               </div>
+
+              <div className="heritage-lineage-round-frame shadow-xl shrink-0">
+                <div className="heritage-lineage-round-ring">
+                  <img
+                    src={getAssetUrl(genEditorialData[2].image)}
+                    alt={genEditorialData[2].name[lang] || genEditorialData[2].name.en}
+                    className="heritage-lineage-img"
+                    loading="lazy"
+                  />
+                  <div className="heritage-lineage-vignette" />
+                </div>
+                <div className="heritage-lineage-cue-badge">
+                  <BookOpen className="w-3.5 h-3.5 text-[#f3e5ab]" />
+                </div>
+              </div>
             </div>
           </div>
 
-          {/* Central Trunk Dropping to Tier 2 */}
-          <div className="heritage-chart-connector-trunk-mid" aria-hidden="true">
-            <span className="heritage-chart-line-vert h-14" />
-            <span className="heritage-chart-node-dot" />
+          {/* Tier 1 to Tier 2 Vertical Connector Line & Gold Node */}
+          <div className="flex flex-col items-center mt-8" aria-hidden="true">
+            <span className="w-[1.5px] h-12 bg-[#c29b38]" />
+            <span className="w-2.5 h-2.5 rounded-full bg-[#b68a32] border-2 border-[#fdfbf7] shadow-sm -mt-1" />
           </div>
         </div>
 
         {/* =========================================================================
             TIER 2 (GENERATION 04 & GENERATION 05)
+            Left: Circle Medallion -> Text
+            Right: Text -> Circle Medallion
            ========================================================================= */}
-        <div className="relative pt-2 pb-6">
-          {/* Horizontal Spanning Branch Line for Tier 2 */}
-          <div className="hidden lg:block absolute top-0 left-[24%] right-[24%] h-[1.5px] bg-[#c29b38]" aria-hidden="true">
+        <div className="relative">
+          {/* Horizontal Spanning Branch Line */}
+          <div className="hidden lg:block absolute -top-4 left-[22%] right-[22%] h-[1.5px] bg-[#c29b38]" aria-hidden="true">
             <span className="absolute left-0 top-0 w-[1.5px] h-6 bg-[#c29b38]" />
             <span className="absolute right-0 top-0 w-[1.5px] h-6 bg-[#c29b38]" />
           </div>
 
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-16 items-center">
-            {/* Gen 04 (Left): Text on Left, Oval on Right */}
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-14 items-center">
+            {/* Gen 04 (Left): Circular Medallion on Left, Text on Right */}
             <div 
               onClick={() => setSelectedGenIndex(3)}
               onMouseEnter={() => setHoveredGen(4)}
               onMouseLeave={() => setHoveredGen(null)}
-              className="group cursor-pointer flex flex-col-reverse sm:flex-row items-center justify-end gap-6 text-center sm:text-right transition-transform duration-300 hover:scale-[1.02]"
+              className="group cursor-pointer flex flex-col sm:flex-row items-center gap-5 sm:gap-6 text-center sm:text-left transition-transform duration-300 hover:scale-[1.02]"
             >
+              <div className="heritage-lineage-round-frame shadow-xl shrink-0">
+                <div className="heritage-lineage-round-ring">
+                  <img
+                    src={getAssetUrl(genEditorialData[3].image)}
+                    alt={genEditorialData[3].name[lang] || genEditorialData[3].name.en}
+                    className="heritage-lineage-img"
+                    loading="lazy"
+                  />
+                  <div className="heritage-lineage-vignette" />
+                </div>
+                <div className="heritage-lineage-cue-badge">
+                  <BookOpen className="w-3.5 h-3.5 text-[#f3e5ab]" />
+                </div>
+              </div>
+
               <div className="space-y-1 max-w-xs">
                 <div className="text-[10px] tracking-[0.2em] font-sans font-bold text-[#8c6426] uppercase">
                   {genEditorialData[3].tag[lang] || genEditorialData[3].tag.en}
@@ -395,45 +399,15 @@ export default function HeritageFamilyTree({ lang = 'en', setActiveTab, onOpenLi
                   {genEditorialData[3].summary[lang] || genEditorialData[3].summary.en}
                 </p>
               </div>
-
-              <div className="heritage-chart-oval-frame shadow-xl shrink-0">
-                <div className="heritage-chart-oval-ring">
-                  <img
-                    src={getAssetUrl(genEditorialData[3].image)}
-                    alt={genEditorialData[3].name[lang] || genEditorialData[3].name.en}
-                    className="heritage-chart-portrait-img"
-                    loading="lazy"
-                  />
-                  <div className="heritage-chart-portrait-vignette" />
-                </div>
-                <div className="heritage-chart-inspect-badge">
-                  <BookOpen className="w-3.5 h-3.5 text-[#f3e5ab]" />
-                </div>
-              </div>
             </div>
 
-            {/* Gen 05 (Right): Oval on Left, Text on Right */}
+            {/* Gen 05 (Right): Text on Left, Circular Medallion on Right */}
             <div 
               onClick={() => setSelectedGenIndex(4)}
               onMouseEnter={() => setHoveredGen(5)}
               onMouseLeave={() => setHoveredGen(null)}
-              className="group cursor-pointer flex flex-col sm:flex-row items-center justify-start gap-6 text-center sm:text-left transition-transform duration-300 hover:scale-[1.02]"
+              className="group cursor-pointer flex flex-col-reverse sm:flex-row items-center justify-end gap-5 sm:gap-6 text-center sm:text-right transition-transform duration-300 hover:scale-[1.02]"
             >
-              <div className="heritage-chart-oval-frame shadow-xl shrink-0">
-                <div className="heritage-chart-oval-ring">
-                  <img
-                    src={getAssetUrl(genEditorialData[4].image)}
-                    alt={genEditorialData[4].name[lang] || genEditorialData[4].name.en}
-                    className="heritage-chart-portrait-img"
-                    loading="lazy"
-                  />
-                  <div className="heritage-chart-portrait-vignette" />
-                </div>
-                <div className="heritage-chart-inspect-badge">
-                  <BookOpen className="w-3.5 h-3.5 text-[#f3e5ab]" />
-                </div>
-              </div>
-
               <div className="space-y-1 max-w-xs">
                 <div className="text-[10px] tracking-[0.2em] font-sans font-bold text-[#8c6426] uppercase">
                   {genEditorialData[4].tag[lang] || genEditorialData[4].tag.en}
@@ -451,34 +425,66 @@ export default function HeritageFamilyTree({ lang = 'en', setActiveTab, onOpenLi
                   {genEditorialData[4].summary[lang] || genEditorialData[4].summary.en}
                 </p>
               </div>
+
+              <div className="heritage-lineage-round-frame shadow-xl shrink-0">
+                <div className="heritage-lineage-round-ring">
+                  <img
+                    src={getAssetUrl(genEditorialData[4].image)}
+                    alt={genEditorialData[4].name[lang] || genEditorialData[4].name.en}
+                    className="heritage-lineage-img"
+                    loading="lazy"
+                  />
+                  <div className="heritage-lineage-vignette" />
+                </div>
+                <div className="heritage-lineage-cue-badge">
+                  <BookOpen className="w-3.5 h-3.5 text-[#f3e5ab]" />
+                </div>
+              </div>
             </div>
           </div>
 
-          {/* Central Trunk Dropping to Tier 3 */}
-          <div className="heritage-chart-connector-trunk-mid" aria-hidden="true">
-            <span className="heritage-chart-line-vert h-14" />
-            <span className="heritage-chart-node-dot" />
+          {/* Tier 2 to Tier 3 Vertical Connector Line & Gold Node */}
+          <div className="flex flex-col items-center mt-8" aria-hidden="true">
+            <span className="w-[1.5px] h-12 bg-[#c29b38]" />
+            <span className="w-2.5 h-2.5 rounded-full bg-[#b68a32] border-2 border-[#fdfbf7] shadow-sm -mt-1" />
           </div>
         </div>
 
         {/* =========================================================================
             TIER 3 (GENERATION 06 & GENERATION 07)
+            Left: Circle Medallion -> Text
+            Right: Text -> Circle Medallion
            ========================================================================= */}
-        <div className="relative pt-2 pb-6">
-          {/* Horizontal Spanning Branch Line for Tier 3 */}
-          <div className="hidden lg:block absolute top-0 left-[24%] right-[24%] h-[1.5px] bg-[#c29b38]" aria-hidden="true">
+        <div className="relative">
+          {/* Horizontal Spanning Branch Line */}
+          <div className="hidden lg:block absolute -top-4 left-[22%] right-[22%] h-[1.5px] bg-[#c29b38]" aria-hidden="true">
             <span className="absolute left-0 top-0 w-[1.5px] h-6 bg-[#c29b38]" />
             <span className="absolute right-0 top-0 w-[1.5px] h-6 bg-[#c29b38]" />
           </div>
 
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-16 items-center">
-            {/* Gen 06 (Left): Text on Left, Oval on Right */}
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-14 items-center">
+            {/* Gen 06 (Left): Circular Medallion on Left, Text on Right */}
             <div 
               onClick={() => setSelectedGenIndex(5)}
               onMouseEnter={() => setHoveredGen(6)}
               onMouseLeave={() => setHoveredGen(null)}
-              className="group cursor-pointer flex flex-col-reverse sm:flex-row items-center justify-end gap-6 text-center sm:text-right transition-transform duration-300 hover:scale-[1.02]"
+              className="group cursor-pointer flex flex-col sm:flex-row items-center gap-5 sm:gap-6 text-center sm:text-left transition-transform duration-300 hover:scale-[1.02]"
             >
+              <div className="heritage-lineage-round-frame shadow-xl shrink-0">
+                <div className="heritage-lineage-round-ring">
+                  <img
+                    src={getAssetUrl(genEditorialData[5].image)}
+                    alt={genEditorialData[5].name[lang] || genEditorialData[5].name.en}
+                    className="heritage-lineage-img"
+                    loading="lazy"
+                  />
+                  <div className="heritage-lineage-vignette" />
+                </div>
+                <div className="heritage-lineage-cue-badge">
+                  <BookOpen className="w-3.5 h-3.5 text-[#f3e5ab]" />
+                </div>
+              </div>
+
               <div className="space-y-1 max-w-xs">
                 <div className="text-[10px] tracking-[0.2em] font-sans font-bold text-[#8c6426] uppercase">
                   {genEditorialData[5].tag[lang] || genEditorialData[5].tag.en}
@@ -496,45 +502,15 @@ export default function HeritageFamilyTree({ lang = 'en', setActiveTab, onOpenLi
                   {genEditorialData[5].summary[lang] || genEditorialData[5].summary.en}
                 </p>
               </div>
-
-              <div className="heritage-chart-oval-frame shadow-xl shrink-0">
-                <div className="heritage-chart-oval-ring">
-                  <img
-                    src={getAssetUrl(genEditorialData[5].image)}
-                    alt={genEditorialData[5].name[lang] || genEditorialData[5].name.en}
-                    className="heritage-chart-portrait-img"
-                    loading="lazy"
-                  />
-                  <div className="heritage-chart-portrait-vignette" />
-                </div>
-                <div className="heritage-chart-inspect-badge">
-                  <BookOpen className="w-3.5 h-3.5 text-[#f3e5ab]" />
-                </div>
-              </div>
             </div>
 
-            {/* Gen 07 (Right): Oval on Left, Text on Right */}
+            {/* Gen 07 (Right): Text on Left, Circular Medallion on Right */}
             <div 
               onClick={() => setSelectedGenIndex(6)}
               onMouseEnter={() => setHoveredGen(7)}
               onMouseLeave={() => setHoveredGen(null)}
-              className="group cursor-pointer flex flex-col sm:flex-row items-center justify-start gap-6 text-center sm:text-left transition-transform duration-300 hover:scale-[1.02]"
+              className="group cursor-pointer flex flex-col-reverse sm:flex-row items-center justify-end gap-5 sm:gap-6 text-center sm:text-right transition-transform duration-300 hover:scale-[1.02]"
             >
-              <div className="heritage-chart-oval-frame shadow-xl shrink-0">
-                <div className="heritage-chart-oval-ring">
-                  <img
-                    src={getAssetUrl(genEditorialData[6].image)}
-                    alt={genEditorialData[6].name[lang] || genEditorialData[6].name.en}
-                    className="heritage-chart-portrait-img"
-                    loading="lazy"
-                  />
-                  <div className="heritage-chart-portrait-vignette" />
-                </div>
-                <div className="heritage-chart-inspect-badge">
-                  <BookOpen className="w-3.5 h-3.5 text-[#f3e5ab]" />
-                </div>
-              </div>
-
               <div className="space-y-1 max-w-xs">
                 <div className="text-[10px] tracking-[0.2em] font-sans font-bold text-[#8c6426] uppercase">
                   {genEditorialData[6].tag[lang] || genEditorialData[6].tag.en}
@@ -552,6 +528,21 @@ export default function HeritageFamilyTree({ lang = 'en', setActiveTab, onOpenLi
                   {genEditorialData[6].summary[lang] || genEditorialData[6].summary.en}
                 </p>
               </div>
+
+              <div className="heritage-lineage-round-frame shadow-xl shrink-0">
+                <div className="heritage-lineage-round-ring">
+                  <img
+                    src={getAssetUrl(genEditorialData[6].image)}
+                    alt={genEditorialData[6].name[lang] || genEditorialData[6].name.en}
+                    className="heritage-lineage-img"
+                    loading="lazy"
+                  />
+                  <div className="heritage-lineage-vignette" />
+                </div>
+                <div className="heritage-lineage-cue-badge">
+                  <BookOpen className="w-3.5 h-3.5 text-[#f3e5ab]" />
+                </div>
+              </div>
             </div>
           </div>
         </div>
@@ -559,37 +550,22 @@ export default function HeritageFamilyTree({ lang = 'en', setActiveTab, onOpenLi
       </div>
 
       {/* =========================================================================
-          HERITAGE CHART FOOTER: "ROOTED IN HERITAGE / GUIDED BY TOMORROW"
+          3. FOOTER: "A LEGACY THAT CONTINUES"
          ========================================================================= */}
-      <footer className="heritage-chart-footer relative text-center pt-10 sm:pt-14 pb-4 z-10">
-        <div className="inline-flex flex-col items-center space-y-2">
-          {/* Top Filigree Emblem */}
-          <div className="flex items-center justify-center gap-2 text-[#b68a32]" aria-hidden="true">
-            <span className="w-8 h-[1px] bg-[#b68a32]/60" />
-            <span className="text-sm">✦</span>
-            <span className="w-8 h-[1px] bg-[#b68a32]/60" />
-          </div>
-
-          <div className="space-y-0.5">
-            <span className="font-serif font-semibold text-xs sm:text-sm tracking-[0.26em] text-[#8c6e4e] uppercase block">
-              {isBn ? 'ঐতিহ্যে নিহিত' : 'ROOTED IN HERITAGE'}
-            </span>
-            <span className="font-serif font-semibold text-xs sm:text-sm tracking-[0.26em] text-[#8c6e4e] uppercase block">
-              {isBn ? 'আগামীর পথপ্রদর্শক' : 'GUIDED BY TOMORROW'}
-            </span>
-          </div>
-
-          {/* Bottom Flourish */}
-          <div className="pt-2" aria-hidden="true">
-            <svg width="40" height="12" viewBox="0 0 40 12" fill="none" className="text-[#b68a32]/70 mx-auto">
-              <path d="M20 0C14 0 10 8 0 8C10 8 14 12 20 12C26 12 30 8 40 8C30 8 26 0 20 0Z" fill="currentColor"/>
-            </svg>
-          </div>
+      <footer className="heritage-lineage-footer relative text-center pt-14 pb-4 z-10">
+        <div className="inline-flex items-center justify-center gap-4 text-[#8c6e4e]">
+          <span className="w-16 h-[1px] bg-gradient-to-r from-transparent to-[#b68a32]" />
+          <span className="text-xs text-[#b68a32]">✦</span>
+          <span className="font-serif font-bold text-xs sm:text-sm tracking-[0.25em] uppercase text-[#8c6e4e]">
+            {isBn ? 'অমর ঐতিহ্য প্রবাহ' : 'A LEGACY THAT CONTINUES'}
+          </span>
+          <span className="text-xs text-[#b68a32]">✦</span>
+          <span className="w-16 h-[1px] bg-gradient-to-l from-transparent to-[#b68a32]" />
         </div>
       </footer>
 
       {/* =========================================================================
-          HERITAGE CUSTODIAN DETAIL MODAL
+          4. MUSEUM CUSTODIAN DETAIL MODAL
          ========================================================================= */}
       {selectedGen && selectedEditorial && (
         <div 
@@ -602,7 +578,7 @@ export default function HeritageFamilyTree({ lang = 'en', setActiveTab, onOpenLi
             className="heritage-tree-modal bg-[#fdfbf7] text-[#321b17] border border-[#d4af37]/60 rounded-3xl max-w-3xl w-full p-6 sm:p-10 shadow-2xl relative overflow-hidden max-h-[90vh] overflow-y-auto"
             onClick={(e) => e.stopPropagation()}
           >
-            {/* Gold Ribbon Accent */}
+            {/* Top Gold Border Accent */}
             <div className="absolute top-0 left-0 right-0 h-2 bg-gradient-to-r from-[#8c6426] via-[#d4af37] to-[#8c6426]" />
             
             {/* Close Button */}
@@ -648,12 +624,12 @@ export default function HeritageFamilyTree({ lang = 'en', setActiveTab, onOpenLi
 
               <div className="grid grid-cols-1 sm:grid-cols-12 gap-6 items-start">
                 <div className="sm:col-span-5 flex flex-col items-center">
-                  <div className="heritage-chart-oval-frame heritage-chart-oval-frame--lg shadow-2xl">
-                    <div className="heritage-chart-oval-ring">
+                  <div className="heritage-lineage-oval-frame heritage-lineage-oval-frame--lg shadow-2xl">
+                    <div className="heritage-lineage-oval-ring">
                       <img
                         src={getAssetUrl(selectedEditorial.image)}
                         alt={selectedEditorial.name[lang] || selectedEditorial.name.en}
-                        className="heritage-chart-portrait-img"
+                        className="heritage-lineage-img"
                       />
                     </div>
                   </div>
