@@ -773,7 +773,7 @@
   width: 100%;
   max-width: 1240px;
   margin-inline: auto;
-  padding: 116px clamp(18px, 4vw, 64px) 58px;
+  padding: 48px clamp(18px, 4vw, 64px) 48px;
   background:
     radial-gradient(circle at 50% 0, rgba(213, 169, 86, .14), transparent 42%),
     linear-gradient(145deg, #2a0d0b 0%, #160706 58%, #230b09 100%);
@@ -791,40 +791,35 @@
   height: 1px;
   background: linear-gradient(90deg, transparent, rgba(216, 174, 98, .72), transparent);
 }
-.royal-family-tree:before { top: 86px; }
-.royal-family-tree:after { bottom: 35px; }
-.royal-family-tree__crown {
-  position: absolute;
-  top: 28px;
-  left: 50%;
-  width: 46px;
-  height: 46px;
-  transform: translateX(-50%) rotate(45deg);
-  display: grid;
-  place-items: center;
-  border: 1px solid rgba(225, 185, 94, .82);
-  background: #210907;
-  color: #e1b95e;
-  box-shadow: 0 10px 30px rgba(0,0,0,.22);
-}
-.royal-family-tree__crown span { transform: rotate(-45deg); font-size: 16px; }
+.royal-family-tree:before { top: 32px; }
+.royal-family-tree:after { bottom: 32px; }
 .royal-family-tree__eyebrow {
   margin: 0 0 32px;
   color: #d7b879;
   font-size: 10px;
   font-weight: 600;
-  letter-spacing: .3em;
+  letter-spacing: .25em;
   text-align: center;
   text-transform: uppercase;
 }
 .royal-family-tree__generation {
   position: relative;
   width: var(--tier-width);
-  margin: 0 auto 4px;
+  margin: 0 auto 6px;
   padding: 1px;
   background: linear-gradient(90deg, rgba(184, 134, 61, .5), #e1b95e, rgba(184, 134, 61, .5));
   clip-path: polygon(18px 0, calc(100% - 18px) 0, 100% 100%, 0 100%);
   filter: drop-shadow(0 12px 18px rgba(0, 0, 0, .13));
+  cursor: pointer;
+  user-select: none;
+  outline: none;
+  transition: transform 0.55s cubic-bezier(0.16, 1, 0.3, 1),
+              opacity 0.55s cubic-bezier(0.16, 1, 0.3, 1),
+              filter 0.55s cubic-bezier(0.16, 1, 0.3, 1),
+              box-shadow 0.55s cubic-bezier(0.16, 1, 0.3, 1);
+}
+.royal-family-tree__generation:focus-visible {
+  box-shadow: 0 0 0 2px #e1b95e;
 }
 .royal-family-tree__card {
   min-height: 112px;
@@ -835,16 +830,53 @@
   padding: 18px clamp(28px, 4vw, 52px);
   background: linear-gradient(105deg, rgba(77, 25, 20, .98), rgba(42, 12, 10, .98));
   clip-path: polygon(18px 0, calc(100% - 18px) 0, 100% 100%, 0 100%);
+  transition: background 0.5s ease, box-shadow 0.5s ease;
 }
 .royal-family-tree__generation:nth-of-type(even) .royal-family-tree__card {
   background: linear-gradient(105deg, rgba(50, 16, 13, .99), rgba(86, 29, 22, .96));
 }
+
+/* Active Highlight / Focus Effect */
+.royal-family-tree__generation.is-active-gen {
+  opacity: 1;
+  transform: scale(1.028) translateY(-4px);
+  z-index: 20;
+  filter: drop-shadow(0 20px 35px rgba(0, 0, 0, 0.8)) drop-shadow(0 0 25px rgba(216, 174, 98, 0.65));
+}
+.royal-family-tree__generation.is-active-gen .royal-family-tree__card {
+  background: linear-gradient(105deg, rgba(100, 32, 26, 0.99), rgba(58, 17, 14, 0.99));
+  box-shadow: inset 0 0 0 1.5px rgba(245, 208, 125, 0.95), 0 12px 30px rgba(0, 0, 0, 0.6);
+}
+.royal-family-tree__generation.is-active-gen .royal-family-tree__number {
+  color: #fed87e;
+  text-shadow: 0 0 16px rgba(254, 216, 126, 0.7);
+}
+.royal-family-tree__generation.is-active-gen h4 {
+  color: #ffffff;
+  text-shadow: 0 2px 10px rgba(0,0,0,0.5);
+}
+
+/* Inactive Background Dimming */
+.royal-family-tree__generation.is-inactive-gen {
+  opacity: 0.35;
+  filter: blur(0.6px) grayscale(25%);
+  transform: scale(0.985);
+}
+.royal-family-tree__generation.is-inactive-gen:hover,
+.royal-family-tree__generation.is-inactive-gen:focus-visible {
+  opacity: 0.85;
+  filter: blur(0px) grayscale(0%);
+  transform: scale(1.008);
+  z-index: 10;
+}
+
 .royal-family-tree__number {
   color: rgba(225, 185, 94, .82);
   font-family: var(--font-serif);
   font-size: clamp(28px, 3vw, 42px);
   font-style: italic;
   line-height: 1;
+  transition: color 0.4s ease, text-shadow 0.4s ease;
 }
 .royal-family-tree__copy { min-width: 0; text-align: center; }
 .royal-family-tree__label {
@@ -861,6 +893,7 @@
   font-size: clamp(18px, 2vw, 26px);
   font-weight: 500;
   line-height: 1.15;
+  transition: color 0.4s ease;
 }
 .royal-family-tree__card p { margin: 0; }
 .royal-family-tree__card .royal-family-tree__role {
@@ -991,7 +1024,7 @@
   .heritage-section { width: 88vw; padding-block: 92px; }
   .heritage-home h2 { font-size: 44px; }
   .heritage-story__image,.heritage-lineage__image { height: 470px; }
-  .royal-family-tree { padding: 104px 6px 44px; border-radius: 24px; }
+  .royal-family-tree { padding: 44px 8px 36px; border-radius: 24px; }
   .royal-family-tree__eyebrow { margin-bottom: 22px; font-size: 8px; letter-spacing: .19em; }
   .royal-family-tree__generation { width: var(--mobile-tier-width); clip-path: polygon(8px 0, calc(100% - 8px) 0, 100% 100%, 0 100%); }
   .royal-family-tree__card { min-height: 0; grid-template-columns: 34px minmax(0, 1fr); gap: 9px; padding: 15px 18px; clip-path: polygon(8px 0, calc(100% - 8px) 0, 100% 100%, 0 100%); }

@@ -1,10 +1,11 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { Compass, Award, ArrowRight, Download, FileText, Sparkles, User, MapPin, Phone, Mail, ShieldCheck } from 'lucide-react';
 import SectionHeader from '../components/SectionHeader';
 import { getAssetUrl } from '../utils/assetHelper';
 import AlpanaDivider from '../components/AlpanaDivider';
 
 export default function AboutPage({ lang = 'en', setActiveTab, onOpenBooking, onOpenLightbox, content }) {
+  const [activeGen, setActiveGen] = useState(1);
   const t = content[lang];
   const isBn = lang === 'bn';
 
@@ -116,33 +117,47 @@ export default function AboutPage({ lang = 'en', setActiveTab, onOpenBooking, on
           />
 
           <div className="royal-family-tree mt-8" aria-label={isBn ? 'সাত প্রজন্মের পারিবারিক বৃক্ষ' : 'Seven-generation family tree'}>
-            <div className="royal-family-tree__crown" aria-hidden="true">
-              <span>✦</span>
-            </div>
             <p className="royal-family-tree__eyebrow">
-              {isBn ? 'প্রতিষ্ঠাতা থেকে বর্তমান অভিভাবক' : 'From founder to present guardians'}
+              {isBn ? 'প্রতিষ্ঠাতা থেকে বর্তমান অভিভাবক · বিস্তারিত দেখতে যেকোনো প্রজন্মে ক্লিক করুন' : 'From founder to present guardians · Click any generation to focus'}
             </p>
-            {t.lineage.generations.map((gen, idx) => (
-              <div
-                key={idx}
-                className={`royal-family-tree__generation royal-family-tree__generation--${idx + 1}`}
-                style={{
-                  '--tier-width': `${44 + (idx * 8)}%`,
-                  '--mobile-tier-width': `${84 + (idx * 2.65)}%`
-                }}
-              >
-                <div className="royal-family-tree__card">
-                  <span className="royal-family-tree__number" aria-hidden="true">{String(idx + 1).padStart(2, '0')}</span>
-                  <div className="royal-family-tree__copy">
-                    <span className="royal-family-tree__label">{gen.gen}</span>
-                    <h4>{gen.name}</h4>
-                    <p className="royal-family-tree__role">{gen.role}</p>
-                    <p className="royal-family-tree__description">{gen.desc}</p>
+            {t.lineage.generations.map((gen, idx) => {
+              const genNum = idx + 1;
+              const isActive = activeGen === genNum;
+              const hasActive = activeGen !== null && activeGen !== undefined;
+              return (
+                <div
+                  key={idx}
+                  role="button"
+                  tabIndex={0}
+                  aria-pressed={isActive}
+                  onClick={() => setActiveGen(activeGen === genNum ? null : genNum)}
+                  onKeyDown={(e) => {
+                    if (e.key === 'Enter' || e.key === ' ') {
+                      e.preventDefault();
+                      setActiveGen(activeGen === genNum ? null : genNum);
+                    }
+                  }}
+                  className={`royal-family-tree__generation royal-family-tree__generation--${genNum} ${
+                    isActive ? 'is-active-gen' : hasActive ? 'is-inactive-gen' : ''
+                  }`}
+                  style={{
+                    '--tier-width': `${46 + (idx * 9)}%`,
+                    '--mobile-tier-width': `${82 + (idx * 3)}%`
+                  }}
+                >
+                  <div className="royal-family-tree__card">
+                    <span className="royal-family-tree__number" aria-hidden="true">{String(genNum).padStart(2, '0')}</span>
+                    <div className="royal-family-tree__copy">
+                      <span className="royal-family-tree__label">{gen.gen}</span>
+                      <h4>{gen.name}</h4>
+                      <p className="royal-family-tree__role">{gen.role}</p>
+                      <p className="royal-family-tree__description">{gen.desc}</p>
+                    </div>
+                    <span className="royal-family-tree__period">{gen.period}</span>
                   </div>
-                  <span className="royal-family-tree__period">{gen.period}</span>
                 </div>
-              </div>
-            ))}
+              );
+            })}
             <div className="royal-family-tree__foundation" aria-hidden="true">
               <span />
               <i>1845</i>
