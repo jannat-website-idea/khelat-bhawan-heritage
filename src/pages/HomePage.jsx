@@ -154,7 +154,7 @@ export default function HomePage({ lang = 'en', setActiveTab, onOpenBooking, onO
                   <p>{trust.desc}</p>
                 </div>
 
-                <div className="mt-auto pt-6">
+                <div className="heritage-trust-card__activities">
                   <ul className="space-y-2">
                     {trust.activities.slice(0, 4).map((activity, idx) => (
                       <li key={idx}>
