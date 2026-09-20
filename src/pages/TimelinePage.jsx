@@ -156,15 +156,15 @@ export default function TimelinePage({ lang = 'en', setActiveTab, onOpenLightbox
     <main className="heritage-timeline-page pt-28 md:pt-36 pb-24 min-h-screen text-foreground relative overflow-hidden">
       {/* =========================================================================
           CONTINUOUS FULL-HEIGHT KHELAT BHAWAN ARCHITECTURAL BACKDROP
-          Dissolves seamlessly down the entire timeline canvas across 4 zones
+          Covers entire timeline canvas with distinct architectural visuals throughout
          ========================================================================= */}
       <div className="heritage-timeline-full-backdrop" aria-hidden="true">
-        {/* Zone 1 (Top / Hero): Grand Facade & Colonnade */}
+        {/* Zone 1 (Top / Hero - 1845): Grand Facade & Colonnade */}
         <div className="heritage-backdrop-zone heritage-backdrop-zone--top">
           <img
             src={getAssetUrl('/images/SDP_0282.jpg')}
             alt=""
-            className="heritage-backdrop-img heritage-backdrop-img--facade"
+            className="heritage-backdrop-img heritage-backdrop-img--top-right"
           />
           <span className="heritage-backdrop-script">Heritage Lives On</span>
           <div className="heritage-backdrop-stamp">
@@ -174,31 +174,49 @@ export default function TimelinePage({ lang = 'en', setActiveTab, onOpenLightbox
           </div>
         </div>
 
-        {/* Zone 2 (Upper-Mid): Inner Courtyard Arches */}
+        {/* Zone 2 (1855 - 1881): Thakur Dalan Courtyard Archways */}
         <div className="heritage-backdrop-zone heritage-backdrop-zone--mid-upper">
           <img
-            src={getAssetUrl('/images/SDP_0273.jpg')}
+            src={getAssetUrl('/images/SDP_0310.jpg')}
             alt=""
-            className="heritage-backdrop-img heritage-backdrop-img--courtyard"
+            className="heritage-backdrop-img heritage-backdrop-img--mid-left"
           />
           <div className="heritage-backdrop-watermark-lotus" />
         </div>
 
-        {/* Zone 3 (Lower-Mid): Balcony Teak & Classical Pillars */}
-        <div className="heritage-backdrop-zone heritage-backdrop-zone--mid-lower">
+        {/* Zone 3 (1920 - 1947): Grand Columns & Upper Heritage Corridors */}
+        <div className="heritage-backdrop-zone heritage-backdrop-zone--mid-center">
           <img
-            src={getAssetUrl('/images/SDP_0359.jpg')}
+            src={getAssetUrl('/images/SDP_0337.jpg')}
             alt=""
-            className="heritage-backdrop-img heritage-backdrop-img--pillars"
+            className="heritage-backdrop-img heritage-backdrop-img--mid-right"
           />
         </div>
 
-        {/* Zone 4 (Bottom): Living Heritage Courtyard Panorama */}
+        {/* Zone 4 (1975 - 1985): Classical Teak Woodwork & Courtyard Balconies */}
+        <div className="heritage-backdrop-zone heritage-backdrop-zone--mid-lower">
+          <img
+            src={getAssetUrl('/images/SDP_0345.jpg')}
+            alt=""
+            className="heritage-backdrop-img heritage-backdrop-img--lower-left"
+          />
+        </div>
+
+        {/* Zone 5 (2005 - 2015): Grand Hall Classical Architecture & Sculptures */}
+        <div className="heritage-backdrop-zone heritage-backdrop-zone--lower">
+          <img
+            src={getAssetUrl('/images/SDP_0411.jpg')}
+            alt=""
+            className="heritage-backdrop-img heritage-backdrop-img--lower-right"
+          />
+        </div>
+
+        {/* Zone 6 (2026 & Terminal): Living Monument Panoramic Overview */}
         <div className="heritage-backdrop-zone heritage-backdrop-zone--bottom">
           <img
-            src={getAssetUrl('/images/SDP_0368.jpg')}
+            src={getAssetUrl('/images/SDP_0365.jpg')}
             alt=""
-            className="heritage-backdrop-img heritage-backdrop-img--panoramic"
+            className="heritage-backdrop-img heritage-backdrop-img--bottom-panoramic"
           />
         </div>
       </div>
@@ -242,11 +260,11 @@ export default function TimelinePage({ lang = 'en', setActiveTab, onOpenLightbox
       </section>
 
       {/* =========================================================================
-          VIEW 1: EDITORIAL OVERLAPPING TIMELINE (MATCHING REFERENCE EXACTLY)
+          VIEW 1: EDITORIAL TIMELINE (MATCHING REFERENCE COMPOSITION EXACTLY)
          ========================================================================= */}
       {activeView === 'timeline' && (
         <section className="heritage-timeline-editorial-stage max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6 relative z-10">
-          {/* Continuous Antique-Gold Central Line */}
+          {/* Continuous Antique-Gold Central Track */}
           <div className="heritage-timeline-gold-track" aria-hidden="true" />
 
           {/* Alternating Wide Editorial Story Panels */}
@@ -261,92 +279,106 @@ export default function TimelinePage({ lang = 'en', setActiveTab, onOpenLightbox
                   data-reveal
                   onMouseEnter={() => setActiveHoverNode(idx)}
                   onMouseLeave={() => setActiveHoverNode(null)}
-                  className={`heritage-timeline-entry ${isLeft ? 'heritage-timeline-entry--left' : 'heritage-timeline-entry--right'}`}
+                  className={`heritage-timeline-row-grid ${isLeft ? 'heritage-timeline-row-grid--left' : 'heritage-timeline-row-grid--right'}`}
                 >
-                  {/* Left Side: Either the Large Story Card (if isLeft) OR the Quote (if isRight) */}
-                  {isLeft ? (
-                    <article
-                      onClick={() => handleCardClick(item)}
-                      className="heritage-timeline-panel heritage-timeline-panel--left"
-                    >
-                      <div className="heritage-timeline-panel__media">
-                        <img
-                          src={getAssetUrl(item.image)}
-                          alt={item.title}
-                          loading="lazy"
-                          className="heritage-timeline-panel__img"
-                        />
-                        <div className="heritage-timeline-panel__caption">
-                          <span>{item.caption}</span>
+                  {/* Left Column */}
+                  <div className="heritage-timeline-col heritage-timeline-col--left">
+                    {isLeft ? (
+                      /* Left Card */
+                      <article
+                        onClick={() => handleCardClick(item)}
+                        className="heritage-timeline-panel heritage-timeline-panel--img-left"
+                      >
+                        <div className="heritage-timeline-panel__media">
+                          <img
+                            src={getAssetUrl(item.image)}
+                            alt={item.title}
+                            loading="lazy"
+                            className="heritage-timeline-panel__img"
+                          />
+                          <div className="heritage-timeline-panel__caption">
+                            <span>{item.caption}</span>
+                          </div>
                         </div>
-                      </div>
 
-                      <div className="heritage-timeline-panel__body">
-                        <div className="heritage-timeline-panel__pill">
-                          <IconComponent className="w-3 h-3" />
-                          <span>{item.badge}</span>
+                        <div className="heritage-timeline-panel__body">
+                          <div className="heritage-timeline-panel__pill">
+                            <IconComponent className="w-3 h-3" />
+                            <span>{item.badge}</span>
+                          </div>
+                          <div className="heritage-timeline-panel__year">{item.year}</div>
+                          <h3 className="heritage-timeline-panel__title">{item.title}</h3>
+                          <p className="heritage-timeline-panel__desc">{item.desc}</p>
+                          <div className="heritage-timeline-panel__action">
+                            <span>{item.actionLabel}</span>
+                            <ArrowRight className="w-3.5 h-3.5 transition-transform group-hover:translate-x-1" />
+                          </div>
                         </div>
-                        <div className="heritage-timeline-panel__year">{item.year}</div>
-                        <h3 className="heritage-timeline-panel__title">{item.title}</h3>
-                        <p className="heritage-timeline-panel__desc">{item.desc}</p>
-                        <div className="heritage-timeline-panel__action">
-                          <span>{item.actionLabel}</span>
-                          <ArrowRight className="w-3.5 h-3.5 transition-transform group-hover:translate-x-1" />
-                        </div>
-                      </div>
-                    </article>
-                  ) : (
-                    <div className="heritage-timeline-side-quote heritage-timeline-side-quote--left">
-                      <p className="heritage-timeline-quote-text">{item.quote}</p>
-                      <span className="heritage-timeline-quote-line" />
-                    </div>
-                  )}
 
-                  {/* Center Node Marker (Positioned directly on the continuous gold track) */}
-                  <div className="heritage-timeline-center-node" aria-hidden="true">
+                        {/* Connector line extending right to the node */}
+                        <span className="heritage-timeline-connector heritage-timeline-connector--right" aria-hidden="true" />
+                      </article>
+                    ) : (
+                      /* Editorial Quote on Left */
+                      <div className="heritage-timeline-quote-box heritage-timeline-quote-box--left">
+                        <p className="heritage-timeline-quote-text">{item.quote}</p>
+                        <span className="heritage-timeline-quote-line" />
+                      </div>
+                    )}
+                  </div>
+
+                  {/* Center Column: Node Dot (Vertically aligned near the Year badge, above text) */}
+                  <div className="heritage-timeline-center-col" aria-hidden="true">
                     <div className={`heritage-timeline-node-dot ${activeHoverNode === idx ? 'is-active' : ''}`}>
                       <span className="heritage-timeline-node-core" />
                     </div>
                   </div>
 
-                  {/* Right Side: Either the Quote (if isLeft) OR the Large Story Card (if isRight) */}
-                  {!isLeft ? (
-                    <article
-                      onClick={() => handleCardClick(item)}
-                      className="heritage-timeline-panel heritage-timeline-panel--right"
-                    >
-                      <div className="heritage-timeline-panel__body">
-                        <div className="heritage-timeline-panel__pill">
-                          <IconComponent className="w-3 h-3" />
-                          <span>{item.badge}</span>
-                        </div>
-                        <div className="heritage-timeline-panel__year">{item.year}</div>
-                        <h3 className="heritage-timeline-panel__title">{item.title}</h3>
-                        <p className="heritage-timeline-panel__desc">{item.desc}</p>
-                        <div className="heritage-timeline-panel__action">
-                          <span>{item.actionLabel}</span>
-                          <ArrowRight className="w-3.5 h-3.5 transition-transform group-hover:translate-x-1" />
-                        </div>
-                      </div>
+                  {/* Right Column */}
+                  <div className="heritage-timeline-col heritage-timeline-col--right">
+                    {!isLeft ? (
+                      /* Right Card */
+                      <article
+                        onClick={() => handleCardClick(item)}
+                        className="heritage-timeline-panel heritage-timeline-panel--img-right"
+                      >
+                        {/* Connector line extending left to the node */}
+                        <span className="heritage-timeline-connector heritage-timeline-connector--left" aria-hidden="true" />
 
-                      <div className="heritage-timeline-panel__media">
-                        <img
-                          src={getAssetUrl(item.image)}
-                          alt={item.title}
-                          loading="lazy"
-                          className="heritage-timeline-panel__img"
-                        />
-                        <div className="heritage-timeline-panel__caption">
-                          <span>{item.caption}</span>
+                        <div className="heritage-timeline-panel__body">
+                          <div className="heritage-timeline-panel__pill">
+                            <IconComponent className="w-3 h-3" />
+                            <span>{item.badge}</span>
+                          </div>
+                          <div className="heritage-timeline-panel__year">{item.year}</div>
+                          <h3 className="heritage-timeline-panel__title">{item.title}</h3>
+                          <p className="heritage-timeline-panel__desc">{item.desc}</p>
+                          <div className="heritage-timeline-panel__action">
+                            <span>{item.actionLabel}</span>
+                            <ArrowRight className="w-3.5 h-3.5 transition-transform group-hover:translate-x-1" />
+                          </div>
                         </div>
+
+                        <div className="heritage-timeline-panel__media">
+                          <img
+                            src={getAssetUrl(item.image)}
+                            alt={item.title}
+                            loading="lazy"
+                            className="heritage-timeline-panel__img"
+                          />
+                          <div className="heritage-timeline-panel__caption">
+                            <span>{item.caption}</span>
+                          </div>
+                        </div>
+                      </article>
+                    ) : (
+                      /* Editorial Quote on Right */
+                      <div className="heritage-timeline-quote-box heritage-timeline-quote-box--right">
+                        <p className="heritage-timeline-quote-text">{item.quote}</p>
+                        <span className="heritage-timeline-quote-line" />
                       </div>
-                    </article>
-                  ) : (
-                    <div className="heritage-timeline-side-quote heritage-timeline-side-quote--right">
-                      <p className="heritage-timeline-quote-text">{item.quote}</p>
-                      <span className="heritage-timeline-quote-line" />
-                    </div>
-                  )}
+                    )}
+                  </div>
                 </div>
               );
             })}
