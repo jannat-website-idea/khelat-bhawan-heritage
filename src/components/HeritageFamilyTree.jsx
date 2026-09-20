@@ -7,12 +7,9 @@ import {
   ChevronRight, 
   Sparkles, 
   CheckCircle2, 
-  BookOpen, 
-  ArrowRight, 
-  Shield, 
-  Award,
   Calendar,
-  ExternalLink
+  ExternalLink,
+  BookOpen
 } from 'lucide-react';
 
 export default function HeritageFamilyTree({ lang = 'en', setActiveTab, onOpenLightbox }) {
@@ -20,7 +17,95 @@ export default function HeritageFamilyTree({ lang = 'en', setActiveTab, onOpenLi
   const [selectedGenIndex, setSelectedGenIndex] = useState(null);
   const [hoveredGen, setHoveredGen] = useState(null);
 
-  // Close modal on ESC key
+  // Generation specific editorial data matching the exact reference image
+  const genEditorialData = [
+    {
+      gen: 1,
+      tag: { en: 'GENERATION 01', bn: '১ম প্রজন্ম' },
+      role: { en: 'THE FOUNDER & PATRIARCH', bn: 'প্রতিষ্ঠাতা ও আদি পুরুষ' },
+      name: { en: 'Babu Khelat Chandra Ghosh', bn: 'বাবু খেলাৎ চন্দ্র ঘোষ' },
+      years: '1775 — 1845',
+      summary: {
+        en: 'Founded Khelat Bhawan and laid the foundation for a legacy of devotion, art and philanthropy.',
+        bn: 'খেলাৎ ভবনের প্রতিষ্ঠা এবং ভক্তি, মার্গসঙ্গীত ও সমাজসেবার অমর ঐতিহ্যের ভিত্তিপ্রস্তর স্থাপন করেন।'
+      },
+      image: '/images/babu_khelat_ghosh_bust.png'
+    },
+    {
+      gen: 2,
+      tag: { en: 'GENERATION 02', bn: '২য় প্রজন্ম' },
+      role: { en: 'RENAISSANCE STEWARDS', bn: 'নবজাগরণের ধারক' },
+      name: { en: 'Babu Mohim Chandra Ghosh', bn: 'বাবু মহিম চন্দ্র ঘোষ' },
+      years: '1845 — 1920',
+      summary: {
+        en: 'Expanded the estate, strengthened cultural patronage and institutionalized key traditions.',
+        bn: 'সম্পত্তি ও ট্রাস্টের প্রসার, সংস্কৃতি ও মার্গসঙ্গীতের পৃষ্ঠপোষকতা এবং পারিবারিক দেবসেবা সুদৃঢ় করেন।'
+      },
+      image: '/images/SDP_0299.jpg'
+    },
+    {
+      gen: 3,
+      tag: { en: 'GENERATION 03', bn: '৩য় প্রজন্ম' },
+      role: { en: 'CULTURAL PATRONS', bn: 'সংস্কৃতি অনুরাগী' },
+      name: { en: 'Babu Sarat Chandra Ghosh', bn: 'বাবু শরৎ চন্দ্র ঘোষ' },
+      years: '1920 — 1950',
+      summary: {
+        en: 'Nurtured the arts, supported classical music and maintained the architectural grandeur of Khelat Bhawan.',
+        bn: 'বাংলার শিল্পকলা ও উচ্চাঙ্গ সঙ্গীতের পৃষ্ঠপোষকতা এবং প্রাসাদের স্থাপত্যের অনন্য সংরক্ষণ করেন।'
+      },
+      image: '/images/SDP_0273.jpg'
+    },
+    {
+      gen: 4,
+      tag: { en: 'GENERATION 04', bn: '৪র্থ প্রজন্ম' },
+      role: { en: 'INSTITUTIONAL FOUNDERS', bn: 'প্রতিষ্ঠান ও ট্রাস্ট নির্মাতা' },
+      name: { en: 'Babu Khelat Ghosh', bn: 'বাবু খেলাৎ ঘোষ ট্রাস্টিগণ' },
+      years: '1950 — 1975',
+      summary: {
+        en: 'Formalized legal trusts to protect the estate, its properties and community initiatives.',
+        bn: 'পারিবারিক দেবসেবা, গৃহসম্পত্তি ও সমাজকল্যাণকে স্থায়ী করতে প্রথম বিধিবদ্ধ ট্রাস্ট গঠন করেন।'
+      },
+      image: '/images/SDP_0305.jpg'
+    },
+    {
+      gen: 5,
+      tag: { en: 'GENERATION 05', bn: '৫ম প্রজন্ম' },
+      role: { en: 'HERITAGE CONSERVATORS', bn: 'সংরক্ষণ ও সংস্কারক' },
+      name: { en: 'Siddhartha Ghosh', bn: 'সিদ্ধার্থ ঘোষ' },
+      years: '1975 — 1985',
+      summary: {
+        en: 'Carried out extensive structural restoration, supported the Artist Nectar Council and expanded public welfare initiatives.',
+        bn: 'ঐতিহাসিক প্রাসাদের বৃহৎ স্থাপত্য সংস্কার সম্পন্ন করেন এবং আর্টিস্ট নেকটার কাউন্সিল গঠন করেন।'
+      },
+      image: '/images/SDP_0291.jpg'
+    },
+    {
+      gen: 6,
+      tag: { en: 'GENERATION 06', bn: '৬ষ্ঠ প্রজন্ম' },
+      role: { en: 'DIGITAL ARCHIVAL CUSTODIANS', bn: 'ডিজিটাল আর্কাইভ ও ট্রাস্ট বোর্ড' },
+      name: { en: 'Governing Trustees of Khelat Bhawan', bn: 'খেলাৎ ভবনের গভর্নিং ট্রাস্টি মণ্ডলী' },
+      years: '1985 — 2015',
+      summary: {
+        en: 'Initiated digital archives, opened the estate for heritage tourism and preserved centuries-old manuscripts and artefacts.',
+        bn: 'ডিজিটাল আর্কাইভের সূচনা, আন্তর্জাতিক হেরিটেজ পর্যটন ও শতবর্ষ প্রাচীন নথি-স্মারক সংরক্ষণ করেন।'
+      },
+      image: '/images/SDP_0344.jpg'
+    },
+    {
+      gen: 7,
+      tag: { en: 'GENERATION 07', bn: '৭ম প্রজন্ম' },
+      role: { en: 'PRESENT GUARDIANS', bn: 'বর্তমান ও ভবিষ্যৎ অভিভাবক' },
+      name: { en: 'Current Custodians & Youth Council', bn: 'বর্তমান ট্রাস্টি ও উত্তরাধিকারী মণ্ডলী' },
+      years: '2015 — Present',
+      summary: {
+        en: 'Continuing the legacy through preservation, education, digital access and community engagement for future generations.',
+        bn: 'টেকসই ঐতিহ্য সংরক্ষণ, ডিজিটাল জীবন্ত মিউজিয়াম ও ভবিষ্যৎ প্রজন্মের মাঝে ঐতিহ্যকে বাঁচিয়ে রাখা।'
+      },
+      image: '/images/SDP_0359.jpg'
+    }
+  ];
+
+  // Close modal on ESC key or arrow navigation
   useEffect(() => {
     const handleKeyDown = (e) => {
       if (e.key === 'Escape') setSelectedGenIndex(null);
@@ -37,469 +122,476 @@ export default function HeritageFamilyTree({ lang = 'en', setActiveTab, onOpenLi
   }, [selectedGenIndex]);
 
   const selectedGen = selectedGenIndex !== null ? familyTreeData[selectedGenIndex] : null;
-
-  // Node position map for desktop 2D Tree (percentages)
-  const nodePositions = [
-    { gen: 1, top: '10%', left: '50%', transform: 'translate(-50%, 0)' }, // Apex
-    { gen: 2, top: '29%', left: '26%', transform: 'translate(-50%, 0)' }, // Tier 1 Left
-    { gen: 3, top: '29%', left: '74%', transform: 'translate(-50%, 0)' }, // Tier 1 Right
-    { gen: 4, top: '51%', left: '30%', transform: 'translate(-50%, 0)' }, // Tier 2 Left
-    { gen: 5, top: '51%', left: '70%', transform: 'translate(-50%, 0)' }, // Tier 2 Right
-    { gen: 6, top: '72%', left: '24%', transform: 'translate(-50%, 0)' }, // Tier 3 Left
-    { gen: 7, top: '72%', left: '76%', transform: 'translate(-50%, 0)' }  // Tier 3 Right
-  ];
+  const selectedEditorial = selectedGenIndex !== null ? genEditorialData[selectedGenIndex] : null;
 
   return (
     <section 
-      className="heritage-tree-wrapper relative my-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 z-10 animate-in fade-in duration-500"
-      aria-label={isBn ? 'খেলাৎ ভবন পারিবারিক বংশলতিকা' : 'Khelat Bhawan Family Tree'}
+      className="heritage-tree-chart-wrapper relative my-8 max-w-7xl mx-auto px-4 sm:px-8 lg:px-12 py-10 sm:py-16 text-[#321b17] z-10 animate-in fade-in duration-500 overflow-hidden rounded-3xl"
+      aria-label={isBn ? 'খেলাৎ ভবন বংশলতিকা' : 'Khelat Bhawan Lineage Chart'}
     >
-      {/* Background Architectural Watermark & Botanical Vignette */}
-      <div className="heritage-tree-canvas-bg" aria-hidden="true">
-        <div className="heritage-tree-palace-watermark" />
-        <div className="heritage-tree-botanical-corner heritage-tree-botanical-corner--tl" />
-        <div className="heritage-tree-botanical-corner heritage-tree-botanical-corner--tr" />
-        <div className="heritage-tree-botanical-corner heritage-tree-botanical-corner--bl" />
-        <div className="heritage-tree-botanical-corner heritage-tree-botanical-corner--br" />
+      {/* ================= BACKGROUND WATERMARKS & ARCHITECTURAL ENGRAVINGS ================= */}
+      <div className="heritage-tree-chart-bg" aria-hidden="true">
+        {/* Architectural Facade Watermark */}
+        <div className="heritage-tree-palace-backdrop" />
+        {/* Botanical Lotus Engraving at bottom-left */}
+        <div className="heritage-tree-lotus-engraving" />
       </div>
 
       {/* =========================================================================
-          HERITAGE TREE HEADER (Strictly matching reference layout)
+          HERITAGE CHART HEADER (Strictly matching reference)
          ========================================================================= */}
-      <header className="heritage-tree-header relative text-center pt-8 sm:pt-12 pb-6 sm:pb-8">
-        {/* Top bar row: Left Brand, Center Space, Right Triple Badge */}
-        <div className="flex items-center justify-between px-2 sm:px-6 mb-4 text-[10px] sm:text-xs tracking-[0.22em] uppercase font-sans text-muted-foreground/80">
-          <div className="text-left">
-            <span className="font-serif font-bold text-foreground tracking-[0.25em] block text-xs sm:text-sm">KHELAT BHAWAN</span>
-            <span className="text-[9px] sm:text-[10px] tracking-[0.2em] text-primary/70">PATHURIA GHATA • EST. 1845</span>
-          </div>
-          <div className="text-right hidden sm:block">
-            <span className="tracking-[0.28em] font-serif font-semibold text-primary/80">
-              {isBn ? 'অতীত • বর্তমান • ভবিষ্যৎ' : 'PAST. PRESENT. FUTURE.'}
+      <header className="heritage-chart-header relative grid grid-cols-1 md:grid-cols-12 gap-6 items-start pb-12 sm:pb-16 z-10">
+        {/* Top-Left: Brand & Script Quote */}
+        <div className="md:col-span-3 text-left space-y-3">
+          <div>
+            <span className="font-serif font-bold text-base tracking-[0.25em] text-[#321b17] block">
+              KHELAT BHAWAN
             </span>
+            <span className="text-[10px] tracking-[0.22em] text-[#8c6e4e] uppercase font-sans font-medium block">
+              PATHURIA GHATA • EST. 1845
+            </span>
+          </div>
+
+          <div className="pt-2">
+            <span className="font-serif italic text-2xl text-[#8c6426] block leading-tight">
+              A legacy<br />that lives<br />on...
+            </span>
+            <div className="w-12 h-0.5 bg-[#b68a32] mt-1" />
           </div>
         </div>
 
-        {/* Main Title Group */}
-        <div className="max-w-3xl mx-auto space-y-2">
-          <span className="heritage-tree-eyebrow">
+        {/* Top-Center: Eyebrow, Main Title, Subtitle */}
+        <div className="md:col-span-6 text-center space-y-2.5">
+          <span className="text-[11px] sm:text-xs tracking-[0.28em] uppercase font-sans font-bold text-[#8c6e4e] block">
             {isBn ? 'খেলাৎ ভবন বংশধারা' : 'THE KHELAT BHAWAN LINEAGE'}
           </span>
-          <h2 className="heritage-tree-main-title">
-            {isBn ? 'সাত প্রজন্মের অবিচ্ছিন্ন অভিভাবকত্ব' : 'Seven Generations of Unbroken Custodianship'}
+          <h2 className="font-serif text-3xl sm:text-4xl lg:text-5xl font-normal text-[#321b17] leading-tight">
+            <span className="italic font-normal">Seven Generations</span><br />
+            <span>of Unbroken Custodianship</span>
           </h2>
-          
-          {/* Ornate Gold Filigree Divider */}
-          <div className="heritage-tree-filigree" aria-hidden="true">
-            <span className="heritage-tree-filigree-line" />
-            <span className="heritage-tree-filigree-gem">✦</span>
-            <span className="heritage-tree-filigree-line" />
+
+          {/* Ornate Gold Filigree */}
+          <div className="flex items-center justify-center gap-3 py-1" aria-hidden="true">
+            <span className="w-12 h-[1px] bg-gradient-to-r from-transparent to-[#b68a32]" />
+            <span className="text-xs text-[#b68a32]">✦</span>
+            <span className="w-12 h-[1px] bg-gradient-to-l from-transparent to-[#b68a32]" />
           </div>
 
-          <p className="heritage-tree-subtitle">
+          <p className="font-serif text-sm sm:text-base text-[#6e554d] max-w-lg mx-auto leading-relaxed">
             {isBn 
-              ? '১৮৪৫ সাল থেকে ঐতিহ্য, শিল্প, সংস্কৃতি ও মানবতার সেবায় নিবেদিত এক অমর পারিবারিক উত্তরাধিকার।'
+              ? '১৮৪৫ সাল থেকে ঐতিহ্য, শিল্প, সংস্কৃতি ও মানবসেবায় নিবেদিত এক অমর বংশধারা।'
               : 'A family devoted to heritage, art, culture and community since 1845.'}
           </p>
         </div>
 
-        {/* Floating Side Quotes (Flanking upper branches on Desktop) */}
-        <aside className="heritage-tree-quote heritage-tree-quote--left hidden xl:block" aria-hidden="true">
-          <p className="heritage-tree-quote-text">
-            {isBn ? '“ঐতিহ্যে নিহিত শিকড়, আগামীর জন্য শাখা-প্রশাখা।”' : '“Roots in heritage, branches for tomorrow.”'}
-          </p>
-          <span className="heritage-tree-quote-rule" />
-        </aside>
-
-        <aside className="heritage-tree-quote heritage-tree-quote--right hidden xl:block" aria-hidden="true">
-          <p className="heritage-tree-quote-text">
-            {isBn ? '“ভবিষ্যৎ প্রজন্মের জন্য এক জীবন্ত উত্তরসূরি ধারা।”' : '“A living legacy for generations to come.”'}
-          </p>
-          <span className="heritage-tree-quote-rule" />
-        </aside>
+        {/* Top-Right: Bengali Script Stack + Past. Present. Future */}
+        <div className="md:col-span-3 text-right hidden md:block space-y-3">
+          <div className="font-bengali-text text-sm text-[#321b17] leading-relaxed space-y-0.5">
+            <div>ঐতিহ্য</div>
+            <div>সংস্কৃতি</div>
+            <div>সমাজ</div>
+            <div>আগামী প্রজন্ম</div>
+          </div>
+          <div className="w-10 h-[1px] bg-[#b68a32] ml-auto" />
+          <div className="font-serif italic text-base text-[#321b17] space-y-0.5 leading-snug">
+            <div>Past.</div>
+            <div>Present.</div>
+            <div>Future.</div>
+          </div>
+        </div>
       </header>
 
       {/* =========================================================================
-          DESKTOP ILLUSTRATED BOTANICAL FAMILY TREE (Screen >= 1024px)
+          THE GOLDEN LINEAGE TREE HIERARCHY (Matching Reference Exactly)
          ========================================================================= */}
-      <div className="hidden lg:block relative w-full heritage-tree-stage">
-        {/* The Botanical Tree Vector Graphics (ViewBox 0 0 1000 1380) */}
-        <svg 
-          viewBox="0 0 1000 1380" 
-          className="heritage-tree-svg w-full h-auto select-none pointer-events-none"
-          aria-hidden="true"
-        >
-          <defs>
-            {/* Rich Organic Bark Gradients */}
-            <linearGradient id="barkGradMain" x1="0%" y1="0%" x2="100%" y2="0%">
-              <stop offset="0%" stopColor="#2c1611" />
-              <stop offset="35%" stopColor="#4a2c20" />
-              <stop offset="65%" stopColor="#6e4632" />
-              <stop offset="100%" stopColor="#2c1611" />
-            </linearGradient>
+      <div className="relative z-10 max-w-5xl mx-auto">
+        
+        {/* =========================================================================
+            TIER 0: APEX (GENERATION 01 — BABU KHELAT CHANDRA GHOSH)
+           ========================================================================= */}
+        <div className="flex flex-col items-center relative">
+          <div 
+            onClick={() => setSelectedGenIndex(0)}
+            onMouseEnter={() => setHoveredGen(1)}
+            onMouseLeave={() => setHoveredGen(null)}
+            className="group cursor-pointer flex flex-col sm:flex-row items-center gap-6 sm:gap-8 bg-transparent transition-transform duration-300 hover:scale-[1.02] max-w-xl mx-auto"
+          >
+            {/* Oval Portrait Medallion */}
+            <div className="heritage-chart-oval-frame shadow-xl shrink-0">
+              <div className="heritage-chart-oval-ring">
+                <img
+                  src={getAssetUrl(genEditorialData[0].image)}
+                  alt={genEditorialData[0].name[lang] || genEditorialData[0].name.en}
+                  className="heritage-chart-portrait-img"
+                  loading="lazy"
+                />
+                <div className="heritage-chart-portrait-vignette" />
+              </div>
+              <div className="heritage-chart-inspect-badge">
+                <BookOpen className="w-3.5 h-3.5 text-[#f3e5ab]" />
+              </div>
+            </div>
 
-            <linearGradient id="barkGradBranch" x1="0%" y1="0%" x2="0%" y2="100%">
-              <stop offset="0%" stopColor="#6e4632" />
-              <stop offset="50%" stopColor="#4a2c20" />
-              <stop offset="100%" stopColor="#2c1611" />
-            </linearGradient>
+            {/* Editorial Text to the Right of Apex Oval */}
+            <div className="text-center sm:text-left space-y-1 max-w-sm">
+              <div className="text-[10px] tracking-[0.2em] font-sans font-bold text-[#8c6426] uppercase">
+                {genEditorialData[0].tag[lang] || genEditorialData[0].tag.en}
+              </div>
+              <div className="text-[11px] tracking-[0.16em] font-sans font-semibold text-[#5a4038] uppercase">
+                {genEditorialData[0].role[lang] || genEditorialData[0].role.en}
+              </div>
+              <h3 className="font-serif text-xl sm:text-2xl font-bold text-[#321b17] leading-tight group-hover:text-[#8c6426] transition-colors">
+                {genEditorialData[0].name[lang] || genEditorialData[0].name.en}
+              </h3>
+              <div className="font-sans text-xs font-semibold text-[#8c6e4e] tracking-wider">
+                {genEditorialData[0].years}
+              </div>
+              <p className="font-serif text-xs sm:text-sm text-[#6e554d] leading-relaxed pt-1">
+                {genEditorialData[0].summary[lang] || genEditorialData[0].summary.en}
+              </p>
+            </div>
+          </div>
 
-            <linearGradient id="goldFiligreeGrad" x1="0%" y1="0%" x2="100%" y2="100%">
-              <stop offset="0%" stopColor="#8c6426" />
-              <stop offset="50%" stopColor="#d4af37" />
-              <stop offset="100%" stopColor="#966e2c" />
-            </linearGradient>
-
-            <linearGradient id="leafGradSepia" x1="0%" y1="0%" x2="100%" y2="100%">
-              <stop offset="0%" stopColor="#9e8557" />
-              <stop offset="50%" stopColor="#7a623c" />
-              <stop offset="100%" stopColor="#4d3b22" />
-            </linearGradient>
-
-            <linearGradient id="leafGradGold" x1="0%" y1="0%" x2="100%" y2="100%">
-              <stop offset="0%" stopColor="#c5a059" />
-              <stop offset="50%" stopColor="#9c7b39" />
-              <stop offset="100%" stopColor="#695123" />
-            </linearGradient>
-
-            {/* Filter for subtle antique tree glow & shadow */}
-            <filter id="treeDropShadow" x="-10%" y="-10%" width="120%" height="120%">
-              <feDropShadow dx="0" dy="4" stdDeviation="6" floodColor="#321b17" floodOpacity="0.12" />
-            </filter>
-          </defs>
-
-          {/* ================= BACKGROUND ROOTS & GROUND EMBELLISHMENTS ================= */}
-          <g className="tree-roots" filter="url(#treeDropShadow)">
-            {/* Deep Root Strands spreading outward */}
-            <path d="M 500 1200 C 470 1250, 380 1290, 240 1330 C 290 1320, 360 1285, 460 1235 Z" fill="url(#barkGradMain)" opacity="0.9" />
-            <path d="M 500 1200 C 530 1250, 620 1290, 760 1330 C 710 1320, 640 1285, 540 1235 Z" fill="url(#barkGradMain)" opacity="0.9" />
-            <path d="M 480 1210 C 430 1270, 320 1320, 180 1345 C 230 1330, 320 1290, 440 1240 Z" fill="url(#barkGradMain)" opacity="0.75" />
-            <path d="M 520 1210 C 570 1270, 680 1320, 820 1345 C 770 1330, 680 1290, 560 1240 Z" fill="url(#barkGradMain)" opacity="0.75" />
-            <path d="M 490 1220 C 460 1280, 400 1340, 330 1365 C 370 1340, 430 1290, 470 1240 Z" fill="url(#barkGradMain)" opacity="0.8" />
-            <path d="M 510 1220 C 540 1280, 600 1340, 670 1365 C 630 1340, 570 1290, 530 1240 Z" fill="url(#barkGradMain)" opacity="0.8" />
-          </g>
-
-          {/* ================= MAIN CENTRAL TRUNK ================= */}
-          <g className="tree-trunk" filter="url(#treeDropShadow)">
-            {/* Trunk flare base to apex */}
-            <path 
-              d="M 450 1210 
-                 C 460 1120, 455 1020, 465 920 
-                 C 455 820, 465 720, 470 600 
-                 C 475 490, 480 390, 490 280 
-                 L 510 280 
-                 C 520 390, 525 490, 530 600 
-                 C 535 720, 545 820, 535 920 
-                 C 545 1020, 540 1120, 550 1210 
-                 Z" 
-              fill="url(#barkGradMain)" 
-            />
-            {/* Bark contour ridges for authentic hand-drawn wood engraving texture */}
-            <path d="M 485 1200 C 480 1080, 488 950, 482 820 C 486 710, 488 560, 496 380" stroke="#1d0f0c" strokeWidth="2.5" fill="none" opacity="0.45" />
-            <path d="M 515 1200 C 520 1080, 512 950, 518 820 C 514 710, 512 560, 504 380" stroke="#1d0f0c" strokeWidth="2.5" fill="none" opacity="0.45" />
-            <path d="M 500 1190 C 495 1040, 505 880, 498 700 C 502 540, 498 420, 500 290" stroke="#7a523a" strokeWidth="1.8" fill="none" opacity="0.5" />
-          </g>
-
-          {/* ================= LEVEL 3 BRANCHES (Gen 06 & Gen 07) ================= */}
-          <g className="tree-branches-tier-3">
-            {/* Branch to Gen 06 (Left) */}
-            <path 
-              d="M 465 970 
-                 C 420 980, 360 990, 260 1020 
-                 C 340 1000, 410 995, 465 1015 Z" 
-              fill="url(#barkGradBranch)" 
-            />
-            <path d="M 465 980 C 390 990, 330 1000, 260 1025" stroke="#1d0f0c" strokeWidth="2" fill="none" opacity="0.4" />
-            <path d="M 280 1015 C 240 1010, 210 1030, 180 1045 C 210 1035, 240 1025, 275 1025 Z" fill="url(#barkGradBranch)" opacity="0.75" />
-
-            {/* Branch to Gen 07 (Right) */}
-            <path 
-              d="M 535 970 
-                 C 580 980, 640 990, 740 1020 
-                 C 660 1000, 590 995, 535 1015 Z" 
-              fill="url(#barkGradBranch)" 
-            />
-            <path d="M 535 980 C 610 990, 670 1000, 740 1025" stroke="#1d0f0c" strokeWidth="2" fill="none" opacity="0.4" />
-            <path d="M 720 1015 C 760 1010, 790 1030, 820 1045 C 790 1035, 760 1025, 725 1025 Z" fill="url(#barkGradBranch)" opacity="0.75" />
-          </g>
-
-          {/* ================= LEVEL 2 BRANCHES (Gen 04 & Gen 05) ================= */}
-          <g className="tree-branches-tier-2">
-            {/* Branch to Gen 04 (Left) */}
-            <path 
-              d="M 470 700 
-                 C 420 705, 370 710, 310 725 
-                 C 370 720, 420 725, 470 745 Z" 
-              fill="url(#barkGradBranch)" 
-            />
-            <path d="M 470 710 C 410 712, 360 718, 315 730" stroke="#1d0f0c" strokeWidth="2" fill="none" opacity="0.4" />
-            <path d="M 330 720 C 290 710, 250 725, 220 740 C 250 730, 290 722, 325 728 Z" fill="url(#barkGradBranch)" opacity="0.75" />
-
-            {/* Branch to Gen 05 (Right) */}
-            <path 
-              d="M 530 700 
-                 C 580 705, 630 710, 690 725 
-                 C 630 720, 580 725, 530 745 Z" 
-              fill="url(#barkGradBranch)" 
-            />
-            <path d="M 530 710 C 590 712, 640 718, 685 730" stroke="#1d0f0c" strokeWidth="2" fill="none" opacity="0.4" />
-            <path d="M 670 720 C 710 710, 750 725, 780 740 C 750 730, 710 722, 675 728 Z" fill="url(#barkGradBranch)" opacity="0.75" />
-          </g>
-
-          {/* ================= LEVEL 1 BRANCHES (Gen 02 & Gen 03) ================= */}
-          <g className="tree-branches-tier-1">
-            {/* Branch to Gen 02 (Left) */}
-            <path 
-              d="M 480 430 
-                 C 420 425, 340 425, 270 435 
-                 C 340 440, 420 450, 480 470 Z" 
-              fill="url(#barkGradBranch)" 
-            />
-            <path d="M 480 440 C 410 435, 335 435, 275 442" stroke="#1d0f0c" strokeWidth="2" fill="none" opacity="0.4" />
-            <path d="M 280 430 C 230 415, 190 430, 150 445 C 190 435, 235 425, 275 438 Z" fill="url(#barkGradBranch)" opacity="0.75" />
-
-            {/* Branch to Gen 03 (Right) */}
-            <path 
-              d="M 520 430 
-                 C 580 425, 660 425, 730 435 
-                 C 660 440, 580 450, 520 470 Z" 
-              fill="url(#barkGradBranch)" 
-            />
-            <path d="M 520 440 C 590 435, 665 435, 725 442" stroke="#1d0f0c" strokeWidth="2" fill="none" opacity="0.4" />
-            <path d="M 720 430 C 770 415, 810 430, 850 445 C 810 435, 765 425, 725 438 Z" fill="url(#barkGradBranch)" opacity="0.75" />
-          </g>
-
-          {/* ================= APEX CROWN FORK (Gen 01 - Babu Khelat Chandra Ghosh) ================= */}
-          <g className="tree-branches-apex">
-            <path 
-              d="M 490 280 
-                 C 460 250, 435 210, 460 160 
-                 C 475 200, 490 230, 495 270 Z" 
-              fill="url(#barkGradBranch)" 
-            />
-            <path 
-              d="M 510 280 
-                 C 540 250, 565 210, 540 160 
-                 C 525 200, 510 230, 505 270 Z" 
-              fill="url(#barkGradBranch)" 
-            />
-            {/* Top decorative cradle flourish holding Babu Khelat Ghosh */}
-            <path d="M 440 180 C 470 230, 530 230, 560 180" stroke="#7a523a" strokeWidth="3" fill="none" opacity="0.6" />
-          </g>
-
-          {/* ================= BOTANICAL LEAF CLUSTERS & GOLD BLOSSOMS ================= */}
-          <g className="tree-foliage" opacity="0.85">
-            {/* Apex Foliage (Gen 1) */}
-            <g transform="translate(500, 130)">
-              <ellipse cx="-75" cy="-20" rx="14" ry="7" transform="rotate(-30, -75, -20)" fill="url(#leafGradGold)" />
-              <ellipse cx="-90" cy="-35" rx="12" ry="6" transform="rotate(-45, -90, -35)" fill="url(#leafGradSepia)" />
-              <ellipse cx="-60" cy="-45" rx="13" ry="6.5" transform="rotate(-15, -60, -45)" fill="url(#leafGradGold)" />
-              <ellipse cx="75" cy="-20" rx="14" ry="7" transform="rotate(30, 75, -20)" fill="url(#leafGradGold)" />
-              <ellipse cx="90" cy="-35" rx="12" ry="6" transform="rotate(45, 90, -35)" fill="url(#leafGradSepia)" />
-              <ellipse cx="60" cy="-45" rx="13" ry="6.5" transform="rotate(15, 60, -45)" fill="url(#leafGradGold)" />
-              {/* Crown top central spray */}
-              <ellipse cx="0" cy="-65" rx="12" ry="6" transform="rotate(-90, 0, -65)" fill="url(#leafGradGold)" />
-              <ellipse cx="-15" cy="-60" rx="10" ry="5" transform="rotate(-115, -15, -60)" fill="url(#leafGradSepia)" />
-              <ellipse cx="15" cy="-60" rx="10" ry="5" transform="rotate(-65, 15, -60)" fill="url(#leafGradSepia)" />
-            </g>
-
-            {/* Gen 2 & 3 Foliage Sprays */}
-            <g transform="translate(260, 420)">
-              <ellipse cx="-80" cy="-10" rx="14" ry="7" transform="rotate(-40, -80, -10)" fill="url(#leafGradSepia)" />
-              <ellipse cx="-95" cy="10" rx="13" ry="6" transform="rotate(-15, -95, 10)" fill="url(#leafGradGold)" />
-              <ellipse cx="-70" cy="25" rx="12" ry="6" transform="rotate(20, -70, 25)" fill="url(#leafGradSepia)" />
-              <ellipse cx="-55" cy="-25" rx="11" ry="5.5" transform="rotate(-55, -55, -25)" fill="url(#leafGradGold)" />
-            </g>
-            <g transform="translate(740, 420)">
-              <ellipse cx="80" cy="-10" rx="14" ry="7" transform="rotate(40, 80, -10)" fill="url(#leafGradSepia)" />
-              <ellipse cx="95" cy="10" rx="13" ry="6" transform="rotate(15, 95, 10)" fill="url(#leafGradGold)" />
-              <ellipse cx="70" cy="25" rx="12" ry="6" transform="rotate(-20, 70, 25)" fill="url(#leafGradSepia)" />
-              <ellipse cx="55" cy="-25" rx="11" ry="5.5" transform="rotate(55, 55, -25)" fill="url(#leafGradGold)" />
-            </g>
-
-            {/* Gen 4 & 5 Foliage Sprays */}
-            <g transform="translate(300, 710)">
-              <ellipse cx="-80" cy="-10" rx="14" ry="7" transform="rotate(-35, -80, -10)" fill="url(#leafGradGold)" />
-              <ellipse cx="-90" cy="15" rx="12" ry="6" transform="rotate(10, -90, 15)" fill="url(#leafGradSepia)" />
-              <ellipse cx="-65" cy="-25" rx="11" ry="5.5" transform="rotate(-60, -65, -25)" fill="url(#leafGradGold)" />
-            </g>
-            <g transform="translate(700, 710)">
-              <ellipse cx="80" cy="-10" rx="14" ry="7" transform="rotate(35, 80, -10)" fill="url(#leafGradGold)" />
-              <ellipse cx="90" cy="15" rx="12" ry="6" transform="rotate(-10, 90, 15)" fill="url(#leafGradSepia)" />
-              <ellipse cx="65" cy="-25" rx="11" ry="5.5" transform="rotate(60, 65, -25)" fill="url(#leafGradGold)" />
-            </g>
-
-            {/* Gen 6 & 7 Foliage Sprays */}
-            <g transform="translate(240, 1000)">
-              <ellipse cx="-80" cy="-5" rx="14" ry="7" transform="rotate(-30, -80, -5)" fill="url(#leafGradSepia)" />
-              <ellipse cx="-95" cy="20" rx="13" ry="6" transform="rotate(15, -95, 20)" fill="url(#leafGradGold)" />
-              <ellipse cx="-60" cy="-20" rx="11" ry="5" transform="rotate(-50, -60, -20)" fill="url(#leafGradGold)" />
-            </g>
-            <g transform="translate(760, 1000)">
-              <ellipse cx="80" cy="-5" rx="14" ry="7" transform="rotate(30, 80, -5)" fill="url(#leafGradSepia)" />
-              <ellipse cx="95" cy="20" rx="13" ry="6" transform="rotate(-15, 95, 20)" fill="url(#leafGradGold)" />
-              <ellipse cx="60" cy="-20" rx="11" ry="5" transform="rotate(50, 60, -20)" fill="url(#leafGradGold)" />
-            </g>
-
-            {/* Ground Botanical Flora around Roots */}
-            <g transform="translate(500, 1260)">
-              <ellipse cx="-200" cy="30" rx="18" ry="8" transform="rotate(-10, -200, 30)" fill="url(#leafGradSepia)" />
-              <ellipse cx="-170" cy="45" rx="16" ry="7" transform="rotate(20, -170, 45)" fill="url(#leafGradGold)" />
-              <ellipse cx="-230" cy="50" rx="14" ry="6" transform="rotate(-25, -230, 50)" fill="url(#leafGradSepia)" />
-              <ellipse cx="200" cy="30" rx="18" ry="8" transform="rotate(10, 200, 30)" fill="url(#leafGradSepia)" />
-              <ellipse cx="170" cy="45" rx="16" ry="7" transform="rotate(-20, 170, 45)" fill="url(#leafGradGold)" />
-              <ellipse cx="230" cy="50" rx="14" ry="6" transform="rotate(25, 230, 50)" fill="url(#leafGradSepia)" />
-            </g>
-          </g>
-        </svg>
+          {/* Lineage Connector: Apex to Tier 1 */}
+          <div className="heritage-chart-connector-trunk-apex" aria-hidden="true">
+            <span className="heritage-chart-line-vert h-12" />
+            <span className="heritage-chart-node-dot" />
+          </div>
+        </div>
 
         {/* =========================================================================
-            7 OVAL GENERATION PORTRAIT MEDALLIONS & PARCHMENT SCROLLS (DESKTOP)
+            TIER 1 (GENERATION 02 & GENERATION 03)
            ========================================================================= */}
-        {familyTreeData.map((gen, idx) => {
-          const pos = nodePositions[idx];
-          const isHovered = hoveredGen === gen.gen;
-          const isFounder = gen.gen === 1;
+        <div className="relative pt-2 pb-6">
+          {/* Horizontal Spanning Branch Line for Tier 1 */}
+          <div className="hidden lg:block absolute top-0 left-[24%] right-[24%] h-[1.5px] bg-[#c29b38]" aria-hidden="true">
+            <span className="absolute left-0 top-0 w-[1.5px] h-6 bg-[#c29b38]" />
+            <span className="absolute right-0 top-0 w-[1.5px] h-6 bg-[#c29b38]" />
+          </div>
 
-          return (
-            <div
-              key={gen.gen}
-              style={{
-                position: 'absolute',
-                top: pos.top,
-                left: pos.left,
-                transform: pos.transform,
-                zIndex: isHovered ? 30 : 20
-              }}
-              onMouseEnter={() => setHoveredGen(gen.gen)}
-              onMouseLeave={() => setHoveredGen(null)}
-              onClick={() => setSelectedGenIndex(idx)}
-              className={`heritage-tree-node group cursor-pointer transition-all duration-300 ${
-                isFounder ? 'heritage-tree-node--apex' : ''
-              } ${isHovered ? 'scale-105' : ''}`}
-            >
-              {/* Oval Gold-Gilded Portrait Medallion */}
-              <div className="heritage-tree-medallion-outer">
-                <div className="heritage-tree-medallion-ring">
-                  <div className="heritage-tree-medallion-inner">
-                    <img
-                      src={getAssetUrl(gen.image)}
-                      alt={gen.name[lang] || gen.name.en}
-                      className="heritage-tree-portrait-img"
-                      loading="lazy"
-                    />
-                    <div className="heritage-tree-portrait-vignette" />
-                  </div>
-                </div>
-
-                {/* Inspect Action Cue on Hover */}
-                <div className="heritage-tree-medallion-cue">
-                  <BookOpen className="w-4 h-4 text-amber-200" />
-                </div>
-              </div>
-
-              {/* Antiqued Parchment Ribbon / Banner */}
-              <div className="heritage-tree-parchment-scroll">
-                {/* Generation Numeral Seal */}
-                <div className="heritage-tree-gen-badge">
-                  <span>{String(gen.gen).padStart(2, '0')}</span>
-                </div>
-
-                {/* Name */}
-                <h3 className="heritage-tree-node-name">
-                  {gen.name[lang] || gen.name.en}
-                </h3>
-
-                {/* Period Years */}
-                <div className="heritage-tree-node-years">
-                  {gen.years}
-                </div>
-
-                {/* Archetype / Heritage Role */}
-                <div className="heritage-tree-node-role">
-                  {gen.title[lang] || gen.title.en}
-                </div>
-              </div>
-            </div>
-          );
-        })}
-      </div>
-
-      {/* =========================================================================
-          RESPONSIVE TABLET & MOBILE TREE (Screen < 1024px)
-         ========================================================================= */}
-      <div className="lg:hidden relative py-8 space-y-12">
-        {/* Central Vertical Trunk Line */}
-        <div className="absolute left-1/2 top-4 bottom-12 -translate-x-1/2 w-3 bg-gradient-to-b from-[#351e13] via-[#6e4632] to-[#2c1611] rounded-full opacity-60 pointer-events-none shadow-sm" aria-hidden="true" />
-
-        {familyTreeData.map((gen, idx) => {
-          const isFounder = gen.gen === 1;
-          const isLeft = idx % 2 === 1; // Gen 2, 4, 6 left; Gen 3, 5, 7 right
-
-          return (
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-16 items-center">
+            {/* Gen 02 (Left): Text on Left, Oval on Right */}
             <div 
-              key={gen.gen}
-              onClick={() => setSelectedGenIndex(idx)}
-              className={`relative z-10 flex flex-col items-center cursor-pointer transition-transform duration-300 active:scale-95 ${
-                isFounder ? 'max-w-xs mx-auto' : isLeft ? 'sm:mr-auto max-w-xs sm:translate-x-4' : 'sm:ml-auto max-w-xs sm:-translate-x-4'
-              }`}
+              onClick={() => setSelectedGenIndex(1)}
+              onMouseEnter={() => setHoveredGen(2)}
+              onMouseLeave={() => setHoveredGen(null)}
+              className="group cursor-pointer flex flex-col-reverse sm:flex-row items-center justify-end gap-6 text-center sm:text-right transition-transform duration-300 hover:scale-[1.02]"
             >
-              {/* Oval Medallion */}
-              <div className="heritage-tree-medallion-outer shadow-xl">
-                <div className="heritage-tree-medallion-ring">
-                  <div className="heritage-tree-medallion-inner">
-                    <img
-                      src={getAssetUrl(gen.image)}
-                      alt={gen.name[lang] || gen.name.en}
-                      className="heritage-tree-portrait-img"
-                      loading="lazy"
-                    />
-                    <div className="heritage-tree-portrait-vignette" />
-                  </div>
+              <div className="space-y-1 max-w-xs">
+                <div className="text-[10px] tracking-[0.2em] font-sans font-bold text-[#8c6426] uppercase">
+                  {genEditorialData[1].tag[lang] || genEditorialData[1].tag.en}
                 </div>
+                <div className="text-[11px] tracking-[0.16em] font-sans font-semibold text-[#5a4038] uppercase">
+                  {genEditorialData[1].role[lang] || genEditorialData[1].role.en}
+                </div>
+                <h3 className="font-serif text-xl sm:text-2xl font-bold text-[#321b17] leading-tight group-hover:text-[#8c6426] transition-colors">
+                  {genEditorialData[1].name[lang] || genEditorialData[1].name.en}
+                </h3>
+                <div className="font-sans text-xs font-semibold text-[#8c6e4e] tracking-wider">
+                  {genEditorialData[1].years}
+                </div>
+                <p className="font-serif text-xs sm:text-sm text-[#6e554d] leading-relaxed pt-1">
+                  {genEditorialData[1].summary[lang] || genEditorialData[1].summary.en}
+                </p>
               </div>
 
-              {/* Parchment Scroll */}
-              <div className="heritage-tree-parchment-scroll mt-2 w-full text-center">
-                <div className="heritage-tree-gen-badge">
-                  <span>{String(gen.gen).padStart(2, '0')}</span>
+              <div className="heritage-chart-oval-frame shadow-xl shrink-0">
+                <div className="heritage-chart-oval-ring">
+                  <img
+                    src={getAssetUrl(genEditorialData[1].image)}
+                    alt={genEditorialData[1].name[lang] || genEditorialData[1].name.en}
+                    className="heritage-chart-portrait-img"
+                    loading="lazy"
+                  />
+                  <div className="heritage-chart-portrait-vignette" />
                 </div>
-                <h3 className="heritage-tree-node-name">
-                  {gen.name[lang] || gen.name.en}
-                </h3>
-                <div className="heritage-tree-node-years">
-                  {gen.years}
-                </div>
-                <div className="heritage-tree-node-role">
-                  {gen.title[lang] || gen.title.en}
-                </div>
-                <div className="pt-2 text-[10px] tracking-wider uppercase text-primary font-semibold flex items-center justify-center gap-1">
-                  <span>{isBn ? 'বিস্তারিত দেখুন' : 'VIEW BIOGRAPHY'}</span>
-                  <ArrowRight className="w-3 h-3" />
+                <div className="heritage-chart-inspect-badge">
+                  <BookOpen className="w-3.5 h-3.5 text-[#f3e5ab]" />
                 </div>
               </div>
             </div>
-          );
-        })}
+
+            {/* Gen 03 (Right): Oval on Left, Text on Right */}
+            <div 
+              onClick={() => setSelectedGenIndex(2)}
+              onMouseEnter={() => setHoveredGen(3)}
+              onMouseLeave={() => setHoveredGen(null)}
+              className="group cursor-pointer flex flex-col sm:flex-row items-center justify-start gap-6 text-center sm:text-left transition-transform duration-300 hover:scale-[1.02]"
+            >
+              <div className="heritage-chart-oval-frame shadow-xl shrink-0">
+                <div className="heritage-chart-oval-ring">
+                  <img
+                    src={getAssetUrl(genEditorialData[2].image)}
+                    alt={genEditorialData[2].name[lang] || genEditorialData[2].name.en}
+                    className="heritage-chart-portrait-img"
+                    loading="lazy"
+                  />
+                  <div className="heritage-chart-portrait-vignette" />
+                </div>
+                <div className="heritage-chart-inspect-badge">
+                  <BookOpen className="w-3.5 h-3.5 text-[#f3e5ab]" />
+                </div>
+              </div>
+
+              <div className="space-y-1 max-w-xs">
+                <div className="text-[10px] tracking-[0.2em] font-sans font-bold text-[#8c6426] uppercase">
+                  {genEditorialData[2].tag[lang] || genEditorialData[2].tag.en}
+                </div>
+                <div className="text-[11px] tracking-[0.16em] font-sans font-semibold text-[#5a4038] uppercase">
+                  {genEditorialData[2].role[lang] || genEditorialData[2].role.en}
+                </div>
+                <h3 className="font-serif text-xl sm:text-2xl font-bold text-[#321b17] leading-tight group-hover:text-[#8c6426] transition-colors">
+                  {genEditorialData[2].name[lang] || genEditorialData[2].name.en}
+                </h3>
+                <div className="font-sans text-xs font-semibold text-[#8c6e4e] tracking-wider">
+                  {genEditorialData[2].years}
+                </div>
+                <p className="font-serif text-xs sm:text-sm text-[#6e554d] leading-relaxed pt-1">
+                  {genEditorialData[2].summary[lang] || genEditorialData[2].summary.en}
+                </p>
+              </div>
+            </div>
+          </div>
+
+          {/* Central Trunk Dropping to Tier 2 */}
+          <div className="heritage-chart-connector-trunk-mid" aria-hidden="true">
+            <span className="heritage-chart-line-vert h-14" />
+            <span className="heritage-chart-node-dot" />
+          </div>
+        </div>
+
+        {/* =========================================================================
+            TIER 2 (GENERATION 04 & GENERATION 05)
+           ========================================================================= */}
+        <div className="relative pt-2 pb-6">
+          {/* Horizontal Spanning Branch Line for Tier 2 */}
+          <div className="hidden lg:block absolute top-0 left-[24%] right-[24%] h-[1.5px] bg-[#c29b38]" aria-hidden="true">
+            <span className="absolute left-0 top-0 w-[1.5px] h-6 bg-[#c29b38]" />
+            <span className="absolute right-0 top-0 w-[1.5px] h-6 bg-[#c29b38]" />
+          </div>
+
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-16 items-center">
+            {/* Gen 04 (Left): Text on Left, Oval on Right */}
+            <div 
+              onClick={() => setSelectedGenIndex(3)}
+              onMouseEnter={() => setHoveredGen(4)}
+              onMouseLeave={() => setHoveredGen(null)}
+              className="group cursor-pointer flex flex-col-reverse sm:flex-row items-center justify-end gap-6 text-center sm:text-right transition-transform duration-300 hover:scale-[1.02]"
+            >
+              <div className="space-y-1 max-w-xs">
+                <div className="text-[10px] tracking-[0.2em] font-sans font-bold text-[#8c6426] uppercase">
+                  {genEditorialData[3].tag[lang] || genEditorialData[3].tag.en}
+                </div>
+                <div className="text-[11px] tracking-[0.16em] font-sans font-semibold text-[#5a4038] uppercase">
+                  {genEditorialData[3].role[lang] || genEditorialData[3].role.en}
+                </div>
+                <h3 className="font-serif text-xl sm:text-2xl font-bold text-[#321b17] leading-tight group-hover:text-[#8c6426] transition-colors">
+                  {genEditorialData[3].name[lang] || genEditorialData[3].name.en}
+                </h3>
+                <div className="font-sans text-xs font-semibold text-[#8c6e4e] tracking-wider">
+                  {genEditorialData[3].years}
+                </div>
+                <p className="font-serif text-xs sm:text-sm text-[#6e554d] leading-relaxed pt-1">
+                  {genEditorialData[3].summary[lang] || genEditorialData[3].summary.en}
+                </p>
+              </div>
+
+              <div className="heritage-chart-oval-frame shadow-xl shrink-0">
+                <div className="heritage-chart-oval-ring">
+                  <img
+                    src={getAssetUrl(genEditorialData[3].image)}
+                    alt={genEditorialData[3].name[lang] || genEditorialData[3].name.en}
+                    className="heritage-chart-portrait-img"
+                    loading="lazy"
+                  />
+                  <div className="heritage-chart-portrait-vignette" />
+                </div>
+                <div className="heritage-chart-inspect-badge">
+                  <BookOpen className="w-3.5 h-3.5 text-[#f3e5ab]" />
+                </div>
+              </div>
+            </div>
+
+            {/* Gen 05 (Right): Oval on Left, Text on Right */}
+            <div 
+              onClick={() => setSelectedGenIndex(4)}
+              onMouseEnter={() => setHoveredGen(5)}
+              onMouseLeave={() => setHoveredGen(null)}
+              className="group cursor-pointer flex flex-col sm:flex-row items-center justify-start gap-6 text-center sm:text-left transition-transform duration-300 hover:scale-[1.02]"
+            >
+              <div className="heritage-chart-oval-frame shadow-xl shrink-0">
+                <div className="heritage-chart-oval-ring">
+                  <img
+                    src={getAssetUrl(genEditorialData[4].image)}
+                    alt={genEditorialData[4].name[lang] || genEditorialData[4].name.en}
+                    className="heritage-chart-portrait-img"
+                    loading="lazy"
+                  />
+                  <div className="heritage-chart-portrait-vignette" />
+                </div>
+                <div className="heritage-chart-inspect-badge">
+                  <BookOpen className="w-3.5 h-3.5 text-[#f3e5ab]" />
+                </div>
+              </div>
+
+              <div className="space-y-1 max-w-xs">
+                <div className="text-[10px] tracking-[0.2em] font-sans font-bold text-[#8c6426] uppercase">
+                  {genEditorialData[4].tag[lang] || genEditorialData[4].tag.en}
+                </div>
+                <div className="text-[11px] tracking-[0.16em] font-sans font-semibold text-[#5a4038] uppercase">
+                  {genEditorialData[4].role[lang] || genEditorialData[4].role.en}
+                </div>
+                <h3 className="font-serif text-xl sm:text-2xl font-bold text-[#321b17] leading-tight group-hover:text-[#8c6426] transition-colors">
+                  {genEditorialData[4].name[lang] || genEditorialData[4].name.en}
+                </h3>
+                <div className="font-sans text-xs font-semibold text-[#8c6e4e] tracking-wider">
+                  {genEditorialData[4].years}
+                </div>
+                <p className="font-serif text-xs sm:text-sm text-[#6e554d] leading-relaxed pt-1">
+                  {genEditorialData[4].summary[lang] || genEditorialData[4].summary.en}
+                </p>
+              </div>
+            </div>
+          </div>
+
+          {/* Central Trunk Dropping to Tier 3 */}
+          <div className="heritage-chart-connector-trunk-mid" aria-hidden="true">
+            <span className="heritage-chart-line-vert h-14" />
+            <span className="heritage-chart-node-dot" />
+          </div>
+        </div>
+
+        {/* =========================================================================
+            TIER 3 (GENERATION 06 & GENERATION 07)
+           ========================================================================= */}
+        <div className="relative pt-2 pb-6">
+          {/* Horizontal Spanning Branch Line for Tier 3 */}
+          <div className="hidden lg:block absolute top-0 left-[24%] right-[24%] h-[1.5px] bg-[#c29b38]" aria-hidden="true">
+            <span className="absolute left-0 top-0 w-[1.5px] h-6 bg-[#c29b38]" />
+            <span className="absolute right-0 top-0 w-[1.5px] h-6 bg-[#c29b38]" />
+          </div>
+
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-16 items-center">
+            {/* Gen 06 (Left): Text on Left, Oval on Right */}
+            <div 
+              onClick={() => setSelectedGenIndex(5)}
+              onMouseEnter={() => setHoveredGen(6)}
+              onMouseLeave={() => setHoveredGen(null)}
+              className="group cursor-pointer flex flex-col-reverse sm:flex-row items-center justify-end gap-6 text-center sm:text-right transition-transform duration-300 hover:scale-[1.02]"
+            >
+              <div className="space-y-1 max-w-xs">
+                <div className="text-[10px] tracking-[0.2em] font-sans font-bold text-[#8c6426] uppercase">
+                  {genEditorialData[5].tag[lang] || genEditorialData[5].tag.en}
+                </div>
+                <div className="text-[11px] tracking-[0.16em] font-sans font-semibold text-[#5a4038] uppercase">
+                  {genEditorialData[5].role[lang] || genEditorialData[5].role.en}
+                </div>
+                <h3 className="font-serif text-xl sm:text-2xl font-bold text-[#321b17] leading-tight group-hover:text-[#8c6426] transition-colors">
+                  {genEditorialData[5].name[lang] || genEditorialData[5].name.en}
+                </h3>
+                <div className="font-sans text-xs font-semibold text-[#8c6e4e] tracking-wider">
+                  {genEditorialData[5].years}
+                </div>
+                <p className="font-serif text-xs sm:text-sm text-[#6e554d] leading-relaxed pt-1">
+                  {genEditorialData[5].summary[lang] || genEditorialData[5].summary.en}
+                </p>
+              </div>
+
+              <div className="heritage-chart-oval-frame shadow-xl shrink-0">
+                <div className="heritage-chart-oval-ring">
+                  <img
+                    src={getAssetUrl(genEditorialData[5].image)}
+                    alt={genEditorialData[5].name[lang] || genEditorialData[5].name.en}
+                    className="heritage-chart-portrait-img"
+                    loading="lazy"
+                  />
+                  <div className="heritage-chart-portrait-vignette" />
+                </div>
+                <div className="heritage-chart-inspect-badge">
+                  <BookOpen className="w-3.5 h-3.5 text-[#f3e5ab]" />
+                </div>
+              </div>
+            </div>
+
+            {/* Gen 07 (Right): Oval on Left, Text on Right */}
+            <div 
+              onClick={() => setSelectedGenIndex(6)}
+              onMouseEnter={() => setHoveredGen(7)}
+              onMouseLeave={() => setHoveredGen(null)}
+              className="group cursor-pointer flex flex-col sm:flex-row items-center justify-start gap-6 text-center sm:text-left transition-transform duration-300 hover:scale-[1.02]"
+            >
+              <div className="heritage-chart-oval-frame shadow-xl shrink-0">
+                <div className="heritage-chart-oval-ring">
+                  <img
+                    src={getAssetUrl(genEditorialData[6].image)}
+                    alt={genEditorialData[6].name[lang] || genEditorialData[6].name.en}
+                    className="heritage-chart-portrait-img"
+                    loading="lazy"
+                  />
+                  <div className="heritage-chart-portrait-vignette" />
+                </div>
+                <div className="heritage-chart-inspect-badge">
+                  <BookOpen className="w-3.5 h-3.5 text-[#f3e5ab]" />
+                </div>
+              </div>
+
+              <div className="space-y-1 max-w-xs">
+                <div className="text-[10px] tracking-[0.2em] font-sans font-bold text-[#8c6426] uppercase">
+                  {genEditorialData[6].tag[lang] || genEditorialData[6].tag.en}
+                </div>
+                <div className="text-[11px] tracking-[0.16em] font-sans font-semibold text-[#5a4038] uppercase">
+                  {genEditorialData[6].role[lang] || genEditorialData[6].role.en}
+                </div>
+                <h3 className="font-serif text-xl sm:text-2xl font-bold text-[#321b17] leading-tight group-hover:text-[#8c6426] transition-colors">
+                  {genEditorialData[6].name[lang] || genEditorialData[6].name.en}
+                </h3>
+                <div className="font-sans text-xs font-semibold text-[#8c6e4e] tracking-wider">
+                  {genEditorialData[6].years}
+                </div>
+                <p className="font-serif text-xs sm:text-sm text-[#6e554d] leading-relaxed pt-1">
+                  {genEditorialData[6].summary[lang] || genEditorialData[6].summary.en}
+                </p>
+              </div>
+            </div>
+          </div>
+        </div>
+
       </div>
 
       {/* =========================================================================
-          TREE BASE GROUND & FOOTER: "THE LEGACY CONTINUES"
+          HERITAGE CHART FOOTER: "ROOTED IN HERITAGE / GUIDED BY TOMORROW"
          ========================================================================= */}
-      <footer className="heritage-tree-footer relative text-center pt-8 sm:pt-14 pb-4">
-        <div className="heritage-tree-legacy-badge">
-          <span className="heritage-tree-legacy-line" />
-          <span className="heritage-tree-legacy-text">
-            {isBn ? 'অমর ঐতিহ্য প্রবাহ • ১৮৪৫ — বর্তমান' : 'THE LEGACY CONTINUES • 1845 — PRESENT'}
-          </span>
-          <span className="heritage-tree-legacy-line" />
+      <footer className="heritage-chart-footer relative text-center pt-10 sm:pt-14 pb-4 z-10">
+        <div className="inline-flex flex-col items-center space-y-2">
+          {/* Top Filigree Emblem */}
+          <div className="flex items-center justify-center gap-2 text-[#b68a32]" aria-hidden="true">
+            <span className="w-8 h-[1px] bg-[#b68a32]/60" />
+            <span className="text-sm">✦</span>
+            <span className="w-8 h-[1px] bg-[#b68a32]/60" />
+          </div>
+
+          <div className="space-y-0.5">
+            <span className="font-serif font-semibold text-xs sm:text-sm tracking-[0.26em] text-[#8c6e4e] uppercase block">
+              {isBn ? 'ঐতিহ্যে নিহিত' : 'ROOTED IN HERITAGE'}
+            </span>
+            <span className="font-serif font-semibold text-xs sm:text-sm tracking-[0.26em] text-[#8c6e4e] uppercase block">
+              {isBn ? 'আগামীর পথপ্রদর্শক' : 'GUIDED BY TOMORROW'}
+            </span>
+          </div>
+
+          {/* Bottom Flourish */}
+          <div className="pt-2" aria-hidden="true">
+            <svg width="40" height="12" viewBox="0 0 40 12" fill="none" className="text-[#b68a32]/70 mx-auto">
+              <path d="M20 0C14 0 10 8 0 8C10 8 14 12 20 12C26 12 30 8 40 8C30 8 26 0 20 0Z" fill="currentColor"/>
+            </svg>
+          </div>
         </div>
       </footer>
 
       {/* =========================================================================
-          HERITAGE CUSTODIAN DETAIL MODAL / DRAWER
+          HERITAGE CUSTODIAN DETAIL MODAL
          ========================================================================= */}
-      {selectedGen && (
+      {selectedGen && selectedEditorial && (
         <div 
           className="fixed inset-0 z-50 flex items-center justify-center p-4 sm:p-6 bg-black/70 backdrop-blur-md animate-in fade-in duration-300"
           onClick={() => setSelectedGenIndex(null)}
@@ -510,7 +602,7 @@ export default function HeritageFamilyTree({ lang = 'en', setActiveTab, onOpenLi
             className="heritage-tree-modal bg-[#fdfbf7] text-[#321b17] border border-[#d4af37]/60 rounded-3xl max-w-3xl w-full p-6 sm:p-10 shadow-2xl relative overflow-hidden max-h-[90vh] overflow-y-auto"
             onClick={(e) => e.stopPropagation()}
           >
-            {/* Antique Modal Background Accent */}
+            {/* Gold Ribbon Accent */}
             <div className="absolute top-0 left-0 right-0 h-2 bg-gradient-to-r from-[#8c6426] via-[#d4af37] to-[#8c6426]" />
             
             {/* Close Button */}
@@ -522,26 +614,24 @@ export default function HeritageFamilyTree({ lang = 'en', setActiveTab, onOpenLi
               <X className="w-5 h-5" />
             </button>
 
-            {/* Modal Body */}
+            {/* Modal Content */}
             <div className="space-y-6 pt-2">
-              {/* Header: Generation Tag & Navigation */}
               <div className="flex items-center justify-between border-b border-[#321b17]/15 pb-4">
                 <div className="flex items-center gap-2">
                   <span className="px-3 py-1 rounded-full bg-[#321b17] text-[#f4efe6] text-xs font-mono font-bold tracking-wider">
-                    GEN #{String(selectedGen.gen).padStart(2, '0')}
+                    {selectedEditorial.tag[lang] || selectedEditorial.tag.en}
                   </span>
                   <span className="text-xs uppercase tracking-widest font-semibold text-[#8c6426]">
-                    {selectedGen.generationLabel[lang] || selectedGen.generationLabel.en}
+                    {selectedEditorial.role[lang] || selectedEditorial.role.en}
                   </span>
                 </div>
 
-                {/* Gen Prev / Next Quick Controls */}
                 <div className="flex items-center gap-1.5">
                   <button
                     disabled={selectedGenIndex === 0}
                     onClick={() => setSelectedGenIndex(selectedGenIndex - 1)}
                     className="p-1.5 rounded-full border border-[#321b17]/20 disabled:opacity-30 hover:bg-[#f4efe6] transition-colors"
-                    title={isBn ? 'পূর্ববর্তী প্রজন্ম' : 'Previous Generation'}
+                    title={isBn ? 'পূর্ববর্তী' : 'Previous'}
                   >
                     <ChevronLeft className="w-4 h-4" />
                   </button>
@@ -549,40 +639,39 @@ export default function HeritageFamilyTree({ lang = 'en', setActiveTab, onOpenLi
                     disabled={selectedGenIndex === familyTreeData.length - 1}
                     onClick={() => setSelectedGenIndex(selectedGenIndex + 1)}
                     className="p-1.5 rounded-full border border-[#321b17]/20 disabled:opacity-30 hover:bg-[#f4efe6] transition-colors"
-                    title={isBn ? 'পরবর্তী প্রজন্ম' : 'Next Generation'}
+                    title={isBn ? 'পরবর্তী' : 'Next'}
                   >
                     <ChevronRight className="w-4 h-4" />
                   </button>
                 </div>
               </div>
 
-              {/* Main Content Layout: Portrait & Narrative */}
               <div className="grid grid-cols-1 sm:grid-cols-12 gap-6 items-start">
-                {/* Left Column: Portrait */}
                 <div className="sm:col-span-5 flex flex-col items-center">
-                  <div className="heritage-tree-modal-portrait">
-                    <img
-                      src={getAssetUrl(selectedGen.image)}
-                      alt={selectedGen.name[lang] || selectedGen.name.en}
-                      className="w-full h-full object-cover"
-                    />
+                  <div className="heritage-chart-oval-frame heritage-chart-oval-frame--lg shadow-2xl">
+                    <div className="heritage-chart-oval-ring">
+                      <img
+                        src={getAssetUrl(selectedEditorial.image)}
+                        alt={selectedEditorial.name[lang] || selectedEditorial.name.en}
+                        className="heritage-chart-portrait-img"
+                      />
+                    </div>
                   </div>
                   <div className="mt-3 text-center">
                     <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-[#f4efe6] border border-[#321b17]/20 text-xs font-mono text-[#321b17]">
                       <Calendar className="w-3.5 h-3.5 text-[#8c6426]" />
-                      <span>{selectedGen.years}</span>
+                      <span>{selectedEditorial.years}</span>
                     </span>
                   </div>
                 </div>
 
-                {/* Right Column: Name, Bio, Key Contributions */}
                 <div className="sm:col-span-7 space-y-4">
                   <div>
                     <h3 className="font-serif text-2xl sm:text-3xl font-bold text-[#321b17] leading-tight">
-                      {selectedGen.name[lang] || selectedGen.name.en}
+                      {selectedEditorial.name[lang] || selectedEditorial.name.en}
                     </h3>
                     <p className="text-xs uppercase tracking-wider text-[#8c6426] font-semibold mt-1">
-                      {selectedGen.title[lang] || selectedGen.title.en}
+                      {selectedEditorial.role[lang] || selectedEditorial.role.en}
                     </p>
                   </div>
 
@@ -590,11 +679,10 @@ export default function HeritageFamilyTree({ lang = 'en', setActiveTab, onOpenLi
                     {selectedGen.bio[lang] || selectedGen.bio.en}
                   </p>
 
-                  {/* Contributions Checklist */}
                   <div className="space-y-2">
                     <h4 className="text-xs uppercase tracking-widest font-semibold text-[#321b17] flex items-center gap-1.5">
                       <Sparkles className="w-3.5 h-3.5 text-[#d4af37]" />
-                      <span>{isBn ? 'ঐতিহাসিক অবদান ও কীর্তি:' : 'Key Heritage Contributions:'}</span>
+                      <span>{isBn ? 'ঐতিহাসিক অবদান ও ভূমিকা:' : 'Key Heritage Contributions:'}</span>
                     </h4>
                     <ul className="space-y-2">
                       {(selectedGen.contributions[lang] || selectedGen.contributions.en).map((item, i) => (
@@ -608,10 +696,9 @@ export default function HeritageFamilyTree({ lang = 'en', setActiveTab, onOpenLi
                 </div>
               </div>
 
-              {/* Modal Footer Actions */}
               <div className="pt-4 border-t border-[#321b17]/15 flex flex-wrap items-center justify-between gap-3">
                 <div className="text-xs text-muted-foreground font-serif italic">
-                  {isBn ? 'খেলাৎ ভবন মহাফেজখানা ও ট্রাস্ট দলিল' : 'Khelat Bhawan Heritage Archives & Trust Records'}
+                  {isBn ? 'খেলাৎ ভবন ঐতিহাসিক মহাফেজখানা' : 'Khelat Bhawan Heritage Archives'}
                 </div>
 
                 <div className="flex items-center gap-3">
