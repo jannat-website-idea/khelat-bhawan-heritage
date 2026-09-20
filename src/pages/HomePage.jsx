@@ -129,7 +129,7 @@ export default function HomePage({ lang = 'en', setActiveTab, onOpenBooking, onO
 
       {/* Item 3: Three Cultural Trust Cards with Full-Screen Span, Rounded Corners and Deep Luxury Shadows */}
       <section className="heritage-trusts-fullscreen heritage-pattern-field">
-        <div className="max-w-[1550px] w-full mx-auto flex flex-col justify-between h-full">
+        <div className="max-w-[1650px] w-full mx-auto flex flex-col justify-between h-full">
           <div className="heritage-heading-row">
             <div>
               <p className="heritage-kicker">{isBn ? 'তত্ত্বাবধান' : 'Custodianship'}</p>
