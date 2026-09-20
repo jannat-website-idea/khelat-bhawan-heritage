@@ -65,30 +65,57 @@ html { scroll-behavior: auto; }
   display: inline-flex; 
   align-items: center; 
   justify-content: center; 
-  gap: 22px; 
-  min-height: 56px; 
-  padding: 16px 36px; 
-  border: 1px solid #d8ae62; 
-  border-radius: 4px; 
-  color: #f3eedb; 
-  background: rgba(20, 15, 14, 0.35); 
-  backdrop-filter: blur(8px);
-  -webkit-backdrop-filter: blur(8px);
-  font-size: 12px; 
-  font-weight: 500; 
-  letter-spacing: .14em; 
+  gap: 20px; 
+  min-height: 58px; 
+  padding: 16px 42px; 
+  border: 1.5px solid rgba(216, 174, 98, 0.7); 
+  border-radius: 9999px; 
+  color: #fffaf0; 
+  background: rgba(18, 10, 12, 0.65); 
+  backdrop-filter: blur(14px);
+  -webkit-backdrop-filter: blur(14px);
+  font-family: var(--font-body);
+  font-size: 11.5px; 
+  font-weight: 600; 
+  letter-spacing: .22em; 
   text-transform: uppercase; 
-  transition: all 0.7s cubic-bezier(0.22, 1, 0.36, 1);
-  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.25);
+  transition: all 0.85s cubic-bezier(0.16, 1, 0.3, 1);
+  box-shadow: 0 8px 28px rgba(0, 0, 0, 0.45), inset 0 0 14px rgba(216, 174, 98, 0.12);
   position: relative;
   overflow: hidden;
+  cursor: pointer;
 }
+
+.royal-outline-button::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.25), transparent);
+  transition: left 1.1s cubic-bezier(0.16, 1, 0.3, 1);
+  pointer-events: none;
+}
+
+.royal-outline-button:hover::before {
+  left: 100%;
+}
+
+.royal-outline-button .royal-btn-arrow {
+  transition: transform 0.85s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
 .royal-outline-button:hover { 
-  background: #d8ae62; 
-  color: #1a0b0e; 
-  border-color: #f3eedb;
-  transform: translateY(-2px);
-  box-shadow: 0 8px 30px rgba(216, 174, 98, 0.4);
+  background: linear-gradient(135deg, #d8ae62 0%, #ecd69e 50%, #c99a4a 100%); 
+  color: #14070a; 
+  border-color: #fff9ee;
+  transform: translateY(-4px) scale(1.025);
+  box-shadow: 0 16px 44px rgba(216, 174, 98, 0.55), 0 0 24px rgba(216, 174, 98, 0.35);
+}
+
+.royal-outline-button:hover .royal-btn-arrow {
+  transform: translateX(8px);
 }
 .royal-hero__bottom { position: absolute; z-index: 4; bottom: 26px; left: 4%; right: 4%; display: grid; grid-template-columns: 1fr 1fr 1fr; align-items: end; font-size: 11px; letter-spacing: .14em; text-transform: uppercase; color: #e1d7b9; }
 .royal-scroll { justify-self: center; display: grid; justify-items: center; gap: 14px; font-size: 12px; font-style: italic; letter-spacing: .14em; text-transform: uppercase; }
