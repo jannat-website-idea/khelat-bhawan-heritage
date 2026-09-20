@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useCallback } from 'react';
+import React, { useState, useEffect } from 'react';
 import { getAssetUrl } from '../utils/assetHelper';
 import { photographyGalleryData, filmsGalleryData } from '../data/galleryData';
 import CurvedGalleryCarousel from '../components/CurvedGalleryCarousel';
@@ -6,15 +6,11 @@ import {
   X, 
   ChevronLeft, 
   ChevronRight, 
-  Play, 
-  Film, 
   Camera, 
-  Calendar, 
-  User, 
-  Maximize2 
+  Film
 } from 'lucide-react';
 
-export default function GalleryPage({ lang = 'en', onOpenLightbox }) {
+export default function GalleryPage({ lang = 'en' }) {
   const isBn = lang === 'bn';
 
   // Fullscreen State for Photography Lightbox
@@ -55,58 +51,36 @@ export default function GalleryPage({ lang = 'en', onOpenLightbox }) {
   const activeFilm = selectedFilmIndex !== null ? filmsGalleryData[selectedFilmIndex] : null;
 
   return (
-    <main className="gallery-immersive-page pt-28 sm:pt-36 pb-24 min-h-screen text-[#f4efe6] bg-[#120a08] relative overflow-hidden">
-      {/* Deep Atmospheric Architectural Background */}
+    <main className="gallery-immersive-page pt-24 sm:pt-28 pb-16 min-h-screen text-[#f4efe6] bg-[#120a08] relative overflow-hidden">
+      {/* Full-bleed Atmospheric Heritage Background */}
       <div className="gallery-immersive-backdrop" aria-hidden="true">
         <div className="gallery-backdrop-watermark" />
         <div className="gallery-backdrop-vignette" />
         <div className="gallery-backdrop-radial-glow" />
       </div>
 
-      <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div className="relative z-10 w-full">
         {/* =========================================================================
-            PAGE INTRO (Minimal, refined, elegant)
-           ========================================================================= */}
-        <header className="text-center max-w-3xl mx-auto pt-4 sm:pt-8 pb-10 sm:pb-16 space-y-3">
-          <div className="inline-flex items-center justify-center gap-3 text-[#d4af37]" aria-hidden="true">
-            <span className="w-10 h-[1px] bg-[#d4af37]/60" />
-            <span className="text-[10px] sm:text-xs font-mono font-bold tracking-[0.28em] uppercase text-[#d4af37]">
-              {isBn ? 'গ্যালারি' : 'GALLERY'}
-            </span>
-            <span className="w-10 h-[1px] bg-[#d4af37]/60" />
-          </div>
-
-          <h1 className="font-serif text-3xl sm:text-5xl lg:text-6xl font-normal text-[#fdfbf7] tracking-tight">
-            {isBn ? 'সময়ের পরিক্রমায় এক অমর যাত্রা' : 'A Journey Through Time'}
-          </h1>
-
-          <p className="font-serif italic text-sm sm:text-base lg:text-lg text-[#a89083] leading-relaxed">
-            {isBn 
-              ? 'খেলাৎ ভবনের জীবন্ত ঐতিহ্য, ঐতিহাসিক স্থান ও সাংস্কৃতিক স্মৃতির নির্বাচিত সংকলন।'
-              : 'Spaces, stories and moments from the living heritage of Khelat Bhawan.'}
-          </p>
-        </header>
-
-        {/* =========================================================================
-            SECTION 01 — PHOTOGRAPHY (Immersive 3D Curved Gallery)
+            SECTION 01 — PHOTOGRAPHY (Full-bleed 3D Curved Scrollable Gallery)
            ========================================================================= */}
         <section 
-          className="gallery-section relative pt-4 pb-16 sm:pb-24 border-b border-[#d4af37]/20"
+          className="gallery-section relative pt-2 pb-14 sm:pb-20 border-b border-[#d4af37]/20"
           aria-label={isBn ? 'চিত্রশালা' : 'Photography Gallery'}
         >
-          <div className="flex items-center justify-between mb-2 px-2 sm:px-6">
-            <div className="flex items-center gap-2">
-              <Camera className="w-4 h-4 text-[#d4af37]" />
-              <span className="text-xs font-mono font-bold tracking-[0.24em] uppercase text-[#d4af37]">
+          {/* Section Sub-header */}
+          <div className="max-w-7xl mx-auto px-6 sm:px-12 flex items-center justify-between mb-3">
+            <div className="flex items-center gap-2 text-[#d4af37]">
+              <Camera className="w-4 h-4" />
+              <span className="text-xs font-mono font-bold tracking-[0.26em] uppercase">
                 {isBn ? '০১ — আলোকচিত্র সংকলন' : '01 — PHOTOGRAPHY'}
               </span>
             </div>
             <span className="text-[11px] font-serif italic text-[#a89083]">
-              {isBn ? 'প্রাঙ্গণ ও স্থাপত্য' : 'Architecture & Heritage Spaces'}
+              {isBn ? 'ড্র্যাগ বা স্ক্রোল করুন' : 'Drag or scroll horizontally'}
             </span>
           </div>
 
-          {/* Curved 3D Photography Carousel */}
+          {/* Full-width 3D Curved Photography Carousel */}
           <CurvedGalleryCarousel
             items={photographyGalleryData}
             mediaType="image"
@@ -116,30 +90,26 @@ export default function GalleryPage({ lang = 'en', onOpenLightbox }) {
         </section>
 
         {/* =========================================================================
-            SECTION 02 — FILMS / VIDEO GALLERY (Immersive 3D Curved Video Gallery)
+            SECTION 02 — FILMS / VIDEO GALLERY (Full-bleed 3D Curved Scrollable Gallery)
            ========================================================================= */}
         <section 
-          className="gallery-section relative pt-16 sm:pt-28 pb-12"
+          className="gallery-section relative pt-14 sm:pt-20 pb-8"
           aria-label={isBn ? 'ভিডিও ও চলচ্চিত্র' : 'Films and Video Gallery'}
         >
-          <div className="text-center max-w-2xl mx-auto mb-6 sm:mb-10 space-y-2">
-            <div className="inline-flex items-center justify-center gap-2">
-              <Film className="w-4 h-4 text-[#d4af37]" />
-              <span className="text-xs font-mono font-bold tracking-[0.24em] uppercase text-[#d4af37]">
+          {/* Section Sub-header */}
+          <div className="max-w-7xl mx-auto px-6 sm:px-12 flex items-center justify-between mb-3">
+            <div className="flex items-center gap-2 text-[#d4af37]">
+              <Film className="w-4 h-4" />
+              <span className="text-xs font-mono font-bold tracking-[0.26em] uppercase">
                 {isBn ? '০২ — চলচ্চিত্র ও প্রামাণ্যচিত্র' : '02 — FILMS'}
               </span>
             </div>
-            <h2 className="font-serif text-2xl sm:text-4xl font-normal text-[#fdfbf7] tracking-tight">
-              {isBn ? 'চলচ্চিত্রে জীবন্ত ঐতিহ্য' : 'Stories in Motion'}
-            </h2>
-            <p className="font-serif italic text-xs sm:text-sm text-[#a89083]">
-              {isBn 
-                ? 'ভিডিও পরিভ্রমণ ও সিনেমাটিক প্রামাণ্যচিত্রের মাধ্যমে ঐতিহ্যের জীবন্ত রূপ প্রত্যক্ষ করুন।'
-                : 'Cinematic archives and documentary walkthroughs capturing the soul of Khelat Bhawan.'}
-            </p>
+            <span className="text-[11px] font-serif italic text-[#a89083]">
+              {isBn ? 'ভিডিও দেখতে ক্লিক করুন' : 'Click active card to play'}
+            </span>
           </div>
 
-          {/* Curved 3D Films Carousel */}
+          {/* Full-width 3D Curved Films Carousel */}
           <CurvedGalleryCarousel
             items={filmsGalleryData}
             mediaType="video"
@@ -149,9 +119,9 @@ export default function GalleryPage({ lang = 'en', onOpenLightbox }) {
         </section>
 
         {/* =========================================================================
-            CORNER EDITORIAL BADGES (Matching visual reference)
+            CORNER EDITORIAL BADGES
            ========================================================================= */}
-        <footer className="pt-16 sm:pt-24 pb-6 flex items-center justify-between text-[10px] sm:text-xs tracking-[0.24em] font-serif uppercase text-[#8c6e4e]/70 border-t border-[#d4af37]/15">
+        <footer className="max-w-7xl mx-auto px-6 sm:px-12 pt-14 pb-4 flex items-center justify-between text-[10px] sm:text-xs tracking-[0.24em] font-serif uppercase text-[#8c6e4e]/70 border-t border-[#d4af37]/15">
           <div className="space-y-0.5 text-left">
             <div>A HERITAGE</div>
             <div>THAT LIVES ON</div>
@@ -178,7 +148,7 @@ export default function GalleryPage({ lang = 'en', onOpenLightbox }) {
           role="dialog"
           aria-modal="true"
         >
-          {/* Top Bar: Close Button, Counter, Category */}
+          {/* Top Bar */}
           <div className="absolute top-0 left-0 right-0 p-4 sm:p-6 flex items-center justify-between text-[#f4efe6] z-20">
             <div className="flex items-center gap-3">
               <span className="font-mono text-xs font-bold tracking-widest text-[#d4af37]">
