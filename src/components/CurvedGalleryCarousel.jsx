@@ -58,23 +58,31 @@ export default function CurvedGalleryCarousel({
     return () => window.removeEventListener('keydown', handleKeyDown);
   }, [handlePrev, handleNext]);
 
-  // Wheel / Trackpad horizontal swipe
-  const handleWheel = (e) => {
-    if (wheelLockRef.current) return;
-    const delta = Math.abs(e.deltaX) > Math.abs(e.deltaY) ? e.deltaX : (e.shiftKey ? e.deltaY : 0);
-    
-    if (Math.abs(delta) > 20) {
-      wheelLockRef.current = true;
-      if (delta > 0) {
-        handleNext();
-      } else {
-        handlePrev();
+  // Native wheel / trackpad horizontal scrolling with smooth debounce
+  useEffect(() => {
+    const el = containerRef.current;
+    if (!el) return;
+
+    const onWheelScroll = (e) => {
+      if (wheelLockRef.current) return;
+      const delta = Math.abs(e.deltaX) > Math.abs(e.deltaY) ? e.deltaX : (e.shiftKey ? e.deltaY : (Math.abs(e.deltaY) > 40 ? e.deltaY : 0));
+      
+      if (Math.abs(delta) > 15) {
+        wheelLockRef.current = true;
+        if (delta > 0) {
+          handleNext();
+        } else {
+          handlePrev();
+        }
+        setTimeout(() => {
+          wheelLockRef.current = false;
+        }, 220);
       }
-      setTimeout(() => {
-        wheelLockRef.current = false;
-      }, 250);
-    }
-  };
+    };
+
+    el.addEventListener('wheel', onWheelScroll, { passive: true });
+    return () => el.removeEventListener('wheel', onWheelScroll);
+  }, [handleNext, handlePrev]);
 
   // Pointer Drag handling (Mouse & Touch unified)
   const handlePointerDown = (e) => {
@@ -99,9 +107,9 @@ export default function CurvedGalleryCarousel({
       e.currentTarget.releasePointerCapture(e.pointerId);
     } catch (err) {}
 
-    if (currentDeltaX > 35) {
+    if (currentDeltaX > 30) {
       handlePrev();
-    } else if (currentDeltaX < -35) {
+    } else if (currentDeltaX < -30) {
       handleNext();
     }
     setCurrentDeltaX(0);
@@ -124,7 +132,6 @@ export default function CurvedGalleryCarousel({
     const dragOffsetPx = isDragging ? currentDeltaX * 0.4 : 0;
 
     if (isMobile) {
-      // Mobile 3D Layout (large center with partial sides)
       if (offset === 0) {
         return {
           transform: `translateX(${dragOffsetPx}px) translateZ(0px) rotateY(${dragOffsetPx * -0.05}deg) scale(1)`,
@@ -135,7 +142,7 @@ export default function CurvedGalleryCarousel({
       }
       if (offset === 1) {
         return {
-          transform: `translateX(calc(75% + ${dragOffsetPx}px)) translateZ(-100px) rotateY(-22deg) scale(0.82)`,
+          transform: `translateX(calc(72% + ${dragOffsetPx}px)) translateZ(-90px) rotateY(-22deg) scale(0.82)`,
           zIndex: 20,
           opacity: 0.65,
           filter: 'brightness(0.7)'
@@ -143,7 +150,7 @@ export default function CurvedGalleryCarousel({
       }
       if (offset === -1) {
         return {
-          transform: `translateX(calc(-75% + ${dragOffsetPx}px)) translateZ(-100px) rotateY(22deg) scale(0.82)`,
+          transform: `translateX(calc(-72% + ${dragOffsetPx}px)) translateZ(-90px) rotateY(22deg) scale(0.82)`,
           zIndex: 20,
           opacity: 0.65,
           filter: 'brightness(0.7)'
@@ -158,7 +165,7 @@ export default function CurvedGalleryCarousel({
       };
     }
 
-    // Fullscreen Grand Desktop 3D Panoramic Curve (Matching Reference Mockup)
+    // Fullscreen Grand Desktop 3D Panoramic Curve (Matching Reference Image)
     if (offset === 0) {
       return {
         transform: `translateX(${dragOffsetPx}px) translateZ(0px) rotateY(${dragOffsetPx * -0.04}deg) scale(1)`,
@@ -169,7 +176,7 @@ export default function CurvedGalleryCarousel({
     }
     if (offset === 1) {
       return {
-        transform: `translateX(calc(clamp(340px, 35vw, 480px) + ${dragOffsetPx}px)) translateZ(-160px) rotateY(-25deg) scale(0.85)`,
+        transform: `translateX(calc(clamp(340px, 35vw, 480px) + ${dragOffsetPx}px)) translateZ(-160px) rotateY(-24deg) scale(0.84)`,
         zIndex: 20,
         opacity: 0.85,
         filter: 'brightness(0.8) drop-shadow(0 15px 35px rgba(0,0,0,0.75))'
@@ -177,7 +184,7 @@ export default function CurvedGalleryCarousel({
     }
     if (offset === -1) {
       return {
-        transform: `translateX(calc(clamp(-480px, -35vw, -340px) + ${dragOffsetPx}px)) translateZ(-160px) rotateY(25deg) scale(0.85)`,
+        transform: `translateX(calc(clamp(-480px, -35vw, -340px) + ${dragOffsetPx}px)) translateZ(-160px) rotateY(24deg) scale(0.84)`,
         zIndex: 20,
         opacity: 0.85,
         filter: 'brightness(0.8) drop-shadow(0 15px 35px rgba(0,0,0,0.75))'
@@ -185,7 +192,7 @@ export default function CurvedGalleryCarousel({
     }
     if (offset === 2) {
       return {
-        transform: `translateX(calc(clamp(640px, 64vw, 880px) + ${dragOffsetPx}px)) translateZ(-320px) rotateY(-42deg) scale(0.72)`,
+        transform: `translateX(calc(clamp(640px, 64vw, 880px) + ${dragOffsetPx}px)) translateZ(-320px) rotateY(-40deg) scale(0.72)`,
         zIndex: 10,
         opacity: 0.55,
         filter: 'brightness(0.6) drop-shadow(0 10px 20px rgba(0,0,0,0.6))'
@@ -193,14 +200,14 @@ export default function CurvedGalleryCarousel({
     }
     if (offset === -2) {
       return {
-        transform: `translateX(calc(clamp(-880px, -64vw, -640px) + ${dragOffsetPx}px)) translateZ(-320px) rotateY(42deg) scale(0.72)`,
+        transform: `translateX(calc(clamp(-880px, -64vw, -640px) + ${dragOffsetPx}px)) translateZ(-320px) rotateY(40deg) scale(0.72)`,
         zIndex: 10,
         opacity: 0.55,
         filter: 'brightness(0.6) drop-shadow(0 10px 20px rgba(0,0,0,0.6))'
       };
     }
 
-    // Virtualized
+    // Virtualized out
     return {
       transform: `translateX(${offset * 500}px) translateZ(-500px)`,
       zIndex: 1,
@@ -213,7 +220,6 @@ export default function CurvedGalleryCarousel({
   return (
     <div 
       ref={containerRef}
-      onWheel={handleWheel}
       onPointerDown={handlePointerDown}
       onPointerMove={handlePointerMove}
       onPointerUp={handlePointerUp}
@@ -290,21 +296,28 @@ export default function CurvedGalleryCarousel({
                 )}
               </div>
 
-              {/* ================= CARD LABEL UNDER MEDIA ================= */}
+              {/* ================= CARD LABEL UNDER MEDIA (Exact Reference Layout) ================= */}
               <div className="curved-gallery-card-meta text-center mt-3 sm:mt-4 space-y-0.5 max-w-[320px]">
-                <div className="text-[11px] sm:text-xs font-mono font-bold tracking-widest text-[#8c6426] uppercase">
-                  {String(index + 1).padStart(2, '0')}
-                </div>
-                
                 {isCurrentActive ? (
-                  /* Center Active Item Title */
-                  <h3 className="font-serif text-sm sm:text-base lg:text-lg font-bold text-[#f4efe6] uppercase tracking-[0.16em] leading-tight">
-                    {title}
-                  </h3>
+                  /* Center Active Item Title & Number */
+                  <div className="space-y-1">
+                    <div className="text-[11px] sm:text-xs font-mono font-bold tracking-widest text-[#d4af37] uppercase">
+                      {String(index + 1).padStart(2, '0')}
+                    </div>
+                    <h3 className="font-serif text-sm sm:text-base lg:text-lg font-medium text-[#f4efe6] uppercase tracking-[0.18em] leading-tight">
+                      {title}
+                    </h3>
+                    <div className="w-8 h-[1px] bg-[#d4af37]/50 mx-auto mt-1" />
+                  </div>
                 ) : (
-                  /* Side Item Label */
-                  <div className="text-[10px] sm:text-xs font-serif uppercase tracking-[0.14em] text-[#a89083]/80">
-                    {category}
+                  /* Side Inactive Item Label */
+                  <div className="space-y-0.5">
+                    <div className="text-[10px] font-mono font-bold text-[#8c6426]">
+                      {String(index + 1).padStart(2, '0')}
+                    </div>
+                    <div className="text-[10px] sm:text-xs font-serif uppercase tracking-[0.14em] text-[#a89083]/80">
+                      {category}
+                    </div>
                   </div>
                 )}
               </div>
