@@ -177,15 +177,15 @@ export default function TrusteesPage({ lang = 'en', setActiveTab, onOpenLightbox
         </div>
 
         {/* Trustee Lineage Section */}
-        <section className="my-24" aria-labelledby="trustee-lineage-heading">
-          <div className="text-center max-w-2xl mx-auto mb-12">
-            <span className="text-[11px] uppercase tracking-[0.25em] text-primary font-sans font-semibold">
+        <section className="trustee-lineage-section my-24" aria-labelledby="trustee-lineage-heading">
+          <div className="trustee-lineage-section__header text-center max-w-3xl mx-auto mb-12">
+            <span className="text-[11px] uppercase tracking-[0.25em] font-sans font-semibold">
               {isBn ? 'আনুষ্ঠানিক তত্ত্বাবধান' : 'Formal Custodianship'}
             </span>
             <h2 id="trustee-lineage-heading" className="font-serif text-3xl md:text-5xl font-bold mt-2">
               {isBn ? 'ট্রাস্টি সময়রেখা ও ধারাবাহিকতা' : 'Trustee Lineage & Continuity'}
             </h2>
-            <p className="text-xs sm:text-sm text-muted-foreground mt-3 font-sans leading-relaxed">
+            <p className="text-sm sm:text-base mt-3 font-sans leading-relaxed">
               {isBn 
                 ? '১৯২০ থেকে বর্তমান পর্যন্ত খেলাৎ ভবনের ট্রাস্ট বোর্ডের প্রাতিষ্ঠানিক দায়িত্বভার।' 
                 : 'Generational stewardship safeguarding spiritual, architectural, and musical heritage since 1920.'}
