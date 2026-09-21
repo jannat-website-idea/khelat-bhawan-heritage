@@ -1,12 +1,13 @@
-import React, { useState, useEffect, useCallback } from 'react';
+import React, { useState, useEffect, useCallback, useMemo } from 'react';
 import { createPortal } from 'react-dom';
 import { getAssetUrl } from '../utils/assetHelper';
 import { photographyGalleryData, filmsGalleryData } from '../data/galleryData';
-import CurvedGalleryCarousel from '../components/CurvedGalleryCarousel';
 import { 
   X, 
   ChevronLeft, 
-  ChevronRight
+  ChevronRight,
+  Play,
+  Maximize2
 } from 'lucide-react';
 
 export default function GalleryPage({ lang = 'en' }) {
@@ -18,6 +19,34 @@ export default function GalleryPage({ lang = 'en' }) {
 
   // Cinematic Theater State for Film Player
   const [selectedFilmIndex, setSelectedFilmIndex] = useState(null);
+  const [activeFilter, setActiveFilter] = useState('all');
+
+  const galleryItems = useMemo(() => {
+    const photos = photographyGalleryData.map((item, index) => ({
+      ...item,
+      mediaType: 'image',
+      sourceIndex: index,
+      preview: item.src
+    }));
+    const films = filmsGalleryData.map((item, index) => ({
+      ...item,
+      mediaType: 'video',
+      sourceIndex: index,
+      preview: item.poster
+    }));
+    if (activeFilter === 'photography') return photos;
+    if (activeFilter === 'films') return films;
+    return [...photos, ...films];
+  }, [activeFilter]);
+
+  const openGalleryItem = (item) => {
+    if (item.mediaType === 'video') {
+      setSelectedFilmIndex(item.sourceIndex);
+      return;
+    }
+    setIsPhotoClosing(false);
+    setSelectedPhotoIndex(item.sourceIndex);
+  };
 
   const closePhoto = useCallback(() => {
     if (selectedPhotoIndex === null || isPhotoClosing) return;
@@ -67,25 +96,23 @@ export default function GalleryPage({ lang = 'en' }) {
   const activeFilm = selectedFilmIndex !== null ? filmsGalleryData[selectedFilmIndex] : null;
 
   return (
-    <main className="gallery-immersive-page pt-20 sm:pt-24 pb-16 min-h-screen text-[#f4efe6] bg-[#120a08] relative overflow-x-clip">
+    <main className="gallery-mosaic-page pt-20 sm:pt-24 min-h-screen text-[#f4efe6] relative overflow-x-clip">
       {/* Full-bleed Atmospheric Heritage Background */}
-      <div className="gallery-immersive-backdrop" aria-hidden="true">
-        <div className="gallery-backdrop-watermark" />
-        <div className="gallery-backdrop-vignette" />
-        <div className="gallery-backdrop-radial-glow" />
+      <div className="gallery-mosaic-backdrop" aria-hidden="true">
+        <div className="gallery-mosaic-backdrop__glow" />
       </div>
 
       <div className="relative z-10 w-full">
         {/* =========================================================================
             EDITORIAL HEADER (Matching Reference Mockup)
            ========================================================================= */}
-        <header className="text-center pt-6 sm:pt-10 pb-4 sm:pb-8 px-6 max-w-4xl mx-auto">
+        <header className="gallery-mosaic-header text-center pt-8 sm:pt-12 pb-7 sm:pb-10 px-6 max-w-4xl mx-auto">
           <div className="inline-flex items-center justify-center gap-3 text-xs sm:text-sm font-mono tracking-[0.35em] text-[#c99a4a] uppercase">
             <span className="opacity-60">—</span>
             <span>{isBn ? 'চিত্রশালা' : 'GALLERY'}</span>
             <span className="opacity-60">—</span>
           </div>
-          <h1 className="font-serif italic text-3xl sm:text-5xl lg:text-6xl text-[#fdfbf7] font-normal tracking-wide mt-3 mb-2">
+          <h1 className="font-serif italic text-4xl sm:text-5xl lg:text-6xl text-[#fdfbf7] font-normal tracking-wide mt-3 mb-3">
             {isBn ? 'সময়ের অনন্ত পরিভ্রমণ' : 'A Journey Through Time'}
           </h1>
           <p className="font-serif text-xs sm:text-sm lg:text-base text-[#c7b299] max-w-xl mx-auto tracking-normal">
@@ -93,66 +120,70 @@ export default function GalleryPage({ lang = 'en' }) {
           </p>
         </header>
 
-        {/* =========================================================================
-            SECTION 01 — PHOTOGRAPHY (Full-bleed 3D Curved Scrollable Gallery)
-           ========================================================================= */}
-        <section 
-          className="gallery-section relative pt-2 pb-14 sm:pb-20 border-b border-[#c99a4a]/20"
-          aria-label={isBn ? 'চিত্রশালা' : 'Photography Gallery'}
-        >
-          {/* Full-width 3D Curved Photography Carousel */}
-          <CurvedGalleryCarousel
-            items={photographyGalleryData}
-            mediaType="image"
-            lang={lang}
-            initialIndex={2}
-            scrollDriven
-            onSelectMedia={(item, index) => {
-              setIsPhotoClosing(false);
-              setSelectedPhotoIndex(index);
-            }}
-          />
-        </section>
-
-        {/* =========================================================================
-            SECTION 02 — FILMS / VIDEO GALLERY (Full-bleed 3D Curved Scrollable Gallery)
-           ========================================================================= */}
-        <section 
-          className="gallery-section relative pt-14 sm:pt-20 pb-8"
-          aria-label={isBn ? 'ভিডিও ও চলচ্চিত্র' : 'Films and Video Gallery'}
-        >
-          <div className="gallery-films-heading text-center px-6 mb-8 sm:mb-12">
-            <span className="text-[11px] sm:text-xs tracking-[0.28em] uppercase text-[#c99a4a]">02 — FILMS</span>
-            <h2 className="font-serif italic text-3xl sm:text-5xl font-normal text-[#f4efe6] mt-3">
-              {isBn ? 'চলমান গল্প' : 'Stories in Motion'}
-            </h2>
+        <section className="gallery-mosaic-shell" aria-label={isBn ? 'চিত্রশালা' : 'Khelat Bhawan media gallery'}>
+          <div className="gallery-mosaic-filters" role="group" aria-label={isBn ? 'গ্যালারি বিভাগ' : 'Gallery filters'}>
+            {[
+              ['all', isBn ? 'সব' : 'All stories'],
+              ['photography', isBn ? 'আলোকচিত্র' : 'Photography'],
+              ['films', isBn ? 'চলচ্চিত্র' : 'Films']
+            ].map(([value, label]) => (
+              <button
+                key={value}
+                type="button"
+                onClick={() => setActiveFilter(value)}
+                className={`gallery-mosaic-filter ${activeFilter === value ? 'is-active' : ''}`}
+                aria-pressed={activeFilter === value}
+              >
+                {label}
+                <span>{value === 'all' ? photographyGalleryData.length + filmsGalleryData.length : value === 'photography' ? photographyGalleryData.length : filmsGalleryData.length}</span>
+              </button>
+            ))}
           </div>
-          {/* Full-width 3D Curved Films Carousel */}
-          <CurvedGalleryCarousel
-            items={filmsGalleryData}
-            mediaType="video"
-            lang={lang}
-            initialIndex={0}
-            onSelectMedia={(item, index) => setSelectedFilmIndex(index)}
-          />
+
+          <div className={`gallery-mosaic-grid gallery-mosaic-grid--${activeFilter}`}>
+            {galleryItems.map((item, index) => {
+              const title = typeof item.title === 'object' ? (item.title[lang] || item.title.en) : item.title;
+              const label = item.shortLabel
+                ? (typeof item.shortLabel === 'object' ? (item.shortLabel[lang] || item.shortLabel.en) : item.shortLabel)
+                : title;
+              return (
+                <button
+                  type="button"
+                  key={`${item.mediaType}-${item.id || index}`}
+                  className="gallery-mosaic-tile group"
+                  onClick={() => openGalleryItem(item)}
+                  aria-label={`${item.mediaType === 'video' ? 'Play' : 'Open'} ${title}`}
+                  style={{ '--tile-index': index }}
+                >
+                  <img src={getAssetUrl(item.preview)} alt={title} loading={index < 8 ? 'eager' : 'lazy'} />
+                  <span className="gallery-mosaic-tile__shade" aria-hidden="true" />
+                  <span className="gallery-mosaic-tile__meta">
+                    <span>{String(index + 1).padStart(2, '0')}</span>
+                    <strong>{label}</strong>
+                  </span>
+                  <span className="gallery-mosaic-tile__action" aria-hidden="true">
+                    {item.mediaType === 'video' ? <Play className="w-4 h-4 fill-current" /> : <Maximize2 className="w-4 h-4" />}
+                  </span>
+                </button>
+              );
+            })}
+          </div>
         </section>
 
         {/* =========================================================================
             CORNER EDITORIAL BADGES (Exact Reference Layout)
            ========================================================================= */}
-        <footer className="max-w-7xl mx-auto px-6 sm:px-12 pt-16 pb-6 flex items-center justify-between text-[10px] sm:text-xs tracking-[0.24em] font-serif uppercase text-[#8c6e4e]/70 border-t border-[#c99a4a]/15">
+        <footer className="gallery-mosaic-footer max-w-[1500px] mx-auto px-6 sm:px-10 pt-10 pb-10 flex items-center justify-between text-[10px] sm:text-xs tracking-[0.2em] font-serif uppercase text-[#bda88a]">
           <div className="space-y-0.5 text-left">
-            <div>A HERITAGE</div>
-            <div>THAT LIVES ON</div>
+            <div>CONTACT US</div>
           </div>
 
           <div className="text-center">
-            <span className="text-[#c99a4a]">✦</span>
+            <span className="text-[#c99a4a]">KHELAT BHAWAN · 1845</span>
           </div>
 
           <div className="space-y-0.5 text-right">
-            <div>KOLKATA</div>
-            <div>INDIA</div>
+            <div>{isBn ? 'যাত্রা শুরু হোক' : "LET'S BEGIN"}</div>
           </div>
         </footer>
       </div>
