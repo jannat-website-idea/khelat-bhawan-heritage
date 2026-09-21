@@ -932,6 +932,50 @@
 .royal-family-tree__foundation i { font-style: normal; }
 
 /* Trustee Lineage: Panoramic Royal Decree Scroll */
+.trustee-cards {
+  position: relative;
+  padding: clamp(1rem, 2.4vw, 2.25rem);
+  border: 1px solid rgba(116, 45, 48, .13);
+  border-radius: clamp(26px, 3vw, 44px);
+  background:
+    radial-gradient(circle at 12% 4%, rgba(141, 64, 67, .12), transparent 28%),
+    linear-gradient(145deg, #f0dfdc 0%, #ead4d1 48%, #f4e7e3 100%);
+}
+.trustee-card {
+  border: 1px solid rgba(104, 34, 38, .26);
+  color: #3b1717;
+  background: linear-gradient(145deg, rgba(239, 218, 215, .98), rgba(230, 198, 196, .94));
+  box-shadow: 0 24px 65px rgba(76, 28, 30, .16), inset 0 0 0 1px rgba(255, 247, 239, .42);
+}
+.trustee-card:hover { border-color: rgba(153, 83, 67, .5); box-shadow: 0 30px 78px rgba(76, 28, 30, .22); }
+.trustee-card__header {
+  border-bottom: 1px solid rgba(104, 34, 38, .2);
+  background: linear-gradient(100deg, rgba(204, 159, 157, .42), rgba(238, 216, 211, .72));
+}
+.trustee-card__icon {
+  border: 1px solid rgba(105, 35, 39, .28);
+  color: #6c262b;
+  background: rgba(255, 246, 239, .48);
+}
+.trustee-card__kicker { color: #7c3338; }
+.trustee-card__title,
+.trustee-card__section-title { color: #3b1717; }
+.trustee-card__category,
+.trustee-card__description { color: rgba(59, 23, 23, .67); }
+.trustee-card__status {
+  border: 1px solid rgba(111, 47, 50, .3);
+  color: #67242a;
+  background: rgba(255, 244, 235, .5);
+}
+.trustee-card__content { background: rgba(246, 230, 226, .46); }
+.trustee-card__section-title { border-bottom: 1px solid rgba(104, 34, 38, .17); }
+.trustee-card__achievement { color: rgba(59, 23, 23, .88); }
+.trustee-card__initiative {
+  border: 1px solid rgba(104, 34, 38, .2);
+  color: rgba(59, 23, 23, .78);
+  background: rgba(255, 246, 239, .48);
+}
+
 .trustee-lineage-section {
   position: relative;
   padding: clamp(3.5rem, 6vw, 6rem) clamp(1rem, 3.6vw, 4rem);

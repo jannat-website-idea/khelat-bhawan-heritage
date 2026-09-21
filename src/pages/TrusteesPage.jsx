@@ -83,36 +83,36 @@ export default function TrusteesPage({ lang = 'en', setActiveTab, onOpenLightbox
         />
 
         {/* 3 Active Trust Cards */}
-        <div className="space-y-16">
+        <div className="trustee-cards space-y-16">
           {trusts.map((trust) => {
             const Icon = trust.icon;
 
             return (
               <div
                 key={trust.id}
-                className="bg-card/70 rounded-3xl border border-border/80 overflow-hidden shadow-xl hover:shadow-2xl hover:border-primary/40 transition-all duration-500 backdrop-blur-sm"
+                className="trustee-card rounded-3xl overflow-hidden shadow-xl hover:shadow-2xl transition-all duration-500"
               >
                 {/* Header Strip */}
-                <div className="bg-muted/60 p-6 md:p-8 flex flex-col md:flex-row md:items-center justify-between gap-4 border-b border-border/50">
+                <div className="trustee-card__header p-6 md:p-8 flex flex-col md:flex-row md:items-center justify-between gap-4">
                   <div className="flex items-center gap-4">
-                    <div className="w-14 h-14 rounded-2xl bg-primary/10 border border-primary/30 flex items-center justify-center text-primary shadow-sm">
+                    <div className="trustee-card__icon w-14 h-14 rounded-2xl flex items-center justify-center shadow-sm">
                       <Icon className="w-7 h-7" />
                     </div>
                     <div>
-                      <span className="text-[11px] uppercase tracking-widest text-primary font-sans font-semibold block">
+                      <span className="trustee-card__kicker text-[11px] uppercase tracking-widest font-sans font-semibold block">
                         Trust {trust.num} · {trust.est}
                       </span>
-                      <h3 className="font-serif text-2xl md:text-3xl font-bold text-foreground mt-0.5">
+                      <h3 className="trustee-card__title font-serif text-2xl md:text-3xl font-bold mt-0.5">
                         {trust.name}
                       </h3>
-                      <p className="text-xs text-muted-foreground font-sans">
+                      <p className="trustee-card__category text-xs font-sans">
                         {trust.category}
                       </p>
                     </div>
                   </div>
 
                   <div className="flex items-center gap-2">
-                    <span className="px-3.5 py-1.5 rounded-full bg-emerald-500/10 text-emerald-500 text-xs font-sans font-semibold border border-emerald-500/30 flex items-center gap-1.5">
+                    <span className="trustee-card__status px-3.5 py-1.5 rounded-full text-xs font-sans font-semibold flex items-center gap-1.5">
                       <ShieldCheck className="w-3.5 h-3.5" />
                       <span>{isBn ? 'সক্রিয় ট্রাস্ট সনদ' : 'Active Charter'}</span>
                     </span>
@@ -120,7 +120,7 @@ export default function TrusteesPage({ lang = 'en', setActiveTab, onOpenLightbox
                 </div>
 
                 {/* Content */}
-                <div className="p-6 md:p-10 grid grid-cols-1 lg:grid-cols-12 gap-10">
+                <div className="trustee-card__content p-6 md:p-10 grid grid-cols-1 lg:grid-cols-12 gap-10">
                   <div className="lg:col-span-5 space-y-4 text-left">
                     <div className="aspect-[16/10] rounded-2xl overflow-hidden bg-black shadow-lg border border-border/60">
                       <img
@@ -135,19 +135,19 @@ export default function TrusteesPage({ lang = 'en', setActiveTab, onOpenLightbox
                         })}
                       />
                     </div>
-                    <p className="text-xs sm:text-sm text-muted-foreground font-sans leading-relaxed">
+                    <p className="trustee-card__description text-xs sm:text-sm font-sans leading-relaxed">
                       {trust.desc}
                     </p>
                   </div>
 
                   <div className="lg:col-span-7 space-y-6 text-left">
                     <div>
-                      <h4 className="font-serif text-base font-bold text-foreground mb-3 pb-2 border-b border-border/40">
+                      <h4 className="trustee-card__section-title font-serif text-base font-bold mb-3 pb-2">
                         {isBn ? 'প্রধান অর্জন ও ঐতিহ্য সংরক্ষণ' : 'Key Achievements & Heritage Preservation'}
                       </h4>
                       <div className="space-y-2">
                         {trust.achievements.map((ach, i) => (
-                          <div key={i} className="flex items-start gap-2.5 text-xs sm:text-sm text-foreground/90 font-sans">
+                          <div key={i} className="trustee-card__achievement flex items-start gap-2.5 text-xs sm:text-sm font-sans">
                             <Check className="w-4 h-4 text-primary flex-shrink-0 mt-0.5" />
                             <span>{ach}</span>
                           </div>
@@ -156,12 +156,12 @@ export default function TrusteesPage({ lang = 'en', setActiveTab, onOpenLightbox
                     </div>
 
                     <div>
-                      <h4 className="font-serif text-base font-bold text-foreground mb-3 pb-2 border-b border-border/40">
+                      <h4 className="trustee-card__section-title font-serif text-base font-bold mb-3 pb-2">
                         {isBn ? 'চলমান কর্মসূচি ও জনকল্যাণ' : 'Active Programs & Community Service'}
                       </h4>
                       <div className="grid grid-cols-1 sm:grid-cols-2 gap-2.5">
                         {trust.initiatives.map((init, i) => (
-                          <div key={i} className="p-3 bg-background/80 border border-border/70 text-xs font-sans text-foreground/80 rounded-xl flex items-center gap-2">
+                          <div key={i} className="trustee-card__initiative p-3 text-xs font-sans rounded-xl flex items-center gap-2">
                             <span className="w-2 h-2 rounded-full bg-primary flex-shrink-0" />
                             <span>{init}</span>
                           </div>
