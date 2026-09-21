@@ -39,6 +39,26 @@ export default function GalleryPage({ lang = 'en' }) {
     return [...photos, ...films];
   }, [activeFilter]);
 
+  const crestRows = useMemo(() => {
+    const patterns = galleryItems.length <= 6
+      ? [2, 3, 1]
+      : galleryItems.length <= 12
+        ? [3, 4, 4, 1]
+        : [3, 5, 6, 3, 1];
+    let cursor = 0;
+    return patterns
+      .map((size, rowIndex) => {
+        const row = galleryItems.slice(cursor, cursor + size).map((item, index) => ({
+          ...item,
+          displayIndex: cursor + index,
+          rowIndex
+        }));
+        cursor += size;
+        return row;
+      })
+      .filter((row) => row.length > 0);
+  }, [galleryItems]);
+
   const openGalleryItem = (item) => {
     if (item.mediaType === 'video') {
       setSelectedFilmIndex(item.sourceIndex);
@@ -140,33 +160,42 @@ export default function GalleryPage({ lang = 'en' }) {
             ))}
           </div>
 
-          <div className={`gallery-mosaic-grid gallery-mosaic-grid--${activeFilter}`}>
-            {galleryItems.map((item, index) => {
-              const title = typeof item.title === 'object' ? (item.title[lang] || item.title.en) : item.title;
-              const label = item.shortLabel
-                ? (typeof item.shortLabel === 'object' ? (item.shortLabel[lang] || item.shortLabel.en) : item.shortLabel)
-                : title;
-              return (
-                <button
-                  type="button"
-                  key={`${item.mediaType}-${item.id || index}`}
-                  className="gallery-mosaic-tile group"
-                  onClick={() => openGalleryItem(item)}
-                  aria-label={`${item.mediaType === 'video' ? 'Play' : 'Open'} ${title}`}
-                  style={{ '--tile-index': index }}
-                >
-                  <img src={getAssetUrl(item.preview)} alt={title} loading={index < 8 ? 'eager' : 'lazy'} />
-                  <span className="gallery-mosaic-tile__shade" aria-hidden="true" />
-                  <span className="gallery-mosaic-tile__meta">
-                    <span>{String(index + 1).padStart(2, '0')}</span>
-                    <strong>{label}</strong>
-                  </span>
-                  <span className="gallery-mosaic-tile__action" aria-hidden="true">
-                    {item.mediaType === 'video' ? <Play className="w-4 h-4 fill-current" /> : <Maximize2 className="w-4 h-4" />}
-                  </span>
-                </button>
-              );
-            })}
+          <div className="gallery-crest" aria-live="polite">
+            <div className="gallery-crest__aura" aria-hidden="true" />
+            {crestRows.map((row, rowIndex) => (
+              <div
+                className={`gallery-crest-row gallery-crest-row--${rowIndex}`}
+                key={`crest-row-${rowIndex}`}
+                style={{ '--row-count': row.length }}
+              >
+                {row.map((item) => {
+                  const title = typeof item.title === 'object' ? (item.title[lang] || item.title.en) : item.title;
+                  const label = item.shortLabel
+                    ? (typeof item.shortLabel === 'object' ? (item.shortLabel[lang] || item.shortLabel.en) : item.shortLabel)
+                    : title;
+                  return (
+                    <button
+                      type="button"
+                      key={`${item.mediaType}-${item.id || item.displayIndex}`}
+                      className="gallery-crest-tile group"
+                      onClick={() => openGalleryItem(item)}
+                      aria-label={`${item.mediaType === 'video' ? 'Play' : 'Open'} ${title}`}
+                      style={{ '--tile-index': item.displayIndex }}
+                    >
+                      <img src={getAssetUrl(item.preview)} alt={title} loading={item.displayIndex < 8 ? 'eager' : 'lazy'} />
+                      <span className="gallery-crest-tile__shade" aria-hidden="true" />
+                      <span className="gallery-crest-tile__meta">
+                        <span>{String(item.displayIndex + 1).padStart(2, '0')}</span>
+                        <strong>{label}</strong>
+                      </span>
+                      <span className="gallery-crest-tile__action" aria-hidden="true">
+                        {item.mediaType === 'video' ? <Play className="w-4 h-4 fill-current" /> : <Maximize2 className="w-4 h-4" />}
+                      </span>
+                    </button>
+                  );
+                })}
+              </div>
+            ))}
           </div>
         </section>
 
