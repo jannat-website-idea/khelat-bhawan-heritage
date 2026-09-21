@@ -1381,8 +1381,8 @@
 }
 
 .gallery-crest-row--2 {
-  --tile-width: clamp(165px, 11.5vw, 218px);
-  --tile-height: clamp(200px, 14vw, 264px);
+  --tile-width: clamp(148px, 9.4vw, 180px);
+  --tile-height: clamp(188px, 11.7vw, 224px);
   --row-index: 2;
   margin-top: clamp(1.65rem, 2vw, 2.5rem);
 }
@@ -1416,6 +1416,34 @@
   transition: transform 620ms cubic-bezier(.16, 1, .3, 1), border-color 320ms ease, box-shadow 620ms ease;
 }
 
+.gallery-crest-tile--portrait {
+  height: calc(var(--tile-height) * 1.08);
+}
+
+.gallery-crest-tile--square {
+  width: var(--tile-height);
+  height: var(--tile-height);
+  flex-basis: var(--tile-height);
+}
+
+.gallery-crest-tile--landscape {
+  width: calc(var(--tile-width) * 1.46);
+  height: calc(var(--tile-height) * .76);
+  flex-basis: calc(var(--tile-width) * 1.46);
+}
+
+.gallery-crest-tile--panorama {
+  width: calc(var(--tile-width) * 1.74);
+  height: calc(var(--tile-height) * .68);
+  flex-basis: calc(var(--tile-width) * 1.74);
+}
+
+.gallery-crest-tile--cinema {
+  width: calc(var(--tile-width) * 1.58);
+  height: calc(var(--tile-height) * .72);
+  flex-basis: calc(var(--tile-width) * 1.58);
+}
+
 .gallery-crest-row--0 .gallery-crest-tile:nth-child(2) {
   transform: translateY(-22px) scale(1.035);
   z-index: 2;
@@ -1432,6 +1460,12 @@
   filter: saturate(.83) contrast(1.05) brightness(.76);
   transform: scale(1.045);
   transition: transform 800ms cubic-bezier(.16, 1, .3, 1), filter 520ms ease;
+}
+
+.gallery-crest-tile--landscape img,
+.gallery-crest-tile--panorama img,
+.gallery-crest-tile--cinema img {
+  object-position: center;
 }
 
 .gallery-crest-tile__shade {
@@ -1527,6 +1561,10 @@
   .gallery-crest-row--3 { --tile-width: 18.5vw; --tile-height: 24vw; margin-top: 12px; }
   .gallery-crest-row--4 { --tile-width: 17vw; --tile-height: 22vw; margin-top: 12px; }
   .gallery-crest-row--0 .gallery-crest-tile:nth-child(2) { transform: translateY(-10px) scale(1.04); }
+  .gallery-crest-tile--square { width: calc(var(--tile-width) * 1.12); height: calc(var(--tile-width) * 1.12); flex-basis: calc(var(--tile-width) * 1.12); }
+  .gallery-crest-tile--landscape { width: calc(var(--tile-width) * 1.34); height: calc(var(--tile-height) * .78); flex-basis: calc(var(--tile-width) * 1.34); }
+  .gallery-crest-tile--panorama { width: calc(var(--tile-width) * 1.48); height: calc(var(--tile-height) * .72); flex-basis: calc(var(--tile-width) * 1.48); }
+  .gallery-crest-tile--cinema { width: calc(var(--tile-width) * 1.38); height: calc(var(--tile-height) * .76); flex-basis: calc(var(--tile-width) * 1.38); }
   .gallery-crest-tile__meta { display: none; }
   .gallery-crest-tile__action { width: 25px; height: 25px; opacity: .78; transform: none; }
 }

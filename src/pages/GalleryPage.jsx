@@ -68,6 +68,14 @@ export default function GalleryPage({ lang = 'en' }) {
     setSelectedPhotoIndex(item.sourceIndex);
   };
 
+  const getFrameShape = (item) => {
+    if (item.mediaType === 'video') return 'cinema';
+    if (['photo-03', 'photo-05'].includes(item.id)) return 'panorama';
+    if (['photo-07', 'photo-10', 'photo-11', 'photo-12'].includes(item.id)) return 'landscape';
+    if (item.id === 'photo-01') return 'square';
+    return 'portrait';
+  };
+
   const closePhoto = useCallback(() => {
     if (selectedPhotoIndex === null || isPhotoClosing) return;
     setIsPhotoClosing(true);
@@ -177,7 +185,7 @@ export default function GalleryPage({ lang = 'en' }) {
                     <button
                       type="button"
                       key={`${item.mediaType}-${item.id || item.displayIndex}`}
-                      className="gallery-crest-tile group"
+                      className={`gallery-crest-tile gallery-crest-tile--${getFrameShape(item)} group`}
                       onClick={() => openGalleryItem(item)}
                       aria-label={`${item.mediaType === 'video' ? 'Play' : 'Open'} ${title}`}
                       style={{ '--tile-index': item.displayIndex }}
