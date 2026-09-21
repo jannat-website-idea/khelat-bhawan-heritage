@@ -1823,35 +1823,6 @@
    Strictly following Khelat Bhawan Brand Architecture
    ========================================================================== */
 
-/* Navbar Dark Gallery Styling */
-.heritage-nav--gallery {
-  height: 70px;
-  box-sizing: border-box;
-  padding: 0;
-  color: #f4efe6;
-  background: linear-gradient(180deg, rgba(14, 6, 5, 0.96) 0%, rgba(14, 6, 5, 0.8) 75%, transparent 100%);
-  border-bottom: 1px solid rgba(212, 175, 55, 0.18);
-  box-shadow: none;
-}
-.heritage-nav--gallery .heritage-brand strong { color: #fdfbf7; text-shadow: 0 2px 10px rgba(0,0,0,0.7); }
-.heritage-nav--gallery .heritage-brand span { color: #d4af37; }
-.heritage-nav--gallery .heritage-nav__links button { color: rgba(244, 239, 230, 0.85); text-shadow: 0 2px 8px rgba(0,0,0,0.7); }
-.heritage-nav--gallery .heritage-nav__links button:hover,
-.heritage-nav--gallery .heritage-nav__links button.is-active { color: #d4af37; }
-.heritage-nav--gallery .heritage-nav__links button:after { background: #d4af37; }
-.heritage-nav--gallery .heritage-language { color: #f4efe6; }
-.heritage-nav--gallery .heritage-menu-btn {
-  color: #f4efe6;
-  border-color: rgba(212, 175, 55, 0.5);
-  background: rgba(26, 12, 9, 0.45);
-  backdrop-filter: blur(6px);
-}
-.heritage-nav--gallery .heritage-menu-btn:hover {
-  background: #d4af37;
-  color: #120a08;
-  border-color: #d4af37;
-}
-
 .gallery-immersive-page {
   background-color: #120a08;
   color: #f4efe6;
@@ -1868,36 +1839,36 @@
 .gallery-backdrop-watermark {
   position: absolute;
   inset: 0;
-  background-image: url('/images/SDP_0282.jpg');
+  background-image: url('/images/khelat-bhawan-night-courtyard.jpg');
   background-size: cover;
-  background-position: center 30%;
-  opacity: 0.08;
-  filter: sepia(0.9) contrast(1.2);
+  background-position: center 25%;
+  opacity: 0.12;
+  filter: sepia(0.85) contrast(1.15) brightness(0.9);
   mix-blend-mode: luminosity;
 }
 
 .gallery-backdrop-radial-glow {
   position: absolute;
-  top: 30%;
+  top: 28%;
   left: 50%;
   transform: translate(-50%, -50%);
   width: min(1200px, 95vw);
   height: 700px;
-  background: radial-gradient(circle, rgba(182, 138, 50, 0.12) 0%, transparent 70%);
+  background: radial-gradient(circle, rgba(182, 138, 50, 0.14) 0%, transparent 70%);
   pointer-events: none;
 }
 
 .gallery-backdrop-vignette {
   position: absolute;
   inset: 0;
-  background: radial-gradient(circle, transparent 40%, #0d0605 95%);
+  background: radial-gradient(circle at 50% 40%, transparent 35%, #0d0605 92%);
   pointer-events: none;
 }
 
 /* 3D Perspective Stage spanning full viewport */
 .curved-gallery-fullscreen-wrapper {
-  perspective: 1400px;
-  -webkit-perspective: 1400px;
+  perspective: 1500px;
+  -webkit-perspective: 1500px;
   touch-action: pan-y;
   user-select: none;
 }
@@ -1912,32 +1883,41 @@
   transform-style: preserve-3d;
   -webkit-transform-style: preserve-3d;
   will-change: transform, opacity, filter;
-  width: clamp(210px, 19vw, 290px);
-  height: clamp(280px, 28vw, 420px);
 }
 
 .curved-gallery-card.is-active-card {
-  width: clamp(440px, 45vw, 680px);
-  height: clamp(280px, 28vw, 420px);
+  width: clamp(420px, 40vw, 640px);
+  height: clamp(280px, 42vh, 420px);
+}
+
+.curved-gallery-card.is-near-side-card {
+  width: clamp(210px, 18.5vw, 290px);
+  height: clamp(280px, 42vh, 420px);
+}
+
+.curved-gallery-card.is-far-side-card {
+  width: clamp(160px, 14vw, 220px);
+  height: clamp(250px, 37vh, 380px);
 }
 
 .curved-gallery-media-frame {
   width: 100%;
   height: 100%;
   border-radius: 4px;
-  border: 1px solid rgba(212, 175, 55, 0.28);
+  border: 1px solid rgba(212, 175, 55, 0.35);
   box-shadow: 0 16px 45px rgba(0, 0, 0, 0.88);
   transition: border-color 0.4s ease, box-shadow 0.4s ease;
 }
 
-.is-side-card:hover .curved-gallery-media-frame {
+.is-near-side-card:hover .curved-gallery-media-frame,
+.is-far-side-card:hover .curved-gallery-media-frame {
   border-color: rgba(212, 175, 55, 0.65);
   box-shadow: 0 20px 50px rgba(0, 0, 0, 0.95), 0 0 20px rgba(212, 175, 55, 0.2);
 }
 
 .is-active-card .curved-gallery-media-frame {
   border: 1px solid rgba(212, 175, 55, 0.65);
-  box-shadow: 0 28px 75px rgba(0, 0, 0, 0.98), 0 0 35px rgba(212, 175, 55, 0.22);
+  box-shadow: 0 26px 70px rgba(0, 0, 0, 0.96), 0 0 30px rgba(212, 175, 55, 0.18);
 }
 
 .is-active-card:hover .curved-gallery-expand-cue {
@@ -1946,12 +1926,13 @@
 
 /* Responsive Card Sizing */
 @media (max-width: 767px) {
-  .curved-gallery-card {
-    width: clamp(140px, 42vw, 190px);
-    height: clamp(200px, 56vw, 270px);
-  }
   .curved-gallery-card.is-active-card {
     width: clamp(280px, 86vw, 400px);
+    height: clamp(180px, 54vw, 250px);
+  }
+  .curved-gallery-card.is-near-side-card,
+  .curved-gallery-card.is-far-side-card {
+    width: clamp(140px, 40vw, 180px);
     height: clamp(180px, 54vw, 250px);
   }
 }
@@ -1962,10 +1943,10 @@
   top: 100%;
   left: 0;
   right: 0;
-  height: clamp(90px, 12vw, 160px);
-  margin-top: 10px;
+  height: clamp(75px, 10vw, 130px);
+  margin-top: 8px;
   transform: scaleY(-1);
-  opacity: 0.28;
+  opacity: 0.22;
   filter: blur(2px);
   overflow: hidden;
   border-radius: 4px;
@@ -1984,7 +1965,7 @@
   width: 44px;
   height: 44px;
   border-radius: 50%;
-  border: 1px solid rgba(212, 175, 55, 0.55);
+  border: 1px solid rgba(212, 175, 55, 0.5);
   background: rgba(22, 10, 8, 0.6);
   display: grid;
   place-items: center;
@@ -1994,15 +1975,16 @@
 }
 
 .curved-gallery-nav-btn:hover {
-  background: #d4af37;
+  background: rgba(212, 175, 55, 0.15);
   border-color: #d4af37;
   box-shadow: 0 0 20px rgba(212, 175, 55, 0.4);
   transform: scale(1.06);
 }
 
 .curved-gallery-nav-btn:hover svg {
-  color: #120a08 !important;
+  color: #d4af37 !important;
 }
+
 
 
 

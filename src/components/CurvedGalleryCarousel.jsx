@@ -23,7 +23,7 @@ export default function CurvedGalleryCarousel({
   const total = items.length;
   const isBn = lang === 'bn';
 
-  // Responsive check
+  // Responsive breakpoint check
   useEffect(() => {
     const handleResize = () => {
       setIsMobile(window.innerWidth < 768);
@@ -33,7 +33,7 @@ export default function CurvedGalleryCarousel({
     return () => window.removeEventListener('resize', handleResize);
   }, []);
 
-  // Navigation handlers
+  // Navigation handlers with smooth cycling
   const handlePrev = useCallback(() => {
     if (total === 0) return;
     setActiveIndex((prev) => (prev - 1 + total) % total);
@@ -62,7 +62,7 @@ export default function CurvedGalleryCarousel({
     return () => window.removeEventListener('keydown', handleKeyDown);
   }, [handlePrev, handleNext]);
 
-  // Native wheel / trackpad horizontal scrolling with smooth debounce
+  // Trackpad / Horizontal Wheel scrolling
   useEffect(() => {
     const el = containerRef.current;
     if (!el) return;
@@ -80,7 +80,7 @@ export default function CurvedGalleryCarousel({
         }
         setTimeout(() => {
           wheelLockRef.current = false;
-        }, 240);
+        }, 260);
       }
     };
 
@@ -88,7 +88,7 @@ export default function CurvedGalleryCarousel({
     return () => el.removeEventListener('wheel', onWheelScroll);
   }, [handleNext, handlePrev]);
 
-  // Pointer Drag handling (Mouse & Touch unified)
+  // Pointer Drag & Touch Swipe handlers
   const handlePointerDown = (e) => {
     setIsDragging(true);
     setStartX(e.clientX);
@@ -121,7 +121,7 @@ export default function CurvedGalleryCarousel({
 
   if (total === 0) return null;
 
-  // Helper to calculate wrapped offset relative to activeIndex
+  // Calculate shortest wrapped offset relative to activeIndex
   const getOffset = (index) => {
     let diff = index - activeIndex;
     if (diff > total / 2) diff -= total;
@@ -129,14 +129,14 @@ export default function CurvedGalleryCarousel({
     return diff;
   };
 
-  // Get dynamic 3D transform for each card matching reference geometry
+  // 3D Transforms matching Reference 2 curved panoramic geometry
   const getCardTransform = (offset) => {
     const dragOffsetPx = isDragging ? currentDeltaX * 0.45 : 0;
 
     if (isMobile) {
       if (offset === 0) {
         return {
-          transform: `translateX(calc(-50% + ${dragOffsetPx}px)) translateZ(0px) rotateY(${dragOffsetPx * -0.06}deg) scale(1)`,
+          transform: `translateX(calc(-50% + ${dragOffsetPx}px)) translateZ(30px) rotateY(${dragOffsetPx * -0.05}deg) scale(1)`,
           zIndex: 30,
           opacity: 1,
           filter: 'brightness(1)'
@@ -144,22 +144,22 @@ export default function CurvedGalleryCarousel({
       }
       if (offset === 1) {
         return {
-          transform: `translateX(calc(-50% + 78% + ${dragOffsetPx}px)) translateZ(-80px) rotateY(-22deg) scale(0.84)`,
+          transform: `translateX(calc(-50% + 76% + ${dragOffsetPx}px)) translateZ(-60px) rotateY(-18deg) scale(0.84)`,
           zIndex: 20,
-          opacity: 0.65,
-          filter: 'brightness(0.72)'
+          opacity: 0.7,
+          filter: 'brightness(0.75)'
         };
       }
       if (offset === -1) {
         return {
-          transform: `translateX(calc(-50% - 78% + ${dragOffsetPx}px)) translateZ(-80px) rotateY(22deg) scale(0.84)`,
+          transform: `translateX(calc(-50% - 76% + ${dragOffsetPx}px)) translateZ(-60px) rotateY(18deg) scale(0.84)`,
           zIndex: 20,
-          opacity: 0.65,
-          filter: 'brightness(0.72)'
+          opacity: 0.7,
+          filter: 'brightness(0.75)'
         };
       }
       return {
-        transform: `translateX(calc(-50% + ${offset * 120}%)) translateZ(-300px)`,
+        transform: `translateX(calc(-50% + ${offset * 110}%)) translateZ(-250px)`,
         zIndex: 5,
         opacity: 0,
         pointerEvents: 'none',
@@ -167,10 +167,10 @@ export default function CurvedGalleryCarousel({
       };
     }
 
-    // Fullscreen Grand Desktop 3D Curved Perspective
+    // 5-Card Panoramic Exhibition Geometry for Desktop
     if (offset === 0) {
       return {
-        transform: `translateX(calc(-50% + ${dragOffsetPx}px)) translateZ(0px) rotateY(${dragOffsetPx * -0.03}deg) scale(1)`,
+        transform: `translateX(calc(-50% + ${dragOffsetPx}px)) translateZ(40px) rotateY(${dragOffsetPx * -0.03}deg) scale(1)`,
         zIndex: 30,
         opacity: 1,
         filter: 'brightness(1)'
@@ -178,34 +178,34 @@ export default function CurvedGalleryCarousel({
     }
     if (offset === 1) {
       return {
-        transform: `translateX(calc(-50% + clamp(300px, 29vw, 420px) + ${dragOffsetPx}px)) translateZ(-130px) rotateY(-24deg) scale(0.9)`,
+        transform: `translateX(calc(-50% + clamp(270px, 26vw, 380px) + ${dragOffsetPx}px)) translateZ(-70px) rotateY(-16deg) scale(0.86)`,
         zIndex: 20,
-        opacity: 0.88,
-        filter: 'brightness(0.82)'
+        opacity: 0.9,
+        filter: 'brightness(0.84)'
       };
     }
     if (offset === -1) {
       return {
-        transform: `translateX(calc(-50% - clamp(300px, 29vw, 420px) + ${dragOffsetPx}px)) translateZ(-130px) rotateY(24deg) scale(0.9)`,
+        transform: `translateX(calc(-50% - clamp(270px, 26vw, 380px) + ${dragOffsetPx}px)) translateZ(-70px) rotateY(16deg) scale(0.86)`,
         zIndex: 20,
-        opacity: 0.88,
-        filter: 'brightness(0.82)'
+        opacity: 0.9,
+        filter: 'brightness(0.84)'
       };
     }
     if (offset === 2) {
       return {
-        transform: `translateX(calc(-50% + clamp(550px, 54vw, 780px) + ${dragOffsetPx}px)) translateZ(-270px) rotateY(-38deg) scale(0.78)`,
+        transform: `translateX(calc(-50% + clamp(480px, 46vw, 680px) + ${dragOffsetPx}px)) translateZ(-190px) rotateY(-30deg) scale(0.72)`,
         zIndex: 10,
-        opacity: 0.6,
-        filter: 'brightness(0.65)'
+        opacity: 0.65,
+        filter: 'brightness(0.68)'
       };
     }
     if (offset === -2) {
       return {
-        transform: `translateX(calc(-50% - clamp(550px, 54vw, 780px) + ${dragOffsetPx}px)) translateZ(-270px) rotateY(38deg) scale(0.78)`,
+        transform: `translateX(calc(-50% - clamp(480px, 46vw, 680px) + ${dragOffsetPx}px)) translateZ(-190px) rotateY(30deg) scale(0.72)`,
         zIndex: 10,
-        opacity: 0.6,
-        filter: 'brightness(0.65)'
+        opacity: 0.65,
+        filter: 'brightness(0.68)'
       };
     }
 
@@ -229,12 +229,14 @@ export default function CurvedGalleryCarousel({
       className="curved-gallery-fullscreen-wrapper relative w-full overflow-hidden select-none py-2 sm:py-6 cursor-grab active:cursor-grabbing"
     >
       {/* 3D Perspective Stage */}
-      <div className="curved-gallery-stage relative w-full min-h-[440px] sm:min-h-[520px] lg:min-h-[580px]">
+      <div className="curved-gallery-stage relative w-full min-h-[460px] sm:min-h-[540px] lg:min-h-[600px]">
         
         {/* ================= 3D CURVED MEDIA CARDS ================= */}
         {items.map((item, index) => {
           const offset = getOffset(index);
           const isCurrentActive = offset === 0;
+          const isNearSide = Math.abs(offset) === 1;
+          const isFarSide = Math.abs(offset) === 2;
           const isVisible = Math.abs(offset) <= 2;
           if (!isVisible) return null;
 
@@ -242,7 +244,7 @@ export default function CurvedGalleryCarousel({
           const rawSrc = mediaType === 'video' ? item.poster : item.src;
           const mediaSrc = getAssetUrl(rawSrc);
           
-          // Get short label (e.g. DETAILS, INTERIORS, THE COURTYARD, DURGA PUJA, CELEBRATIONS)
+          // Get short label (e.g. DETAILS, INTERIORS, THE GRAND COURTYARD, DURGA PUJA, CELEBRATIONS)
           const shortLabel = item.shortLabel 
             ? (typeof item.shortLabel === 'object' ? (item.shortLabel[lang] || item.shortLabel.en) : item.shortLabel)
             : (typeof item.category === 'object' ? (item.category[lang] || item.category.en) : item.category);
@@ -264,10 +266,14 @@ export default function CurvedGalleryCarousel({
               className={`curved-gallery-card absolute top-4 left-1/2 transition-all ${
                 isDragging ? 'duration-75' : 'duration-700 cubic-bezier(0.2, 0.8, 0.2, 1)'
               } flex flex-col items-center cursor-pointer ${
-                isCurrentActive ? 'is-active-card' : 'is-side-card'
+                isCurrentActive 
+                  ? 'is-active-card' 
+                  : isNearSide 
+                    ? 'is-near-side-card' 
+                    : 'is-far-side-card'
               }`}
             >
-              {/* Media Container Frame */}
+              {/* Media Container Frame (Fine antique gold edge, 4px radius) */}
               <div className="curved-gallery-media-frame relative overflow-hidden bg-[#160c0a]">
                 <img
                   src={mediaSrc}
@@ -277,12 +283,12 @@ export default function CurvedGalleryCarousel({
                   loading={Math.abs(offset) <= 1 ? 'eager' : 'lazy'}
                 />
 
-                {/* Ambient Shading Overlay */}
+                {/* Subtle Ambient Vignette Overlay */}
                 <div className={`absolute inset-0 transition-opacity duration-500 pointer-events-none ${
-                  isCurrentActive ? 'bg-gradient-to-t from-black/40 via-transparent to-black/10' : 'bg-black/35 hover:bg-black/15'
+                  isCurrentActive ? 'bg-gradient-to-t from-black/35 via-transparent to-black/10' : 'bg-black/30 hover:bg-black/10'
                 }`} />
 
-                {/* Video Play Badge */}
+                {/* Video Play Badge for Video Media */}
                 {mediaType === 'video' && (
                   <div className="absolute inset-0 flex items-center justify-center pointer-events-none">
                     <div className={`rounded-full bg-[#120a08]/85 border border-[#d4af37] flex items-center justify-center text-[#f3e5ab] shadow-2xl transition-transform duration-300 ${
@@ -300,9 +306,9 @@ export default function CurvedGalleryCarousel({
                   </div>
                 )}
 
-                {/* Fullscreen Expand Cue on Hover */}
+                {/* Fullscreen Expand Cue on Active Center Card */}
                 {isCurrentActive && mediaType === 'image' && (
-                  <div className="curved-gallery-expand-cue absolute bottom-3 right-3 p-2 rounded-full bg-[#160c0a]/85 border border-[#d4af37]/60 text-[#f3e5ab] opacity-0 transition-opacity duration-300 pointer-events-none">
+                  <div className="curved-gallery-expand-cue absolute bottom-3 right-3 p-2 rounded-full bg-[#160c0a]/85 border border-[#d4af37]/60 text-[#f3e5ab] opacity-75 hover:opacity-100 transition-opacity duration-300 pointer-events-none">
                     <Maximize2 className="w-3.5 h-3.5" />
                   </div>
                 )}
@@ -311,15 +317,15 @@ export default function CurvedGalleryCarousel({
               {/* ================= CARD LABEL UNDER MEDIA (Exact Reference Layout) ================= */}
               <div className="curved-gallery-card-meta text-center mt-3 sm:mt-4 space-y-0.5 w-full select-none pointer-events-none">
                 {isCurrentActive ? (
-                  /* Center Active Item Number, Title, and Gold Dash */
+                  /* Center Active Item Number, Title, and Gold Decorative Dash */
                   <div className="flex flex-col items-center">
-                    <span className="text-[11px] sm:text-xs font-mono font-medium tracking-[0.24em] text-[#d4af37] uppercase">
+                    <span className="text-[11px] sm:text-xs font-mono font-medium tracking-[0.25em] text-[#d4af37] uppercase">
                       {String(index + 1).padStart(2, '0')}
                     </span>
                     <h3 className="font-serif text-xs sm:text-sm lg:text-base font-medium text-[#f4efe6] uppercase tracking-[0.22em] mt-0.5 leading-snug">
                       {shortLabel}
                     </h3>
-                    <div className="w-8 h-[1.5px] bg-[#d4af37]/60 mt-1.5" />
+                    <div className="w-8 h-[1px] bg-[#d4af37]/60 mt-1.5" />
                   </div>
                 ) : (
                   /* Side Inactive Item Number & Label */
@@ -327,25 +333,23 @@ export default function CurvedGalleryCarousel({
                     <span className="text-[10px] sm:text-[11px] font-mono font-medium tracking-[0.2em] text-[#d4af37]/75 uppercase">
                       {String(index + 1).padStart(2, '0')}
                     </span>
-                    <div className="text-[10px] sm:text-xs font-serif uppercase tracking-[0.2em] text-[#c7b299]/85 mt-0.5">
+                    <div className="text-[10px] sm:text-xs font-serif uppercase tracking-[0.18em] text-[#c7b299]/90 mt-0.5">
                       {shortLabel}
                     </div>
                   </div>
                 )}
               </div>
 
-              {/* Glassy Inverted Floor Reflection (Center Active Card) */}
-              {isCurrentActive && (
-                <div className="curved-gallery-reflection pointer-events-none" aria-hidden="true">
-                  <img
-                    src={mediaSrc}
-                    alt=""
-                    draggable={false}
-                    className="w-full h-full object-cover"
-                  />
-                  <div className="curved-gallery-reflection-mask" />
-                </div>
-              )}
+              {/* Subtle Inverted Floor Reflection (Grounding depth) */}
+              <div className="curved-gallery-reflection pointer-events-none" aria-hidden="true">
+                <img
+                  src={mediaSrc}
+                  alt=""
+                  draggable={false}
+                  className="w-full h-full object-cover"
+                />
+                <div className="curved-gallery-reflection-mask" />
+              </div>
             </div>
           );
         })}
@@ -354,13 +358,13 @@ export default function CurvedGalleryCarousel({
       {/* =========================================================================
           ELEGANT NAVIGATION CONTROLS: ← [ 03 / 12 ] →
          ========================================================================= */}
-      <div className="curved-gallery-controls relative z-30 flex items-center justify-center gap-6 sm:gap-8 mt-6 sm:mt-8">
+      <div className="curved-gallery-controls relative z-30 flex items-center justify-center gap-6 sm:gap-8 mt-4 sm:mt-6">
         <button
           onClick={handlePrev}
-          className="curved-gallery-nav-btn"
+          className="curved-gallery-nav-btn group"
           aria-label={isBn ? 'পূর্ববর্তী' : 'Previous'}
         >
-          <ArrowLeft className="w-4 h-4 text-[#d4af37]" />
+          <ArrowLeft className="w-4 h-4 text-[#d4af37] transition-transform duration-300 group-hover:-translate-x-0.5" />
         </button>
 
         <div className="flex flex-col items-center">
@@ -372,10 +376,10 @@ export default function CurvedGalleryCarousel({
 
         <button
           onClick={handleNext}
-          className="curved-gallery-nav-btn"
+          className="curved-gallery-nav-btn group"
           aria-label={isBn ? 'পরবর্তী' : 'Next'}
         >
-          <ArrowRight className="w-4 h-4 text-[#d4af37]" />
+          <ArrowRight className="w-4 h-4 text-[#d4af37] transition-transform duration-300 group-hover:translate-x-0.5" />
         </button>
       </div>
     </div>
