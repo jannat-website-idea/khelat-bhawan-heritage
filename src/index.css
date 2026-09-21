@@ -1823,6 +1823,35 @@
    Strictly following Khelat Bhawan Brand Architecture
    ========================================================================== */
 
+/* Navbar Dark Gallery Styling */
+.heritage-nav--gallery {
+  height: 70px;
+  box-sizing: border-box;
+  padding: 0;
+  color: #f4efe6;
+  background: linear-gradient(180deg, rgba(14, 6, 5, 0.96) 0%, rgba(14, 6, 5, 0.8) 75%, transparent 100%);
+  border-bottom: 1px solid rgba(212, 175, 55, 0.18);
+  box-shadow: none;
+}
+.heritage-nav--gallery .heritage-brand strong { color: #fdfbf7; text-shadow: 0 2px 10px rgba(0,0,0,0.7); }
+.heritage-nav--gallery .heritage-brand span { color: #d4af37; }
+.heritage-nav--gallery .heritage-nav__links button { color: rgba(244, 239, 230, 0.85); text-shadow: 0 2px 8px rgba(0,0,0,0.7); }
+.heritage-nav--gallery .heritage-nav__links button:hover,
+.heritage-nav--gallery .heritage-nav__links button.is-active { color: #d4af37; }
+.heritage-nav--gallery .heritage-nav__links button:after { background: #d4af37; }
+.heritage-nav--gallery .heritage-language { color: #f4efe6; }
+.heritage-nav--gallery .heritage-menu-btn {
+  color: #f4efe6;
+  border-color: rgba(212, 175, 55, 0.5);
+  background: rgba(26, 12, 9, 0.45);
+  backdrop-filter: blur(6px);
+}
+.heritage-nav--gallery .heritage-menu-btn:hover {
+  background: #d4af37;
+  color: #120a08;
+  border-color: #d4af37;
+}
+
 .gallery-immersive-page {
   background-color: #120a08;
   color: #f4efe6;
@@ -1883,27 +1912,48 @@
   transform-style: preserve-3d;
   -webkit-transform-style: preserve-3d;
   will-change: transform, opacity, filter;
-  width: clamp(300px, 38vw, 490px);
+  width: clamp(210px, 19vw, 290px);
+  height: clamp(280px, 28vw, 420px);
 }
 
 .curved-gallery-card.is-active-card {
-  width: clamp(340px, 44vw, 560px);
+  width: clamp(440px, 45vw, 680px);
+  height: clamp(280px, 28vw, 420px);
 }
 
 .curved-gallery-media-frame {
-  aspect-ratio: 16 / 10.5;
   width: 100%;
-  box-shadow: 0 20px 50px rgba(0, 0, 0, 0.85);
-  transition: border-color 0.3s ease, box-shadow 0.3s ease;
+  height: 100%;
+  border-radius: 4px;
+  border: 1px solid rgba(212, 175, 55, 0.28);
+  box-shadow: 0 16px 45px rgba(0, 0, 0, 0.88);
+  transition: border-color 0.4s ease, box-shadow 0.4s ease;
+}
+
+.is-side-card:hover .curved-gallery-media-frame {
+  border-color: rgba(212, 175, 55, 0.65);
+  box-shadow: 0 20px 50px rgba(0, 0, 0, 0.95), 0 0 20px rgba(212, 175, 55, 0.2);
 }
 
 .is-active-card .curved-gallery-media-frame {
-  border-color: rgba(212, 175, 55, 0.7);
-  box-shadow: 0 30px 70px rgba(0, 0, 0, 0.95), 0 0 40px rgba(182, 138, 50, 0.22);
+  border: 1px solid rgba(212, 175, 55, 0.65);
+  box-shadow: 0 28px 75px rgba(0, 0, 0, 0.98), 0 0 35px rgba(212, 175, 55, 0.22);
 }
 
 .is-active-card:hover .curved-gallery-expand-cue {
   opacity: 1;
+}
+
+/* Responsive Card Sizing */
+@media (max-width: 767px) {
+  .curved-gallery-card {
+    width: clamp(140px, 42vw, 190px);
+    height: clamp(200px, 56vw, 270px);
+  }
+  .curved-gallery-card.is-active-card {
+    width: clamp(280px, 86vw, 400px);
+    height: clamp(180px, 54vw, 250px);
+  }
 }
 
 /* Glassy Mirror Floor Reflection */
@@ -1912,44 +1962,48 @@
   top: 100%;
   left: 0;
   right: 0;
-  height: 100px;
-  margin-top: 8px;
+  height: clamp(90px, 12vw, 160px);
+  margin-top: 10px;
   transform: scaleY(-1);
-  opacity: 0.24;
+  opacity: 0.28;
   filter: blur(2px);
   overflow: hidden;
-  border-radius: 12px;
+  border-radius: 4px;
+  mask-image: linear-gradient(to top, rgba(0, 0, 0, 0.7) 0%, transparent 80%);
+  -webkit-mask-image: linear-gradient(to top, rgba(0, 0, 0, 0.7) 0%, transparent 80%);
 }
 
 .curved-gallery-reflection-mask {
   position: absolute;
   inset: 0;
-  background: linear-gradient(to top, transparent 0%, #120a08 75%);
+  background: linear-gradient(to top, transparent 0%, #120a08 80%);
 }
 
 /* Controls Navigation Button */
 .curved-gallery-nav-btn {
-  width: 48px;
-  height: 48px;
+  width: 44px;
+  height: 44px;
   border-radius: 50%;
-  border: 1.5px solid rgba(212, 175, 55, 0.45);
-  background: rgba(30, 16, 12, 0.75);
+  border: 1px solid rgba(212, 175, 55, 0.55);
+  background: rgba(22, 10, 8, 0.6);
   display: grid;
   place-items: center;
   transition: all 0.3s cubic-bezier(0.2, 0.8, 0.2, 1);
-  backdrop-filter: blur(10px);
+  backdrop-filter: blur(8px);
+  cursor: pointer;
 }
 
 .curved-gallery-nav-btn:hover {
   background: #d4af37;
   border-color: #d4af37;
-  box-shadow: 0 0 24px rgba(212, 175, 55, 0.45);
-  transform: scale(1.08);
+  box-shadow: 0 0 20px rgba(212, 175, 55, 0.4);
+  transform: scale(1.06);
 }
 
 .curved-gallery-nav-btn:hover svg {
-  color: #120a08;
+  color: #120a08 !important;
 }
+
 
 
 

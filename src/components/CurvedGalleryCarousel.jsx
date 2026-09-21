@@ -6,9 +6,13 @@ export default function CurvedGalleryCarousel({
   items = [],
   mediaType = 'image', // 'image' | 'video'
   lang = 'en',
+  initialIndex = 2,
   onSelectMedia
 }) {
-  const [activeIndex, setActiveIndex] = useState(0);
+  const [activeIndex, setActiveIndex] = useState(() => {
+    if (items.length === 0) return 0;
+    return initialIndex >= 0 && initialIndex < items.length ? initialIndex : 0;
+  });
   const [isDragging, setIsDragging] = useState(false);
   const [startX, setStartX] = useState(0);
   const [currentDeltaX, setCurrentDeltaX] = useState(0);
@@ -65,7 +69,7 @@ export default function CurvedGalleryCarousel({
 
     const onWheelScroll = (e) => {
       if (wheelLockRef.current) return;
-      const delta = Math.abs(e.deltaX) > Math.abs(e.deltaY) ? e.deltaX : (e.shiftKey ? e.deltaY : (Math.abs(e.deltaY) > 40 ? e.deltaY : 0));
+      const delta = Math.abs(e.deltaX) > Math.abs(e.deltaY) ? e.deltaX : (e.shiftKey ? e.deltaY : (Math.abs(e.deltaY) > 35 ? e.deltaY : 0));
       
       if (Math.abs(delta) > 15) {
         wheelLockRef.current = true;
@@ -76,7 +80,7 @@ export default function CurvedGalleryCarousel({
         }
         setTimeout(() => {
           wheelLockRef.current = false;
-        }, 220);
+        }, 240);
       }
     };
 
@@ -107,17 +111,15 @@ export default function CurvedGalleryCarousel({
       e.currentTarget.releasePointerCapture(e.pointerId);
     } catch (err) {}
 
-    if (currentDeltaX > 30) {
+    if (currentDeltaX > 35) {
       handlePrev();
-    } else if (currentDeltaX < -30) {
+    } else if (currentDeltaX < -35) {
       handleNext();
     }
     setCurrentDeltaX(0);
   };
 
   if (total === 0) return null;
-
-  const activeItem = items[activeIndex];
 
   // Helper to calculate wrapped offset relative to activeIndex
   const getOffset = (index) => {
@@ -127,14 +129,14 @@ export default function CurvedGalleryCarousel({
     return diff;
   };
 
-  // Get dynamic 3D transform for each card
-  const getCardStyle = (offset) => {
-    const dragOffsetPx = isDragging ? currentDeltaX * 0.4 : 0;
+  // Get dynamic 3D transform for each card matching reference geometry
+  const getCardTransform = (offset) => {
+    const dragOffsetPx = isDragging ? currentDeltaX * 0.45 : 0;
 
     if (isMobile) {
       if (offset === 0) {
         return {
-          transform: `translateX(${dragOffsetPx}px) translateZ(0px) rotateY(${dragOffsetPx * -0.05}deg) scale(1)`,
+          transform: `translateX(calc(-50% + ${dragOffsetPx}px)) translateZ(0px) rotateY(${dragOffsetPx * -0.06}deg) scale(1)`,
           zIndex: 30,
           opacity: 1,
           filter: 'brightness(1)'
@@ -142,22 +144,22 @@ export default function CurvedGalleryCarousel({
       }
       if (offset === 1) {
         return {
-          transform: `translateX(calc(72% + ${dragOffsetPx}px)) translateZ(-90px) rotateY(-22deg) scale(0.82)`,
+          transform: `translateX(calc(-50% + 78% + ${dragOffsetPx}px)) translateZ(-80px) rotateY(-22deg) scale(0.84)`,
           zIndex: 20,
           opacity: 0.65,
-          filter: 'brightness(0.7)'
+          filter: 'brightness(0.72)'
         };
       }
       if (offset === -1) {
         return {
-          transform: `translateX(calc(-72% + ${dragOffsetPx}px)) translateZ(-90px) rotateY(22deg) scale(0.82)`,
+          transform: `translateX(calc(-50% - 78% + ${dragOffsetPx}px)) translateZ(-80px) rotateY(22deg) scale(0.84)`,
           zIndex: 20,
           opacity: 0.65,
-          filter: 'brightness(0.7)'
+          filter: 'brightness(0.72)'
         };
       }
       return {
-        transform: `translateX(${offset * 120}%) translateZ(-300px)`,
+        transform: `translateX(calc(-50% + ${offset * 120}%)) translateZ(-300px)`,
         zIndex: 5,
         opacity: 0,
         pointerEvents: 'none',
@@ -165,51 +167,51 @@ export default function CurvedGalleryCarousel({
       };
     }
 
-    // Fullscreen Grand Desktop 3D Panoramic Curve (Matching Reference Image)
+    // Fullscreen Grand Desktop 3D Curved Perspective
     if (offset === 0) {
       return {
-        transform: `translateX(${dragOffsetPx}px) translateZ(0px) rotateY(${dragOffsetPx * -0.04}deg) scale(1)`,
+        transform: `translateX(calc(-50% + ${dragOffsetPx}px)) translateZ(0px) rotateY(${dragOffsetPx * -0.03}deg) scale(1)`,
         zIndex: 30,
         opacity: 1,
-        filter: 'brightness(1) drop-shadow(0 25px 60px rgba(0,0,0,0.95))'
+        filter: 'brightness(1)'
       };
     }
     if (offset === 1) {
       return {
-        transform: `translateX(calc(clamp(340px, 35vw, 480px) + ${dragOffsetPx}px)) translateZ(-160px) rotateY(-24deg) scale(0.84)`,
+        transform: `translateX(calc(-50% + clamp(300px, 29vw, 420px) + ${dragOffsetPx}px)) translateZ(-130px) rotateY(-24deg) scale(0.9)`,
         zIndex: 20,
-        opacity: 0.85,
-        filter: 'brightness(0.8) drop-shadow(0 15px 35px rgba(0,0,0,0.75))'
+        opacity: 0.88,
+        filter: 'brightness(0.82)'
       };
     }
     if (offset === -1) {
       return {
-        transform: `translateX(calc(clamp(-480px, -35vw, -340px) + ${dragOffsetPx}px)) translateZ(-160px) rotateY(24deg) scale(0.84)`,
+        transform: `translateX(calc(-50% - clamp(300px, 29vw, 420px) + ${dragOffsetPx}px)) translateZ(-130px) rotateY(24deg) scale(0.9)`,
         zIndex: 20,
-        opacity: 0.85,
-        filter: 'brightness(0.8) drop-shadow(0 15px 35px rgba(0,0,0,0.75))'
+        opacity: 0.88,
+        filter: 'brightness(0.82)'
       };
     }
     if (offset === 2) {
       return {
-        transform: `translateX(calc(clamp(640px, 64vw, 880px) + ${dragOffsetPx}px)) translateZ(-320px) rotateY(-40deg) scale(0.72)`,
+        transform: `translateX(calc(-50% + clamp(550px, 54vw, 780px) + ${dragOffsetPx}px)) translateZ(-270px) rotateY(-38deg) scale(0.78)`,
         zIndex: 10,
-        opacity: 0.55,
-        filter: 'brightness(0.6) drop-shadow(0 10px 20px rgba(0,0,0,0.6))'
+        opacity: 0.6,
+        filter: 'brightness(0.65)'
       };
     }
     if (offset === -2) {
       return {
-        transform: `translateX(calc(clamp(-880px, -64vw, -640px) + ${dragOffsetPx}px)) translateZ(-320px) rotateY(40deg) scale(0.72)`,
+        transform: `translateX(calc(-50% - clamp(550px, 54vw, 780px) + ${dragOffsetPx}px)) translateZ(-270px) rotateY(38deg) scale(0.78)`,
         zIndex: 10,
-        opacity: 0.55,
-        filter: 'brightness(0.6) drop-shadow(0 10px 20px rgba(0,0,0,0.6))'
+        opacity: 0.6,
+        filter: 'brightness(0.65)'
       };
     }
 
     // Virtualized out
     return {
-      transform: `translateX(${offset * 500}px) translateZ(-500px)`,
+      transform: `translateX(calc(-50% + ${offset * 500}px)) translateZ(-500px)`,
       zIndex: 1,
       opacity: 0,
       pointerEvents: 'none',
@@ -224,25 +226,33 @@ export default function CurvedGalleryCarousel({
       onPointerMove={handlePointerMove}
       onPointerUp={handlePointerUp}
       onPointerCancel={handlePointerUp}
-      className="curved-gallery-fullscreen-wrapper relative w-full overflow-hidden select-none py-4 sm:py-8 cursor-grab active:cursor-grabbing"
+      className="curved-gallery-fullscreen-wrapper relative w-full overflow-hidden select-none py-2 sm:py-6 cursor-grab active:cursor-grabbing"
     >
-      {/* 3D Perspective Stage spanning full-width */}
-      <div className="curved-gallery-stage relative w-full flex items-center justify-center min-h-[480px] sm:min-h-[560px] lg:min-h-[640px]">
+      {/* 3D Perspective Stage */}
+      <div className="curved-gallery-stage relative w-full min-h-[440px] sm:min-h-[520px] lg:min-h-[580px]">
         
         {/* ================= 3D CURVED MEDIA CARDS ================= */}
         {items.map((item, index) => {
           const offset = getOffset(index);
           const isCurrentActive = offset === 0;
-          const style = getCardStyle(offset);
+          const isVisible = Math.abs(offset) <= 2;
+          if (!isVisible) return null;
+
+          const transformStyle = getCardTransform(offset);
           const rawSrc = mediaType === 'video' ? item.poster : item.src;
           const mediaSrc = getAssetUrl(rawSrc);
-          const title = typeof item.title === 'object' ? (item.title[lang] || item.title.en) : item.title;
-          const category = typeof item.category === 'object' ? (item.category[lang] || item.category.en) : item.category;
+          
+          // Get short label (e.g. DETAILS, INTERIORS, THE COURTYARD, DURGA PUJA, CELEBRATIONS)
+          const shortLabel = item.shortLabel 
+            ? (typeof item.shortLabel === 'object' ? (item.shortLabel[lang] || item.shortLabel.en) : item.shortLabel)
+            : (typeof item.category === 'object' ? (item.category[lang] || item.category.en) : item.category);
+
+          const fullTitle = typeof item.title === 'object' ? (item.title[lang] || item.title.en) : item.title;
 
           return (
             <div
               key={item.id || index}
-              style={style}
+              style={transformStyle}
               onClick={(e) => {
                 if (Math.abs(currentDeltaX) > 10) return; // ignore click if dragged
                 if (isCurrentActive) {
@@ -251,78 +261,80 @@ export default function CurvedGalleryCarousel({
                   setActiveIndex(index);
                 }
               }}
-              className={`curved-gallery-card absolute transition-all ${
+              className={`curved-gallery-card absolute top-4 left-1/2 transition-all ${
                 isDragging ? 'duration-75' : 'duration-700 cubic-bezier(0.2, 0.8, 0.2, 1)'
-              } flex flex-col items-center ${
+              } flex flex-col items-center cursor-pointer ${
                 isCurrentActive ? 'is-active-card' : 'is-side-card'
               }`}
             >
-              {/* Media Container with Golden Beveled Rim */}
-              <div className="curved-gallery-media-frame relative overflow-hidden rounded-xl sm:rounded-2xl border border-[#d4af37]/40 bg-[#1a0e0b]">
+              {/* Media Container Frame */}
+              <div className="curved-gallery-media-frame relative overflow-hidden bg-[#160c0a]">
                 <img
                   src={mediaSrc}
-                  alt={title}
+                  alt={fullTitle}
                   draggable={false}
                   className="w-full h-full object-cover transition-transform duration-700 pointer-events-none"
                   loading={Math.abs(offset) <= 1 ? 'eager' : 'lazy'}
                 />
 
-                {/* Subtle Ambient Vignette Overlay */}
-                <div className="absolute inset-0 bg-gradient-to-t from-[#120a08]/70 via-transparent to-black/20 pointer-events-none" />
+                {/* Ambient Shading Overlay */}
+                <div className={`absolute inset-0 transition-opacity duration-500 pointer-events-none ${
+                  isCurrentActive ? 'bg-gradient-to-t from-black/40 via-transparent to-black/10' : 'bg-black/35 hover:bg-black/15'
+                }`} />
 
-                {/* Video Play Badge if Video Media */}
+                {/* Video Play Badge */}
                 {mediaType === 'video' && (
                   <div className="absolute inset-0 flex items-center justify-center pointer-events-none">
-                    <div className={`rounded-full bg-[#160c0a]/85 border border-[#d4af37] flex items-center justify-center text-[#f3e5ab] shadow-2xl transition-transform duration-300 ${
-                      isCurrentActive ? 'w-16 h-16 sm:w-20 sm:h-20 scale-100 hover:scale-110' : 'w-10 h-10 sm:w-12 sm:h-12 opacity-80'
+                    <div className={`rounded-full bg-[#120a08]/85 border border-[#d4af37] flex items-center justify-center text-[#f3e5ab] shadow-2xl transition-transform duration-300 ${
+                      isCurrentActive ? 'w-16 h-16 sm:w-20 sm:h-20 scale-100 hover:scale-110' : 'w-10 h-10 sm:w-12 sm:h-12 opacity-85'
                     }`}>
-                      <Play className={`${isCurrentActive ? 'w-6 h-6 sm:w-8 sm:h-8' : 'w-4 h-4 sm:w-5 sm:h-5'} fill-current ml-1`} />
+                      <Play className={`${isCurrentActive ? 'w-6 h-6 sm:w-7 sm:h-7' : 'w-4 h-4'} fill-current ml-1`} />
                     </div>
                   </div>
                 )}
 
-                {/* Duration Badge for Videos */}
-                {mediaType === 'video' && item.duration && (
-                  <div className="absolute top-3 right-3 px-2.5 py-1 rounded-full bg-black/80 border border-[#d4af37]/40 text-[10px] font-mono text-[#f3e5ab] tracking-wider">
+                {/* Video Duration Badge */}
+                {mediaType === 'video' && item.duration && isCurrentActive && (
+                  <div className="absolute top-3 right-3 px-2.5 py-0.5 rounded-full bg-black/85 border border-[#d4af37]/40 text-[10px] font-mono text-[#f3e5ab] tracking-wider pointer-events-none">
                     {item.duration}
                   </div>
                 )}
 
                 {/* Fullscreen Expand Cue on Hover */}
-                {isCurrentActive && (
-                  <div className="curved-gallery-expand-cue absolute bottom-3 right-3 p-2 rounded-full bg-[#160c0a]/85 border border-[#d4af37]/60 text-[#f3e5ab] opacity-0 transition-opacity duration-300">
-                    <Maximize2 className="w-4 h-4" />
+                {isCurrentActive && mediaType === 'image' && (
+                  <div className="curved-gallery-expand-cue absolute bottom-3 right-3 p-2 rounded-full bg-[#160c0a]/85 border border-[#d4af37]/60 text-[#f3e5ab] opacity-0 transition-opacity duration-300 pointer-events-none">
+                    <Maximize2 className="w-3.5 h-3.5" />
                   </div>
                 )}
               </div>
 
               {/* ================= CARD LABEL UNDER MEDIA (Exact Reference Layout) ================= */}
-              <div className="curved-gallery-card-meta text-center mt-3 sm:mt-4 space-y-0.5 max-w-[320px]">
+              <div className="curved-gallery-card-meta text-center mt-3 sm:mt-4 space-y-0.5 w-full select-none pointer-events-none">
                 {isCurrentActive ? (
-                  /* Center Active Item Title & Number */
-                  <div className="space-y-1">
-                    <div className="text-[11px] sm:text-xs font-mono font-bold tracking-widest text-[#d4af37] uppercase">
+                  /* Center Active Item Number, Title, and Gold Dash */
+                  <div className="flex flex-col items-center">
+                    <span className="text-[11px] sm:text-xs font-mono font-medium tracking-[0.24em] text-[#d4af37] uppercase">
                       {String(index + 1).padStart(2, '0')}
-                    </div>
-                    <h3 className="font-serif text-sm sm:text-base lg:text-lg font-medium text-[#f4efe6] uppercase tracking-[0.18em] leading-tight">
-                      {title}
+                    </span>
+                    <h3 className="font-serif text-xs sm:text-sm lg:text-base font-medium text-[#f4efe6] uppercase tracking-[0.22em] mt-0.5 leading-snug">
+                      {shortLabel}
                     </h3>
-                    <div className="w-8 h-[1px] bg-[#d4af37]/50 mx-auto mt-1" />
+                    <div className="w-8 h-[1.5px] bg-[#d4af37]/60 mt-1.5" />
                   </div>
                 ) : (
-                  /* Side Inactive Item Label */
-                  <div className="space-y-0.5">
-                    <div className="text-[10px] font-mono font-bold text-[#8c6426]">
+                  /* Side Inactive Item Number & Label */
+                  <div className="flex flex-col items-center opacity-85">
+                    <span className="text-[10px] sm:text-[11px] font-mono font-medium tracking-[0.2em] text-[#d4af37]/75 uppercase">
                       {String(index + 1).padStart(2, '0')}
-                    </div>
-                    <div className="text-[10px] sm:text-xs font-serif uppercase tracking-[0.14em] text-[#a89083]/80">
-                      {category}
+                    </span>
+                    <div className="text-[10px] sm:text-xs font-serif uppercase tracking-[0.2em] text-[#c7b299]/85 mt-0.5">
+                      {shortLabel}
                     </div>
                   </div>
                 )}
               </div>
 
-              {/* Mirror Reflection on Floor */}
+              {/* Glassy Inverted Floor Reflection (Center Active Card) */}
               {isCurrentActive && (
                 <div className="curved-gallery-reflection pointer-events-none" aria-hidden="true">
                   <img
@@ -342,26 +354,26 @@ export default function CurvedGalleryCarousel({
       {/* =========================================================================
           ELEGANT NAVIGATION CONTROLS: ← [ 03 / 12 ] →
          ========================================================================= */}
-      <div className="curved-gallery-controls relative z-30 flex items-center justify-center gap-6 sm:gap-8 mt-4 sm:mt-6">
+      <div className="curved-gallery-controls relative z-30 flex items-center justify-center gap-6 sm:gap-8 mt-6 sm:mt-8">
         <button
           onClick={handlePrev}
           className="curved-gallery-nav-btn"
-          aria-label={isBn ? 'পূর্ববর্তী মিডিয়া' : 'Previous media'}
+          aria-label={isBn ? 'পূর্ববর্তী' : 'Previous'}
         >
           <ArrowLeft className="w-4 h-4 text-[#d4af37]" />
         </button>
 
         <div className="flex flex-col items-center">
-          <span className="font-mono text-xs sm:text-sm font-bold tracking-[0.25em] text-[#f4efe6]">
+          <span className="font-mono text-xs sm:text-sm font-semibold tracking-[0.25em] text-[#f4efe6]">
             {String(activeIndex + 1).padStart(2, '0')} / {String(total).padStart(2, '0')}
           </span>
-          <span className="w-8 h-[1px] bg-[#d4af37]/60 mt-1" />
+          <span className="w-8 h-[1px] bg-[#d4af37]/50 mt-1" />
         </div>
 
         <button
           onClick={handleNext}
           className="curved-gallery-nav-btn"
-          aria-label={isBn ? 'পরবর্তী মিডিয়া' : 'Next media'}
+          aria-label={isBn ? 'পরবর্তী' : 'Next'}
         >
           <ArrowRight className="w-4 h-4 text-[#d4af37]" />
         </button>

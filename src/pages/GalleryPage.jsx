@@ -51,7 +51,7 @@ export default function GalleryPage({ lang = 'en' }) {
   const activeFilm = selectedFilmIndex !== null ? filmsGalleryData[selectedFilmIndex] : null;
 
   return (
-    <main className="gallery-immersive-page pt-24 sm:pt-28 pb-16 min-h-screen text-[#f4efe6] bg-[#120a08] relative overflow-hidden">
+    <main className="gallery-immersive-page pt-20 sm:pt-24 pb-16 min-h-screen text-[#f4efe6] bg-[#120a08] relative overflow-hidden">
       {/* Full-bleed Atmospheric Heritage Background */}
       <div className="gallery-immersive-backdrop" aria-hidden="true">
         <div className="gallery-backdrop-watermark" />
@@ -61,22 +61,39 @@ export default function GalleryPage({ lang = 'en' }) {
 
       <div className="relative z-10 w-full">
         {/* =========================================================================
+            EDITORIAL HEADER (Matching Reference Mockup)
+           ========================================================================= */}
+        <header className="text-center pt-6 sm:pt-10 pb-4 sm:pb-8 px-6 max-w-4xl mx-auto">
+          <div className="inline-flex items-center justify-center gap-3 text-xs sm:text-sm font-mono tracking-[0.35em] text-[#d4af37] uppercase">
+            <span className="opacity-60">—</span>
+            <span>{isBn ? 'চিত্রশালা' : 'GALLERY'}</span>
+            <span className="opacity-60">—</span>
+          </div>
+          <h1 className="font-serif italic text-3xl sm:text-5xl lg:text-6xl text-[#fdfbf7] font-normal tracking-wide mt-3 mb-2">
+            {isBn ? 'সময়ের অনন্ত পরিভ্রমণ' : 'A Journey Through Time'}
+          </h1>
+          <p className="font-serif text-xs sm:text-sm lg:text-base text-[#c7b299] max-w-xl mx-auto tracking-normal">
+            {isBn ? 'খেলাৎ ভবনের জীবন্ত ঐতিহ্যের স্থাপত্য, মুহূর্ত ও গৌরবময় ইতিহাস।' : 'Spaces, stories and moments from the living heritage of Khelat Bhawan.'}
+          </p>
+        </header>
+
+        {/* =========================================================================
             SECTION 01 — PHOTOGRAPHY (Full-bleed 3D Curved Scrollable Gallery)
            ========================================================================= */}
         <section 
           className="gallery-section relative pt-2 pb-14 sm:pb-20 border-b border-[#d4af37]/20"
           aria-label={isBn ? 'চিত্রশালা' : 'Photography Gallery'}
         >
-          {/* Section Sub-header */}
-          <div className="max-w-7xl mx-auto px-6 sm:px-12 flex items-center justify-between mb-3">
+          {/* Section Indicator */}
+          <div className="max-w-7xl mx-auto px-6 sm:px-12 flex items-center justify-between mb-2 sm:mb-4">
             <div className="flex items-center gap-2 text-[#d4af37]">
-              <Camera className="w-4 h-4" />
-              <span className="text-xs font-mono font-bold tracking-[0.26em] uppercase">
+              <Camera className="w-3.5 h-3.5 sm:w-4 sm:h-4" />
+              <span className="text-[11px] sm:text-xs font-mono font-bold tracking-[0.24em] uppercase">
                 {isBn ? '০১ — আলোকচিত্র সংকলন' : '01 — PHOTOGRAPHY'}
               </span>
             </div>
-            <span className="text-[11px] font-serif italic text-[#a89083]">
-              {isBn ? 'ড্র্যাগ বা স্ক্রোল করুন' : 'Drag or scroll horizontally'}
+            <span className="text-[10px] sm:text-xs font-serif italic text-[#a89083]">
+              {isBn ? 'ড্র্যাগ বা অনুভূমিক স্ক্রোল করুন' : 'Drag or scroll horizontally'}
             </span>
           </div>
 
@@ -85,6 +102,7 @@ export default function GalleryPage({ lang = 'en' }) {
             items={photographyGalleryData}
             mediaType="image"
             lang={lang}
+            initialIndex={2}
             onSelectMedia={(item, index) => setSelectedPhotoIndex(index)}
           />
         </section>
@@ -96,16 +114,16 @@ export default function GalleryPage({ lang = 'en' }) {
           className="gallery-section relative pt-14 sm:pt-20 pb-8"
           aria-label={isBn ? 'ভিডিও ও চলচ্চিত্র' : 'Films and Video Gallery'}
         >
-          {/* Section Sub-header */}
-          <div className="max-w-7xl mx-auto px-6 sm:px-12 flex items-center justify-between mb-3">
+          {/* Section Indicator */}
+          <div className="max-w-7xl mx-auto px-6 sm:px-12 flex items-center justify-between mb-2 sm:mb-4">
             <div className="flex items-center gap-2 text-[#d4af37]">
-              <Film className="w-4 h-4" />
-              <span className="text-xs font-mono font-bold tracking-[0.26em] uppercase">
+              <Film className="w-3.5 h-3.5 sm:w-4 sm:h-4" />
+              <span className="text-[11px] sm:text-xs font-mono font-bold tracking-[0.24em] uppercase">
                 {isBn ? '০২ — চলচ্চিত্র ও প্রামাণ্যচিত্র' : '02 — FILMS'}
               </span>
             </div>
-            <span className="text-[11px] font-serif italic text-[#a89083]">
-              {isBn ? 'ভিডিও দেখতে ক্লিক করুন' : 'Click active card to play'}
+            <span className="text-[10px] sm:text-xs font-serif italic text-[#a89083]">
+              {isBn ? 'ভিডিও দেখতে কার্ডে ক্লিক করুন' : 'Click active card to play'}
             </span>
           </div>
 
@@ -114,14 +132,15 @@ export default function GalleryPage({ lang = 'en' }) {
             items={filmsGalleryData}
             mediaType="video"
             lang={lang}
+            initialIndex={0}
             onSelectMedia={(item, index) => setSelectedFilmIndex(index)}
           />
         </section>
 
         {/* =========================================================================
-            CORNER EDITORIAL BADGES
+            CORNER EDITORIAL BADGES (Exact Reference Layout)
            ========================================================================= */}
-        <footer className="max-w-7xl mx-auto px-6 sm:px-12 pt-14 pb-4 flex items-center justify-between text-[10px] sm:text-xs tracking-[0.24em] font-serif uppercase text-[#8c6e4e]/70 border-t border-[#d4af37]/15">
+        <footer className="max-w-7xl mx-auto px-6 sm:px-12 pt-16 pb-6 flex items-center justify-between text-[10px] sm:text-xs tracking-[0.24em] font-serif uppercase text-[#8c6e4e]/70 border-t border-[#d4af37]/15">
           <div className="space-y-0.5 text-left">
             <div>A HERITAGE</div>
             <div>THAT LIVES ON</div>
