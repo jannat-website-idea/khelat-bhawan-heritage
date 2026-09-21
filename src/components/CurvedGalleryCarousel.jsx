@@ -13,12 +13,14 @@ export default function CurvedGalleryCarousel({
     if (items.length === 0) return 0;
     return initialIndex >= 0 && initialIndex < items.length ? initialIndex : 0;
   });
+  const [isPointerDown, setIsPointerDown] = useState(false);
   const [isDragging, setIsDragging] = useState(false);
   const [startX, setStartX] = useState(0);
   const [currentDeltaX, setCurrentDeltaX] = useState(0);
   const [isMobile, setIsMobile] = useState(false);
   const containerRef = useRef(null);
   const wheelLockRef = useRef(false);
+  const hasDraggedRef = useRef(false);
 
   const total = items.length;
   const isBn = lang === 'bn';
@@ -88,35 +90,40 @@ export default function CurvedGalleryCarousel({
     return () => el.removeEventListener('wheel', onWheelScroll);
   }, [handleNext, handlePrev]);
 
-  // Pointer Drag & Touch Swipe handlers
+  // Mouse & Touch Drag handling
   const handlePointerDown = (e) => {
-    setIsDragging(true);
+    setIsPointerDown(true);
+    hasDraggedRef.current = false;
     setStartX(e.clientX);
     setCurrentDeltaX(0);
-    try {
-      e.currentTarget.setPointerCapture(e.pointerId);
-    } catch (err) {}
   };
 
   const handlePointerMove = (e) => {
-    if (!isDragging) return;
+    if (!isPointerDown) return;
     const delta = e.clientX - startX;
-    setCurrentDeltaX(delta);
+    if (Math.abs(delta) > 8) {
+      setIsDragging(true);
+      hasDraggedRef.current = true;
+      setCurrentDeltaX(delta);
+    }
   };
 
-  const handlePointerUp = (e) => {
-    if (!isDragging) return;
-    setIsDragging(false);
-    try {
-      e.currentTarget.releasePointerCapture(e.pointerId);
-    } catch (err) {}
-
-    if (currentDeltaX > 35) {
-      handlePrev();
-    } else if (currentDeltaX < -35) {
-      handleNext();
+  const handlePointerUp = () => {
+    if (isPointerDown) {
+      if (isDragging) {
+        if (currentDeltaX > 35) {
+          handlePrev();
+        } else if (currentDeltaX < -35) {
+          handleNext();
+        }
+      }
+      setIsPointerDown(false);
+      setIsDragging(false);
+      setCurrentDeltaX(0);
+      setTimeout(() => {
+        hasDraggedRef.current = false;
+      }, 50);
     }
-    setCurrentDeltaX(0);
   };
 
   if (total === 0) return null;
@@ -219,13 +226,21 @@ export default function CurvedGalleryCarousel({
     };
   };
 
+  const handleCardClick = (item, index, isCurrentActive) => {
+    if (hasDraggedRef.current) return;
+    setActiveIndex(index);
+    if (onSelectMedia) {
+      onSelectMedia(item, index);
+    }
+  };
+
   return (
     <div 
       ref={containerRef}
       onPointerDown={handlePointerDown}
       onPointerMove={handlePointerMove}
       onPointerUp={handlePointerUp}
-      onPointerCancel={handlePointerUp}
+      onPointerLeave={handlePointerUp}
       className="curved-gallery-fullscreen-wrapper relative w-full overflow-hidden select-none py-2 sm:py-6 cursor-grab active:cursor-grabbing"
     >
       {/* 3D Perspective Stage */}
@@ -256,13 +271,12 @@ export default function CurvedGalleryCarousel({
               key={item.id || index}
               style={transformStyle}
               onClick={(e) => {
-                if (Math.abs(currentDeltaX) > 10) return; // ignore click if dragged
-                if (isCurrentActive) {
-                  onSelectMedia(item, index);
-                } else {
-                  setActiveIndex(index);
-                }
+                e.stopPropagation();
+                handleCardClick(item, index, isCurrentActive);
               }}
+              role="button"
+              tabIndex={0}
+              aria-label={`Open ${fullTitle} in full screen`}
               className={`curved-gallery-card absolute top-4 left-1/2 transition-all ${
                 isDragging ? 'duration-75' : 'duration-700 cubic-bezier(0.2, 0.8, 0.2, 1)'
               } flex flex-col items-center cursor-pointer ${
@@ -274,25 +288,25 @@ export default function CurvedGalleryCarousel({
               }`}
             >
               {/* Media Container Frame (Fine antique gold edge, 4px radius) */}
-              <div className="curved-gallery-media-frame relative overflow-hidden bg-[#160c0a]">
+              <div className="curved-gallery-media-frame relative overflow-hidden bg-[#160c0a] group">
                 <img
                   src={mediaSrc}
                   alt={fullTitle}
                   draggable={false}
-                  className="w-full h-full object-cover transition-transform duration-700 pointer-events-none"
+                  className="w-full h-full object-cover transition-transform duration-700 pointer-events-none group-hover:scale-105"
                   loading={Math.abs(offset) <= 1 ? 'eager' : 'lazy'}
                 />
 
                 {/* Subtle Ambient Vignette Overlay */}
                 <div className={`absolute inset-0 transition-opacity duration-500 pointer-events-none ${
-                  isCurrentActive ? 'bg-gradient-to-t from-black/35 via-transparent to-black/10' : 'bg-black/30 hover:bg-black/10'
+                  isCurrentActive ? 'bg-gradient-to-t from-black/35 via-transparent to-black/10' : 'bg-black/30 group-hover:bg-black/10'
                 }`} />
 
                 {/* Video Play Badge for Video Media */}
                 {mediaType === 'video' && (
                   <div className="absolute inset-0 flex items-center justify-center pointer-events-none">
                     <div className={`rounded-full bg-[#120a08]/85 border border-[#d4af37] flex items-center justify-center text-[#f3e5ab] shadow-2xl transition-transform duration-300 ${
-                      isCurrentActive ? 'w-16 h-16 sm:w-20 sm:h-20 scale-100 hover:scale-110' : 'w-10 h-10 sm:w-12 sm:h-12 opacity-85'
+                      isCurrentActive ? 'w-16 h-16 sm:w-20 sm:h-20 scale-100 group-hover:scale-110' : 'w-10 h-10 sm:w-12 sm:h-12 opacity-85 group-hover:opacity-100'
                     }`}>
                       <Play className={`${isCurrentActive ? 'w-6 h-6 sm:w-7 sm:h-7' : 'w-4 h-4'} fill-current ml-1`} />
                     </div>
@@ -300,15 +314,17 @@ export default function CurvedGalleryCarousel({
                 )}
 
                 {/* Video Duration Badge */}
-                {mediaType === 'video' && item.duration && isCurrentActive && (
+                {mediaType === 'video' && item.duration && (
                   <div className="absolute top-3 right-3 px-2.5 py-0.5 rounded-full bg-black/85 border border-[#d4af37]/40 text-[10px] font-mono text-[#f3e5ab] tracking-wider pointer-events-none">
                     {item.duration}
                   </div>
                 )}
 
-                {/* Fullscreen Expand Cue on Active Center Card */}
-                {isCurrentActive && mediaType === 'image' && (
-                  <div className="curved-gallery-expand-cue absolute bottom-3 right-3 p-2 rounded-full bg-[#160c0a]/85 border border-[#d4af37]/60 text-[#f3e5ab] opacity-75 hover:opacity-100 transition-opacity duration-300 pointer-events-none">
+                {/* Fullscreen Expand Cue on Hover */}
+                {mediaType === 'image' && (
+                  <div className={`curved-gallery-expand-cue absolute bottom-3 right-3 p-2 rounded-full bg-[#160c0a]/85 border border-[#d4af37]/60 text-[#f3e5ab] transition-opacity duration-300 pointer-events-none ${
+                    isCurrentActive ? 'opacity-80 group-hover:opacity-100' : 'opacity-0 group-hover:opacity-80'
+                  }`}>
                     <Maximize2 className="w-3.5 h-3.5" />
                   </div>
                 )}
@@ -360,7 +376,10 @@ export default function CurvedGalleryCarousel({
          ========================================================================= */}
       <div className="curved-gallery-controls relative z-30 flex items-center justify-center gap-6 sm:gap-8 mt-4 sm:mt-6">
         <button
-          onClick={handlePrev}
+          onClick={(e) => {
+            e.stopPropagation();
+            handlePrev();
+          }}
           className="curved-gallery-nav-btn group"
           aria-label={isBn ? 'পূর্ববর্তী' : 'Previous'}
         >
@@ -375,7 +394,10 @@ export default function CurvedGalleryCarousel({
         </div>
 
         <button
-          onClick={handleNext}
+          onClick={(e) => {
+            e.stopPropagation();
+            handleNext();
+          }}
           className="curved-gallery-nav-btn group"
           aria-label={isBn ? 'পরবর্তী' : 'Next'}
         >
