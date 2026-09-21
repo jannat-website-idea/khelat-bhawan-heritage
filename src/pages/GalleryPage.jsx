@@ -1,13 +1,12 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
+import { createPortal } from 'react-dom';
 import { getAssetUrl } from '../utils/assetHelper';
 import { photographyGalleryData, filmsGalleryData } from '../data/galleryData';
 import CurvedGalleryCarousel from '../components/CurvedGalleryCarousel';
 import { 
   X, 
   ChevronLeft, 
-  ChevronRight, 
-  Camera, 
-  Film
+  ChevronRight
 } from 'lucide-react';
 
 export default function GalleryPage({ lang = 'en' }) {
@@ -15,15 +14,25 @@ export default function GalleryPage({ lang = 'en' }) {
 
   // Fullscreen State for Photography Lightbox
   const [selectedPhotoIndex, setSelectedPhotoIndex] = useState(null);
+  const [isPhotoClosing, setIsPhotoClosing] = useState(false);
 
   // Cinematic Theater State for Film Player
   const [selectedFilmIndex, setSelectedFilmIndex] = useState(null);
+
+  const closePhoto = useCallback(() => {
+    if (selectedPhotoIndex === null || isPhotoClosing) return;
+    setIsPhotoClosing(true);
+    window.setTimeout(() => {
+      setSelectedPhotoIndex(null);
+      setIsPhotoClosing(false);
+    }, 650);
+  }, [isPhotoClosing, selectedPhotoIndex]);
 
   // Keyboard navigation inside modal viewers
   useEffect(() => {
     const handleKeyDown = (e) => {
       if (e.key === 'Escape') {
-        setSelectedPhotoIndex(null);
+        closePhoto();
         setSelectedFilmIndex(null);
       }
       // Photo modal navigation
@@ -45,13 +54,20 @@ export default function GalleryPage({ lang = 'en' }) {
     };
     window.addEventListener('keydown', handleKeyDown);
     return () => window.removeEventListener('keydown', handleKeyDown);
+  }, [selectedPhotoIndex, selectedFilmIndex, closePhoto]);
+
+  useEffect(() => {
+    if (selectedPhotoIndex === null && selectedFilmIndex === null) return undefined;
+    const previousOverflow = document.body.style.overflow;
+    document.body.style.overflow = 'hidden';
+    return () => { document.body.style.overflow = previousOverflow; };
   }, [selectedPhotoIndex, selectedFilmIndex]);
 
   const activePhoto = selectedPhotoIndex !== null ? photographyGalleryData[selectedPhotoIndex] : null;
   const activeFilm = selectedFilmIndex !== null ? filmsGalleryData[selectedFilmIndex] : null;
 
   return (
-    <main className="gallery-immersive-page pt-20 sm:pt-24 pb-16 min-h-screen text-[#f4efe6] bg-[#120a08] relative overflow-hidden">
+    <main className="gallery-immersive-page pt-20 sm:pt-24 pb-16 min-h-screen text-[#f4efe6] bg-[#120a08] relative overflow-x-clip">
       {/* Full-bleed Atmospheric Heritage Background */}
       <div className="gallery-immersive-backdrop" aria-hidden="true">
         <div className="gallery-backdrop-watermark" />
@@ -64,7 +80,7 @@ export default function GalleryPage({ lang = 'en' }) {
             EDITORIAL HEADER (Matching Reference Mockup)
            ========================================================================= */}
         <header className="text-center pt-6 sm:pt-10 pb-4 sm:pb-8 px-6 max-w-4xl mx-auto">
-          <div className="inline-flex items-center justify-center gap-3 text-xs sm:text-sm font-mono tracking-[0.35em] text-[#d4af37] uppercase">
+          <div className="inline-flex items-center justify-center gap-3 text-xs sm:text-sm font-mono tracking-[0.35em] text-[#c99a4a] uppercase">
             <span className="opacity-60">—</span>
             <span>{isBn ? 'চিত্রশালা' : 'GALLERY'}</span>
             <span className="opacity-60">—</span>
@@ -81,29 +97,20 @@ export default function GalleryPage({ lang = 'en' }) {
             SECTION 01 — PHOTOGRAPHY (Full-bleed 3D Curved Scrollable Gallery)
            ========================================================================= */}
         <section 
-          className="gallery-section relative pt-2 pb-14 sm:pb-20 border-b border-[#d4af37]/20"
+          className="gallery-section relative pt-2 pb-14 sm:pb-20 border-b border-[#c99a4a]/20"
           aria-label={isBn ? 'চিত্রশালা' : 'Photography Gallery'}
         >
-          {/* Section Indicator */}
-          <div className="max-w-7xl mx-auto px-6 sm:px-12 flex items-center justify-between mb-2 sm:mb-4">
-            <div className="flex items-center gap-2 text-[#d4af37]">
-              <Camera className="w-3.5 h-3.5 sm:w-4 sm:h-4" />
-              <span className="text-[11px] sm:text-xs font-mono font-bold tracking-[0.24em] uppercase">
-                {isBn ? '০১ — আলোকচিত্র সংকলন' : '01 — PHOTOGRAPHY'}
-              </span>
-            </div>
-            <span className="text-[10px] sm:text-xs font-serif italic text-[#a89083]">
-              {isBn ? 'ড্র্যাগ বা অনুভূমিক স্ক্রোল করুন' : 'Drag or scroll horizontally'}
-            </span>
-          </div>
-
           {/* Full-width 3D Curved Photography Carousel */}
           <CurvedGalleryCarousel
             items={photographyGalleryData}
             mediaType="image"
             lang={lang}
             initialIndex={2}
-            onSelectMedia={(item, index) => setSelectedPhotoIndex(index)}
+            scrollDriven
+            onSelectMedia={(item, index) => {
+              setIsPhotoClosing(false);
+              setSelectedPhotoIndex(index);
+            }}
           />
         </section>
 
@@ -114,19 +121,12 @@ export default function GalleryPage({ lang = 'en' }) {
           className="gallery-section relative pt-14 sm:pt-20 pb-8"
           aria-label={isBn ? 'ভিডিও ও চলচ্চিত্র' : 'Films and Video Gallery'}
         >
-          {/* Section Indicator */}
-          <div className="max-w-7xl mx-auto px-6 sm:px-12 flex items-center justify-between mb-2 sm:mb-4">
-            <div className="flex items-center gap-2 text-[#d4af37]">
-              <Film className="w-3.5 h-3.5 sm:w-4 sm:h-4" />
-              <span className="text-[11px] sm:text-xs font-mono font-bold tracking-[0.24em] uppercase">
-                {isBn ? '০২ — চলচ্চিত্র ও প্রামাণ্যচিত্র' : '02 — FILMS'}
-              </span>
-            </div>
-            <span className="text-[10px] sm:text-xs font-serif italic text-[#a89083]">
-              {isBn ? 'ভিডিও দেখতে কার্ডে ক্লিক করুন' : 'Click active card to play'}
-            </span>
+          <div className="gallery-films-heading text-center px-6 mb-8 sm:mb-12">
+            <span className="text-[11px] sm:text-xs tracking-[0.28em] uppercase text-[#c99a4a]">02 — FILMS</span>
+            <h2 className="font-serif italic text-3xl sm:text-5xl font-normal text-[#f4efe6] mt-3">
+              {isBn ? 'চলমান গল্প' : 'Stories in Motion'}
+            </h2>
           </div>
-
           {/* Full-width 3D Curved Films Carousel */}
           <CurvedGalleryCarousel
             items={filmsGalleryData}
@@ -140,14 +140,14 @@ export default function GalleryPage({ lang = 'en' }) {
         {/* =========================================================================
             CORNER EDITORIAL BADGES (Exact Reference Layout)
            ========================================================================= */}
-        <footer className="max-w-7xl mx-auto px-6 sm:px-12 pt-16 pb-6 flex items-center justify-between text-[10px] sm:text-xs tracking-[0.24em] font-serif uppercase text-[#8c6e4e]/70 border-t border-[#d4af37]/15">
+        <footer className="max-w-7xl mx-auto px-6 sm:px-12 pt-16 pb-6 flex items-center justify-between text-[10px] sm:text-xs tracking-[0.24em] font-serif uppercase text-[#8c6e4e]/70 border-t border-[#c99a4a]/15">
           <div className="space-y-0.5 text-left">
             <div>A HERITAGE</div>
             <div>THAT LIVES ON</div>
           </div>
 
           <div className="text-center">
-            <span className="text-[#d4af37]">✦</span>
+            <span className="text-[#c99a4a]">✦</span>
           </div>
 
           <div className="space-y-0.5 text-right">
@@ -160,17 +160,17 @@ export default function GalleryPage({ lang = 'en' }) {
       {/* =========================================================================
           FULLSCREEN IMAGE VIEWER LIGHTBOX
          ========================================================================= */}
-      {activePhoto && (
+      {activePhoto && createPortal(
         <div 
-          className="fixed inset-0 z-50 flex items-center justify-center bg-[#100806]/96 backdrop-blur-xl animate-in fade-in duration-300"
-          onClick={() => setSelectedPhotoIndex(null)}
+          className={`gallery-lightbox fixed inset-0 z-50 flex items-center justify-center bg-[#100806]/96 ${isPhotoClosing ? 'is-closing' : 'is-open'}`}
+          onClick={closePhoto}
           role="dialog"
           aria-modal="true"
         >
           {/* Top Bar */}
           <div className="absolute top-0 left-0 right-0 p-4 sm:p-6 flex items-center justify-between text-[#f4efe6] z-20">
             <div className="flex items-center gap-3">
-              <span className="font-mono text-xs font-bold tracking-widest text-[#d4af37]">
+              <span className="font-mono text-xs font-bold tracking-widest text-[#c99a4a]">
                 {String(selectedPhotoIndex + 1).padStart(2, '0')} / {String(photographyGalleryData.length).padStart(2, '0')}
               </span>
               <span className="text-xs uppercase font-serif tracking-widest text-[#a89083] hidden sm:inline">
@@ -179,8 +179,8 @@ export default function GalleryPage({ lang = 'en' }) {
             </div>
 
             <button
-              onClick={() => setSelectedPhotoIndex(null)}
-              className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-[#1e100c] border border-[#d4af37]/40 text-xs font-mono uppercase tracking-widest text-[#f4efe6] hover:bg-[#d4af37] hover:text-[#120a08] transition-colors"
+              onClick={closePhoto}
+              className="gallery-lightbox__close inline-flex items-center gap-2 px-4 py-2 bg-[#1e100c] border border-[#c99a4a]/40 text-xs font-mono uppercase tracking-widest text-[#f4efe6] hover:bg-[#c99a4a] hover:text-[#120a08] transition-colors"
               aria-label={isBn ? 'বন্ধ করুন' : 'Close image'}
             >
               <span>{isBn ? 'বন্ধ করুন' : 'CLOSE IMAGE'}</span>
@@ -194,7 +194,7 @@ export default function GalleryPage({ lang = 'en' }) {
               e.stopPropagation();
               setSelectedPhotoIndex((prev) => (prev - 1 + photographyGalleryData.length) % photographyGalleryData.length);
             }}
-            className="absolute left-4 sm:left-8 top-1/2 -translate-y-1/2 w-12 h-12 rounded-full bg-[#1e100c]/80 border border-[#d4af37]/40 text-[#f4efe6] flex items-center justify-center hover:bg-[#d4af37] hover:text-[#120a08] transition-colors z-20"
+            className="absolute left-4 sm:left-8 top-1/2 -translate-y-1/2 w-12 h-12 rounded-full bg-[#1e100c]/80 border border-[#c99a4a]/40 text-[#f4efe6] flex items-center justify-center hover:bg-[#c99a4a] hover:text-[#120a08] transition-colors z-20"
             aria-label={isBn ? 'পূর্ববর্তী ছবি' : 'Previous photograph'}
           >
             <ChevronLeft className="w-6 h-6" />
@@ -208,7 +208,7 @@ export default function GalleryPage({ lang = 'en' }) {
             <img
               src={getAssetUrl(activePhoto.src)}
               alt={typeof activePhoto.title === 'object' ? (activePhoto.title[lang] || activePhoto.title.en) : activePhoto.title}
-              className="max-h-[72vh] max-w-full object-contain rounded-lg shadow-2xl border border-[#d4af37]/30"
+              className="gallery-lightbox__image max-h-[72vh] max-w-full object-contain shadow-2xl border border-[#c99a4a]/45"
             />
             
             {/* Caption & Description */}
@@ -230,20 +230,21 @@ export default function GalleryPage({ lang = 'en' }) {
               e.stopPropagation();
               setSelectedPhotoIndex((prev) => (prev + 1) % photographyGalleryData.length);
             }}
-            className="absolute right-4 sm:right-8 top-1/2 -translate-y-1/2 w-12 h-12 rounded-full bg-[#1e100c]/80 border border-[#d4af37]/40 text-[#f4efe6] flex items-center justify-center hover:bg-[#d4af37] hover:text-[#120a08] transition-colors z-20"
+            className="absolute right-4 sm:right-8 top-1/2 -translate-y-1/2 w-12 h-12 rounded-full bg-[#1e100c]/80 border border-[#c99a4a]/40 text-[#f4efe6] flex items-center justify-center hover:bg-[#c99a4a] hover:text-[#120a08] transition-colors z-20"
             aria-label={isBn ? 'পরবর্তী ছবি' : 'Next photograph'}
           >
             <ChevronRight className="w-6 h-6" />
           </button>
-        </div>
+        </div>,
+        document.body
       )}
 
       {/* =========================================================================
           CINEMATIC FILM THEATER PLAYER
          ========================================================================= */}
-      {activeFilm && (
+      {activeFilm && createPortal(
         <div 
-          className="fixed inset-0 z-50 flex items-center justify-center bg-[#0d0605]/98 backdrop-blur-2xl animate-in fade-in duration-300"
+          className="gallery-film-theater fixed inset-0 flex items-center justify-center bg-[#0d0605]/98 backdrop-blur-2xl animate-in fade-in duration-300"
           onClick={() => setSelectedFilmIndex(null)}
           role="dialog"
           aria-modal="true"
@@ -318,7 +319,8 @@ export default function GalleryPage({ lang = 'en' }) {
               </div>
             </div>
           </div>
-        </div>
+        </div>,
+        document.body
       )}
     </main>
   );

@@ -1142,7 +1142,7 @@
   right: -10px;
   width: clamp(440px, 48vw, 760px);
   height: 520px;
-  opacity: 0.16;
+  opacity: 0.22;
   mask-image: radial-gradient(ellipse at 70% 40%, black 25%, transparent 72%);
   -webkit-mask-image: radial-gradient(ellipse at 70% 40%, black 25%, transparent 72%);
 }
@@ -1826,6 +1826,8 @@
 .gallery-immersive-page {
   background-color: #120a08;
   color: #f4efe6;
+  --gallery-gold: #c99a4a;
+  --gallery-gold-light: #d8ae62;
 }
 
 .gallery-immersive-backdrop {
@@ -1842,8 +1844,8 @@
   background-image: url('/images/khelat-bhawan-night-courtyard.jpg');
   background-size: cover;
   background-position: center 25%;
-  opacity: 0.12;
-  filter: sepia(0.85) contrast(1.15) brightness(0.9);
+  opacity: 0.16;
+  filter: sepia(0.88) contrast(1.12) brightness(0.68);
   mix-blend-mode: luminosity;
 }
 
@@ -1867,11 +1869,29 @@
 
 /* 3D Perspective Stage spanning full viewport */
 .curved-gallery-fullscreen-wrapper {
-  perspective: 1500px;
-  -webkit-perspective: 1500px;
+  perspective: 1650px;
+  -webkit-perspective: 1650px;
+  perspective-origin: 50% 43%;
   touch-action: pan-y;
   user-select: none;
 }
+
+.curved-gallery-scroll-track {
+  position: relative;
+  height: var(--gallery-scroll-height);
+}
+
+.curved-gallery-sticky-viewport {
+  position: sticky;
+  top: 72px;
+  height: calc(100vh - 72px);
+  min-height: 680px;
+  display: flex;
+  align-items: center;
+  overflow: clip;
+}
+
+.curved-gallery-sticky-viewport > .curved-gallery-fullscreen-wrapper { width: 100%; }
 
 .curved-gallery-stage {
   transform-style: preserve-3d;
@@ -1883,41 +1903,49 @@
   transform-style: preserve-3d;
   -webkit-transform-style: preserve-3d;
   will-change: transform, opacity, filter;
+  transition-property: width, height, transform, opacity, filter;
+  transition-duration: 1000ms;
+  transition-timing-function: cubic-bezier(.16, 1, .3, 1);
+}
+
+.curved-gallery-sticky-viewport .curved-gallery-card {
+  transition-duration: 150ms;
+  transition-timing-function: linear;
 }
 
 .curved-gallery-card.is-active-card {
-  width: clamp(420px, 40vw, 640px);
-  height: clamp(280px, 42vh, 420px);
+  width: clamp(430px, 39vw, 660px);
+  height: clamp(290px, 44vh, 440px);
 }
 
 .curved-gallery-card.is-near-side-card {
-  width: clamp(210px, 18.5vw, 290px);
-  height: clamp(280px, 42vh, 420px);
+  width: clamp(230px, 20vw, 320px);
+  height: clamp(360px, 54vh, 520px);
 }
 
 .curved-gallery-card.is-far-side-card {
-  width: clamp(160px, 14vw, 220px);
-  height: clamp(250px, 37vh, 380px);
+  width: clamp(205px, 17vw, 275px);
+  height: clamp(410px, 64vh, 610px);
 }
 
 .curved-gallery-media-frame {
   width: 100%;
   height: 100%;
   border-radius: 4px;
-  border: 1px solid rgba(212, 175, 55, 0.35);
-  box-shadow: 0 16px 45px rgba(0, 0, 0, 0.88);
+  border: 1px solid rgba(201, 154, 74, 0.52);
+  box-shadow: 0 16px 42px rgba(0, 0, 0, 0.58);
   transition: border-color 0.4s ease, box-shadow 0.4s ease;
 }
 
 .is-near-side-card:hover .curved-gallery-media-frame,
 .is-far-side-card:hover .curved-gallery-media-frame {
-  border-color: rgba(212, 175, 55, 0.65);
-  box-shadow: 0 20px 50px rgba(0, 0, 0, 0.95), 0 0 20px rgba(212, 175, 55, 0.2);
+  border-color: rgba(201, 154, 74, 0.72);
+  box-shadow: 0 20px 50px rgba(0, 0, 0, 0.72), 0 0 18px rgba(201, 154, 74, 0.15);
 }
 
 .is-active-card .curved-gallery-media-frame {
-  border: 1px solid rgba(212, 175, 55, 0.65);
-  box-shadow: 0 26px 70px rgba(0, 0, 0, 0.96), 0 0 30px rgba(212, 175, 55, 0.18);
+  border: 1px solid rgba(216, 174, 98, 0.82);
+  box-shadow: 0 26px 64px rgba(0, 0, 0, 0.74), 0 0 28px rgba(201, 154, 74, 0.13);
 }
 
 .is-active-card:hover .curved-gallery-expand-cue {
@@ -1965,7 +1993,7 @@
   width: 44px;
   height: 44px;
   border-radius: 50%;
-  border: 1px solid rgba(212, 175, 55, 0.5);
+  border: 1px solid rgba(201, 154, 74, 0.65);
   background: rgba(22, 10, 8, 0.6);
   display: grid;
   place-items: center;
@@ -1976,19 +2004,69 @@
 
 .curved-gallery-nav-btn:hover {
   background: rgba(212, 175, 55, 0.15);
-  border-color: #d4af37;
-  box-shadow: 0 0 20px rgba(212, 175, 55, 0.4);
+  border-color: #c99a4a;
+  box-shadow: 0 0 20px rgba(201, 154, 74, 0.28);
   transform: scale(1.06);
 }
 
 .curved-gallery-nav-btn:hover svg {
-  color: #d4af37 !important;
+  color: #c99a4a !important;
 }
 
+.gallery-lightbox {
+  z-index: 1000;
+  opacity: 0;
+  backdrop-filter: blur(0);
+  transition: opacity 650ms cubic-bezier(.16, 1, .3, 1), backdrop-filter 650ms cubic-bezier(.16, 1, .3, 1);
+}
 
+.gallery-lightbox.is-open {
+  opacity: 1;
+  backdrop-filter: blur(14px);
+  animation: galleryBackdropIn 650ms cubic-bezier(.16, 1, .3, 1) both;
+}
+.gallery-lightbox.is-closing { opacity: 0; backdrop-filter: blur(0); }
 
+.gallery-lightbox__image {
+  border-radius: 2px;
+  transform: translateY(54px) scale(.72);
+  opacity: 0;
+  transition: transform 900ms cubic-bezier(.16, 1, .3, 1), opacity 520ms ease;
+}
 
+.gallery-lightbox.is-open .gallery-lightbox__image {
+  transform: translateY(0) scale(1);
+  opacity: 1;
+  animation: galleryImageForward 900ms cubic-bezier(.16, 1, .3, 1) both;
+}
+.gallery-lightbox.is-closing .gallery-lightbox__image { transform: translateY(42px) scale(.74); opacity: 0; }
+.gallery-lightbox__close { border-radius: 2px; }
+.gallery-film-theater { z-index: 1000; }
 
+@keyframes galleryBackdropIn {
+  from { opacity: 0; backdrop-filter: blur(0); }
+  to { opacity: 1; backdrop-filter: blur(14px); }
+}
+
+@keyframes galleryImageForward {
+  from { transform: translateY(54px) scale(.72); opacity: 0; }
+  to { transform: translateY(0) scale(1); opacity: 1; }
+}
+
+@media (min-width: 768px) and (max-width: 1099px) {
+  .curved-gallery-card.is-active-card { width: min(58vw, 620px); height: min(45vh, 420px); }
+  .curved-gallery-card.is-near-side-card,
+  .curved-gallery-card.is-far-side-card { width: min(27vw, 250px); height: min(42vh, 390px); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .curved-gallery-card,
+  .gallery-lightbox,
+  .gallery-lightbox__image,
+  .curved-gallery-media-frame img { transition-duration: 1ms !important; }
+  .curved-gallery-scroll-track { height: auto !important; }
+  .curved-gallery-sticky-viewport { position: relative; top: auto; height: auto; min-height: 0; }
+}
 
 
 
