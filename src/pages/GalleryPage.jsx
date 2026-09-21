@@ -40,11 +40,16 @@ export default function GalleryPage({ lang = 'en' }) {
   }, [activeFilter]);
 
   const crestRows = useMemo(() => {
-    const patterns = galleryItems.length <= 6
-      ? [2, 3, 1]
-      : galleryItems.length <= 12
-        ? [3, 4, 4, 1]
-        : [3, 5, 6, 3, 1];
+    const rowRhythm = [2, 4, 3];
+    const patterns = [];
+    let remaining = galleryItems.length;
+    let rhythmIndex = 0;
+    while (remaining > 0) {
+      const size = Math.min(rowRhythm[rhythmIndex % rowRhythm.length], remaining);
+      patterns.push(size);
+      remaining -= size;
+      rhythmIndex += 1;
+    }
     let cursor = 0;
     return patterns
       .map((size, rowIndex) => {
@@ -172,7 +177,7 @@ export default function GalleryPage({ lang = 'en' }) {
             <div className="gallery-crest__aura" aria-hidden="true" />
             {crestRows.map((row, rowIndex) => (
               <div
-                className={`gallery-crest-row gallery-crest-row--${rowIndex}`}
+                className={`gallery-crest-row gallery-crest-row--${rowIndex} gallery-crest-row--count-${row.length}`}
                 key={`crest-row-${rowIndex}`}
                 style={{ '--row-count': row.length }}
               >
