@@ -1022,6 +1022,90 @@
 .trustee-lineage__item h3 { margin: 6px 0 8px; color: #f4efe5; font-family: var(--font-serif); font-size: clamp(24px, 2.3vw, 34px); font-weight: 500; }
 .trustee-lineage__item p { max-width: 950px; margin: 0; color: rgba(244, 239, 229, .68); font-size: 14.5px; line-height: 1.75; }
 
+/* Trustee hierarchy — widening royal tiers communicate succession at a glance. */
+.trustee-pyramid {
+  position: relative;
+  z-index: 2;
+  width: min(100%, 1120px);
+  margin: 0 auto;
+  padding: clamp(2rem, 4vw, 3.75rem) 0 1rem;
+}
+.trustee-pyramid__eyebrow {
+  margin: 0 0 clamp(2rem, 4vw, 3.5rem);
+  color: #d7b879;
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: .26em;
+  text-align: center;
+  text-transform: uppercase;
+}
+.trustee-pyramid__tier {
+  position: relative;
+  width: var(--tier-width);
+  margin: 0 auto 9px;
+  padding: 1px;
+  background: linear-gradient(90deg, rgba(184, 134, 61, .5), #e1b95e, rgba(184, 134, 61, .5));
+  clip-path: polygon(18px 0, calc(100% - 18px) 0, 100% 100%, 0 100%);
+  filter: drop-shadow(0 14px 20px rgba(0, 0, 0, .2));
+}
+.trustee-pyramid__card {
+  min-height: 124px;
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+  align-items: center;
+  gap: clamp(14px, 2.2vw, 30px);
+  padding: 20px clamp(28px, 4vw, 54px);
+  color: #f4efe5;
+  background: linear-gradient(105deg, rgba(78, 25, 20, .98), rgba(42, 12, 10, .99));
+  clip-path: polygon(18px 0, calc(100% - 18px) 0, 100% 100%, 0 100%);
+}
+.trustee-pyramid__tier:nth-of-type(even) .trustee-pyramid__card {
+  background: linear-gradient(105deg, rgba(49, 15, 13, .99), rgba(88, 29, 22, .97));
+}
+.trustee-pyramid__copy { min-width: 0; text-align: center; }
+.trustee-pyramid__label {
+  color: #d7b879;
+  font-size: 9px;
+  font-weight: 700;
+  letter-spacing: .2em;
+  text-transform: uppercase;
+}
+.trustee-pyramid__copy h3 {
+  margin: 4px 0 3px;
+  color: #f4efe5;
+  font-family: var(--font-serif);
+  font-size: clamp(19px, 2vw, 29px);
+  font-weight: 500;
+  line-height: 1.15;
+}
+.trustee-pyramid__copy p {
+  max-width: 650px;
+  margin: 5px auto 0;
+  color: rgba(244, 239, 229, .67);
+  font-size: 12px;
+  line-height: 1.55;
+}
+.trustee-pyramid__card time {
+  color: rgba(244, 239, 229, .7);
+  font-family: var(--font-serif);
+  font-size: 13px;
+  letter-spacing: .08em;
+  white-space: nowrap;
+}
+.trustee-pyramid__foundation {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 14px;
+  margin-top: 28px;
+  color: #d7b879;
+  font-family: var(--font-serif);
+  font-size: 15px;
+  letter-spacing: .18em;
+}
+.trustee-pyramid__foundation span { width: min(160px, 22vw); height: 1px; background: rgba(201, 154, 74, .5); }
+.trustee-pyramid__foundation i { font-style: normal; }
+
 .heritage-gallery { width: 100%; max-width: none; padding-inline: max(6vw,calc((100vw - 1230px)/2)); background: hsl(var(--secondary)); }
 .heritage-gallery__grid { display: grid; grid-template-columns: 1.45fr .75fr 1fr; grid-template-rows: 300px 300px; gap: 17px; }
 .heritage-gallery__item { position: relative; padding: 0; border: 0; background: #250604; overflow: hidden; }
@@ -1080,6 +1164,16 @@
   .trustee-lineage__item > div:last-child { padding-top: 3px; }
   .trustee-lineage__item h3 { font-size: 22px; line-height: 1.18; }
   .trustee-lineage__item p { font-size: 14px; line-height: 1.65; }
+  .trustee-pyramid { padding-top: 1.5rem; }
+  .trustee-pyramid__eyebrow { margin-bottom: 1.75rem; padding-inline: 18px; font-size: 8px; letter-spacing: .18em; line-height: 1.7; }
+  .trustee-pyramid__tier { width: var(--tier-mobile-width); max-width: 100%; clip-path: polygon(8px 0, calc(100% - 8px) 0, 100% 100%, 0 100%); }
+  .trustee-pyramid__card { min-height: 0; grid-template-columns: minmax(0, 1fr); gap: 7px; padding: 16px 18px; clip-path: polygon(8px 0, calc(100% - 8px) 0, 100% 100%, 0 100%); }
+  .trustee-pyramid__copy { text-align: left; }
+  .trustee-pyramid__label { font-size: 7px; letter-spacing: .13em; }
+  .trustee-pyramid__copy h3 { font-size: 16px; }
+  .trustee-pyramid__copy p { display: none; }
+  .trustee-pyramid__card time { grid-column: 1; font-size: 10px; }
+  .trustee-pyramid__foundation { margin-top: 18px; font-size: 12px; }
   .lineage-alpana-rail { width: 18px; background-size: 18px 58px; }
   .lineage-alpana-rail--left { left: 5px; }
   .lineage-alpana-rail--right { right: 5px; }

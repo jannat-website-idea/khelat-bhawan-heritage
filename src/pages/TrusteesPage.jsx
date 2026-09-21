@@ -2,7 +2,6 @@ import React from 'react';
 import { Heart, Music, Users, Check, ShieldCheck, Sparkles, ArrowRight } from 'lucide-react';
 import SectionHeader from '../components/SectionHeader';
 import { getAssetUrl } from '../utils/assetHelper';
-import AlpanaMotif from '../components/AlpanaMotif';
 
 export default function TrusteesPage({ lang = 'en', setActiveTab, onOpenLightbox, content }) {
   const t = content[lang];
@@ -192,21 +191,33 @@ export default function TrusteesPage({ lang = 'en', setActiveTab, onOpenLightbox
             </p>
           </div>
 
-          <div className="trustee-lineage">
-            <span className="lineage-alpana-rail lineage-alpana-rail--left" aria-hidden="true" />
-            <span className="lineage-alpana-rail lineage-alpana-rail--right" aria-hidden="true" />
-            {trusteeTimeline.map((trustee) => (
-              <article key={trustee.period} className="trustee-lineage__item">
-                <div className="trustee-lineage__seal" aria-hidden="true">
-                  <AlpanaMotif />
-                </div>
-                <div>
-                  <span>{trustee.period}</span>
-                  <h3>{trustee.name}</h3>
-                  <p>{trustee.desc}</p>
+          <div className="trustee-pyramid">
+            <p className="trustee-pyramid__eyebrow">
+              {isBn ? '১৯২০ থেকে বর্তমান তত্ত্বাবধায়ক মণ্ডলী' : 'From the first trustees to the present governing board'}
+            </p>
+            {trusteeTimeline.map((trustee, index) => (
+              <article
+                key={trustee.period}
+                className="trustee-pyramid__tier"
+                style={{ '--tier-width': `${64 + (index * 8)}%`, '--tier-mobile-width': `${84 + (index * 4)}%` }}
+              >
+                <div className="trustee-pyramid__card">
+                  <div className="trustee-pyramid__copy">
+                    <span className="trustee-pyramid__label">
+                      {isBn ? 'তত্ত্বাবধানের উত্তরাধিকার' : 'Custodianship succession'}
+                    </span>
+                    <h3>{trustee.name}</h3>
+                    <p>{trustee.desc}</p>
+                  </div>
+                  <time>{trustee.period}</time>
                 </div>
               </article>
             ))}
+            <div className="trustee-pyramid__foundation" aria-hidden="true">
+              <span />
+              <i>1845</i>
+              <span />
+            </div>
           </div>
         </section>
 
