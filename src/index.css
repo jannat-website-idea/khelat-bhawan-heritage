@@ -758,7 +758,7 @@
 .heritage-devotion h2 { width: 100%; max-width: 1500px; margin-inline: auto; color: #fff8eb; text-wrap: balance; }
 .heritage-devotion__content > p:not(.heritage-kicker) { width: min(100%, 1120px); margin-inline: auto; color: rgba(255,248,235,.72); }
 .heritage-devotion .heritage-button { margin-top: 28px; }
-.heritage-devotion__pattern { position: absolute; left: 0; right: 0; height: 70px; opacity: .35; background-image: radial-gradient(circle at 35px 35px,transparent 0 8px,#d7ad4f 9px 10px,transparent 11px 18px,#d4b193 19px 20px,transparent 21px),radial-gradient(ellipse at 35px 8px,#d7ad4f 0 2px,transparent 3px),radial-gradient(ellipse at 62px 35px,#d7ad4f 0 2px,transparent 3px),radial-gradient(ellipse at 35px 62px,#d7ad4f 0 2px,transparent 3px),radial-gradient(ellipse at 8px 35px,#d7ad4f 0 2px,transparent 3px); background-size: 70px 70px; }
+.heritage-devotion__pattern { position: absolute; left: 0; right: 0; z-index: 1; height: 70px; opacity: .35; pointer-events: none; background-image: radial-gradient(circle at 35px 35px,transparent 0 8px,#d7ad4f 9px 10px,transparent 11px 18px,#d4b193 19px 20px,transparent 21px),radial-gradient(ellipse at 35px 8px,#d7ad4f 0 2px,transparent 3px),radial-gradient(ellipse at 62px 35px,#d7ad4f 0 2px,transparent 3px),radial-gradient(ellipse at 35px 62px,#d7ad4f 0 2px,transparent 3px),radial-gradient(ellipse at 8px 35px,#d7ad4f 0 2px,transparent 3px); background-size: 70px 70px; }
 .heritage-devotion__pattern--top { top: 0; }.heritage-devotion__pattern--bottom { bottom: 0; transform: rotate(180deg); }
 
 .heritage-lineage { display: grid; grid-template-columns: 1.05fr .95fr; align-items: center; gap: clamp(70px, 8vw, 130px); }

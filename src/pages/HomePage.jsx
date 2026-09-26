@@ -193,8 +193,9 @@ export default function HomePage({ lang = 'en', setActiveTab, onOpenBooking, onO
         />
         <div className="absolute inset-0 z-0 bg-gradient-to-t from-black via-black/85 to-black/90 pointer-events-none" />
 
+        <div className="heritage-devotion__pattern heritage-devotion__pattern--top" aria-hidden="true" />
+
         <div className="heritage-devotion__content relative z-10 w-full max-w-none mx-auto space-y-6">
-          <div className="heritage-devotion__pattern heritage-devotion__pattern--top" aria-hidden="true" />
           <p className="heritage-kicker text-primary">{isBn ? 'ভক্তি ও ঐতিহ্য' : 'Sacred Devotion'}</p>
           <h2 className="text-3xl sm:text-5xl font-serif font-bold text-[#fff8eb] tracking-wide">
             {isBn ? '১৮৫৫ সাল থেকে অবিচ্ছিন্ন দুর্গাপূজা' : 'Durga Puja, unbroken since 1855'}
@@ -210,8 +211,9 @@ export default function HomePage({ lang = 'en', setActiveTab, onOpenBooking, onO
               {isBn ? 'পূজা ও উৎসব সূচি দেখুন' : 'Explore Festival & Puja Calendar'}
             </button>
           </div>
-          <div className="heritage-devotion__pattern heritage-devotion__pattern--bottom" aria-hidden="true" />
         </div>
+
+        <div className="heritage-devotion__pattern heritage-devotion__pattern--bottom" aria-hidden="true" />
       </section>
 
       {/* Seven Generations Lineage Preview */}
