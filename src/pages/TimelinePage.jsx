@@ -226,7 +226,7 @@ export default function TimelinePage({ lang = 'en', setActiveTab, onOpenLightbox
           1. HERO / INTRODUCTION
          ========================================================================= */}
       <section className="heritage-timeline-hero relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-8 pb-10 sm:pb-14 text-left z-10">
-        <div className="max-w-2xl space-y-3.5">
+        <div className="max-w-5xl space-y-3.5">
           <span className="heritage-timeline-hero__eyebrow">
             {isBn ? 'সময়ের পরিক্রমায়' : 'A JOURNEY THROUGH TIME'}
           </span>
@@ -240,7 +240,7 @@ export default function TimelinePage({ lang = 'en', setActiveTab, onOpenLightbox
           </p>
 
           {/* Compact View Switcher Controls */}
-          <div className="flex flex-wrap items-center gap-2.5 pt-3">
+          <div className="flex flex-wrap lg:flex-nowrap items-center gap-2.5 pt-3">
             <button
               onClick={() => setActiveView('timeline')}
               className={`heritage-timeline-toggle-btn ${activeView === 'timeline' ? 'is-active' : ''}`}

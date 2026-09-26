@@ -1985,6 +1985,7 @@
 .heritage-timeline-toggle-btn {
   display: inline-flex;
   align-items: center;
+  flex: 0 0 auto;
   gap: 7px;
   padding: 8px 18px;
   border-radius: 999px;
@@ -1998,6 +1999,7 @@
   box-shadow: 0 3px 10px rgba(70, 45, 25, 0.04);
   transition: all 0.3s ease;
   cursor: pointer;
+  white-space: nowrap;
 }
 
 .heritage-timeline-toggle-btn:hover {
