@@ -938,27 +938,27 @@
 .trustee-cards {
   position: relative;
   padding: clamp(1.25rem, 2.8vw, 2.75rem);
-  border: 2px solid #d4af37;
+  border: 2.5px solid #d4af37;
   border-radius: clamp(26px, 3vw, 44px);
   background:
-    radial-gradient(circle at 15% 10%, rgba(245, 225, 160, 0.4), transparent 50%),
-    radial-gradient(circle at 85% 90%, rgba(190, 145, 45, 0.35), transparent 55%),
-    linear-gradient(155deg, #dfba6c 0%, #caa048 40%, #edd388 75%, #b88a30 100%);
+    radial-gradient(circle at 15% 10%, rgba(255, 238, 180, 0.6), transparent 50%),
+    radial-gradient(circle at 85% 90%, rgba(212, 175, 55, 0.45), transparent 55%),
+    linear-gradient(155deg, #e2be6d 0%, #caa048 40%, #edd388 75%, #b88a30 100%);
   box-shadow:
-    0 30px 80px rgba(70, 50, 10, 0.25),
-    inset 0 0 0 1px rgba(255, 245, 210, 0.5),
-    0 0 35px rgba(212, 175, 55, 0.3);
+    0 30px 80px rgba(70, 50, 10, 0.28),
+    inset 0 0 0 1px rgba(255, 245, 210, 0.6),
+    0 0 45px rgba(212, 175, 55, 0.38);
 }
 .trustee-card {
   border: 2px solid #c99a30;
   color: #1a1204;
   background:
-    radial-gradient(ellipse at top left, rgba(255, 255, 255, 0.7) 0%, transparent 60%),
-    radial-gradient(circle at bottom right, rgba(210, 165, 50, 0.4) 0%, transparent 70%),
+    radial-gradient(ellipse at top left, rgba(255, 255, 255, 0.75) 0%, transparent 60%),
+    radial-gradient(circle at bottom right, rgba(210, 165, 50, 0.45) 0%, transparent 70%),
     linear-gradient(145deg, #fdf6e2 0%, #f7e6b5 35%, #fff1c6 70%, #ebd28e 100%);
   box-shadow:
-    0 20px 55px rgba(80, 55, 10, 0.22),
-    0 0 30px rgba(212, 175, 55, 0.3),
+    0 20px 55px rgba(80, 55, 10, 0.25),
+    0 0 32px rgba(212, 175, 55, 0.35),
     inset 0 1px 2px rgba(255, 255, 255, 0.9),
     inset 0 -1px 2px rgba(160, 120, 25, 0.3);
   border-radius: 24px;
@@ -968,8 +968,8 @@
 .trustee-card:hover {
   border-color: #b58320;
   box-shadow:
-    0 30px 75px rgba(80, 55, 10, 0.3),
-    0 0 45px rgba(212, 175, 55, 0.55);
+    0 30px 75px rgba(80, 55, 10, 0.35),
+    0 0 50px rgba(212, 175, 55, 0.6);
   transform: translateY(-4px);
 }
 .trustee-card__header {
@@ -1012,7 +1012,7 @@
   backdrop-filter: blur(8px);
 }
 .trustee-card__content {
-  background: rgba(255, 250, 235, 0.5);
+  background: rgba(255, 250, 235, 0.6);
 }
 .trustee-card__section-title {
   color: #785412;
@@ -1047,16 +1047,16 @@
 .trustee-lineage-section {
   position: relative;
   padding: clamp(3.5rem, 6vw, 6rem) clamp(1rem, 3.6vw, 4rem);
-  border: 1px solid rgba(201, 154, 74, .5);
+  border: 1.5px solid rgba(212, 175, 55, 0.55);
   border-radius: clamp(24px, 3vw, 42px);
-  color: #f4efe5;
+  color: #f8f3e6;
   background:
-    radial-gradient(circle at 50% -12%, rgba(135, 47, 35, .48), transparent 42%),
-    linear-gradient(145deg, #3b100d 0%, #230907 52%, #160605 100%);
+    radial-gradient(circle at 50% -12%, rgba(212, 175, 55, 0.25), transparent 48%),
+    linear-gradient(145deg, #221a0e 0%, #151008 52%, #0a0804 100%);
   box-shadow:
-    inset 0 0 0 9px rgba(12, 3, 3, .32),
-    inset 0 0 0 10px rgba(201, 154, 74, .2),
-    0 30px 80px rgba(50, 12, 9, .2);
+    inset 0 0 0 9px rgba(10, 8, 4, 0.45),
+    inset 0 0 0 10px rgba(212, 175, 55, 0.25),
+    0 30px 80px rgba(20, 16, 6, 0.35);
   overflow: hidden;
 }
 .trustee-lineage-section::before,
@@ -1084,17 +1084,17 @@
   padding: 42px clamp(28px, 5vw, 75px);
   border: 1.5px solid rgba(225, 185, 94, .52);
   border-radius: 20px;
-  background-color: rgba(29, 7, 6, .82);
+  background-color: rgba(24, 18, 10, 0.9);
   background-image:
     radial-gradient(circle, rgba(225, 185, 94, .11) 1.1px, transparent 1.4px),
-    linear-gradient(120deg, rgba(90, 26, 21, .58), rgba(29, 7, 6, .78));
+    linear-gradient(120deg, rgba(46, 35, 18, 0.65), rgba(20, 15, 8, 0.85));
   background-size: 24px 24px;
-  box-shadow: inset 0 0 0 8px rgba(22, 6, 5, .72), inset 0 0 0 10px rgba(225, 185, 94, .2), 0 28px 70px rgba(0, 0, 0, .3);
+  box-shadow: inset 0 0 0 8px rgba(16, 12, 6, 0.75), inset 0 0 0 10px rgba(225, 185, 94, .2), 0 28px 70px rgba(0, 0, 0, .3);
   overflow: hidden;
 }
 .trustee-lineage:before { content: ""; position: absolute; top: 32px; bottom: 32px; left: calc(clamp(28px, 5vw, 75px) + 36px); width: 1.5px; background: linear-gradient(hsl(var(--accent) / .2),hsl(var(--accent)),hsl(var(--accent) / .2)); }
 .trustee-lineage__item { position: relative; display: grid; grid-template-columns: 72px 1fr; gap: 32px; align-items: start; padding: 0 0 46px; }
-.trustee-lineage__seal { z-index: 1; width: 72px; height: 72px; display: grid; place-items: center; border: 1.5px solid #d8ae62; border-radius: 50%; background: #4d1914; box-shadow: inset 0 0 0 4px #1b0706, inset 0 0 0 6px rgba(216, 174, 98, .65), 0 10px 24px rgba(0, 0, 0, .3); color: #f3d798; }
+.trustee-lineage__seal { z-index: 1; width: 72px; height: 72px; display: grid; place-items: center; border: 1.5px solid #d8ae62; border-radius: 50%; background: #2e2312; box-shadow: inset 0 0 0 4px #120e06, inset 0 0 0 6px rgba(216, 174, 98, .65), 0 10px 24px rgba(0, 0, 0, .3); color: #f3d798; }
 .trustee-lineage__seal svg { width: 54px; height: 54px; }
 
 /* Minimalist, Clean Bengali Kalka Border Rails */
@@ -1168,11 +1168,11 @@
   gap: clamp(14px, 2.2vw, 30px);
   padding: 20px clamp(28px, 4vw, 54px);
   color: #f4efe5;
-  background: linear-gradient(105deg, rgba(78, 25, 20, .98), rgba(42, 12, 10, .99));
+  background: linear-gradient(105deg, rgba(38, 30, 15, 0.98), rgba(20, 16, 8, 0.99));
   clip-path: polygon(18px 0, calc(100% - 18px) 0, 100% 100%, 0 100%);
 }
 .trustee-pyramid__tier:nth-of-type(even) .trustee-pyramid__card {
-  background: linear-gradient(105deg, rgba(49, 15, 13, .99), rgba(88, 29, 22, .97));
+  background: linear-gradient(105deg, rgba(26, 20, 10, 0.99), rgba(46, 36, 18, 0.97));
 }
 .trustee-pyramid__copy { min-width: 0; text-align: center; }
 .trustee-pyramid__label {
@@ -1270,7 +1270,7 @@
   .trustee-lineage { padding: 28px 22px; }
   .trustee-lineage:before { left: 46px; }
   .trustee-lineage__item { grid-template-columns: 48px minmax(0, 1fr); gap: 14px; padding-bottom: 34px; }
-  .trustee-lineage__seal { width: 48px; height: 48px; box-shadow: inset 0 0 0 3px #1b0706, inset 0 0 0 4px rgba(216, 174, 98, .65), 0 8px 18px rgba(0, 0, 0, .28); }
+  .trustee-lineage__seal { width: 48px; height: 48px; box-shadow: inset 0 0 0 3px #120e06, inset 0 0 0 4px rgba(216, 174, 98, .65), 0 8px 18px rgba(0, 0, 0, .28); }
   .trustee-lineage__seal svg { width: 36px; height: 36px; }
   .trustee-lineage__item > div:last-child { padding-top: 3px; }
   .trustee-lineage__item h3 { font-size: 22px; line-height: 1.18; }

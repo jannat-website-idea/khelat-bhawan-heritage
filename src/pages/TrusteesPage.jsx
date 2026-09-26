@@ -222,7 +222,7 @@ export default function TrusteesPage({ lang = 'en', setActiveTab, onOpenLightbox
         </section>
 
         {/* Governance Quote */}
-        <div className="p-10 md:p-14 rounded-3xl text-center my-16 shadow-2xl space-y-4 border border-[#d4af37]/40 bg-gradient-to-br from-[#2a0e0c] via-[#1d0706] to-[#120404] text-[#f4efe5]">
+        <div className="p-10 md:p-14 rounded-3xl text-center my-16 shadow-2xl space-y-4 border border-[#d4af37]/60 bg-gradient-to-br from-[#1f190c] via-[#151108] to-[#0d0a04] text-[#f4efe5]">
           <blockquote className="font-serif italic text-xl md:text-2xl text-[#f4efe5]/95 max-w-3xl mx-auto leading-relaxed">
             "{isBn 
               ? 'আনুষ্ঠানিক ট্রাস্ট ব্যবস্থার মাধ্যমে আমরা নিশ্চিত করি যে খেলাৎ ভবনের পুণ্য ঐতিহ্য ও সঙ্গীতধারা আগামী বহু শতাব্দী পর্যন্ত সুরক্ষিত থাকবে।'
