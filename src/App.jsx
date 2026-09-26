@@ -35,23 +35,6 @@ export default function App() {
     setIsBookingOpen(true);
   };
 
-  // Sync hash routing so users can link directly to #gallery, #about, #timeline, etc.
-  useEffect(() => {
-    const handleHash = () => {
-      const rawHash = window.location.hash.replace(/^#\/?/, '').trim().toLowerCase();
-      const validTabs = ['home', 'heritage', 'timeline', 'founder', 'trustees', 'gallery', 'events', 'rental', 'feedback', 'contact'];
-      if (!rawHash || rawHash === 'home') {
-        setActiveTab('home');
-      } else if (validTabs.includes(rawHash)) {
-        setActiveTab(rawHash);
-      }
-    };
-
-    handleHash();
-    window.addEventListener('hashchange', handleHash);
-    return () => window.removeEventListener('hashchange', handleHash);
-  }, []);
-
   const scrollToTop = () => {
     if (window.__lenis) {
       window.__lenis.scrollTo(0, { immediate: true, force: true });
@@ -64,24 +47,84 @@ export default function App() {
       window.scrollTo(0, 0);
       document.documentElement.scrollTop = 0;
       document.body.scrollTop = 0;
+      setTimeout(() => {
+        window.__lenis?.scrollTo(0, { immediate: true, force: true });
+        window.scrollTo(0, 0);
+        document.documentElement.scrollTop = 0;
+        document.body.scrollTop = 0;
+      }, 60);
     });
   };
 
+  const clearRouteHash = () => {
+    try {
+      history.replaceState('', document.title, window.location.pathname);
+    } catch {
+      window.location.hash = '';
+    }
+  };
+
+  // Every fresh load / reload begins and finishes at the homepage hero section.
+  useEffect(() => {
+    const previousRestoration = history.scrollRestoration;
+    history.scrollRestoration = 'manual';
+    setActiveTab('home');
+    clearRouteHash();
+    scrollToTop();
+    return () => {
+      history.scrollRestoration = previousRestoration;
+    };
+  }, []);
+
+  // Once loading completes, route visitors to requested tab on browser back/forward or hash change
+  useEffect(() => {
+    if (loading) return undefined;
+
+    const handleRoute = () => {
+      const rawHash = window.location.hash.replace(/^#\/?/, '').trim().toLowerCase();
+      const validTabs = ['home', 'heritage', 'timeline', 'founder', 'trustees', 'gallery', 'events', 'rental', 'feedback', 'contact'];
+      if (validTabs.includes(rawHash)) {
+        setActiveTab(rawHash);
+      } else {
+        setActiveTab('home');
+      }
+      scrollToTop();
+    };
+
+    window.addEventListener('hashchange', handleRoute);
+    window.addEventListener('popstate', handleRoute);
+    return () => {
+      window.removeEventListener('hashchange', handleRoute);
+      window.removeEventListener('popstate', handleRoute);
+    };
+  }, [loading]);
+
   // Update hash and reset scroll when activeTab changes
   const handleTabChange = (tab) => {
-    setActiveTab(tab);
-    if (tab === 'home') {
-      if (window.location.hash && window.location.hash !== '#' && window.location.hash !== '#home') {
-        try {
-          history.pushState('', document.title, window.location.pathname + window.location.search);
-        } catch {
-          window.location.hash = 'home';
-        }
-      }
-    } else {
-      window.location.hash = tab;
+    const validTabs = ['home', 'heritage', 'timeline', 'founder', 'trustees', 'gallery', 'events', 'rental', 'feedback', 'contact'];
+    const nextTab = validTabs.includes(tab) ? tab : 'home';
+    setActiveTab(nextTab);
+    const nextUrl = nextTab === 'home'
+      ? window.location.pathname
+      : `${window.location.pathname}#${nextTab}`;
+    try {
+      history.pushState({ tab: nextTab }, document.title, nextUrl);
+    } catch {
+      window.location.hash = nextTab === 'home' ? '' : nextTab;
     }
     scrollToTop();
+  };
+
+  const handleLoaderComplete = () => {
+    setActiveTab('home');
+    clearRouteHash();
+    setLoading(false);
+    setHomeReady(true);
+    scrollToTop();
+    requestAnimationFrame(() => {
+      scrollToTop();
+      setTimeout(scrollToTop, 120);
+    });
   };
 
   // Scroll to top whenever activeTab changes
@@ -116,7 +159,7 @@ export default function App() {
 
   return (
     <>
-    {loading && <HeritageLoader onReveal={setHomeReady} onComplete={setLoading} lang={lang} />}
+    {loading && <HeritageLoader onReveal={setHomeReady} onComplete={handleLoaderComplete} lang={lang} />}
     <div inert={loading ? '' : undefined} aria-hidden={loading || undefined} className={`min-h-screen flex flex-col justify-between bg-background text-foreground ${lang === 'bn' ? 'font-bengali-text' : 'font-body'}`}>
       {/* Fixed Glass Navigation */}
       <Navbar
