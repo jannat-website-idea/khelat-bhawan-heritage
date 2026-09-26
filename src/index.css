@@ -2013,6 +2013,125 @@
   box-shadow: 0 5px 16px rgba(43, 23, 19, 0.22);
 }
 
+.heritage-timeline-download-card {
+  width: min(100%, 680px);
+  margin-top: 24px;
+  display: grid;
+  grid-template-columns: auto minmax(0, 1fr) auto;
+  align-items: center;
+  gap: 16px;
+  padding: 16px 18px;
+  border: 1px solid rgba(174, 128, 38, 0.42);
+  border-radius: 18px;
+  background:
+    linear-gradient(120deg, rgba(255, 253, 247, 0.94), rgba(241, 229, 203, 0.82)),
+    rgba(250, 246, 236, 0.9);
+  box-shadow: 0 16px 40px rgba(54, 30, 20, 0.1);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+}
+
+.heritage-timeline-download-card__icon {
+  width: 46px;
+  height: 46px;
+  display: grid;
+  place-items: center;
+  border-radius: 50%;
+  color: #f6ecd3;
+  background: #4a1720;
+  box-shadow: inset 0 0 0 1px rgba(221, 178, 85, 0.42);
+}
+
+.heritage-timeline-download-card__icon svg {
+  width: 20px;
+  height: 20px;
+}
+
+.heritage-timeline-download-card__copy {
+  min-width: 0;
+}
+
+.heritage-timeline-download-card__eyebrow {
+  display: block;
+  margin-bottom: 4px;
+  color: #a47625;
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 0.18em;
+}
+
+.heritage-timeline-download-card__title {
+  color: #2b1713;
+  font-family: var(--font-serif);
+  font-size: clamp(18px, 2vw, 23px);
+  font-weight: 600;
+  line-height: 1.2;
+}
+
+.heritage-timeline-download-card__meta {
+  margin-top: 3px;
+  color: #776253;
+  font-size: 13px;
+  line-height: 1.45;
+}
+
+.heritage-timeline-download-card__action {
+  min-height: 44px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  padding: 0 18px;
+  border: 1px solid #4a1720;
+  border-radius: 999px;
+  color: #fffaf0;
+  background: #4a1720;
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  white-space: nowrap;
+  box-shadow: 0 8px 18px rgba(74, 23, 32, 0.2);
+  transition: transform 220ms ease, background-color 220ms ease, box-shadow 220ms ease;
+}
+
+.heritage-timeline-download-card__action:hover {
+  transform: translateY(-2px);
+  background: #651d29;
+  box-shadow: 0 12px 24px rgba(74, 23, 32, 0.25);
+}
+
+.heritage-timeline-download-card__action:focus-visible {
+  outline: 3px solid rgba(198, 155, 67, 0.45);
+  outline-offset: 3px;
+}
+
+.heritage-timeline-download-card__action svg {
+  width: 16px;
+  height: 16px;
+}
+
+@media (max-width: 640px) {
+  .heritage-timeline-download-card {
+    grid-template-columns: auto minmax(0, 1fr);
+    padding: 15px;
+    gap: 13px;
+  }
+
+  .heritage-timeline-download-card__action {
+    grid-column: 1 / -1;
+    width: 100%;
+  }
+
+  .heritage-timeline-download-card__eyebrow {
+    font-size: 9px;
+    letter-spacing: 0.14em;
+  }
+
+  .heritage-timeline-download-card__meta {
+    font-size: 12px;
+  }
+}
+
 /* ==========================================================================
    Central Gold Track & 3-Column Balanced Editorial Stage
    ========================================================================== */
