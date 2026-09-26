@@ -240,7 +240,7 @@ export default function TimelinePage({ lang = 'en', setActiveTab, onOpenLightbox
           </p>
 
           {/* Compact View Switcher Controls */}
-          <div className="flex flex-wrap lg:flex-nowrap items-center gap-2.5 pt-3">
+          <div className="flex flex-wrap lg:flex-nowrap items-center gap-2.5 pt-3 w-full">
             <button
               onClick={() => setActiveView('timeline')}
               className={`heritage-timeline-toggle-btn ${activeView === 'timeline' ? 'is-active' : ''}`}

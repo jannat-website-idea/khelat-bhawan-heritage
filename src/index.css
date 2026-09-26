@@ -2053,7 +2053,8 @@
 .heritage-timeline-toggle-btn {
   display: inline-flex;
   align-items: center;
-  flex: 0 0 auto;
+  justify-content: center;
+  flex: 1 1 0%;
   gap: 7px;
   padding: 8px 18px;
   border-radius: 999px;
