@@ -941,105 +941,107 @@
   border: 2px solid #d4af37;
   border-radius: clamp(26px, 3vw, 44px);
   background:
-    radial-gradient(circle at 15% 10%, rgba(212, 175, 55, 0.22), transparent 50%),
-    radial-gradient(circle at 85% 90%, rgba(138, 35, 38, 0.28), transparent 55%),
-    linear-gradient(155deg, #1f0807 0%, #130403 50%, #0a0202 100%);
+    radial-gradient(circle at 15% 10%, rgba(245, 225, 160, 0.4), transparent 50%),
+    radial-gradient(circle at 85% 90%, rgba(190, 145, 45, 0.35), transparent 55%),
+    linear-gradient(155deg, #dfba6c 0%, #caa048 40%, #edd388 75%, #b88a30 100%);
   box-shadow:
-    0 30px 80px rgba(0, 0, 0, 0.6),
-    inset 0 0 0 1px rgba(212, 175, 55, 0.3);
+    0 30px 80px rgba(70, 50, 10, 0.25),
+    inset 0 0 0 1px rgba(255, 245, 210, 0.5),
+    0 0 35px rgba(212, 175, 55, 0.3);
 }
 .trustee-card {
-  border: 2px solid #d4af37;
-  color: #260a08;
+  border: 2px solid #c99a30;
+  color: #1a1204;
   background:
-    radial-gradient(ellipse at top left, rgba(255, 248, 220, 0.5) 0%, transparent 60%),
-    radial-gradient(circle at bottom right, rgba(160, 115, 30, 0.35) 0%, transparent 70%),
-    linear-gradient(145deg, #dfba6c 0%, #c99842 35%, #e8ca7d 70%, #ba892e 100%);
+    radial-gradient(ellipse at top left, rgba(255, 255, 255, 0.7) 0%, transparent 60%),
+    radial-gradient(circle at bottom right, rgba(210, 165, 50, 0.4) 0%, transparent 70%),
+    linear-gradient(145deg, #fdf6e2 0%, #f7e6b5 35%, #fff1c6 70%, #ebd28e 100%);
   box-shadow:
-    0 25px 65px rgba(25, 8, 8, 0.45),
-    0 0 30px rgba(212, 175, 55, 0.28),
-    inset 0 1px 2px rgba(255, 255, 255, 0.65),
-    inset 0 -1px 2px rgba(90, 60, 10, 0.4);
+    0 20px 55px rgba(80, 55, 10, 0.22),
+    0 0 30px rgba(212, 175, 55, 0.3),
+    inset 0 1px 2px rgba(255, 255, 255, 0.9),
+    inset 0 -1px 2px rgba(160, 120, 25, 0.3);
   border-radius: 24px;
   overflow: hidden;
   transition: transform 0.4s cubic-bezier(0.2, 0.8, 0.2, 1), border-color 0.4s ease, box-shadow 0.4s ease;
 }
 .trustee-card:hover {
-  border-color: #fce7aa;
+  border-color: #b58320;
   box-shadow:
-    0 32px 85px rgba(25, 8, 8, 0.55),
-    0 0 45px rgba(212, 175, 55, 0.5);
+    0 30px 75px rgba(80, 55, 10, 0.3),
+    0 0 45px rgba(212, 175, 55, 0.55);
   transform: translateY(-4px);
 }
 .trustee-card__header {
-  border-bottom: 1.5px solid rgba(80, 40, 10, 0.25);
-  background: linear-gradient(90deg, rgba(255, 246, 220, 0.6) 0%, rgba(224, 182, 92, 0.7) 100%);
+  border-bottom: 2px solid #d4af37;
+  background: linear-gradient(90deg, #f3dfa2 0%, #e2be68 50%, #f6e5b2 100%);
 }
 .trustee-card__icon {
-  border: 2px solid #5c1e14;
-  color: #fff9ee;
-  background: linear-gradient(135deg, #501712 0%, #360f0c 100%);
-  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
+  border: 2px solid #b88628;
+  color: #1a1204;
+  background: linear-gradient(135deg, #fbf0cf 0%, #e5c162 100%);
+  box-shadow: 0 4px 15px rgba(120, 85, 20, 0.25);
 }
 .trustee-card__kicker {
-  color: #5c1e14;
+  color: #8c6418;
   font-weight: 700;
   letter-spacing: 0.22em;
 }
 .trustee-card__title {
-  color: #2b0c0a;
+  color: #1a1204;
   font-family: var(--font-serif);
   font-weight: 700;
   letter-spacing: 0.02em;
 }
 .trustee-card__category {
-  color: #4a1c14;
+  color: #634710;
   font-weight: 600;
   letter-spacing: 0.04em;
 }
 .trustee-card__description {
-  color: #381310;
+  color: #2e2107;
   font-weight: 500;
   line-height: 1.68;
 }
 .trustee-card__status {
-  border: 1.5px solid #6c221a;
-  color: #fff9ee;
-  background: #501712;
-  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.25);
+  border: 1.5px solid #b88628;
+  color: #1a1204;
+  background: linear-gradient(135deg, #fcedc5 0%, #e6c572 100%);
+  box-shadow: 0 2px 10px rgba(120, 85, 20, 0.18);
+  font-weight: 700;
   backdrop-filter: blur(8px);
 }
 .trustee-card__content {
-  background: rgba(255, 250, 235, 0.38);
+  background: rgba(255, 250, 235, 0.5);
 }
 .trustee-card__section-title {
-  color: #2b0c0a;
+  color: #785412;
   font-weight: 700;
-  border-bottom: 1.5px solid rgba(90, 45, 15, 0.25);
+  border-bottom: 1.5px solid rgba(184, 134, 40, 0.35);
   letter-spacing: 0.03em;
 }
 .trustee-card__achievement {
-  color: #2b0c0a;
+  color: #1a1204;
   font-weight: 500;
 }
 .trustee-card__achievement svg {
-  color: #501712 !important;
+  color: #996e1b !important;
 }
 .trustee-card__initiative {
-  border: 1.5px solid rgba(90, 45, 15, 0.3);
-  color: #2b0c0a;
-  background: rgba(255, 248, 225, 0.72);
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+  border: 1.5px solid rgba(184, 134, 40, 0.4);
+  color: #1a1204;
+  background: linear-gradient(145deg, #fef9ea 0%, #f6e7bc 100%);
+  box-shadow: 0 2px 8px rgba(120, 85, 20, 0.12);
   font-weight: 600;
   transition: all 0.3s ease;
 }
 .trustee-card__initiative:hover {
-  border-color: #501712;
-  background: rgba(255, 255, 255, 0.92);
+  border-color: #996e1b;
+  background: #ffffff;
   transform: translateY(-1px);
 }
 .trustee-card__initiative span:first-child {
-  background: #501712 !important;
+  background: #996e1b !important;
 }
 
 .trustee-lineage-section {

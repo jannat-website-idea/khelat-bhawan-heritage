@@ -122,7 +122,7 @@ export default function TrusteesPage({ lang = 'en', setActiveTab, onOpenLightbox
                 {/* Content */}
                 <div className="trustee-card__content p-6 md:p-10 grid grid-cols-1 lg:grid-cols-12 gap-10">
                   <div className="lg:col-span-5 space-y-4 text-left">
-                    <div className="aspect-[16/10] rounded-2xl overflow-hidden bg-black shadow-lg border-2 border-[#5c1e14]/30">
+                    <div className="aspect-[16/10] rounded-2xl overflow-hidden bg-black shadow-lg border-2 border-[#b88628]/40">
                       <img
                         src={getAssetUrl(trust.image)}
                         alt={trust.name}
@@ -148,7 +148,7 @@ export default function TrusteesPage({ lang = 'en', setActiveTab, onOpenLightbox
                       <div className="space-y-2">
                         {trust.achievements.map((ach, i) => (
                           <div key={i} className="trustee-card__achievement flex items-start gap-2.5 text-xs sm:text-sm font-sans">
-                            <Check className="w-4 h-4 text-[#501712] flex-shrink-0 mt-0.5" />
+                            <Check className="w-4 h-4 text-[#996e1b] flex-shrink-0 mt-0.5" />
                             <span>{ach}</span>
                           </div>
                         ))}
@@ -162,7 +162,7 @@ export default function TrusteesPage({ lang = 'en', setActiveTab, onOpenLightbox
                       <div className="grid grid-cols-1 sm:grid-cols-2 gap-2.5">
                         {trust.initiatives.map((init, i) => (
                           <div key={i} className="trustee-card__initiative p-3 text-xs font-sans rounded-xl flex items-center gap-2">
-                            <span className="w-2 h-2 rounded-full bg-[#501712] flex-shrink-0" />
+                            <span className="w-2 h-2 rounded-full bg-[#996e1b] flex-shrink-0" />
                             <span>{init}</span>
                           </div>
                         ))}
