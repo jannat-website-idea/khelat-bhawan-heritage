@@ -938,99 +938,108 @@
 .trustee-cards {
   position: relative;
   padding: clamp(1.25rem, 2.8vw, 2.75rem);
-  border: 1.5px solid rgba(212, 175, 55, 0.4);
+  border: 2px solid #d4af37;
   border-radius: clamp(26px, 3vw, 44px);
   background:
-    radial-gradient(circle at 15% 10%, rgba(182, 138, 50, 0.18), transparent 45%),
-    radial-gradient(circle at 85% 90%, rgba(138, 35, 38, 0.25), transparent 50%),
-    linear-gradient(155deg, #240b09 0%, #180706 50%, #100404 100%);
+    radial-gradient(circle at 15% 10%, rgba(212, 175, 55, 0.22), transparent 50%),
+    radial-gradient(circle at 85% 90%, rgba(138, 35, 38, 0.28), transparent 55%),
+    linear-gradient(155deg, #1f0807 0%, #130403 50%, #0a0202 100%);
   box-shadow:
-    0 25px 70px rgba(0, 0, 0, 0.55),
-    inset 0 0 0 1px rgba(212, 175, 55, 0.2);
+    0 30px 80px rgba(0, 0, 0, 0.6),
+    inset 0 0 0 1px rgba(212, 175, 55, 0.3);
 }
 .trustee-card {
-  border: 1.5px solid rgba(212, 175, 55, 0.42);
-  color: #fdfaf4;
+  border: 2px solid #d4af37;
+  color: #260a08;
   background:
-    radial-gradient(ellipse at top left, rgba(212, 175, 55, 0.1) 0%, transparent 60%),
-    linear-gradient(145deg, #2c0e0c 0%, #1e0807 55%, #140505 100%);
+    radial-gradient(ellipse at top left, rgba(255, 248, 220, 0.5) 0%, transparent 60%),
+    radial-gradient(circle at bottom right, rgba(160, 115, 30, 0.35) 0%, transparent 70%),
+    linear-gradient(145deg, #dfba6c 0%, #c99842 35%, #e8ca7d 70%, #ba892e 100%);
   box-shadow:
-    0 20px 55px rgba(0, 0, 0, 0.55),
-    inset 0 1px 0 rgba(255, 235, 170, 0.25);
+    0 25px 65px rgba(25, 8, 8, 0.45),
+    0 0 30px rgba(212, 175, 55, 0.28),
+    inset 0 1px 2px rgba(255, 255, 255, 0.65),
+    inset 0 -1px 2px rgba(90, 60, 10, 0.4);
   border-radius: 24px;
   overflow: hidden;
   transition: transform 0.4s cubic-bezier(0.2, 0.8, 0.2, 1), border-color 0.4s ease, box-shadow 0.4s ease;
 }
 .trustee-card:hover {
-  border-color: rgba(212, 175, 55, 0.85);
+  border-color: #fce7aa;
   box-shadow:
-    0 30px 80px rgba(0, 0, 0, 0.7),
-    0 0 35px rgba(212, 175, 55, 0.22);
-  transform: translateY(-3px);
+    0 32px 85px rgba(25, 8, 8, 0.55),
+    0 0 45px rgba(212, 175, 55, 0.5);
+  transform: translateY(-4px);
 }
 .trustee-card__header {
-  border-bottom: 1.5px solid rgba(212, 175, 55, 0.32);
-  background: linear-gradient(90deg, rgba(65, 20, 18, 0.95) 0%, rgba(42, 12, 11, 0.98) 100%);
+  border-bottom: 1.5px solid rgba(80, 40, 10, 0.25);
+  background: linear-gradient(90deg, rgba(255, 246, 220, 0.6) 0%, rgba(224, 182, 92, 0.7) 100%);
 }
 .trustee-card__icon {
-  border: 1.5px solid rgba(212, 175, 55, 0.65);
-  color: #f3e5ab;
-  background: linear-gradient(135deg, rgba(212, 175, 55, 0.3) 0%, rgba(138, 35, 38, 0.45) 100%);
-  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.45), inset 0 0 10px rgba(212, 175, 55, 0.25);
+  border: 2px solid #5c1e14;
+  color: #fff9ee;
+  background: linear-gradient(135deg, #501712 0%, #360f0c 100%);
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
 }
 .trustee-card__kicker {
-  color: #d4af37;
+  color: #5c1e14;
   font-weight: 700;
   letter-spacing: 0.22em;
 }
 .trustee-card__title {
-  color: #fff9ee;
+  color: #2b0c0a;
   font-family: var(--font-serif);
+  font-weight: 700;
   letter-spacing: 0.02em;
 }
 .trustee-card__category {
-  color: #e5cfb3;
+  color: #4a1c14;
+  font-weight: 600;
   letter-spacing: 0.04em;
 }
 .trustee-card__description {
-  color: #e6decb;
+  color: #381310;
+  font-weight: 500;
   line-height: 1.68;
 }
 .trustee-card__status {
-  border: 1px solid rgba(212, 175, 55, 0.55);
-  color: #f3e5ab;
-  background: rgba(212, 175, 55, 0.15);
-  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.3);
+  border: 1.5px solid #6c221a;
+  color: #fff9ee;
+  background: #501712;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.25);
   backdrop-filter: blur(8px);
 }
 .trustee-card__content {
-  background: rgba(20, 6, 6, 0.55);
+  background: rgba(255, 250, 235, 0.38);
 }
 .trustee-card__section-title {
-  color: #d4af37;
-  border-bottom: 1px solid rgba(212, 175, 55, 0.25);
+  color: #2b0c0a;
+  font-weight: 700;
+  border-bottom: 1.5px solid rgba(90, 45, 15, 0.25);
   letter-spacing: 0.03em;
 }
 .trustee-card__achievement {
-  color: #f4efe6;
+  color: #2b0c0a;
+  font-weight: 500;
 }
 .trustee-card__achievement svg {
-  color: #d4af37 !important;
+  color: #501712 !important;
 }
 .trustee-card__initiative {
-  border: 1px solid rgba(212, 175, 55, 0.3);
-  color: #f4efe6;
-  background: rgba(46, 15, 13, 0.85);
-  box-shadow: 0 3px 10px rgba(0, 0, 0, 0.25);
-  transition: border-color 0.3s ease, background 0.3s ease, transform 0.3s ease;
+  border: 1.5px solid rgba(90, 45, 15, 0.3);
+  color: #2b0c0a;
+  background: rgba(255, 248, 225, 0.72);
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+  font-weight: 600;
+  transition: all 0.3s ease;
 }
 .trustee-card__initiative:hover {
-  border-color: rgba(212, 175, 55, 0.7);
-  background: rgba(68, 22, 20, 0.95);
+  border-color: #501712;
+  background: rgba(255, 255, 255, 0.92);
   transform: translateY(-1px);
 }
 .trustee-card__initiative span:first-child {
-  background: #d4af37 !important;
+  background: #501712 !important;
 }
 
 .trustee-lineage-section {
