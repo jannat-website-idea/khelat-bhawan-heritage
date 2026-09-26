@@ -825,7 +825,7 @@
 .royal-family-tree__card {
   min-height: 112px;
   display: grid;
-  grid-template-columns: 56px minmax(0, 1fr) auto;
+  grid-template-columns: minmax(72px, 1fr) minmax(0, 3fr) minmax(72px, 1fr);
   align-items: center;
   gap: clamp(14px, 2vw, 28px);
   padding: 18px clamp(28px, 4vw, 52px);
@@ -879,7 +879,7 @@
   line-height: 1;
   transition: color 0.4s ease, text-shadow 0.4s ease;
 }
-.royal-family-tree__copy { min-width: 0; text-align: center; }
+.royal-family-tree__copy { grid-column: 2; min-width: 0; text-align: center; }
 .royal-family-tree__label {
   color: #d7b879;
   font-size: 9px;
@@ -912,6 +912,8 @@
   line-height: 1.5;
 }
 .royal-family-tree__period {
+  grid-column: 3;
+  justify-self: end;
   color: rgba(244, 239, 229, .68);
   font-family: var(--font-serif);
   font-size: 13px;
@@ -1174,7 +1176,7 @@
   .heritage-story__image,.heritage-lineage__image { height: 560px; }
   .royal-family-tree { padding-inline: 16px; }
   .royal-family-tree__generation { width: min(calc(var(--tier-width) + 8%), 98%); }
-  .royal-family-tree__card { grid-template-columns: 44px minmax(0, 1fr) auto; padding-inline: 28px; }
+  .royal-family-tree__card { grid-template-columns: minmax(52px, 1fr) minmax(0, 3fr) minmax(52px, 1fr); padding-inline: 28px; }
   .heritage-trust-grid { grid-template-columns: 1fr; }
   .heritage-trust-card { min-height: 0; }
   .heritage-heading-row { align-items: start; flex-direction: column; gap: 24px; }
@@ -1190,14 +1192,13 @@
   .royal-family-tree { padding: 44px 8px 36px; border-radius: 24px; }
   .royal-family-tree__eyebrow { margin-bottom: 22px; font-size: 8px; letter-spacing: .19em; }
   .royal-family-tree__generation { width: var(--mobile-tier-width); clip-path: polygon(8px 0, calc(100% - 8px) 0, 100% 100%, 0 100%); }
-  .royal-family-tree__card { min-height: 0; grid-template-columns: 34px minmax(0, 1fr); gap: 9px; padding: 15px 18px; clip-path: polygon(8px 0, calc(100% - 8px) 0, 100% 100%, 0 100%); }
-  .royal-family-tree__number { font-size: 25px; }
-  .royal-family-tree__copy { text-align: left; }
+  .royal-family-tree__card { min-height: 0; grid-template-columns: 1fr; gap: 9px; padding: 15px 18px; clip-path: polygon(8px 0, calc(100% - 8px) 0, 100% 100%, 0 100%); }
+  .royal-family-tree__copy { grid-column: 1; text-align: center; }
   .royal-family-tree__label { font-size: 7px; letter-spacing: .14em; }
   .royal-family-tree__card h4 { font-size: 16px; }
   .royal-family-tree__card .royal-family-tree__role { font-size: 7px; letter-spacing: .1em; }
   .royal-family-tree__card .royal-family-tree__description { display: none; }
-  .royal-family-tree__period { grid-column: 2; font-size: 10px; }
+  .royal-family-tree__period { grid-column: 1; justify-self: center; font-size: 10px; }
   .royal-family-tree__foundation { margin-top: 18px; font-size: 12px; }
   .trustee-lineage-section { padding: 3.5rem 12px; border-radius: 24px; }
   .trustee-lineage-section__header { padding-inline: 12px; }

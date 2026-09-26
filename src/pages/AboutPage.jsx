@@ -146,7 +146,6 @@ export default function AboutPage({ lang = 'en', setActiveTab, onOpenBooking, on
                   }}
                 >
                   <div className="royal-family-tree__card">
-                    <span className="royal-family-tree__number" aria-hidden="true">{String(genNum).padStart(2, '0')}</span>
                     <div className="royal-family-tree__copy">
                       <span className="royal-family-tree__label">{gen.gen}</span>
                       <h4>{gen.name}</h4>
