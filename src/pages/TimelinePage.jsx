@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { getAssetUrl } from '../utils/assetHelper';
 import { familyTreeData } from '../data/familyTreeData';
 import HeritageFamilyTree from '../components/HeritageFamilyTree';
-import { Clock, Users, Calendar, ArrowRight, Sparkles, CheckCircle2, Landmark, Heart, Music, Shield, BookOpen, Film, Flame, Download, FileText } from 'lucide-react';
+import { Clock, Users, Calendar, ArrowRight, Sparkles, CheckCircle2, Landmark, Heart, Music, Shield, BookOpen, Film, Flame, Download } from 'lucide-react';
 
 export default function TimelinePage({ lang = 'en', setActiveTab, onOpenLightbox, content }) {
   const [activeView, setActiveView] = useState('timeline'); // 'timeline' | 'family-tree'
@@ -256,35 +256,17 @@ export default function TimelinePage({ lang = 'en', setActiveTab, onOpenLightbox
               <Users className="w-3.5 h-3.5" />
               <span>{isBn ? '৭ প্রজন্মের পারিবারিক বংশতালিকা' : '7-Generation Family Tree'}</span>
             </button>
-          </div>
-
-          <aside className="heritage-timeline-download-card" aria-labelledby="heritage-guide-title">
-            <div className="heritage-timeline-download-card__icon" aria-hidden="true">
-              <FileText />
-            </div>
-
-            <div className="heritage-timeline-download-card__copy">
-              <span className="heritage-timeline-download-card__eyebrow">
-                {isBn ? 'বিনামূল্যের হেরিটেজ গাইড' : 'COMPLIMENTARY HERITAGE GUIDE'}
-              </span>
-              <h2 id="heritage-guide-title" className="heritage-timeline-download-card__title">
-                {isBn ? 'খেলাৎ ভবন হেরিটেজ কম্পেন্ডিয়াম' : 'The Khelat Bhawan Heritage Compendium'}
-              </h2>
-              <p className="heritage-timeline-download-card__meta">
-                {isBn ? '১২-পৃষ্ঠার পিডিএফ · এক ক্লিকে বিনামূল্যে ডাউনলোড' : '12-page PDF · Free one-click download'}
-              </p>
-            </div>
 
             <a
               href={getAssetUrl('/Khelat_Bhawan_Heritage_eBook.pdf')}
               download="Khelat_Bhawan_Heritage_Compendium.pdf"
-              className="heritage-timeline-download-card__action"
+              className="heritage-timeline-toggle-btn heritage-timeline-toggle-btn--download"
               aria-label={isBn ? 'বিনামূল্যে হেরিটেজ পিডিএফ ডাউনলোড করুন' : 'Download the free Khelat Bhawan heritage PDF'}
             >
-              <Download aria-hidden="true" />
-              <span>{isBn ? 'বিনামূল্যে ডাউনলোড' : 'DOWNLOAD FREE'}</span>
+              <Download className="w-3.5 h-3.5" aria-hidden="true" />
+              <span>{isBn ? 'বিনামূল্যে হেরিটেজ পিডিএফ' : 'Free Heritage PDF'}</span>
             </a>
-          </aside>
+          </div>
         </div>
       </section>
 
