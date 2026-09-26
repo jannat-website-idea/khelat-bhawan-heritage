@@ -193,7 +193,7 @@ export default function HomePage({ lang = 'en', setActiveTab, onOpenBooking, onO
         />
         <div className="absolute inset-0 z-0 bg-gradient-to-t from-black via-black/85 to-black/90 pointer-events-none" />
 
-        <div className="relative z-10 max-w-3xl mx-auto space-y-6">
+        <div className="heritage-devotion__content relative z-10 w-full max-w-none mx-auto space-y-6">
           <div className="heritage-devotion__pattern heritage-devotion__pattern--top" aria-hidden="true" />
           <p className="heritage-kicker text-primary">{isBn ? 'ভক্তি ও ঐতিহ্য' : 'Sacred Devotion'}</p>
           <h2 className="text-3xl sm:text-5xl font-serif font-bold text-[#fff8eb] tracking-wide">

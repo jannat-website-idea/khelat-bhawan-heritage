@@ -753,9 +753,10 @@
   line-height: 1.52;
 }
 
-.heritage-devotion { position: relative; min-height: 600px; display: grid; align-content: center; justify-items: center; padding: 115px 7vw; text-align: center; color: #fff8eb; background: #654d48; overflow: hidden; }
-.heritage-devotion h2 { color: #fff8eb; }
-.heritage-devotion > p:not(.heritage-kicker) { max-width: 680px; color: rgba(255,248,235,.72); }
+.heritage-devotion { position: relative; min-height: 600px; display: grid; align-content: center; justify-items: center; padding: 115px 0; text-align: center; color: #fff8eb; background: #654d48; overflow: hidden; }
+.heritage-devotion__content { width: 100%; padding-inline: 7vw; }
+.heritage-devotion h2 { width: 100%; max-width: 1500px; margin-inline: auto; color: #fff8eb; text-wrap: balance; }
+.heritage-devotion__content > p:not(.heritage-kicker) { width: min(100%, 1120px); margin-inline: auto; color: rgba(255,248,235,.72); }
 .heritage-devotion .heritage-button { margin-top: 28px; }
 .heritage-devotion__pattern { position: absolute; left: 0; right: 0; height: 70px; opacity: .35; background-image: radial-gradient(circle at 35px 35px,transparent 0 8px,#d7ad4f 9px 10px,transparent 11px 18px,#d4b193 19px 20px,transparent 21px),radial-gradient(ellipse at 35px 8px,#d7ad4f 0 2px,transparent 3px),radial-gradient(ellipse at 62px 35px,#d7ad4f 0 2px,transparent 3px),radial-gradient(ellipse at 35px 62px,#d7ad4f 0 2px,transparent 3px),radial-gradient(ellipse at 8px 35px,#d7ad4f 0 2px,transparent 3px); background-size: 70px 70px; }
 .heritage-devotion__pattern--top { top: 0; }.heritage-devotion__pattern--bottom { bottom: 0; transform: rotate(180deg); }
@@ -1227,7 +1228,8 @@
   .heritage-trust-card__top { margin-bottom: 34px; }
   .heritage-trust-card h3 { font-size: 29px; }
   .heritage-timeline-band .heritage-section { width: 88vw; }
-  .heritage-devotion { min-height: 560px; padding-inline: 8vw; }
+  .heritage-devotion { min-height: 560px; }
+  .heritage-devotion__content { padding-inline: 8vw; }
   .heritage-gallery__grid { grid-template-columns: 1fr 1fr; grid-template-rows: 290px 210px; }
   .heritage-gallery__item--1 { grid-column: span 2; grid-row: auto; }
   .heritage-gallery__item--4 { display: block; grid-row: auto; }
