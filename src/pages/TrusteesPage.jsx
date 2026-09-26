@@ -122,7 +122,7 @@ export default function TrusteesPage({ lang = 'en', setActiveTab, onOpenLightbox
                 {/* Content */}
                 <div className="trustee-card__content p-6 md:p-10 grid grid-cols-1 lg:grid-cols-12 gap-10">
                   <div className="lg:col-span-5 space-y-4 text-left">
-                    <div className="aspect-[16/10] rounded-2xl overflow-hidden bg-black shadow-lg border border-border/60">
+                    <div className="aspect-[16/10] rounded-2xl overflow-hidden bg-black shadow-lg border border-[#d4af37]/35">
                       <img
                         src={getAssetUrl(trust.image)}
                         alt={trust.name}
@@ -148,7 +148,7 @@ export default function TrusteesPage({ lang = 'en', setActiveTab, onOpenLightbox
                       <div className="space-y-2">
                         {trust.achievements.map((ach, i) => (
                           <div key={i} className="trustee-card__achievement flex items-start gap-2.5 text-xs sm:text-sm font-sans">
-                            <Check className="w-4 h-4 text-primary flex-shrink-0 mt-0.5" />
+                            <Check className="w-4 h-4 text-[#d4af37] flex-shrink-0 mt-0.5" />
                             <span>{ach}</span>
                           </div>
                         ))}
@@ -162,7 +162,7 @@ export default function TrusteesPage({ lang = 'en', setActiveTab, onOpenLightbox
                       <div className="grid grid-cols-1 sm:grid-cols-2 gap-2.5">
                         {trust.initiatives.map((init, i) => (
                           <div key={i} className="trustee-card__initiative p-3 text-xs font-sans rounded-xl flex items-center gap-2">
-                            <span className="w-2 h-2 rounded-full bg-primary flex-shrink-0" />
+                            <span className="w-2 h-2 rounded-full bg-[#d4af37] flex-shrink-0" />
                             <span>{init}</span>
                           </div>
                         ))}
@@ -222,13 +222,13 @@ export default function TrusteesPage({ lang = 'en', setActiveTab, onOpenLightbox
         </section>
 
         {/* Governance Quote */}
-        <div className="bg-primary text-primary-foreground p-10 md:p-14 rounded-3xl text-center my-16 shadow-2xl space-y-4">
-          <blockquote className="font-serif italic text-xl md:text-2xl text-primary-foreground/95 max-w-3xl mx-auto leading-relaxed">
+        <div className="p-10 md:p-14 rounded-3xl text-center my-16 shadow-2xl space-y-4 border border-[#d4af37]/40 bg-gradient-to-br from-[#2a0e0c] via-[#1d0706] to-[#120404] text-[#f4efe5]">
+          <blockquote className="font-serif italic text-xl md:text-2xl text-[#f4efe5]/95 max-w-3xl mx-auto leading-relaxed">
             "{isBn 
               ? 'আনুষ্ঠানিক ট্রাস্ট ব্যবস্থার মাধ্যমে আমরা নিশ্চিত করি যে খেলাৎ ভবনের পুণ্য ঐতিহ্য ও সঙ্গীতধারা আগামী বহু শতাব্দী পর্যন্ত সুরক্ষিত থাকবে।'
               : 'Through formal trusts, we ensure that our living heritage, sacred devotion, and musical legacy remain protected and accessible for centuries to come.'}"
           </blockquote>
-          <span className="text-[11px] uppercase tracking-widest text-amber-300 font-sans font-semibold block">
+          <span className="text-[11px] uppercase tracking-widest text-[#d4af37] font-sans font-semibold block">
             Pathuria Ghata Ghosh Bari Trust Governance
           </span>
         </div>
