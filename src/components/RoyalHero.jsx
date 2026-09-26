@@ -90,7 +90,7 @@ export default function RoyalHero({ lang, setActiveTab, ready }) {
         <p className="royal-hero__subtitle">
           <span>{bn ? '১৮৪৫ সাল থেকে এক জীবন্ত উত্তরাধিকার' : 'A living legacy since 1845'}</span>
         </p>
-        <button className="royal-outline-button" onClick={() => setActiveTab('heritage')}>
+        <button className="royal-outline-button mt-8" onClick={() => setActiveTab('heritage')}>
           <span>{bn ? 'ঐতিহ্য আবিষ্কার করুন' : 'Explore heritage'}</span>
           <ArrowRight className="royal-btn-arrow" size={19} aria-hidden="true" />
         </button>
