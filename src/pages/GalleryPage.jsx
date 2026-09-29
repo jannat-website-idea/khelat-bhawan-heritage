@@ -158,7 +158,6 @@ export default function GalleryPage({ lang = 'en' }) {
                       <img src={getAssetUrl(item.preview)} alt={title} loading={displayIndex < 8 ? 'eager' : 'lazy'} />
                       <span className="gallery-crest-tile__shade" aria-hidden="true" />
                       <span className="gallery-crest-tile__meta">
-                        <span>{String(displayIndex + 1).padStart(2, '0')}</span>
                         <strong>{label}</strong>
                       </span>
                       <span className="gallery-crest-tile__action" aria-hidden="true">

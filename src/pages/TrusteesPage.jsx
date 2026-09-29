@@ -87,7 +87,7 @@ export default function TrusteesPage({ lang = 'en', setActiveTab, onOpenLightbox
   }, [selectedTrustee]);
 
   return (
-    <main className="pt-28 md:pt-36 pb-24 bg-background min-h-screen text-foreground">
+    <main className="trustees-page pt-28 md:pt-36 pb-24 min-h-screen text-foreground">
       <div className="w-full max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-20">
         <SectionHeader
           title={isBn ? 'সাংস্কৃতিক ট্রাস্ট ও ট্রাস্টি মণ্ডলী' : 'Cultural Trusts & Custodian Governance'}
