@@ -72,7 +72,7 @@ export default function HeritageLoader({ onComplete, onReveal, lang }) {
   }, [onComplete, onReveal]);
 
   // Progressive Emergence Calculations
-  const normalizedProgress = progress / 100;
+  const normalizedProgress = Number.isFinite(progress) ? progress / 100 : 0;
   // Title starts at 0 opacity, emerges slowly as loading progresses
   const titleOpacity = Math.min(1, Math.pow(normalizedProgress, 1.3) * 1.1);
   const titleBlur = Math.max(0, (1 - normalizedProgress) * 14);

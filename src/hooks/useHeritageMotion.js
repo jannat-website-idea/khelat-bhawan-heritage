@@ -14,7 +14,7 @@ export default function useHeritageMotion(route, lang, loading) {
       const root = document.querySelector('[data-page-content]');
       if (!root) return;
       const lenis = new Lenis({
-        lerp: .13, smoothWheel: true, wheelMultiplier: 1, syncTouch: false,
+        lerp: .085, smoothWheel: true, wheelMultiplier: .92, syncTouch: false,
         prevent: node => !!node.closest('[role="dialog"],.heritage-nav__drawer'),
       });
       window.__lenis = lenis;

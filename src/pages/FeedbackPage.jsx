@@ -5,7 +5,7 @@ import AlpanaDivider from '../components/AlpanaDivider';
 
 export default function FeedbackPage({ lang, content }) {
   const t = content[lang];
-  const rev = t.reviews;
+  const rev = { ...t.reviews, items: content.en.reviews.items || [] };
   const isBn = lang === 'bn';
 
   const [rating, setRating] = useState(5);
@@ -26,7 +26,7 @@ export default function FeedbackPage({ lang, content }) {
 
   return (
     <main className="pt-32 pb-24 bg-background min-h-screen">
-      <div className="container mx-auto px-6 max-w-6xl">
+      <div className="feedback-page__sections container mx-auto px-6 max-w-6xl">
         <SectionHeader
           title={isBn ? 'দর্শক প্রতিক্রিয়া ও পর্যালোচনা' : 'Visitor Voices & Reviews'}
           subtitle={isBn 
@@ -35,7 +35,7 @@ export default function FeedbackPage({ lang, content }) {
         />
 
         {/* Featured Google Reviews Grid */}
-        <section className="mb-20">
+        <section className="feedback-page__reviews mb-20">
           <div className="text-center mb-10">
             <p className="heritage-kicker">{isBn ? 'নির্বাচিত পর্যালোচনা' : 'Featured Google Reviews'}</p>
             <h2 className="font-serif text-2xl md:text-3xl font-semibold text-foreground">
@@ -45,9 +45,9 @@ export default function FeedbackPage({ lang, content }) {
           </div>
 
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-            {rev.items.map((item) => (
+            {rev.items.map((item, index) => (
               <a
-                key={item.id}
+                key={`${item.id}-${index}`}
                 href={rev.googleUrl}
                 target="_blank"
                 rel="noopener noreferrer"
@@ -91,7 +91,7 @@ export default function FeedbackPage({ lang, content }) {
         </section>
 
         {/* Private Feedback / Message Section */}
-        <section className="mb-16 p-8 md:p-12 rounded-sm bg-card border border-border shadow-lg">
+        <section className="feedback-page__message mb-16 p-8 md:p-12 rounded-sm bg-card border border-border shadow-lg">
           <div className="max-w-2xl mx-auto">
             <div className="text-center mb-8">
               <p className="heritage-kicker">{isBn ? 'সরাসরি মতামত' : 'Direct Message'}</p>
@@ -249,7 +249,7 @@ export default function FeedbackPage({ lang, content }) {
         </section>
 
         {/* Live Google Reviews Summary Card (Moved to bottom of page) */}
-        <section className="p-8 md:p-10 rounded-sm bg-gradient-to-br from-card via-card/95 to-secondary border border-border shadow-md relative overflow-hidden">
+        <section className="feedback-page__google p-8 md:p-10 rounded-sm bg-gradient-to-br from-card via-card/95 to-secondary border border-border shadow-md relative overflow-hidden">
           <div className="absolute top-0 right-0 w-64 h-64 bg-accent/5 rounded-full blur-3xl pointer-events-none" />
           
           <div className="flex flex-col lg:flex-row items-center justify-between gap-8 relative z-10">

@@ -167,7 +167,6 @@ export default function TimelinePage({ lang = 'en', setActiveTab, onOpenLightbox
             alt=""
             className="heritage-backdrop-img heritage-backdrop-img--top-right"
           />
-          <span className="heritage-backdrop-script">Heritage Lives On</span>
           <div className="heritage-backdrop-stamp">
             <span>1845</span>
             <small>TO</small>

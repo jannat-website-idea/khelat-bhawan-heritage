@@ -39,31 +39,6 @@ export default function GalleryPage({ lang = 'en' }) {
     return [...photos, ...films];
   }, [activeFilter]);
 
-  const crestRows = useMemo(() => {
-    const rowRhythm = [2, 4, 3];
-    const patterns = [];
-    let remaining = galleryItems.length;
-    let rhythmIndex = 0;
-    while (remaining > 0) {
-      const size = Math.min(rowRhythm[rhythmIndex % rowRhythm.length], remaining);
-      patterns.push(size);
-      remaining -= size;
-      rhythmIndex += 1;
-    }
-    let cursor = 0;
-    return patterns
-      .map((size, rowIndex) => {
-        const row = galleryItems.slice(cursor, cursor + size).map((item, index) => ({
-          ...item,
-          displayIndex: cursor + index,
-          rowIndex
-        }));
-        cursor += size;
-        return row;
-      })
-      .filter((row) => row.length > 0);
-  }, [galleryItems]);
-
   const openGalleryItem = (item) => {
     if (item.mediaType === 'video') {
       setSelectedFilmIndex(item.sourceIndex);
@@ -71,14 +46,6 @@ export default function GalleryPage({ lang = 'en' }) {
     }
     setIsPhotoClosing(false);
     setSelectedPhotoIndex(item.sourceIndex);
-  };
-
-  const getFrameShape = (item) => {
-    if (item.mediaType === 'video') return 'cinema';
-    if (['photo-03', 'photo-05'].includes(item.id)) return 'panorama';
-    if (['photo-07', 'photo-10', 'photo-11', 'photo-12'].includes(item.id)) return 'landscape';
-    if (item.id === 'photo-01') return 'square';
-    return 'portrait';
   };
 
   const closePhoto = useCallback(() => {
@@ -129,7 +96,7 @@ export default function GalleryPage({ lang = 'en' }) {
   const activeFilm = selectedFilmIndex !== null ? filmsGalleryData[selectedFilmIndex] : null;
 
   return (
-    <main className="gallery-mosaic-page pt-20 sm:pt-24 min-h-screen text-[#f4efe6] relative overflow-x-clip">
+    <main className="gallery-mosaic-page pt-20 sm:pt-24 min-h-screen text-foreground relative overflow-x-clip">
       {/* Full-bleed Atmospheric Heritage Background */}
       <div className="gallery-mosaic-backdrop" aria-hidden="true">
         <div className="gallery-mosaic-backdrop__glow" />
@@ -140,15 +107,15 @@ export default function GalleryPage({ lang = 'en' }) {
             EDITORIAL HEADER (Matching Reference Mockup)
            ========================================================================= */}
         <header className="gallery-mosaic-header text-center pt-8 sm:pt-12 pb-7 sm:pb-10 px-6 max-w-4xl mx-auto">
-          <div className="inline-flex items-center justify-center gap-3 text-xs sm:text-sm font-mono tracking-[0.35em] text-[#c99a4a] uppercase">
+          <div className="inline-flex items-center justify-center gap-3 text-xs sm:text-sm font-mono tracking-[0.35em] text-accent uppercase">
             <span className="opacity-60">—</span>
             <span>{isBn ? 'চিত্রশালা' : 'GALLERY'}</span>
             <span className="opacity-60">—</span>
           </div>
-          <h1 className="font-serif italic text-4xl sm:text-5xl lg:text-6xl text-[#fdfbf7] font-normal tracking-wide mt-3 mb-3">
+          <h1 className="font-serif italic text-4xl sm:text-5xl lg:text-6xl text-foreground font-normal tracking-wide mt-3 mb-3">
             {isBn ? 'সময়ের অনন্ত পরিভ্রমণ' : 'A Journey Through Time'}
           </h1>
-          <p className="font-serif text-xs sm:text-sm lg:text-base text-[#c7b299] max-w-xl mx-auto tracking-normal">
+          <p className="font-serif text-xs sm:text-sm lg:text-base text-muted-foreground max-w-xl mx-auto tracking-normal">
             {isBn ? 'খেলাৎ ভবনের জীবন্ত ঐতিহ্যের স্থাপত্য, মুহূর্ত ও গৌরবময় ইতিহাস।' : 'Spaces, stories and moments from the living heritage of Khelat Bhawan.'}
           </p>
         </header>
@@ -173,15 +140,8 @@ export default function GalleryPage({ lang = 'en' }) {
             ))}
           </div>
 
-          <div className="gallery-crest" aria-live="polite">
-            <div className="gallery-crest__aura" aria-hidden="true" />
-            {crestRows.map((row, rowIndex) => (
-              <div
-                className={`gallery-crest-row gallery-crest-row--${rowIndex} gallery-crest-row--count-${row.length}`}
-                key={`crest-row-${rowIndex}`}
-                style={{ '--row-count': row.length }}
-              >
-                {row.map((item) => {
+          <div className="gallery-editorial-grid" aria-live="polite">
+            {galleryItems.map((item, displayIndex) => {
                   const title = typeof item.title === 'object' ? (item.title[lang] || item.title.en) : item.title;
                   const label = item.shortLabel
                     ? (typeof item.shortLabel === 'object' ? (item.shortLabel[lang] || item.shortLabel.en) : item.shortLabel)
@@ -190,15 +150,15 @@ export default function GalleryPage({ lang = 'en' }) {
                     <button
                       type="button"
                       key={`${item.mediaType}-${item.id || item.displayIndex}`}
-                      className={`gallery-crest-tile gallery-crest-tile--${getFrameShape(item)} group`}
+                      className={`gallery-editorial-tile ${item.mediaType === 'video' ? 'gallery-editorial-tile--video' : 'gallery-editorial-tile--photo'} group`}
                       onClick={() => openGalleryItem(item)}
                       aria-label={`${item.mediaType === 'video' ? 'Play' : 'Open'} ${title}`}
-                      style={{ '--tile-index': item.displayIndex }}
+                      style={{ '--tile-index': displayIndex }}
                     >
-                      <img src={getAssetUrl(item.preview)} alt={title} loading={item.displayIndex < 8 ? 'eager' : 'lazy'} />
+                      <img src={getAssetUrl(item.preview)} alt={title} loading={displayIndex < 8 ? 'eager' : 'lazy'} />
                       <span className="gallery-crest-tile__shade" aria-hidden="true" />
                       <span className="gallery-crest-tile__meta">
-                        <span>{String(item.displayIndex + 1).padStart(2, '0')}</span>
+                        <span>{String(displayIndex + 1).padStart(2, '0')}</span>
                         <strong>{label}</strong>
                       </span>
                       <span className="gallery-crest-tile__action" aria-hidden="true">
@@ -206,9 +166,7 @@ export default function GalleryPage({ lang = 'en' }) {
                       </span>
                     </button>
                   );
-                })}
-              </div>
-            ))}
+            })}
           </div>
         </section>
 

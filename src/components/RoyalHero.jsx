@@ -60,7 +60,6 @@ export default function RoyalHero({ lang, setActiveTab, ready }) {
           className="royal-hero__film"
           autoPlay
           muted
-          defaultMuted
           playsInline
           loop
           preload="auto"
@@ -76,11 +75,6 @@ export default function RoyalHero({ lang, setActiveTab, ready }) {
         </video>
       </div>
       <div className="royal-hero__shade" />
-
-      {/* Top Right Corner Tag */}
-      <div className="royal-hero__corner-tag">
-        <span>{bn ? 'স্থাপিত ১৮৪৫' : 'ESTABLISHED 1845'}</span>
-      </div>
 
       <div className="royal-hero__content">
         <h1 aria-label={bn ? 'খেলাৎ ভবন' : 'Khelat Bhawan'}>

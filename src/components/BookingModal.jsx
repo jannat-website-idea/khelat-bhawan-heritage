@@ -1,10 +1,11 @@
 import React, { useState, useEffect } from 'react';
+import { createPortal } from 'react-dom';
 import { X, CheckCircle2, Send, Calendar as CalendarIcon, Clock, ShieldCheck, Lock, Unlock, Mail, AlertCircle } from 'lucide-react';
 import { getBlockedDates, saveBlockedDates, isDateBlocked, isPastDate } from '../data/bookingData';
 
 export default function BookingModal({ isOpen, onClose, lang = 'en', content, initialEvent = '' }) {
   const t = content[lang]?.bookingModal || {
-    title: lang === 'bn' ? 'রিজার্ভেশন ও বুকিং অনুসন্ধান' : 'Palace Reservations & Bookings',
+    title: lang === 'bn' ? 'রিজার্ভেশন ও বুকিং অনুসন্ধান' : 'Reservations & Bookings',
     successTitle: lang === 'bn' ? 'অনুসন্ধান সফলভাবে গৃহীত হয়েছে' : 'Reservation Request Received',
     successMsg: lang === 'bn'
       ? 'আপনার বুকিং সংক্রান্ত বিবরণ আমাদের রাজবাড়ি ট্রাস্টি ও এস্টেট ম্যানেজমেন্টের কাছে প্রেরিত হয়েছে। পরবর্তী ৪৮ ঘণ্টার মধ্যে নিশ্চিতকরণ জানানো হবে।'
@@ -25,7 +26,9 @@ export default function BookingModal({ isOpen, onClose, lang = 'en', content, in
 
   const [blockedDates, setBlockedDates] = useState(getBlockedDates());
   const [adminMode, setAdminMode] = useState(false);
-  const [currentMonthOffset, setCurrentMonthOffset] = useState(0);
+  const now = new Date();
+  const [calendarMonth, setCalendarMonth] = useState(now.getMonth());
+  const [calendarYear, setCalendarYear] = useState(now.getFullYear());
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [submitted, setSubmitted] = useState(false);
   const [dispatchDetails, setDispatchDetails] = useState(null);
@@ -40,15 +43,26 @@ export default function BookingModal({ isOpen, onClose, lang = 'en', content, in
     setBlockedDates(getBlockedDates());
   }, [isOpen]);
 
+  useEffect(() => {
+    if (!isOpen) return undefined;
+    const previousOverflow = document.body.style.overflow;
+    document.body.style.overflow = 'hidden';
+    const onKeyDown = (event) => {
+      if (event.key === 'Escape') onClose();
+    };
+    window.addEventListener('keydown', onKeyDown);
+    return () => {
+      document.body.style.overflow = previousOverflow;
+      window.removeEventListener('keydown', onKeyDown);
+    };
+  }, [isOpen, onClose]);
+
   if (!isOpen) return null;
 
   // Calendar calculations
   const today = new Date();
-  const targetDate = new Date(today.getFullYear(), today.getMonth() + currentMonthOffset, 1);
-  const year = targetDate.getFullYear();
-  const month = targetDate.getMonth();
-  const monthName = targetDate.toLocaleString(lang === 'bn' ? 'bn-IN' : 'en-US', { month: 'long', year: 'numeric' });
-  
+  const year = calendarYear;
+  const month = calendarMonth;
   const daysInMonth = new Date(year, month + 1, 0).getDate();
   const firstDayIndex = new Date(year, month, 1).getDay();
 
@@ -112,11 +126,25 @@ export default function BookingModal({ isOpen, onClose, lang = 'en', content, in
     onClose();
   };
 
-  return (
-    <div className="fixed inset-0 z-50 overflow-y-auto flex items-center justify-center p-3 sm:p-6 bg-black/80 backdrop-blur-md animate-in fade-in duration-200">
+  const yearOptions = Array.from({ length: 2100 - today.getFullYear() }, (_, index) => today.getFullYear() + index);
+  const monthOptions = Array.from({ length: 12 }, (_, index) => new Date(2000, index, 1).toLocaleString(lang === 'bn' ? 'bn-IN' : 'en-US', { month: 'long' }));
+  const atCurrentMonth = year === today.getFullYear() && month === today.getMonth();
+
+  const moveMonth = (step) => {
+    const next = new Date(year, month + step, 1);
+    if (next < new Date(today.getFullYear(), today.getMonth(), 1) || next.getFullYear() > 2099) return;
+    setCalendarMonth(next.getMonth());
+    setCalendarYear(next.getFullYear());
+  };
+
+  return createPortal(
+    <div className="fixed inset-0 z-[10000] overflow-y-auto flex items-center justify-center p-3 sm:p-6 bg-black/80 backdrop-blur-md animate-in fade-in duration-200" onMouseDown={onClose}>
       <div 
         className="relative w-full max-w-3xl bg-card rounded-2xl shadow-2xl border border-border/80 overflow-hidden text-foreground max-h-[92vh] flex flex-col"
-        onClick={(e) => e.stopPropagation()}
+        onMouseDown={(e) => e.stopPropagation()}
+        role="dialog"
+        aria-modal="true"
+        aria-labelledby="booking-dialog-title"
       >
         {/* Royal Header */}
         <div className="bg-muted/60 px-6 py-5 border-b border-border/60 flex items-center justify-between">
@@ -124,8 +152,8 @@ export default function BookingModal({ isOpen, onClose, lang = 'en', content, in
             <span className="text-[10px] uppercase tracking-[0.25em] text-primary font-semibold block">
               {lang === 'bn' ? 'পাথুরিয়াঘাটা ঘোষ বাড়ি · স্থাপিত ১৮৪৫' : 'Pathuria Ghata Ghosh Bari · Est. 1845'}
             </span>
-            <h3 className="font-serif text-xl sm:text-2xl font-bold text-foreground">
-              {lang === 'bn' ? 'রিজার্ভেশন ও বুকিং অনুসন্ধান' : 'Palace Reservations & Bookings'}
+            <h3 id="booking-dialog-title" className="font-serif text-xl sm:text-2xl font-bold text-foreground">
+              {lang === 'bn' ? 'রিজার্ভেশন ও বুকিং অনুসন্ধান' : 'Reservations & Bookings'}
             </h3>
           </div>
 
@@ -246,24 +274,33 @@ export default function BookingModal({ isOpen, onClose, lang = 'en', content, in
                 <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2 border-b border-border/50 pb-3">
                   <div className="flex items-center gap-2">
                     <CalendarIcon className="w-4 h-4 text-primary" />
-                    <span className="font-serif font-semibold text-sm sm:text-base text-foreground">
-                      {monthName}
-                    </span>
+                    <label className="sr-only" htmlFor="booking-month">Month</label>
+                    <select id="booking-month" value={month} onChange={(event) => setCalendarMonth(Number(event.target.value))} className="bg-card border border-border/60 rounded-lg px-2.5 py-1.5 text-xs text-foreground">
+                      {monthOptions.map((label, index) => <option key={label} value={index} disabled={year === today.getFullYear() && index < today.getMonth()}>{label}</option>)}
+                    </select>
+                    <label className="sr-only" htmlFor="booking-year">Year</label>
+                    <select id="booking-year" value={year} onChange={(event) => {
+                      const nextYear = Number(event.target.value);
+                      setCalendarYear(nextYear);
+                      if (nextYear === today.getFullYear() && month < today.getMonth()) setCalendarMonth(today.getMonth());
+                    }} className="bg-card border border-border/60 rounded-lg px-2.5 py-1.5 text-xs text-foreground">
+                      {yearOptions.map((option) => <option key={option} value={option}>{option}</option>)}
+                    </select>
                   </div>
 
                   <div className="flex items-center gap-2">
                     <button
                       type="button"
-                      disabled={currentMonthOffset <= 0}
-                      onClick={() => setCurrentMonthOffset(prev => Math.max(0, prev - 1))}
+                      disabled={atCurrentMonth}
+                      onClick={() => moveMonth(-1)}
                       className="px-2.5 py-1 text-xs border border-border/60 rounded-lg hover:bg-card disabled:opacity-30 disabled:cursor-not-allowed"
                     >
                       ← {lang === 'bn' ? 'পূর্ববর্তী' : 'Prev'}
                     </button>
                     <button
                       type="button"
-                      disabled={currentMonthOffset >= 6}
-                      onClick={() => setCurrentMonthOffset(prev => prev + 1)}
+                      disabled={year === 2099 && month === 11}
+                      onClick={() => moveMonth(1)}
                       className="px-2.5 py-1 text-xs border border-border/60 rounded-lg hover:bg-card disabled:opacity-30 disabled:cursor-not-allowed"
                     >
                       {lang === 'bn' ? 'পরবর্তী' : 'Next'} →
@@ -403,6 +440,7 @@ export default function BookingModal({ isOpen, onClose, lang = 'en', content, in
           )}
         </div>
       </div>
-    </div>
+    </div>,
+    document.body
   );
 }

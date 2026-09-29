@@ -1,13 +1,27 @@
-import React, { useState } from 'react';
-import { Compass, Award, ArrowRight, Download, FileText, Sparkles, User, MapPin, Phone, Mail, ShieldCheck } from 'lucide-react';
+import React, { useEffect, useState } from 'react';
+import { createPortal } from 'react-dom';
+import { Compass, Award, ArrowRight, Download, Sparkles, User, MapPin, Phone, Mail, X } from 'lucide-react';
 import SectionHeader from '../components/SectionHeader';
 import { getAssetUrl } from '../utils/assetHelper';
 import AlpanaDivider from '../components/AlpanaDivider';
 
 export default function AboutPage({ lang = 'en', setActiveTab, onOpenBooking, onOpenLightbox, content }) {
-  const [activeGen, setActiveGen] = useState(1);
+  const [activeGen, setActiveGen] = useState(null);
   const t = content[lang];
   const isBn = lang === 'bn';
+  const selectedGeneration = activeGen ? t.lineage.generations[activeGen - 1] : null;
+
+  useEffect(() => {
+    if (!selectedGeneration) return undefined;
+    const previousOverflow = document.body.style.overflow;
+    document.body.style.overflow = 'hidden';
+    const closeOnEscape = (event) => event.key === 'Escape' && setActiveGen(null);
+    window.addEventListener('keydown', closeOnEscape);
+    return () => {
+      document.body.style.overflow = previousOverflow;
+      window.removeEventListener('keydown', closeOnEscape);
+    };
+  }, [selectedGeneration]);
 
   return (
     <main className="pt-28 md:pt-36 pb-24 bg-background min-h-screen text-foreground">
@@ -21,6 +35,13 @@ export default function AboutPage({ lang = 'en', setActiveTab, onOpenBooking, on
               ? '১৮৪৫ সাল থেকে উত্তর কলকাতায় বাঙালি সংস্কৃতি, শাস্ত্রীয় সঙ্গীত ও আধ্যাত্মিক ভক্তি সংরক্ষণের দেড় শতাব্দীরও প্রাচীন গৌরব' 
               : 'A 175-year journey of preserving Bengali aristocratic heritage, sacred traditions, and classical arts'}
           />
+
+          <div className="heritage-pdf-link-row">
+            <a href="/Khelat_Bhawan_Heritage_eBook.pdf" download="Khelat_Bhawan_Heritage_eBook.pdf" className="heritage-pdf-link">
+              <Download className="w-3.5 h-3.5" />
+              <span>{isBn ? 'বিনামূল্যে হেরিটেজ পিডিএফ' : 'Free heritage PDF'}</span>
+            </a>
+          </div>
 
           <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-14 items-center">
             <div className="lg:col-span-6 space-y-6 text-left">
@@ -129,12 +150,13 @@ export default function AboutPage({ lang = 'en', setActiveTab, onOpenBooking, on
                   key={idx}
                   role="button"
                   tabIndex={0}
-                  aria-pressed={isActive}
-                  onClick={() => setActiveGen(activeGen === genNum ? null : genNum)}
+                  aria-haspopup="dialog"
+                  aria-expanded={isActive}
+                  onClick={() => setActiveGen(genNum)}
                   onKeyDown={(e) => {
                     if (e.key === 'Enter' || e.key === ' ') {
                       e.preventDefault();
-                      setActiveGen(activeGen === genNum ? null : genNum);
+                      setActiveGen(genNum);
                     }
                   }}
                   className={`royal-family-tree__generation royal-family-tree__generation--${genNum} ${
@@ -231,39 +253,7 @@ export default function AboutPage({ lang = 'en', setActiveTab, onOpenBooking, on
           </div>
         </section>
 
-        {/* SECTION 6: DOWNLOADABLE HERITAGE EBOOK / PDF (Item 9) */}
-        <section id="heritage-ebook" className="bg-card rounded-3xl border border-primary/40 p-8 sm:p-12 shadow-2xl text-center max-w-4xl mx-auto space-y-6">
-          <div className="w-16 h-16 rounded-full bg-primary/10 text-primary flex items-center justify-center mx-auto border border-primary/30 shadow-md">
-            <FileText className="w-8 h-8" />
-          </div>
-          <div>
-            <span className="text-xs uppercase tracking-[0.25em] text-primary font-semibold font-sans block mb-2">
-              {isBn ? 'ডিজিটাল আর্কাইভ ও পুস্তিকা' : 'Official Publication'}
-            </span>
-            <h3 className="font-serif text-3xl sm:text-4xl font-bold text-foreground">
-              {isBn ? 'খেলাৎ ভবন হেরিটেজ ই-বুক ডাউনলোড করুন' : 'Download the Khelat Bhawan Heritage Guide & eBook'}
-            </h3>
-          </div>
-          <p className="text-muted-foreground text-xs sm:text-sm font-sans max-w-xl mx-auto leading-relaxed">
-            {isBn
-              ? 'খেলাৎ ভবনের ১৭৫+ বছরের পূর্ণাঙ্গ ইতিহাস, স্থাপত্যের নিদর্শন, ঐতিহাসিক দুর্গাপূজা ও পারিবারিক বংশলতিকার বিশদ বিবরণ সম্বলিত অফিসিয়াল ই-বুক (PDF)।'
-              : 'Download the comprehensive archival monograph detailing over 175 years of architectural history, spiritual sanctity, classical musical patronage, and seven generations of custodianship.'}
-          </p>
-          <div className="pt-2">
-            <a
-              href="/Khelat_Bhawan_Heritage_eBook.pdf"
-              download="Khelat_Bhawan_Heritage_eBook.pdf"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="inline-flex items-center gap-2 px-8 py-4 rounded-xl bg-primary text-primary-foreground text-xs font-semibold tracking-widest uppercase hover:bg-primary/90 transition-all shadow-xl"
-            >
-              <Download className="w-4 h-4" />
-              <span>{isBn ? 'হেরিটেজ ই-বুক ডাউনলোড করুন (PDF)' : 'Download Heritage eBook (PDF)'}</span>
-            </a>
-          </div>
-        </section>
-
-        {/* SECTION 7: VISIT / CONTACT INFORMATION & CTA */}
+        {/* SECTION 6: VISIT / CONTACT INFORMATION & CTA */}
         <section id="heritage-contact-cta" className="p-8 sm:p-12 bg-card/60 rounded-3xl border border-border/80 shadow-xl space-y-8">
           <div className="text-center max-w-2xl mx-auto space-y-2">
             <span className="text-xs uppercase tracking-widest text-primary font-semibold font-sans">
@@ -315,6 +305,21 @@ export default function AboutPage({ lang = 'en', setActiveTab, onOpenBooking, on
         </section>
 
       </div>
+      {selectedGeneration && createPortal(
+        <div className="generation-dialog" role="presentation" onMouseDown={() => setActiveGen(null)}>
+          <article className="generation-dialog__panel" role="dialog" aria-modal="true" aria-labelledby="generation-dialog-title" onMouseDown={(event) => event.stopPropagation()}>
+            <button type="button" className="generation-dialog__close" onClick={() => setActiveGen(null)} aria-label={isBn ? 'বন্ধ করুন' : 'Close generation details'}><X /></button>
+            <span className="generation-dialog__label">{selectedGeneration.gen}</span>
+            <h3 id="generation-dialog-title">{selectedGeneration.name}</h3>
+            <p className="generation-dialog__period">{selectedGeneration.period}</p>
+            <div className="generation-dialog__rule" />
+            <h4>{selectedGeneration.role}</h4>
+            <p className="generation-dialog__description">{selectedGeneration.desc}</p>
+            <p className="generation-dialog__note">{isBn ? 'খেলাৎ ভবনের অবিচ্ছিন্ন পারিবারিক অভিভাবকত্বের একটি অধ্যায়।' : 'A chapter in the unbroken family custodianship of Khelat Bhawan.'}</p>
+          </article>
+        </div>,
+        document.body
+      )}
     </main>
   );
 }

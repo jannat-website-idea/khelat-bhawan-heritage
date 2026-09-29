@@ -82,7 +82,6 @@ export default function HeritageRentalPage({ lang = 'en', onOpenBooking, onOpenL
                     ← {lang === 'bn' ? 'পূর্ববর্তী' : 'Prev'}
                   </button>
                   <button
-                    disabled={currentMonthOffset >= 6}
                     onClick={() => setCurrentMonthOffset(prev => prev + 1)}
                     className="px-2.5 py-1 text-xs border border-border/60 rounded-lg hover:bg-card disabled:opacity-30"
                   >
@@ -197,7 +196,7 @@ export default function HeritageRentalPage({ lang = 'en', onOpenBooking, onOpenL
                   onClick={() => onOpenBooking(srv.title)}
                   className="w-full py-3.5 bg-primary text-primary-foreground text-xs tracking-[0.2em] uppercase font-sans font-semibold hover:bg-primary/90 transition-all rounded-xl text-center shadow-md"
                 >
-                  {lang === 'bn' ? 'বুকিং অনুসন্ধান পাঠান' : 'Enquire For This Venue'}
+                  {lang === 'bn' ? 'এই রিজার্ভেশন সম্পর্কে অনুসন্ধান করুন' : 'Enquire About This Reservation'}
                 </button>
               </div>
             </div>

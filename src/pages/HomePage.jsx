@@ -60,7 +60,9 @@ export default function HomePage({ lang = 'en', setActiveTab, onOpenBooking, onO
   const isBn = lang === 'bn';
   const milestones = t.timelinePreview.items;
   const galleryPreview = galleryData.slice(0, 6);
-  const reviews = t.reviews.items || [];
+  // Reviews are user-authored content. Keep every review in its submitted
+  // language even when the surrounding interface is switched to Bengali.
+  const reviews = content.en.reviews.items || [];
 
   const openImage = (src, title, desc = '') => onOpenLightbox({ type: 'image', src, title, desc });
 

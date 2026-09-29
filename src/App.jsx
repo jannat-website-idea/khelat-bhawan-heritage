@@ -160,7 +160,7 @@ export default function App() {
   return (
     <>
     {loading && <HeritageLoader onReveal={setHomeReady} onComplete={handleLoaderComplete} lang={lang} />}
-    <div inert={loading ? '' : undefined} aria-hidden={loading || undefined} className={`min-h-screen flex flex-col justify-between bg-background text-foreground ${lang === 'bn' ? 'font-bengali-text' : 'font-body'}`}>
+    <div inert={(loading || isBookingOpen) ? '' : undefined} aria-hidden={(loading || isBookingOpen) || undefined} className={`min-h-screen flex flex-col justify-between bg-background text-foreground ${lang === 'bn' ? 'font-bengali-text' : 'font-body'}`}>
       {/* Fixed Glass Navigation */}
       <Navbar
         lang={lang}

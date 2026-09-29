@@ -141,7 +141,8 @@ html { scroll-behavior: auto; }
 .royal-legacy-strip__intro { display: grid; grid-template-columns: 1.1fr 1fr; gap: 20px 70px; }
 .heritage-home .royal-legacy-strip h2 { font-size: clamp(36px,3.5vw,54px); line-height: 1.12; }
 .royal-legacy-strip__intro > div { display: flex; gap: 32px; grid-column: 2; }
-.royal-legacy-strip button { display: inline-flex; align-items: center; gap: 10px; color: #741e30; font-size: 13px; border-bottom: 1px solid #b79a68; padding-bottom: 8px; }
+.royal-legacy-strip button { display: inline-flex; align-items: center; gap: 10px; color: #741e30; font-size: 13px; border-bottom: 1px solid #b79a68; padding-bottom: 8px; transition: gap .8s cubic-bezier(.16,1,.3,1), color .65s ease, transform .8s cubic-bezier(.16,1,.3,1); }
+.royal-legacy-strip button:hover { gap: 18px; color: #a77a2f; transform: translateY(-2px); }
 .royal-legacy-strip__stats { display: grid; grid-template-columns: repeat(3,1fr); border-top: 1px solid #b79a6855; margin-top: 48px; padding-top: 30px; text-align: center; }
 .royal-legacy-strip__stats > div + div { border-left: 1px solid #b79a6855; }
 .royal-legacy-strip strong { display: block; font-family: 'Playfair Display',serif; font-weight: 400; color: #8c7036; font-size: 38px; }
@@ -539,4 +540,3 @@ html { scroll-behavior: auto; }
 .testimonials-marquee-track:hover {
   animation-play-state: paused;
 }
-
