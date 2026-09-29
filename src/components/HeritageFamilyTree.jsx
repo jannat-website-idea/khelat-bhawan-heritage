@@ -99,12 +99,12 @@ export default function HeritageFamilyTree({ lang = 'en', setActiveTab }) {
               <p className="heritage-family-dialog__bio">{selectedGen.bio[lang] || selectedGen.bio.en}</p>
               <h4><Sparkles />{isBn ? 'ঐতিহাসিক অবদান' : 'Key heritage contributions'}</h4>
               <ul>{(selectedGen.contributions[lang] || selectedGen.contributions.en).map((item) => <li key={item}><CheckCircle2 />{item}</li>)}</ul>
-              <div className="heritage-family-dialog__actions">
-                <button type="button" disabled={selectedGenIndex === 0} onClick={() => setSelectedGenIndex((index) => index - 1)}><ChevronLeft />{isBn ? 'পূর্ববর্তী' : 'Previous'}</button>
-                {selectedGen.gen === 1 && setActiveTab && <button type="button" onClick={() => { setSelectedGenIndex(null); setActiveTab('founder'); }}>{isBn ? 'প্রতিষ্ঠাতার জীবনী' : 'Founder biography'}<ExternalLink /></button>}
-                {selectedGen.gen >= 4 && setActiveTab && <button type="button" onClick={() => { setSelectedGenIndex(null); setActiveTab('trustees'); }}>{isBn ? 'ট্রাস্ট ও ট্রাস্টি' : 'Trusts & trustees'}<ExternalLink /></button>}
-                <button type="button" disabled={selectedGenIndex === generations.length - 1} onClick={() => setSelectedGenIndex((index) => index + 1)}>{isBn ? 'পরবর্তী' : 'Next'}<ChevronRight /></button>
-              </div>
+              {setActiveTab && (selectedGen.gen === 1 || selectedGen.gen >= 4) && (
+                <div className="heritage-family-dialog__actions">
+                  {selectedGen.gen === 1 && <button type="button" onClick={() => { setSelectedGenIndex(null); setActiveTab('founder'); }}>{isBn ? 'প্রতিষ্ঠাতার জীবনী' : 'Founder biography'}<ExternalLink /></button>}
+                  {selectedGen.gen >= 4 && <button type="button" onClick={() => { setSelectedGenIndex(null); setActiveTab('trustees'); }}>{isBn ? 'ট্রাস্ট ও ট্রাস্টি' : 'Trusts & trustees'}<ExternalLink /></button>}
+                </div>
+              )}
             </div>
           </article>
           <button
