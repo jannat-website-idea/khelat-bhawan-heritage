@@ -51,7 +51,6 @@ export default function HeritageFamilyTree({ lang = 'en', setActiveTab }) {
             <button type="button" className={`heritage-family-node ${index % 2 ? 'is-right' : 'is-left'}`} style={{ '--generation-index': index }} key={generation.gen} onClick={() => setSelectedGenIndex(index)} aria-label={`${value(generation.tag)}: ${value(generation.name)}`}>
               <span className="heritage-family-node__portrait"><img src={getAssetUrl(generation.image)} alt="" loading="lazy" /></span>
               <span className="heritage-family-node__copy">
-                <span className="heritage-family-node__number">{String(generation.gen).padStart(2, '0')}</span>
                 <span className="heritage-family-node__generation">{value(generation.tag)}</span>
                 <span className="heritage-family-node__role">{value(generation.role)}</span>
                 <strong>{value(generation.name)}</strong>
