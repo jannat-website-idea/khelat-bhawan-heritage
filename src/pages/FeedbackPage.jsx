@@ -45,14 +45,14 @@ export default function FeedbackPage({ lang, content }) {
             <AlpanaDivider className="my-4" />
           </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+          <div className="columns-1 md:columns-2 gap-6">
             {rev.items.map((item, index) => (
               <a
                 key={`${item.id}-${index}`}
                 href={item.reviewUrl}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="group p-8 rounded-sm bg-card border border-border hover:border-accent/60 shadow-sm hover:shadow-xl transition-all duration-300 flex flex-col justify-between text-left relative overflow-hidden"
+                className="group mb-6 break-inside-avoid inline-flex w-full p-8 rounded-sm bg-card border border-border hover:border-accent/60 shadow-sm hover:shadow-xl transition-all duration-300 flex-col text-left relative overflow-hidden"
               >
                 <div>
                   {/* Star Rating */}
