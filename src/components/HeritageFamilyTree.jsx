@@ -76,6 +76,15 @@ export default function HeritageFamilyTree({ lang = 'en', setActiveTab }) {
 
       {selectedGen && selectedEditorial && createPortal(
         <div className="heritage-family-dialog" role="presentation" onMouseDown={() => setSelectedGenIndex(null)}>
+          <button
+            type="button"
+            className="heritage-family-dialog__side-nav is-previous"
+            onMouseDown={(event) => event.stopPropagation()}
+            onClick={() => setSelectedGenIndex((index) => (index - 1 + generations.length) % generations.length)}
+            aria-label={isBn ? 'পূর্ববর্তী প্রজন্ম দেখুন' : 'View previous generation'}
+          >
+            <ChevronLeft />
+          </button>
           <article className="heritage-family-dialog__panel" role="dialog" aria-modal="true" aria-labelledby="heritage-family-dialog-title" onMouseDown={(event) => event.stopPropagation()}>
             <button type="button" className="heritage-family-dialog__close" onClick={() => setSelectedGenIndex(null)} aria-label={isBn ? 'পারিবারিক বংশতালিকায় ফিরে যান' : 'Back to family tree'}>
               <span>{isBn ? 'বংশতালিকায় ফিরুন' : 'Back to family tree'}</span>
@@ -98,6 +107,15 @@ export default function HeritageFamilyTree({ lang = 'en', setActiveTab }) {
               </div>
             </div>
           </article>
+          <button
+            type="button"
+            className="heritage-family-dialog__side-nav is-next"
+            onMouseDown={(event) => event.stopPropagation()}
+            onClick={() => setSelectedGenIndex((index) => (index + 1) % generations.length)}
+            aria-label={isBn ? 'পরবর্তী প্রজন্ম দেখুন' : 'View next generation'}
+          >
+            <ChevronRight />
+          </button>
         </div>,
         document.body
       )}
