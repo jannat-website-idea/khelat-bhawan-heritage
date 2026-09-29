@@ -51,8 +51,8 @@ export default function HeritageFamilyTree({ lang = 'en', setActiveTab }) {
           <path className="heritage-family-journey__arrow" d="M700 525 C580 645 420 485 300 620" />
           <path className="heritage-family-journey__arrow" d="M300 825 C420 945 580 785 700 920" />
           <path className="heritage-family-journey__arrow" d="M700 1125 C580 1245 420 1085 300 1220" />
-          <path className="heritage-family-journey__arrow" d="M300 1425 C420 1545 580 1385 700 1520" />
-          <path className="heritage-family-journey__arrow" d="M700 1725 C580 1845 420 1685 300 1820" />
+          <path className="heritage-family-journey__arrow" d="M300 1395 C420 1490 580 1355 700 1470" />
+          <path className="heritage-family-journey__arrow" d="M700 1695 C580 1790 420 1655 300 1770" />
         </svg>
 
         {generations.map((generation, index) => {
