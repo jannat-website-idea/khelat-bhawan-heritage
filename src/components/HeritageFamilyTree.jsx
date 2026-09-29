@@ -42,7 +42,19 @@ export default function HeritageFamilyTree({ lang = 'en', setActiveTab }) {
 
       <div className="heritage-family-journey__path">
         <svg className="heritage-family-journey__line" viewBox="0 0 1000 2100" preserveAspectRatio="none" aria-hidden="true">
-          <path d="M285 95 C290 220 735 180 725 350 S260 500 275 665 S735 815 720 980 S260 1130 275 1295 S735 1445 720 1610 S300 1780 285 2020" />
+          <defs>
+            <mask id="familyJourneyTextClearance">
+              <rect width="1000" height="2100" fill="white" />
+              <rect x="205" y="0" width="410" height="275" rx="36" fill="black" />
+              <rect x="385" y="285" width="410" height="290" rx="36" fill="black" />
+              <rect x="205" y="585" width="410" height="290" rx="36" fill="black" />
+              <rect x="385" y="885" width="410" height="290" rx="36" fill="black" />
+              <rect x="205" y="1185" width="410" height="290" rx="36" fill="black" />
+              <rect x="385" y="1485" width="410" height="290" rx="36" fill="black" />
+              <rect x="205" y="1785" width="410" height="315" rx="36" fill="black" />
+            </mask>
+          </defs>
+          <path mask="url(#familyJourneyTextClearance)" d="M285 95 C290 220 735 180 725 350 S260 500 275 665 S735 815 720 980 S260 1130 275 1295 S735 1445 720 1610 S300 1780 285 2020" />
         </svg>
 
         {generations.map((generation, index) => {
