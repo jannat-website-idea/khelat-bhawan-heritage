@@ -43,16 +43,16 @@ export default function HeritageFamilyTree({ lang = 'en', setActiveTab }) {
       <div className="heritage-family-journey__path">
         <svg className="heritage-family-journey__line" viewBox="0 0 1000 2100" preserveAspectRatio="none" aria-hidden="true">
           <defs>
-            <marker id="familyJourneyArrowhead" markerWidth="10" markerHeight="10" refX="8" refY="5" orient="auto" markerUnits="strokeWidth">
-              <path className="heritage-family-journey__arrowhead" d="M1 1.5 L8 5 L1 8.5" />
+            <marker id="familyJourneyArrowhead" markerWidth="11" markerHeight="11" refX="9" refY="5.5" orient="auto" markerUnits="strokeWidth">
+              <path className="heritage-family-journey__arrowhead" d="M1 1 L9 5.5 L1 10 L3.4 5.5 Z" />
             </marker>
           </defs>
-          <path className="heritage-family-journey__arrow" d="M630 205 C690 205 735 228 765 285" />
-          <path className="heritage-family-journey__arrow" d="M370 505 C310 505 265 528 235 585" />
-          <path className="heritage-family-journey__arrow" d="M630 805 C690 805 735 828 765 885" />
-          <path className="heritage-family-journey__arrow" d="M370 1105 C310 1105 265 1128 235 1185" />
-          <path className="heritage-family-journey__arrow" d="M630 1405 C690 1405 735 1428 765 1485" />
-          <path className="heritage-family-journey__arrow" d="M370 1705 C310 1705 265 1728 235 1785" />
+          <path className="heritage-family-journey__arrow" d="M300 225 C420 345 580 185 700 320" />
+          <path className="heritage-family-journey__arrow" d="M700 525 C580 645 420 485 300 620" />
+          <path className="heritage-family-journey__arrow" d="M300 825 C420 945 580 785 700 920" />
+          <path className="heritage-family-journey__arrow" d="M700 1125 C580 1245 420 1085 300 1220" />
+          <path className="heritage-family-journey__arrow" d="M300 1425 C420 1545 580 1385 700 1520" />
+          <path className="heritage-family-journey__arrow" d="M700 1725 C580 1845 420 1685 300 1820" />
         </svg>
 
         {generations.map((generation, index) => {
