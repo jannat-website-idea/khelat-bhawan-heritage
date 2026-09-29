@@ -104,7 +104,6 @@ export default function HomePage({ lang = 'en', setActiveTab, onOpenBooking, onO
             {isBn ? '“এই বাড়ি শুধু ইট ও দেয়াল নয়—' : '“This house isn’t bricks and walls—'}
             <em>{isBn ? 'এটি বাংলার সাংস্কৃতিক আত্মা।”' : 'it is Bengal’s cultural soul.”'}</em>
           </h2>
-          <AlpanaDivider className="heritage-story__divider" />
           <p>
             {isBn
               ? '১৮৪৫ সালে প্রতিষ্ঠিত খেলাৎ ভবন—পাথুরিয়াঘাটা ঘোষ বাড়ি নামেও পরিচিত—বাংলার সাংস্কৃতিক ঐতিহ্য ও আধ্যাত্মিক ভক্তির এক জীবন্ত সাক্ষ্য।'
@@ -247,18 +246,17 @@ export default function HomePage({ lang = 'en', setActiveTab, onOpenBooking, onO
           </button>
         </div>
 
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+        <div className="heritage-gallery__modern-grid">
           {galleryPreview.map((item, index) => {
             const rawSrc = item.type === 'video' ? (item.poster || '/images/SDP_0344.jpg') : item.src;
             const finalSrc = getAssetUrl(rawSrc);
 
             return (
-              <div
+              <button
+                type="button"
                 key={item.id}
                 onClick={() => onOpenLightbox(item)}
-                className={`group relative overflow-hidden rounded-2xl border border-border/50 bg-card/40 cursor-pointer shadow-lg hover:shadow-2xl hover:border-primary/50 transition-all duration-500 ${
-                  index === 0 ? 'sm:col-span-2 aspect-[16/9]' : 'aspect-[4/3]'
-                }`}
+                className={`heritage-gallery__archive-card group ${index === 0 ? 'is-featured' : ''}`}
               >
                 <img
                   src={finalSrc}
@@ -286,11 +284,11 @@ export default function HomePage({ lang = 'en', setActiveTab, onOpenBooking, onO
                   <h3 className="font-serif text-lg sm:text-xl font-semibold mb-1 group-hover:text-primary transition-colors">
                     {item.title}
                   </h3>
-                  <p className="text-xs text-muted-foreground font-sans line-clamp-2">
+                  <p className="text-xs text-white/75 font-sans line-clamp-2">
                     {item.desc}
                   </p>
                 </div>
-              </div>
+              </button>
             );
           })}
         </div>
