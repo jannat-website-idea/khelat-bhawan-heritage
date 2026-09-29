@@ -199,7 +199,7 @@ export default function GalleryPage({ lang = 'en' }) {
           aria-modal="true"
         >
           {/* Top Bar */}
-          <div className="absolute top-0 left-0 right-0 p-4 sm:p-6 flex items-center justify-between text-[#f4efe6] z-20">
+          <div className="gallery-film-theater__topbar absolute top-0 left-0 right-0 p-4 sm:p-6 flex items-center justify-between text-[#f4efe6] z-20">
             <div className="flex items-center gap-3">
               <span className="font-mono text-xs font-bold tracking-widest text-[#c99a4a]">
                 {String(selectedPhotoIndex + 1).padStart(2, '0')} / {String(photographyGalleryData.length).padStart(2, '0')}
@@ -293,7 +293,7 @@ export default function GalleryPage({ lang = 'en' }) {
 
             <button
               onClick={() => setSelectedFilmIndex(null)}
-              className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-[#1e100c] border border-[#d4af37]/40 text-xs font-mono uppercase tracking-widest text-[#f4efe6] hover:bg-[#d4af37] hover:text-[#120a08] transition-colors"
+              className="gallery-film-theater__close inline-flex items-center gap-2 px-4 py-2 rounded-full bg-[#1e100c] border border-[#d4af37]/40 text-xs font-mono uppercase tracking-widest text-[#f4efe6] hover:bg-[#d4af37] hover:text-[#120a08] transition-colors"
               aria-label={isBn ? 'বন্ধ করুন' : 'Close film'}
             >
               <span>{isBn ? 'বন্ধ করুন' : 'CLOSE FILM'}</span>
@@ -303,7 +303,7 @@ export default function GalleryPage({ lang = 'en' }) {
 
           {/* Film Video Player Container */}
           <div 
-            className="relative w-full max-w-5xl max-h-[85vh] p-4 flex flex-col items-center justify-center z-10"
+            className="gallery-film-theater__content relative w-full max-w-5xl max-h-[85vh] p-4 flex flex-col items-center justify-center z-10"
             onClick={(e) => e.stopPropagation()}
           >
             <div className="gallery-film-stage">
