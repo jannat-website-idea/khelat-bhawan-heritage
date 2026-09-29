@@ -43,18 +43,16 @@ export default function HeritageFamilyTree({ lang = 'en', setActiveTab }) {
       <div className="heritage-family-journey__path">
         <svg className="heritage-family-journey__line" viewBox="0 0 1000 2100" preserveAspectRatio="none" aria-hidden="true">
           <defs>
-            <mask id="familyJourneyTextClearance">
-              <rect width="1000" height="2100" fill="white" />
-              <rect x="205" y="0" width="410" height="275" rx="36" fill="black" />
-              <rect x="385" y="285" width="410" height="290" rx="36" fill="black" />
-              <rect x="205" y="585" width="410" height="290" rx="36" fill="black" />
-              <rect x="385" y="885" width="410" height="290" rx="36" fill="black" />
-              <rect x="205" y="1185" width="410" height="290" rx="36" fill="black" />
-              <rect x="385" y="1485" width="410" height="290" rx="36" fill="black" />
-              <rect x="205" y="1785" width="410" height="315" rx="36" fill="black" />
-            </mask>
+            <marker id="familyJourneyArrowhead" markerWidth="10" markerHeight="10" refX="8" refY="5" orient="auto" markerUnits="strokeWidth">
+              <path className="heritage-family-journey__arrowhead" d="M1 1.5 L8 5 L1 8.5" />
+            </marker>
           </defs>
-          <path mask="url(#familyJourneyTextClearance)" d="M285 95 C290 220 735 180 725 350 S260 500 275 665 S735 815 720 980 S260 1130 275 1295 S735 1445 720 1610 S300 1780 285 2020" />
+          <path className="heritage-family-journey__arrow" d="M620 215 C720 220 785 245 810 292" />
+          <path className="heritage-family-journey__arrow" d="M380 515 C280 520 215 545 190 592" />
+          <path className="heritage-family-journey__arrow" d="M620 815 C720 820 785 845 810 892" />
+          <path className="heritage-family-journey__arrow" d="M380 1115 C280 1120 215 1145 190 1192" />
+          <path className="heritage-family-journey__arrow" d="M620 1415 C720 1420 785 1445 810 1492" />
+          <path className="heritage-family-journey__arrow" d="M380 1715 C280 1720 215 1745 190 1792" />
         </svg>
 
         {generations.map((generation, index) => {
