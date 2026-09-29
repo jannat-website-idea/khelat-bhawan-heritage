@@ -339,7 +339,7 @@ export default function HomePage({ lang = 'en', setActiveTab, onOpenBooking, onO
             {[...reviews, ...reviews].map((item, idx) => (
               <a
                 key={`${item.id}-${idx}`}
-                href={GOOGLE_REVIEWS_URL}
+                href={item.reviewUrl}
                 target="_blank"
                 rel="noopener noreferrer"
                 className="w-[320px] sm:w-[380px] bg-background/90 rounded-2xl border border-border/70 p-6 shadow-xl flex flex-col justify-between shrink-0 hover:border-primary/50 transition-all duration-300"

@@ -49,7 +49,7 @@ export default function FeedbackPage({ lang, content }) {
             {rev.items.map((item, index) => (
               <a
                 key={`${item.id}-${index}`}
-                href={rev.googleUrl}
+                href={item.reviewUrl}
                 target="_blank"
                 rel="noopener noreferrer"
                 className="group p-8 rounded-sm bg-card border border-border hover:border-accent/60 shadow-sm hover:shadow-xl transition-all duration-300 flex flex-col justify-between text-left relative overflow-hidden"
