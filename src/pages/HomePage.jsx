@@ -5,6 +5,7 @@ import { ArrowRight, Star, ExternalLink, Play, Quote } from 'lucide-react';
 import AlpanaDivider from '../components/AlpanaDivider';
 import { getAssetUrl } from '../utils/assetHelper';
 import { galleryData } from '../data/galleryData';
+import { GOOGLE_REVIEWS_URL, googleReviews, googleReviewSummary } from '../data/googleReviews';
 
 function AnimatedStat({ target, suffix = '', isBn = false, duration = 2000 }) {
   const [count, setCount] = useState(0);
@@ -60,9 +61,8 @@ export default function HomePage({ lang = 'en', setActiveTab, onOpenBooking, onO
   const isBn = lang === 'bn';
   const milestones = t.timelinePreview.items;
   const galleryPreview = galleryData.slice(0, 6);
-  // Reviews are user-authored content. Keep every review in its submitted
-  // language even when the surrounding interface is switched to Bengali.
-  const reviews = content.en.reviews.items || [];
+  // Keep Google review excerpts in the language in which they were posted.
+  const reviews = googleReviews;
 
   const openImage = (src, title, desc = '') => onOpenLightbox({ type: 'image', src, title, desc });
 
@@ -310,7 +310,7 @@ export default function HomePage({ lang = 'en', setActiveTab, onOpenBooking, onO
 
           <div className="flex items-center gap-4 bg-background/80 px-5 py-3 rounded-2xl border border-border/80 shadow-md">
             <div className="text-center">
-              <span className="font-serif text-2xl font-bold text-foreground">4.9</span>
+              <span className="font-serif text-2xl font-bold text-foreground">{googleReviewSummary.rating}</span>
               <span className="text-xs text-muted-foreground">/5.0</span>
             </div>
             <div className="h-8 w-px bg-border/60" />
@@ -321,12 +321,12 @@ export default function HomePage({ lang = 'en', setActiveTab, onOpenBooking, onO
                 ))}
               </div>
               <a
-                href={t.reviews.googleUrl}
+                href={GOOGLE_REVIEWS_URL}
                 target="_blank"
                 rel="noopener noreferrer"
                 className="text-xs text-primary font-medium hover:underline flex items-center gap-1 mt-0.5"
               >
-                <span>{isBn ? '১৫০+ গুগল রিভিউ' : '150+ Google Reviews'}</span>
+                <span>{isBn ? `${googleReviewSummary.reviewCount}টি গুগল রিভিউ` : `${googleReviewSummary.reviewCount} Google Reviews`}</span>
                 <ExternalLink className="w-3 h-3" />
               </a>
             </div>
@@ -338,8 +338,11 @@ export default function HomePage({ lang = 'en', setActiveTab, onOpenBooking, onO
           <div className="testimonials-marquee-track">
             {/* Duplicated 8 items twice for continuous infinite loop */}
             {[...reviews, ...reviews].map((item, idx) => (
-              <div
+              <a
                 key={`${item.id}-${idx}`}
+                href={GOOGLE_REVIEWS_URL}
+                target="_blank"
+                rel="noopener noreferrer"
                 className="w-[320px] sm:w-[380px] bg-background/90 rounded-2xl border border-border/70 p-6 shadow-xl flex flex-col justify-between shrink-0 hover:border-primary/50 transition-all duration-300"
               >
                 <div>
@@ -350,16 +353,12 @@ export default function HomePage({ lang = 'en', setActiveTab, onOpenBooking, onO
                       ))}
                     </div>
                     <span className="text-[10px] uppercase tracking-wider px-2 py-0.5 rounded-full bg-primary/10 text-primary font-medium">
-                      {item.category || 'Heritage'}
+                      Google Review
                     </span>
                   </div>
 
-                  <h4 className="font-serif text-base font-semibold text-foreground mb-2 line-clamp-1">
-                    “{item.title}”
-                  </h4>
-
                   <p className="text-muted-foreground text-xs sm:text-sm font-sans leading-relaxed line-clamp-4 mb-6">
-                    {item.review}
+                    “{item.review}”
                   </p>
                 </div>
 
@@ -369,22 +368,22 @@ export default function HomePage({ lang = 'en', setActiveTab, onOpenBooking, onO
                   </div>
                   <div className="overflow-hidden">
                     <strong className="block text-xs font-semibold text-foreground truncate">{item.name}</strong>
-                    <span className="block text-[10px] text-muted-foreground truncate">{item.role}</span>
+                    <span className="block text-[10px] text-muted-foreground truncate">{item.time} · View on Google</span>
                   </div>
                 </div>
-              </div>
+              </a>
             ))}
           </div>
         </div>
 
         <div className="max-w-7xl mx-auto px-4 sm:px-6 mt-10 text-center">
           <a
-            href={t.reviews.googleUrl}
+            href={GOOGLE_REVIEWS_URL}
             target="_blank"
             rel="noopener noreferrer"
             className="inline-flex items-center gap-2 px-6 py-3 rounded-full bg-primary text-primary-foreground text-xs font-semibold tracking-wider uppercase hover:bg-primary/90 transition-all shadow-md"
           >
-            <span>{isBn ? 'গুগলে সব পর্যালোচনা দেখুন' : 'Read All 150+ Reviews on Google'}</span>
+            <span>{isBn ? 'গুগলে সব আসল পর্যালোচনা দেখুন' : 'Read All Original Reviews on Google'}</span>
             <ExternalLink className="w-3.5 h-3.5" />
           </a>
         </div>

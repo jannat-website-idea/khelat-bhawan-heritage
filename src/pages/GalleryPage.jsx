@@ -306,15 +306,35 @@ export default function GalleryPage({ lang = 'en' }) {
             className="relative w-full max-w-5xl max-h-[85vh] p-4 flex flex-col items-center justify-center z-10"
             onClick={(e) => e.stopPropagation()}
           >
-            <div className="relative w-full aspect-video rounded-xl sm:rounded-2xl overflow-hidden bg-black shadow-2xl border border-[#d4af37]/40">
-              <video
-                src={getAssetUrl(activeFilm.src)}
-                poster={getAssetUrl(activeFilm.poster)}
-                controls
-                autoPlay
-                playsInline
-                className="w-full h-full object-contain"
-              />
+            <div className="gallery-film-stage">
+              <button
+                type="button"
+                onClick={() => setSelectedFilmIndex((prev) => (prev - 1 + filmsGalleryData.length) % filmsGalleryData.length)}
+                className="gallery-film-side-control gallery-film-side-control--prev"
+                aria-label={isBn ? 'পূর্ববর্তী চলচ্চিত্র' : 'Previous film'}
+              >
+                <ChevronLeft aria-hidden="true" />
+              </button>
+
+              <div className="relative w-full aspect-video rounded-xl sm:rounded-2xl overflow-hidden bg-black shadow-2xl border border-[#d4af37]/40">
+                <video
+                  src={getAssetUrl(activeFilm.src)}
+                  poster={getAssetUrl(activeFilm.poster)}
+                  controls
+                  autoPlay
+                  playsInline
+                  className="w-full h-full object-contain"
+                />
+              </div>
+
+              <button
+                type="button"
+                onClick={() => setSelectedFilmIndex((prev) => (prev + 1) % filmsGalleryData.length)}
+                className="gallery-film-side-control gallery-film-side-control--next"
+                aria-label={isBn ? 'পরবর্তী চলচ্চিত্র' : 'Next film'}
+              >
+                <ChevronRight aria-hidden="true" />
+              </button>
             </div>
 
             {/* Video Meta & Prev/Next Controls Underneath */}

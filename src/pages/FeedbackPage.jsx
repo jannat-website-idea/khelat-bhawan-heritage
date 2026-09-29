@@ -2,10 +2,11 @@ import React, { useState } from 'react';
 import { Star, MessageSquare, ExternalLink, CheckCircle, Send, Heart, Award, Sparkles } from 'lucide-react';
 import SectionHeader from '../components/SectionHeader';
 import AlpanaDivider from '../components/AlpanaDivider';
+import { GOOGLE_REVIEWS_URL, googleReviews, googleReviewSummary } from '../data/googleReviews';
 
 export default function FeedbackPage({ lang, content }) {
   const t = content[lang];
-  const rev = { ...t.reviews, items: content.en.reviews.items || [] };
+  const rev = { ...t.reviews, googleUrl: GOOGLE_REVIEWS_URL, items: googleReviews };
   const isBn = lang === 'bn';
 
   const [rating, setRating] = useState(5);
@@ -61,14 +62,9 @@ export default function FeedbackPage({ lang, content }) {
                     ))}
                   </div>
 
-                  {/* Headline */}
-                  <h4 className="font-serif text-lg font-semibold text-foreground mb-3 leading-snug group-hover:text-accent transition-colors">
-                    “{item.title}”
-                  </h4>
-
                   {/* Review Text */}
                   <p className="text-sm text-foreground/80 font-body leading-relaxed mb-6">
-                    {item.review}
+                    “{item.review}”
                   </p>
                 </div>
 
@@ -82,6 +78,7 @@ export default function FeedbackPage({ lang, content }) {
                       <p className="font-serif font-semibold text-foreground text-sm leading-tight">
                         {item.name}
                       </p>
+                      <p className="text-[10px] text-muted-foreground mt-1">{item.time} · View original on Google</p>
                     </div>
                   </div>
                 </div>
@@ -265,7 +262,7 @@ export default function FeedbackPage({ lang, content }) {
 
               <div>
                 <div className="flex items-center justify-center sm:justify-start gap-2 mb-1">
-                  <span className="text-3xl font-serif font-bold text-foreground">{rev.rating}</span>
+                  <span className="text-3xl font-serif font-bold text-foreground">{googleReviewSummary.rating}</span>
                   <div className="flex items-center text-amber-500">
                     {[...Array(5)].map((_, i) => (
                       <Star key={i} className="w-5 h-5 fill-amber-400 text-amber-400" />
@@ -277,7 +274,7 @@ export default function FeedbackPage({ lang, content }) {
                   {isBn ? 'গুগল ব্যবসায়িক পর্যালোচনা — খেলাৎ ভবন পাথুরিয়াঘাটা রাজবাড়ি' : 'Google Verified Rating — Khelat Bhavan Pathuriaghata Rajbari'}
                 </h3>
                 <p className="text-xs text-muted-foreground font-body mt-0.5">
-                  {isBn ? '১৫০+ যাচাইকৃত গুগল পর্যালোচনা ও প্রত্যক্ষ ভক্তবৃন্দের মতামত' : 'Based on 150+ verified Google visitor reviews & historical accounts'}
+                  {isBn ? `${googleReviewSummary.reviewCount}টি আসল গুগল পর্যালোচনা` : `Based on ${googleReviewSummary.reviewCount} original Google reviews`}
                 </p>
               </div>
             </div>
