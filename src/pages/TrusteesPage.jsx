@@ -1,11 +1,13 @@
-import React from 'react';
-import { Heart, Music, Users, Check, ShieldCheck, Sparkles, ArrowRight } from 'lucide-react';
+import React, { useEffect, useState } from 'react';
+import { createPortal } from 'react-dom';
+import { Heart, Music, Users, Check, ShieldCheck, Sparkles, ArrowRight, X } from 'lucide-react';
 import SectionHeader from '../components/SectionHeader';
 import { getAssetUrl } from '../utils/assetHelper';
 
 export default function TrusteesPage({ lang = 'en', setActiveTab, onOpenLightbox, content }) {
   const t = content[lang];
   const isBn = lang === 'bn';
+  const [selectedTrustee, setSelectedTrustee] = useState(null);
 
   const trusts = [
     {
@@ -71,6 +73,18 @@ export default function TrusteesPage({ lang = 'en', setActiveTab, onOpenLightbox
     { period: '1995–2020', name: isBn ? 'চতুর্থ ট্রাস্টি' : 'Fourth Generation Trustees', desc: isBn ? 'ঐতিহ্যবাহী মূল্যবোধ ও সমকালীন প্রয়োজনের মধ্যে সেতুবন্ধন গড়ে বৃহত্তর পরিচিতির পথ খুলে দেন।' : 'Bridged traditional values with contemporary needs, opening the heritage to wider appreciation.' },
     { period: isBn ? '২০২০–বর্তমান' : '2020–Present', name: isBn ? 'বর্তমান ট্রাস্টি মণ্ডলী' : 'Current Governing Board', desc: isBn ? 'দৃশ্যমান ও অদৃশ্য ঐতিহ্য সংরক্ষণ নিশ্চিত করে ট্রাস্টকে ডিজিটাল যুগে এগিয়ে নিয়ে যাচ্ছেন।' : 'Leading the trust into the digital age while ensuring the preservation of tangible and intangible heritage.' }
   ];
+
+  useEffect(() => {
+    if (!selectedTrustee) return undefined;
+    const previousOverflow = document.body.style.overflow;
+    document.body.style.overflow = 'hidden';
+    const closeOnEscape = (event) => event.key === 'Escape' && setSelectedTrustee(null);
+    window.addEventListener('keydown', closeOnEscape);
+    return () => {
+      document.body.style.overflow = previousOverflow;
+      window.removeEventListener('keydown', closeOnEscape);
+    };
+  }, [selectedTrustee]);
 
   return (
     <main className="pt-28 md:pt-36 pb-24 bg-background min-h-screen text-foreground">
@@ -200,6 +214,16 @@ export default function TrusteesPage({ lang = 'en', setActiveTab, onOpenLightbox
                 key={trustee.period}
                 className="trustee-pyramid__tier"
                 style={{ '--tier-width': `${64 + (index * 8)}%`, '--tier-mobile-width': `${84 + (index * 4)}%` }}
+                role="button"
+                tabIndex={0}
+                aria-haspopup="dialog"
+                onClick={() => setSelectedTrustee(trustee)}
+                onKeyDown={(event) => {
+                  if (event.key === 'Enter' || event.key === ' ') {
+                    event.preventDefault();
+                    setSelectedTrustee(trustee);
+                  }
+                }}
               >
                 <div className="trustee-pyramid__card">
                   <div className="trustee-pyramid__copy">
@@ -220,6 +244,21 @@ export default function TrusteesPage({ lang = 'en', setActiveTab, onOpenLightbox
             </div>
           </div>
         </section>
+
+        {selectedTrustee && createPortal(
+          <div className="generation-dialog" role="presentation" onMouseDown={() => setSelectedTrustee(null)}>
+            <article className="generation-dialog__panel" role="dialog" aria-modal="true" aria-labelledby="trustee-dialog-title" onMouseDown={(event) => event.stopPropagation()}>
+              <button type="button" className="generation-dialog__close" onClick={() => setSelectedTrustee(null)} aria-label={isBn ? 'বন্ধ করুন' : 'Close trustee details'}><X /></button>
+              <span className="generation-dialog__label">{isBn ? 'তত্ত্বাবধানের উত্তরাধিকার' : 'Custodianship succession'}</span>
+              <h3 id="trustee-dialog-title">{selectedTrustee.name}</h3>
+              <p className="generation-dialog__period">{selectedTrustee.period}</p>
+              <div className="generation-dialog__rule" />
+              <p className="generation-dialog__description">{selectedTrustee.desc}</p>
+              <p className="generation-dialog__note">{isBn ? 'খেলাৎ ভবনের আনুষ্ঠানিক তত্ত্বাবধানের ধারাবাহিক ইতিহাস।' : 'Part of Khelat Bhawan’s continuing tradition of formal stewardship.'}</p>
+            </article>
+          </div>,
+          document.body
+        )}
 
         {/* Governance Quote */}
         <div className="p-10 md:p-14 rounded-3xl text-center my-16 shadow-2xl space-y-4 border border-[#d4af37]/60 bg-gradient-to-br from-[#1f190c] via-[#151108] to-[#0d0a04] text-[#f4efe5]">
