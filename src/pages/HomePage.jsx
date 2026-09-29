@@ -170,8 +170,9 @@ export default function HomePage({ lang = 'en', setActiveTab, onOpenBooking, onO
           </div>
 
           <div className="text-center mt-10">
-            <button className="heritage-button heritage-button--dark mx-auto" onClick={() => setActiveTab('trustees')}>
-              {isBn ? 'ট্রাস্ট ও ট্রাস্টি দেখুন' : 'View trusts & trustees'}
+            <button className="heritage-premium-cta mx-auto" onClick={() => setActiveTab('trustees')}>
+              <span>{isBn ? 'ট্রাস্ট ও ট্রাস্টি দেখুন' : 'View trusts & trustees'}</span>
+              <ArrowRight className="heritage-premium-cta__arrow" size={21} aria-hidden="true" />
             </button>
           </div>
         </div>
@@ -381,10 +382,10 @@ export default function HomePage({ lang = 'en', setActiveTab, onOpenBooking, onO
             href={GOOGLE_REVIEWS_URL}
             target="_blank"
             rel="noopener noreferrer"
-            className="inline-flex items-center gap-2 px-6 py-3 rounded-full bg-primary text-primary-foreground text-xs font-semibold tracking-wider uppercase hover:bg-primary/90 transition-all shadow-md"
+            className="heritage-premium-cta heritage-premium-cta--wide mx-auto"
           >
             <span>{isBn ? 'গুগলে সব আসল পর্যালোচনা দেখুন' : 'Read All Original Reviews on Google'}</span>
-            <ExternalLink className="w-3.5 h-3.5" />
+            <ArrowRight className="heritage-premium-cta__arrow" size={21} aria-hidden="true" />
           </a>
         </div>
       </section>
