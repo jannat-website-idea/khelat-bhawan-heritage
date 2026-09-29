@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from 'react';
+import { createPortal } from 'react-dom';
 import { Calendar, CheckCircle2, ChevronLeft, ChevronRight, ExternalLink, Sparkles, X } from 'lucide-react';
 import { familyTreeData } from '../data/familyTreeData';
 import { getAssetUrl } from '../utils/assetHelper';
@@ -64,10 +65,13 @@ export default function HeritageFamilyTree({ lang = 'en', setActiveTab }) {
 
       <footer className="heritage-family-journey__footer"><span />{isBn ? 'উত্তরাধিকার বহমান' : 'THE LEGACY CONTINUES'}<span /></footer>
 
-      {selectedGen && selectedEditorial && (
+      {selectedGen && selectedEditorial && createPortal(
         <div className="heritage-family-dialog" role="presentation" onMouseDown={() => setSelectedGenIndex(null)}>
           <article className="heritage-family-dialog__panel" role="dialog" aria-modal="true" aria-labelledby="heritage-family-dialog-title" onMouseDown={(event) => event.stopPropagation()}>
-            <button type="button" className="heritage-family-dialog__close" onClick={() => setSelectedGenIndex(null)} aria-label={isBn ? 'বন্ধ করুন' : 'Close generation details'}><X /></button>
+            <button type="button" className="heritage-family-dialog__close" onClick={() => setSelectedGenIndex(null)} aria-label={isBn ? 'পারিবারিক বংশতালিকায় ফিরে যান' : 'Back to family tree'}>
+              <span>{isBn ? 'বংশতালিকায় ফিরুন' : 'Back to family tree'}</span>
+              <X />
+            </button>
             <div className="heritage-family-dialog__portrait"><img src={getAssetUrl(selectedEditorial.image)} alt="" /></div>
             <div className="heritage-family-dialog__content">
               <span className="heritage-family-dialog__label">{selectedEditorial.tag[lang] || selectedEditorial.tag.en}</span>
@@ -85,7 +89,8 @@ export default function HeritageFamilyTree({ lang = 'en', setActiveTab }) {
               </div>
             </div>
           </article>
-        </div>
+        </div>,
+        document.body
       )}
     </section>
   );
