@@ -19,7 +19,7 @@ export default function Lightbox({ item, onClose, onNext, onPrev, hasNext, hasPr
 
   return (
     <div 
-      className="fixed inset-0 z-[9999] bg-[#120a0d]/95 backdrop-blur-2xl flex flex-col justify-between p-4 md:p-8 animate-fade-in text-[#f7eed9] select-none"
+      className="heritage-lightbox fixed inset-0 z-[9999] bg-[#120a0d]/95 backdrop-blur-2xl flex flex-col justify-between p-4 md:p-8 animate-fade-in text-[#f7eed9] select-none"
       onClick={onClose}
       role="dialog"
       aria-modal="true"
@@ -27,10 +27,10 @@ export default function Lightbox({ item, onClose, onNext, onPrev, hasNext, hasPr
     >
       {/* Top Header Bar */}
       <div 
-        className="flex items-center justify-between z-20 w-full max-w-7xl mx-auto pb-4 border-b border-[#d8ae62]/25" 
+        className="heritage-lightbox__header flex items-center justify-between z-20 w-full max-w-7xl mx-auto pb-4 border-b border-[#d8ae62]/25" 
         onClick={(e) => e.stopPropagation()}
       >
-        <div className="flex items-center gap-4">
+        <div className="heritage-lightbox__heading flex items-center gap-4">
           <button
             onClick={onClose}
             className="flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-[#2a171c] hover:bg-[#3d2027] border border-[#d8ae62]/40 text-[#d8ae62] hover:text-[#fff] text-xs font-semibold tracking-wider uppercase transition-all duration-300 shadow-md cursor-pointer"
@@ -39,7 +39,7 @@ export default function Lightbox({ item, onClose, onNext, onPrev, hasNext, hasPr
             <ArrowLeft className="w-4 h-4" />
             <span className="hidden sm:inline">Back</span>
           </button>
-          <div>
+          <div className="heritage-lightbox__title">
             <span className="text-[10px] md:text-xs tracking-[0.25em] uppercase text-[#d8ae62] font-semibold block">
               Khelat Bhawan · Visual Archive {item.category && `· ${item.category.toUpperCase()}`}
             </span>
@@ -60,7 +60,7 @@ export default function Lightbox({ item, onClose, onNext, onPrev, hasNext, hasPr
       </div>
 
       {/* Main Content Area */}
-      <div className="relative flex-1 flex items-center justify-center my-3 overflow-hidden" onClick={(e) => e.stopPropagation()}>
+      <div className="heritage-lightbox__stage relative flex-1 flex items-center justify-center my-3 overflow-hidden" onClick={(e) => e.stopPropagation()}>
         {item.type === 'video' ? (
           <div className="max-w-5xl max-h-[70vh] w-full rounded-xl overflow-hidden shadow-2xl bg-black border border-[#d8ae62]/30">
             <video
@@ -102,7 +102,7 @@ export default function Lightbox({ item, onClose, onNext, onPrev, hasNext, hasPr
       </div>
 
       {/* Bottom Description */}
-      <div className="max-w-3xl mx-auto text-center px-4 space-y-1 z-10" onClick={(e) => e.stopPropagation()}>
+      <div className="heritage-lightbox__description max-w-3xl mx-auto text-center px-4 space-y-1 z-10" onClick={(e) => e.stopPropagation()}>
         <p className="text-sm md:text-base text-[#e5ddc8] font-light leading-relaxed">
           {item.desc}
         </p>

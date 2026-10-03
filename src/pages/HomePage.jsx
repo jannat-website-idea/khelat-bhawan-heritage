@@ -227,7 +227,7 @@ export default function HomePage({ lang = 'en', setActiveTab, onOpenBooking, onO
           <p className="heritage-kicker">{isBn ? 'পারিবারিক আর্কাইভ' : 'The family archive'}</p>
           <h2>{isBn ? 'সাত প্রজন্মের তত্ত্বাবধান' : 'Seven generations of custodians'}</h2>
           <AlpanaDivider className="heritage-lineage__divider" />
-          <p>{isBn ? 'বাবু খেলাৎ ঘোষ থেকে বর্তমান প্রজন্ম পর্যন্ত, পরিবারের সাত প্রজন্ম এই উত্তরাধিকার সংরক্ষণ করেছে।' : 'From Babu Khelat Chandra Ghosh to the present day, seven unbroken generations have carried the stewardship of this monumental estate.'}</p>
+          <p>{isBn ? 'খেলাৎ ঘোষ থেকে বর্তমান প্রজন্ম পর্যন্ত, পরিবারের সাত প্রজন্ম এই উত্তরাধিকার সংরক্ষণ করেছে।' : 'From Khelat Ghosh to the present day, seven generations have carried the stewardship of this heritage.'}</p>
           <button className="editorial-link" onClick={() => setActiveTab('timeline')}>
             {isBn ? 'পারিবারিক বংশতালিকা ও সময়রেখা' : 'Explore Family Tree & Timeline'}<ArrowRight />
           </button>

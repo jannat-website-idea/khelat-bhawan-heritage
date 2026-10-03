@@ -2288,6 +2288,294 @@
   .heritage-button,.editorial-link,.heritage-pdf-link,.generation-dialog,.generation-dialog__panel,.contact-page__official-card,.gallery-editorial-tile,.gallery-editorial-tile img { animation: none !important; transition-duration: 1ms !important; }
 }
 
+/* --------------------------------------------------------------------------
+   Phone-size resilience
+   Keep every interactive surface visible from 320px upward without changing
+   the desktop composition.
+   -------------------------------------------------------------------------- */
+html,
+body,
+#root {
+  max-width: 100%;
+  overflow-x: clip;
+}
+
+img,
+video,
+iframe {
+  max-width: 100%;
+}
+
+@media (max-width: 640px) {
+  .heritage-nav__inner {
+    width: calc(100% - 24px);
+  }
+
+  .heritage-brand {
+    min-width: 0;
+  }
+
+  .heritage-brand strong {
+    white-space: nowrap;
+  }
+
+  .heritage-nav__actions {
+    flex: 0 0 auto;
+    gap: 8px;
+  }
+
+  .heritage-menu-btn {
+    min-height: 40px;
+    padding-inline: 12px;
+  }
+
+  .royal-portal-overlay {
+    padding:
+      max(18px, env(safe-area-inset-top))
+      20px
+      max(18px, env(safe-area-inset-bottom));
+  }
+
+  .royal-portal-overlay > div:first-child {
+    align-items: flex-start;
+    gap: 12px;
+  }
+
+  .royal-portal-overlay > div:first-child > div {
+    min-width: 0;
+  }
+
+  .royal-portal-overlay > div:first-child h2,
+  .royal-portal-overlay > div:first-child p {
+    overflow-wrap: anywhere;
+  }
+
+  .royal-portal-close {
+    flex: 0 0 auto;
+    min-height: 40px;
+    padding-inline: 12px;
+  }
+
+  .royal-portal-item {
+    min-height: 54px;
+    padding-block: 12px;
+  }
+
+  .royal-portal-item .item-label {
+    font-size: clamp(18px, 6vw, 23px);
+  }
+
+  .royal-portal-overlay > div:last-child {
+    align-items: stretch;
+    gap: 10px;
+    padding-bottom: env(safe-area-inset-bottom);
+  }
+
+  .royal-portal-overlay > div:last-child > div,
+  .royal-portal-overlay > div:last-child a {
+    min-width: 0;
+    max-width: 100%;
+  }
+
+  .royal-portal-overlay > div:last-child > div:last-child {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 8px;
+  }
+
+  .royal-portal-overlay > div:last-child a {
+    overflow-wrap: anywhere;
+  }
+
+  .heritage-timeline-page .heritage-timeline-toggle-btn {
+    flex: 1 0 100%;
+    width: 100%;
+    min-height: 42px;
+    padding: 9px 12px;
+    white-space: normal;
+    line-height: 1.35;
+    text-align: center;
+  }
+
+  .heritage-timeline-page .heritage-timeline-toggle-btn span {
+    min-width: 0;
+    overflow-wrap: anywhere;
+  }
+
+  .gallery-mosaic-filters {
+    justify-content: center;
+    flex-wrap: wrap;
+    overflow: visible;
+    gap: 8px;
+  }
+
+  .gallery-mosaic-filter {
+    min-height: 38px;
+    padding-inline: 11px;
+    font-size: .58rem;
+  }
+
+  .testimonials-marquee-track > a {
+    width: calc(100vw - 48px);
+    max-width: 340px;
+  }
+
+  .feedback-page__reviews a,
+  .feedback-page__message,
+  .feedback-page__google {
+    padding: 1.35rem;
+  }
+
+  .contact-page {
+    padding-top: 6.5rem;
+  }
+
+  .contact-page .container {
+    padding-inline: 16px;
+  }
+
+  .contact-page__official-card,
+  .contact-page__form-card,
+  .contact-page__map-card {
+    padding: 1.25rem;
+  }
+
+  .contact-page__hours {
+    align-items: flex-start;
+    text-align: left;
+  }
+
+  .contact-page__map-heading {
+    align-items: flex-start;
+    flex-direction: column;
+  }
+
+  .generation-dialog {
+    align-items: stretch;
+    padding: 0;
+  }
+
+  .generation-dialog__panel {
+    width: 100%;
+    max-height: 100dvh;
+    overflow-y: auto;
+    border-inline: 0;
+  }
+
+  .generation-dialog__close {
+    position: sticky;
+    top: 0;
+    z-index: 2;
+    margin: -2.65rem 0 .75rem auto;
+  }
+
+  .heritage-family-dialog__panel,
+  .generation-dialog__panel {
+    padding-bottom: max(2rem, env(safe-area-inset-bottom));
+  }
+}
+
+@media (max-width: 360px) {
+  .heritage-brand strong {
+    font-size: 15px;
+    letter-spacing: .04em;
+  }
+
+  .heritage-brand span {
+    font-size: 5.5px;
+    letter-spacing: .15em;
+  }
+
+  .heritage-language {
+    display: none;
+  }
+
+  .royal-portal-overlay {
+    padding-inline: 16px;
+  }
+
+  .royal-portal-overlay > div:first-child p {
+    font-size: 8px;
+    letter-spacing: .2em;
+  }
+
+  .royal-portal-overlay > div:first-child h2 {
+    font-size: 17px;
+  }
+
+  .royal-portal-item {
+    padding-inline: 8px;
+  }
+
+  .gallery-mosaic-filter {
+    padding-inline: 9px;
+    letter-spacing: .08em;
+  }
+}
+
+@media (max-width: 640px) {
+  .heritage-lightbox {
+    padding:
+      max(12px, env(safe-area-inset-top))
+      12px
+      max(14px, env(safe-area-inset-bottom));
+  }
+
+  .heritage-lightbox__header {
+    align-items: flex-start;
+    gap: 8px;
+    padding-bottom: 10px;
+  }
+
+  .heritage-lightbox__heading,
+  .heritage-lightbox__title {
+    min-width: 0;
+  }
+
+  .heritage-lightbox__heading {
+    gap: 8px;
+  }
+
+  .heritage-lightbox__title > span {
+    display: none;
+  }
+
+  .heritage-lightbox__title h3 {
+    display: -webkit-box;
+    overflow: hidden;
+    font-size: .95rem;
+    white-space: normal;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 2;
+  }
+
+  .heritage-lightbox__header > button:last-child {
+    flex: 0 0 auto;
+    min-height: 40px;
+    padding-inline: 12px;
+  }
+
+  .heritage-lightbox__stage {
+    min-height: 0;
+  }
+
+  .heritage-lightbox__stage > button {
+    width: 42px;
+    height: 42px;
+  }
+
+  .heritage-lightbox__description {
+    max-height: 18dvh;
+    overflow-y: auto;
+    padding-inline: 6px;
+  }
+
+  .heritage-lightbox__description p {
+    font-size: .78rem;
+    line-height: 1.45;
+  }
+}
+
 /* ==========================================================================
    Editorial Heritage History Timeline (Museum Archive Spread)
    ========================================================================== */

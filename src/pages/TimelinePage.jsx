@@ -18,7 +18,7 @@ export default function TimelinePage({ lang = 'en', setActiveTab, onOpenLightbox
       title: isBn ? "খেলাৎ ভবনের প্রতিষ্ঠা ও রাজপ্রাসাদ নির্মাণ" : "Founding of Khelat Bhawan Palace",
       desc: isBn 
         ? "বাবু খেলাৎ চন্দ্র ঘোষ উত্তর কলকাতার পাথুরিয়াঘাটায় গ্র্যান্ড করিন্থিয়ান স্তম্ভ, মার্বেল চত্বর এবং বেলজিয়ান ঝাড়বাতি শোভিত এই ঐতিহাসিক প্রাসাদ নির্মাণ করেন।"
-        : "Babu Khelat Chandra Ghosh commissions the monumental palatial mansion at 47 Pathuria Ghata Street, synthesizing Doric and Corinthian classical architecture with traditional Bengali courtyards.",
+        : "Khelat Bhawan was established as a grand Bengali heritage mansion by the Ghosh family.",
       image: "/images/SDP_0344.jpg",
       caption: isBn ? "পাথুরিয়াঘাটা, ১৮৪৫" : "Pathuria Ghata, c. 1845",
       actionLabel: isBn ? "আর্কাইভ দেখুন" : "EXPLORE ARCHIVES",
@@ -31,7 +31,7 @@ export default function TimelinePage({ lang = 'en', setActiveTab, onOpenLightbox
       title: isBn ? "প্রথম দুর্গাপূজা ও নিত্য দেবসেবার সূচনা" : "Inauguration of Historic Durga Puja",
       desc: isBn 
         ? "খেলাৎ ভবনে প্রথম আনুষ্ঠানিক একচালা ডাকের সাজের দেবী দুর্গাপূজার সূচনা হয়—যে পবিত্র ঐতিহ্য ১৭১ বছর ধরে আজ পর্যন্ত অব্যাহত।"
-        : "The first formal Durga Puja celebration is consecrated at Thakur Dalan. An unbroken 171-year sacred ritual begins with traditional Ekchala Daker Saaj idol and 108 lotus sandhi puja.",
+        : "The first formal Durga Puja celebration at Khelat Bhawan established a tradition that continues to this day.",
       image: "/images/unnamed_6.webp",
       caption: isBn ? "খেলাৎ ভবনে ঐতিহাসিক দুর্গাপূজা" : "Durga Puja at Khelat Bhawan",
       actionLabel: isBn ? "গ্যালারি দেখুন" : "VIEW GALLERY",
@@ -130,12 +130,25 @@ export default function TimelinePage({ lang = 'en', setActiveTab, onOpenLightbox
       icon: Film
     },
     {
-      year: "2026",
-      badge: isBn ? "বর্তমান ও ভবিষ্যৎ রূপরেখা" : "PRESENT & FUTURE",
-      title: isBn ? "১৭১তম বার্ষিক মহোৎসব ও গ্লোবাল হেরিটেজ পোর্টাল" : "171st Festive Gala & Global Heritage Stewardship",
+      year: "2020",
+      badge: isBn ? "ডিজিটাল অভিজ্ঞতা" : "DIGITAL EXPERIENCE",
+      title: isBn ? "ভার্চুয়াল অভিজ্ঞতার সূচনা" : "Virtual Experience Launch",
       desc: isBn 
-        ? "ডিজিটাল বুকিং, আন্তর্জাতিক সাংস্কৃতিক সম্মেলন এবং বাংলার সমৃদ্ধ আভিজাত্য সংরক্ষণের টেকসই আধুনিক মডেল।"
-        : "Unveiling modern digital reservations, high-definition visual chronicles, interactive family archives, and sustainable global heritage outreach.",
+        ? "ভার্চুয়াল ট্যুর ও ডিজিটাল অভিজ্ঞতার সূচনার মাধ্যমে বিশ্বজুড়ে এই ঐতিহ্যকে পৌঁছে দেওয়া হয়।"
+        : "Virtual tours and digital experiences make the heritage accessible to audiences around the world.",
+      image: "/images/SDP_0368.jpg",
+      caption: isBn ? "ডিজিটাল ঐতিহ্য অভিজ্ঞতা" : "Digital Heritage Experience",
+      actionLabel: isBn ? "আরও জানুন" : "LEARN MORE",
+      quote: isBn ? "“বিশ্বজুড়ে পৌঁছে যাওয়া জীবন্ত ঐতিহ্য।”" : "“Heritage shared beyond its walls.”",
+      icon: Sparkles
+    },
+    {
+      year: "2023",
+      badge: isBn ? "ভবিষ্যৎ রূপরেখা" : "FUTURE VISION",
+      title: isBn ? "ভবিষ্যৎ দৃষ্টিভঙ্গি উদ্যোগ" : "Future Vision Initiative",
+      desc: isBn
+        ? "টেকসই সংরক্ষণ মডেল এবং বাংলার ঐতিহ্য সম্পর্কে বিশ্বব্যাপী সচেতনতা বৃদ্ধির উদ্যোগ নেওয়া হয়।"
+        : "Sustainable preservation models and global awareness initiatives support the future of Bengali heritage.",
       image: "/images/SDP_0368.jpg",
       caption: isBn ? "আজকের জীবন্ত ঐতিহ্য" : "The Living Monument Today",
       actionLabel: isBn ? "আজই পরিদর্শন করুন" : "EXPERIENCE TODAY",

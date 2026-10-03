@@ -194,7 +194,7 @@ export default function AboutPage({ lang = 'en', setActiveTab, onOpenBooking, on
               <div className="w-44 h-44 sm:w-52 sm:h-52 mx-auto lg:mx-0 rounded-full overflow-hidden border-2 border-primary/50 shadow-2xl bg-black">
                 <img
                   src={getAssetUrl('/images/babu_khelat_ghosh_bust.png')}
-                  alt="Babu Khelat Chandra Ghosh"
+                  alt="Khelat Ghosh"
                   className="w-full h-full object-cover"
                 />
               </div>
@@ -206,7 +206,7 @@ export default function AboutPage({ lang = 'en', setActiveTab, onOpenBooking, on
                 <span>{isBn ? 'প্রতিষ্ঠাতা ও সমাজহিতৈষী' : 'Founder & Cultural Patriarch'}</span>
               </div>
               <h3 className="font-serif text-2xl sm:text-4xl font-bold text-foreground">
-                {isBn ? 'বাবু খেলাৎ চন্দ্র ঘোষ (১৭৭৫ – ১৮৪৫)' : 'Babu Khelat Chandra Ghosh (1775 – 1845)'}
+                {isBn ? 'খেলাৎ ঘোষ (১৭৭৫ – ১৮৪৫)' : 'Khelat Ghosh (1775 – 1845)'}
               </h3>
               <p className="text-muted-foreground text-xs sm:text-sm font-sans leading-relaxed">
                 {isBn

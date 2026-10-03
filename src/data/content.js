@@ -111,7 +111,7 @@ export const siteData = {
     },
     founder: {
       eyebrow: "The Visionary Patriarch",
-      name: "Babu Khelat Ghosh",
+      name: "Khelat Ghosh",
       years: "1775 – 1845",
       role: "Founder & Aristocratic Visionary",
       tagline: "Businessman, Philanthropist, and Patron of Bengali Arts & Culture",
@@ -183,7 +183,7 @@ export const siteData = {
       generations: [
         {
           gen: "1st Generation",
-          name: "Babu Khelat Ghosh",
+          name: "Khelat Ghosh",
           period: "1775 – 1845",
           role: "Founder",
           desc: "Established Khelat Bhawan in 1845, prominent businessman, philanthropist, and founder of the cultural estate.",

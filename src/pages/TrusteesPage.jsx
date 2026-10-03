@@ -13,55 +13,55 @@ export default function TrusteesPage({ lang = 'en', setActiveTab, onOpenLightbox
     {
       id: "trust-1",
       num: "01",
-      est: "1855 / 1920",
+      est: "1855",
       name: "Lakshmi Narayan Gopal Radha Krishna Jew Trust",
       category: isBn ? "ভক্তি ও আধ্যাত্মিক ঐতিহ্য" : "Religious & Spiritual Devotion",
       icon: Heart,
       desc: isBn
         ? "১৮৫৫ সাল থেকে খেলাৎ ভবনের পুণ্য ধর্মীয় ঐতিহ্য, বিশেষত ঐতিহাসিক দুর্গাপূজা, জগদ্ধাত্রী পূজা পরিচালনা এবং পারিবারিক বিগ্রহের নিত্যসেবায় নিয়োজিত।"
-        : "Dedicated to preserving the spiritual essence of Bengali culture through daily devotional practices, sacred deity veneration, and the 171-year continuous Durga Puja.",
+        : "Dedicated to preserving the spiritual essence of Bengali culture through devotional practices and religious ceremonies.",
       achievements: isBn 
         ? ["১৭১+ বছর ধরে নিরবচ্ছিন্ন দুর্গাপূজা", "১৮৮১ সালে শ্রীরামকৃষ্ণের পুণ্য আগমন ও আশীর্বাদ", "১০৮ পদ্মের ঐতিহ্যবাহী সন্ধিপূজা ও মহাপ্রসাদ বিতরণ", "নিত্য দেবসেবা ও আধ্যাত্মিক দিকনির্দেশনা"]
-        : ["171+ years of unbroken traditional Durga Puja", "Blessed by Sri Ramakrishna Paramhansa in 1881", "Traditional 108 lotus Sandhi Puja and community Prasad distribution", "Daily Nitya Seva for Lakshmi Narayan, Gopal, and Radha Krishna deities"],
+        : ["170+ years of continuous Durga Puja", "Blessed by Sri Ramakrishna in 1881", "Traditional ritual preservation", "Community spiritual guidance"],
       initiatives: isBn 
         ? ["১৮৫৫ সাল থেকে দুর্গাপূজা মহোৎসব", "ঐতিহ্যবাহী রীতিতে জগদ্ধাত্রী পূজা", "দৈনিক নিত্যসেবা ও আরতি", "আধ্যাত্মিক আলোচনা ও ভক্তিমূলক সঙ্গীত"]
-        : ["Durga Puja celebration since 1855", "Jagadhatri Puja with ancestral rituals", "Daily Nitya Seva and Sandhya Aarti", "Spiritual discourses and devotional kirtans"],
+        : ["Durga Puja celebration since 1855", "Jagadhatri Puja with traditional rituals", "Daily Nitya Seva and prayers", "Spiritual discourse and bhajans", "Religious festival organization"],
       image: "/images/SDP_0368.jpg"
     },
     {
       id: "trust-2",
       num: "02",
-      est: "1950s / 1975",
+      est: "1950s",
       name: "Khelat Ghosh Memorial Trust",
       category: isBn ? "শাস্ত্রীয় সঙ্গীত ও সংস্কৃতি" : "Classical Music & Cultural Patronage",
       icon: Music,
       desc: isBn
         ? "প্রতিষ্ঠাতা বাবু খেলাৎ ঘোষের সঙ্গীতানুরাগকে চিরস্মরণীয় রাখতে ভারতীয় মার্গ সঙ্গীতের চর্চা, ঐতিহ্যবাহী সঙ্গীতশিল্পীদের সহায়তা ও রাজবাড়ি স্থাপত্য সংরক্ষণে নিবেদিত।"
-        : "Promoting Indian classical music, Dhrupad, Khayal, and Sitar traditions while stewarding the structural preservation of the 19th-century palace estate.",
+        : "Promoting Bengali music, classical arts, and cultural initiatives to preserve our rich artistic heritage.",
       achievements: isBn 
         ? ["১০০+ শাস্ত্রীয় সঙ্গীতশিল্পীকে সম্মাননা ও সহায়তা", "ঐতিহাসিক বাৎসরিক মার্গ সঙ্গীত সম্মেলন", "১৯৭৫ সালে রাজপ্রাসাদের প্রধান স্থাপত্য পুনরুদ্ধার", "তরুণ উচ্চাঙ্গ সঙ্গীত শিল্পীদের প্রশিক্ষণ ও অনুদান"]
-        : ["Supported 100+ classical maestros and performers", "Pioneered historic classical music conferences", "1975 comprehensive palace architectural restoration", "Mentorship and grants for young classical vocalists and sitarists"],
+        : ["Supported 100+ classical musicians", "Organized 500+ cultural programs", "Preserved traditional Bengali music", "Mentored young artists"],
       initiatives: isBn 
         ? ["শাস্ত্রীয় সঙ্গীতানুষ্ঠান ও বৈঠক", "ঐতিহ্যবাহী সঙ্গীতশিল্পীদের পৃষ্ঠপোষকতা", "সংগীত সম্মেলন ও সেমিনার", "ঐতিহাসিক স্থাপত্যের সযত্ন সংস্কার"]
-        : ["Classical baithaks and soirees", "Support for heritage musicians", "Annual music festivals & academic seminars", "Ongoing structural preservation of Khelat Bhawan"],
+        : ["Classical music concerts and recitals", "Support for traditional musicians", "Bengali cultural event organization", "Music education programs", "Artist recognition awards"],
       image: "/images/SDP_0282.jpg"
     },
     {
       id: "trust-3",
       num: "03",
-      est: "1985 / 2000+",
+      est: "2000+",
       name: "Artist Nectar Council of Culture",
       category: isBn ? "মঞ্চশিল্প ও সমাজকল্যাণ" : "Performing Arts, Education & Social Welfare",
       icon: Users,
       desc: isBn
         ? "মঞ্চনাটক, শিল্পীদের কল্যাণ, সমাজসেবা, সুবিধাবঞ্চিত শিশুদের শিক্ষাদান ও স্বাস্থ্য সচেতনতা কর্মসূচিতে নিবেদিত সাংস্কৃতিক পরিষদ।"
-        : "Focused on performing arts residencies, theater productions, community education, healthcare camps, and youth heritage engagement.",
+        : "Focused on performing arts, social service, children's education, and healthcare awareness in the community.",
       achievements: isBn 
         ? ["২০০+ সুবিধাবঞ্চিত শিশুকে শিক্ষাবৃত্তি", "৫০+ বিনামূল্যে স্বাস্থ্য ও চক্ষু পরীক্ষা শিবির", "৩০০+ সাংস্কৃতিক ও নাট্য পরিবেশনা", "যুব ঐতিহ্য সংরক্ষণ ফেলোশিপ"]
-        : ["Educated 200+ underprivileged children", "Conducted 50+ free healthcare & eye screening camps", "Organized 300+ cultural and theatrical productions", "Youth heritage preservation fellowships"],
+        : ["Educated 200+ underprivileged children", "Conducted 50+ health camps", "Organized 300+ cultural performances", "Community welfare programs"],
       initiatives: isBn 
         ? ["মঞ্চশিল্প কর্মশালা ও নাট্যোৎসব", "সুবিধাবঞ্চিত শিশুদের শিক্ষা সহায়তা", "বিনামূল্যে স্বাস্থ্য সচেতনতা শিবির", "ডিজিটাল সংস্কৃতি আর্কাইভ উদ্যোগ"]
-        : ["Performing arts workshops & theater festivals", "Educational scholarships for underprivileged youth", "Community healthcare awareness drives", "Digital youth cultural archive initiatives"],
+        : ["Performing arts workshops and shows", "Educational support for underprivileged children", "Healthcare awareness campaigns", "Social service initiatives", "Cultural preservation programs"],
       image: "/images/unnamed_12.webp"
     }
   ];
