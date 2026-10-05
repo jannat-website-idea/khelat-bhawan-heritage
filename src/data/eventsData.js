@@ -1,5 +1,5 @@
 // Event data for Khelat Bhawan cultural and heritage events
-export const eventsData = [
+export const defaultEventsData = [
   {
     id: 'durga-puja-2026',
     category: 'upcoming',
@@ -177,8 +177,103 @@ export const eventsData = [
   }
 ];
 
+export const EVENTS_STORAGE_KEY = 'khelat_bhawan_events';
+
+export const getStoredEvents = () => {
+  if (typeof window === 'undefined') return defaultEventsData;
+  try {
+    const raw = localStorage.getItem(EVENTS_STORAGE_KEY);
+    if (!raw) return defaultEventsData;
+    const parsed = JSON.parse(raw);
+    return Array.isArray(parsed) && parsed.length > 0 ? parsed : defaultEventsData;
+  } catch (err) {
+    console.error('Error loading stored events:', err);
+    return defaultEventsData;
+  }
+};
+
+export const saveStoredEvents = (events) => {
+  if (typeof window === 'undefined') return;
+  try {
+    localStorage.setItem(EVENTS_STORAGE_KEY, JSON.stringify(events));
+  } catch (err) {
+    console.error('Error saving events:', err);
+  }
+};
+
+export const resetStoredEvents = () => {
+  if (typeof window === 'undefined') return defaultEventsData;
+  try {
+    localStorage.removeItem(EVENTS_STORAGE_KEY);
+  } catch (err) {
+    console.error('Error resetting events:', err);
+  }
+  return defaultEventsData;
+};
+
+// Evaluates whether an event is in the past based on current date or status
+export const isPastEvent = (event) => {
+  if (!event) return false;
+  
+  // If explicitly categorized as past
+  if (event.category === 'past') return true;
+
+  const dateStr = typeof event.date === 'object' ? (event.date.en || '') : String(event.date || '');
+  const timeStr = typeof event.time === 'object' ? (event.time.en || '') : String(event.time || '');
+
+  // If marked as concluded
+  if (/concluded|completed|past/i.test(dateStr) || /concluded|completed|past/i.test(timeStr)) {
+    return true;
+  }
+
+  if (!dateStr) return false;
+
+  try {
+    let targetDateStr = dateStr;
+    const yearMatch = dateStr.match(/\d{4}/);
+    const year = yearMatch ? yearMatch[0] : new Date().getFullYear();
+
+    // If date has a range e.g. "October 18 – 22, 2026" or "February 15 – 18, 2026"
+    if (dateStr.includes('–') || dateStr.includes('-')) {
+      const parts = dateStr.split(/[–-]/);
+      const secondPart = parts[1].trim();
+      const monthMatch = parts[0].match(/[a-zA-Z]+/);
+      const month = monthMatch ? monthMatch[0] : '';
+      
+      if (!secondPart.match(/[a-zA-Z]+/)) {
+        targetDateStr = `${month} ${secondPart}`;
+      } else {
+        targetDateStr = secondPart;
+      }
+      if (!targetDateStr.includes(year)) {
+        targetDateStr = `${targetDateStr} ${year}`;
+      }
+    }
+
+    const d = new Date(targetDateStr);
+    if (!isNaN(d.getTime())) {
+      // Set time to end of day
+      d.setHours(23, 59, 59, 999);
+      const now = new Date();
+      return d < now;
+    }
+  } catch (err) {
+    console.error('Error parsing date for event:', dateStr, err);
+  }
+
+  return false;
+};
+
+export const isFutureEvent = (dateStr) => {
+  if (!dateStr) return true;
+  return !isPastEvent({ date: { en: dateStr } });
+};
+
 export const getWhatsAppLink = (message) => {
   const phone = '919830000000'; // Official business WhatsApp
   const encoded = encodeURIComponent(message || 'Hello, I would like to enquire about events at Khelat Bhawan.');
   return `https://wa.me/${phone}?text=${encoded}`;
 };
+
+// Backwards compatibility
+export const eventsData = defaultEventsData;
