@@ -8,26 +8,25 @@ export default function HeritageLoader({ onComplete, onReveal, lang }) {
   const dialog = useRef(null);
   const bn = lang === 'bn';
 
-  // 1. Balanced Golden Glitter & Corner Ambient Dust Canvas
+  // 1. Balanced Golden Glitter & Corner Ambient Dust Canvas with Retina / High-DPI support
   useEffect(() => {
     const canvas = canvasRef.current;
     if (!canvas) return;
     const ctx = canvas.getContext('2d');
     let animId;
-    let width = (canvas.width = window.innerWidth);
-    let height = (canvas.height = window.innerHeight);
+    const dpr = Math.min(window.devicePixelRatio || 1, 2);
+    let width = (canvas.width = window.innerWidth * dpr);
+    let height = (canvas.height = window.innerHeight * dpr);
 
     const handleResize = () => {
       if (!canvas) return;
-      width = canvas.width = window.innerWidth;
-      height = canvas.height = window.innerHeight;
+      width = canvas.width = window.innerWidth * dpr;
+      height = canvas.height = window.innerHeight * dpr;
     };
     window.addEventListener('resize', handleResize);
 
-    // 75 total particles: balanced across corners, edges, and central glow
     const particleCount = 75;
     const particles = Array.from({ length: particleCount }, (_, idx) => {
-      // 45% center cluster, 55% distributed across corners and outer bounds
       const isCenter = idx < 34;
       const x = isCenter
         ? width / 2 + (Math.random() - 0.5) * (width * 0.55)
@@ -39,9 +38,9 @@ export default function HeritageLoader({ onComplete, onReveal, lang }) {
       return {
         x,
         y,
-        radius: Math.random() * 1.8 + 0.5,
-        vx: (Math.random() - 0.5) * 0.22,
-        vy: (Math.random() - 0.5) * 0.22 - 0.08,
+        radius: (Math.random() * 1.8 + 0.5) * dpr,
+        vx: (Math.random() - 0.5) * 0.22 * dpr,
+        vy: ((Math.random() - 0.5) * 0.22 - 0.08) * dpr,
         alpha: Math.random() * 0.65 + 0.2,
         twinkleSpeed: Math.random() * 0.025 + 0.012,
         color: Math.random() > 0.35 ? '#ffd885' : '#f5be58',
@@ -56,7 +55,7 @@ export default function HeritageLoader({ onComplete, onReveal, lang }) {
       const centerGlow = ctx.createRadialGradient(
         width / 2,
         height / 2,
-        30,
+        20 * dpr,
         width / 2,
         height / 2,
         Math.max(width, height) * 0.5
@@ -74,7 +73,6 @@ export default function HeritageLoader({ onComplete, onReveal, lang }) {
         p.alpha += Math.sin(Date.now() * p.twinkleSpeed) * 0.012;
         const currentAlpha = Math.max(0.08, Math.min(0.9, p.alpha));
 
-        // Wrap around bounds
         if (p.x < 0) p.x = width;
         if (p.x > width) p.x = 0;
         if (p.y < 0) p.y = height;
@@ -84,16 +82,15 @@ export default function HeritageLoader({ onComplete, onReveal, lang }) {
         ctx.globalAlpha = currentAlpha;
         ctx.fillStyle = p.color;
         ctx.shadowColor = '#ffd270';
-        ctx.shadowBlur = p.radius * 5;
+        ctx.shadowBlur = p.radius * 4;
 
         ctx.beginPath();
         ctx.arc(p.x, p.y, p.radius, 0, Math.PI * 2);
         ctx.fill();
 
-        // Delicate 4-point cross glint on brightest stars
-        if (p.isStar && p.radius > 1.3) {
+        if (p.isStar && p.radius > 1.2 * dpr) {
           ctx.strokeStyle = `rgba(255, 240, 195, ${currentAlpha * 0.75})`;
-          ctx.lineWidth = 0.5;
+          ctx.lineWidth = 0.5 * dpr;
           const len = p.radius * 2.8;
           ctx.beginPath();
           ctx.moveTo(p.x - len, p.y);
@@ -182,7 +179,7 @@ export default function HeritageLoader({ onComplete, onReveal, lang }) {
         display: 'flex',
         flexDirection: 'column',
         justifyContent: 'space-between',
-        padding: '32px 5vw 6vh',
+        padding: 'calc(env(safe-area-inset-top, 0px) + 24px) 5vw calc(env(safe-area-inset-bottom, 0px) + 28px)',
         backgroundColor: '#050203',
         color: '#f0e7d5',
         opacity: leaving ? 0 : entered ? 1 : 0,
@@ -201,45 +198,45 @@ export default function HeritageLoader({ onComplete, onReveal, lang }) {
       />
 
       {/* Top Header Labels */}
-      <header className="relative z-10 flex justify-between gap-6 uppercase text-[11px] font-sans tracking-[0.2em] text-[#e2d3b7] animate-fade-in opacity-90">
+      <header className="relative z-10 flex justify-between gap-3 uppercase text-[10px] sm:text-[11px] font-sans tracking-[0.16em] sm:tracking-[0.2em] text-[#e2d3b7] animate-fade-in opacity-90">
         <span>{bn ? 'খেলাৎ ভবন' : 'Khelat Bhawan'}</span>
         <span>{bn ? 'কলকাতা · স্থাপিত ১৮৪৫' : 'Kolkata · Est. 1845'}</span>
       </header>
 
       {/* Central Composition with Silky Smooth Continuous Letter Animation */}
-      <div className="relative z-10 flex flex-col items-center justify-center text-center my-auto py-6 max-w-4xl mx-auto">
+      <div className="relative z-10 flex flex-col items-center justify-center text-center my-auto py-4 sm:py-6 max-w-4xl mx-auto w-full px-2">
         {/* Top Label: Pathuria Ghata Ghosh Bari */}
-        <p className="text-[11px] uppercase tracking-[0.32em] text-[#dbc59d] mb-4 font-sans animate-fade-in opacity-85">
+        <p className="text-[10px] sm:text-[11px] uppercase tracking-[0.25em] sm:tracking-[0.32em] text-[#dbc59d] mb-3 sm:mb-4 font-sans animate-fade-in opacity-85">
           {bn ? 'পাথুরিয়াঘাটা ঘোষ বাড়ি' : 'Pathuria Ghata Ghosh Bari'}
         </p>
         
         {/* Stacked Luxury Title with Smooth Fluid Letter Expansion & Liquid Gold Shimmer */}
-        <div className="flex flex-col items-center justify-center select-none py-2">
+        <div className="flex flex-col items-center justify-center select-none py-1 sm:py-2 w-full">
           {/* Line 1: Khelat */}
-          <span className="loader-title-khelat font-serif font-light text-[clamp(54px,8.5vw,115px)] leading-[1.0]">
+          <span className="loader-title-khelat font-serif font-light text-[clamp(42px,9vw,115px)] leading-[1.0]">
             {bn ? 'খেলাৎ' : 'Khelat'}
           </span>
 
           {/* Line 2: Bhawan */}
-          <span className="loader-title-bhawan font-serif italic font-normal text-[clamp(58px,9.5vw,125px)] leading-[0.95] mt-1 sm:mt-2">
+          <span className="loader-title-bhawan font-serif italic font-normal text-[clamp(46px,10vw,125px)] leading-[0.95] mt-1 sm:mt-2">
             {bn ? 'ভবন' : 'Bhawan'}
           </span>
         </div>
 
         {/* Bottom Caption: A living legacy of Bengal since 1845 */}
-        <span className="loader-caption-emerge font-serif italic text-sm sm:text-base text-[#ccbaa1] mt-6">
+        <span className="loader-caption-emerge font-serif italic text-xs sm:text-base text-[#ccbaa1] mt-4 sm:mt-6 px-4">
           {bn ? 'এক জীবন্ত ঐতিহ্য ও সাবেকি উত্তরাধিকার' : 'A living legacy of Bengal since 1845'}
         </span>
       </div>
 
       {/* Bottom Progress Bar & Percentage */}
-      <footer className="relative z-10 w-full max-w-[760px] mx-auto">
+      <footer className="relative z-10 w-full max-w-[760px] mx-auto px-2">
         <div className="w-full">
-          <div className="flex items-end justify-between mb-3 text-xs tracking-[0.22em] font-sans uppercase">
-            <span className="text-[10.5px] font-medium text-[#c6b69a]">
+          <div className="flex items-end justify-between mb-2 sm:mb-3 text-xs tracking-[0.2em] font-sans uppercase">
+            <span className="text-[9.5px] sm:text-[10.5px] font-medium text-[#c6b69a]">
               {bn ? 'প্রাসাদে প্রবেশাধিকার' : 'ENTERING THE PALACE'}
             </span>
-            <output aria-hidden="true" className="font-serif text-2xl sm:text-3xl text-[#ecd69e] tabular-nums">
+            <output aria-hidden="true" className="font-serif text-xl sm:text-3xl text-[#ecd69e] tabular-nums">
               {String(progress).padStart(2, '0')}
               <small className="text-xs text-[#d8ae62] ml-1 font-sans font-normal">%</small>
             </output>
@@ -257,7 +254,7 @@ export default function HeritageLoader({ onComplete, onReveal, lang }) {
         </div>
       </footer>
 
-      {/* Embedded High-Performance Fluid CSS Animation Styles */}
+      {/* High-Performance Fluid CSS Animation Styles with Responsive Media Queries */}
       <style>{`
         @keyframes loaderKhelatFlow {
           0% {
@@ -273,12 +270,12 @@ export default function HeritageLoader({ onComplete, onReveal, lang }) {
             transform: scale(0.98) translateY(0);
           }
           65% {
-            letter-spacing: 0.22em;
+            letter-spacing: 0.20em;
             transform: scale(1.01);
             text-shadow: 0 0 35px rgba(230, 185, 110, 0.6), 0 0 60px rgba(216, 174, 98, 0.3);
           }
           100% {
-            letter-spacing: 0.18em;
+            letter-spacing: 0.16em;
             transform: scale(1);
             opacity: 1;
             filter: blur(0px);
@@ -300,12 +297,12 @@ export default function HeritageLoader({ onComplete, onReveal, lang }) {
             transform: scale(0.98) translateY(0);
           }
           68% {
-            letter-spacing: 0.16em;
+            letter-spacing: 0.15em;
             transform: scale(1.01);
             text-shadow: 0 0 35px rgba(216, 174, 98, 0.6), 0 0 60px rgba(184, 134, 40, 0.3);
           }
           100% {
-            letter-spacing: 0.13em;
+            letter-spacing: 0.12em;
             transform: scale(1);
             opacity: 1;
             filter: blur(0px);
@@ -313,14 +310,68 @@ export default function HeritageLoader({ onComplete, onReveal, lang }) {
           }
         }
 
+        @media (max-width: 640px) {
+          @keyframes loaderKhelatFlow {
+            0% {
+              opacity: 0;
+              filter: blur(6px);
+              letter-spacing: 0.02em;
+              transform: scale(0.96);
+            }
+            20% {
+              opacity: 1;
+              filter: blur(0px);
+              letter-spacing: 0.03em;
+              transform: scale(0.98);
+            }
+            65% {
+              letter-spacing: 0.13em;
+              transform: scale(1.01);
+              text-shadow: 0 0 25px rgba(230, 185, 110, 0.6);
+            }
+            100% {
+              letter-spacing: 0.10em;
+              transform: scale(1);
+              opacity: 1;
+              text-shadow: 0 0 30px rgba(230, 185, 110, 0.5);
+            }
+          }
+
+          @keyframes loaderBhawanFlow {
+            0% {
+              opacity: 0;
+              filter: blur(6px);
+              letter-spacing: 0.01em;
+              transform: scale(0.96);
+            }
+            25% {
+              opacity: 1;
+              filter: blur(0px);
+              letter-spacing: 0.02em;
+              transform: scale(0.98);
+            }
+            68% {
+              letter-spacing: 0.10em;
+              transform: scale(1.01);
+              text-shadow: 0 0 25px rgba(216, 174, 98, 0.6);
+            }
+            100% {
+              letter-spacing: 0.08em;
+              transform: scale(1);
+              opacity: 1;
+              text-shadow: 0 0 30px rgba(216, 174, 98, 0.5);
+            }
+          }
+        }
+
         @keyframes loaderCaptionFlow {
           0% {
             opacity: 0;
-            transform: translateY(12px);
+            transform: translateY(10px);
           }
           35% {
             opacity: 0;
-            transform: translateY(8px);
+            transform: translateY(6px);
           }
           60% {
             opacity: 0.85;

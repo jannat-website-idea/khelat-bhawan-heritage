@@ -244,11 +244,11 @@ const EventsPage = ({ lang = 'en', setActiveTab, onOpenBooking }) => {
             {/* Top Floating Close Button */}
             <button
               onClick={() => setActiveModalEvent(null)}
-              className="absolute top-4 right-4 z-30 w-11 h-11 rounded-full bg-[#761628] hover:bg-[#8a2034] text-white border border-[#d8ae62] flex items-center justify-center transition-all duration-300 shadow-2xl hover:scale-110 hover:rotate-90 active:scale-95 cursor-pointer"
+              className="absolute top-3 right-3 sm:top-4 sm:right-4 z-30 w-10 h-10 sm:w-11 sm:h-11 rounded-full bg-[#761628] hover:bg-[#8a2034] text-white border border-[#d8ae62] flex items-center justify-center transition-all duration-300 shadow-2xl hover:scale-110 hover:rotate-90 active:scale-95 cursor-pointer"
               aria-label="Close modal"
               title="Close Event Details"
             >
-              <X className="w-5 h-5" />
+              <X className="w-4 h-4 sm:w-5 sm:h-5" />
             </button>
 
             {/* Modal Image */}
