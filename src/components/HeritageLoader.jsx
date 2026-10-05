@@ -1,24 +1,120 @@
 import React, { useEffect, useRef, useState } from 'react';
-import { getAssetUrl } from '../utils/assetHelper';
 
 export default function HeritageLoader({ onComplete, onReveal, lang }) {
   const [progress, setProgress] = useState(0);
   const [leaving, setLeaving] = useState(false);
   const [entered, setEntered] = useState(false);
+  const canvasRef = useRef(null);
   const dialog = useRef(null);
   const bn = lang === 'bn';
 
+  // 1. Particle Canvas System (Gold Sparkles & Bokeh Embers from reference image)
   useEffect(() => {
-    let disposed = false, assetsReady = false, finishing = false, frame, holdTimer, exitTimer;
-    
-    // Initial fade-in trigger
-    const enterTimer = setTimeout(() => setEntered(true), 60);
+    const canvas = canvasRef.current;
+    if (!canvas) return;
+    const ctx = canvas.getContext('2d');
+    let animId;
+    let width = (canvas.width = window.innerWidth);
+    let height = (canvas.height = window.innerHeight);
 
+    const handleResize = () => {
+      if (!canvas) return;
+      width = canvas.width = window.innerWidth;
+      height = canvas.height = window.innerHeight;
+    };
+    window.addEventListener('resize', handleResize);
+
+    // Generate gold sparkles and embers
+    const particleCount = 65;
+    const particles = Array.from({ length: particleCount }, () => ({
+      x: width / 2 + (Math.random() - 0.5) * (width * 0.7),
+      y: height / 2 + (Math.random() - 0.5) * (height * 0.6),
+      radius: Math.random() * 2.2 + 0.6,
+      vx: (Math.random() - 0.5) * 0.35,
+      vy: (Math.random() - 0.5) * 0.35 - 0.15, // slight upward float
+      alpha: Math.random() * 0.7 + 0.2,
+      baseAlpha: Math.random() * 0.6 + 0.3,
+      twinkleSpeed: Math.random() * 0.03 + 0.01,
+      color: Math.random() > 0.3 ? '#fcdb8a' : '#e6ab47',
+      isStar: Math.random() > 0.6
+    }));
+
+    const render = () => {
+      ctx.clearRect(0, 0, width, height);
+
+      // Subtle center radial ambient glow
+      const grad = ctx.createRadialGradient(
+        width / 2,
+        height / 2,
+        20,
+        width / 2,
+        height / 2,
+        Math.max(width, height) * 0.45
+      );
+      grad.addColorStop(0, 'rgba(84, 45, 20, 0.25)');
+      grad.addColorStop(0.5, 'rgba(30, 12, 16, 0.15)');
+      grad.addColorStop(1, 'rgba(0, 0, 0, 0)');
+      ctx.fillStyle = grad;
+      ctx.fillRect(0, 0, width, height);
+
+      // Draw & update particles
+      particles.forEach((p) => {
+        p.x += p.vx;
+        p.y += p.vy;
+        p.alpha += Math.sin(Date.now() * p.twinkleSpeed) * 0.015;
+        const currentAlpha = Math.max(0.1, Math.min(0.95, p.alpha));
+
+        // Wrap around bounds
+        if (p.x < 0) p.x = width;
+        if (p.x > width) p.x = 0;
+        if (p.y < 0) p.y = height;
+        if (p.y > height) p.y = 0;
+
+        ctx.save();
+        ctx.globalAlpha = currentAlpha;
+        ctx.fillStyle = p.color;
+        ctx.shadowColor = '#ffd270';
+        ctx.shadowBlur = p.radius * 6;
+
+        ctx.beginPath();
+        ctx.arc(p.x, p.y, p.radius, 0, Math.PI * 2);
+        ctx.fill();
+
+        // Cross sparkle for larger particles
+        if (p.isStar && p.radius > 1.5) {
+          ctx.strokeStyle = 'rgba(255, 235, 175, ' + (currentAlpha * 0.8) + ')';
+          ctx.lineWidth = 0.5;
+          ctx.beginPath();
+          ctx.moveTo(p.x - p.radius * 2.5, p.y);
+          ctx.lineTo(p.x + p.radius * 2.5, p.y);
+          ctx.moveTo(p.x, p.y - p.radius * 2.5);
+          ctx.lineTo(p.x, p.y + p.radius * 2.5);
+          ctx.stroke();
+        }
+        ctx.restore();
+      });
+
+      animId = requestAnimationFrame(render);
+    };
+
+    render();
+
+    return () => {
+      cancelAnimationFrame(animId);
+      window.removeEventListener('resize', handleResize);
+    };
+  }, []);
+
+  // 2. Cinematic Loading Timer (Extended to ~2.8s for luxury emergence)
+  useEffect(() => {
+    let disposed = false, finishing = false, frame, holdTimer, exitTimer;
+    
+    const enterTimer = setTimeout(() => setEntered(true), 60);
     const start = performance.now();
     const reduced = matchMedia('(prefers-reduced-motion: reduce)').matches;
-    // Keep the branded entrance brief so navigation and hero media become
-    // interactive as soon as the first meaningful paint is visible.
-    const duration = reduced ? 120 : 420;
+    
+    // Luxury duration: 2800ms (reduced: 300ms)
+    const duration = reduced ? 300 : 2800;
     const previousOverflow = document.body.style.overflow;
     document.body.style.overflow = 'hidden';
     window.scrollTo({ top: 0, left: 0, behavior: 'instant' });
@@ -26,25 +122,19 @@ export default function HeritageLoader({ onComplete, onReveal, lang }) {
     document.body.scrollTop = 0;
     dialog.current?.focus({ preventScroll: true });
 
-    const photo = new Image();
-    const photoReady = new Promise(resolve => { photo.onload = resolve; photo.onerror = resolve; });
-    photo.src = getAssetUrl('/images/SDP_0291.jpg');
-    Promise.all([photoReady, document.fonts?.ready || Promise.resolve()]).then(() => {
-      if (!disposed) assetsReady = true;
-    });
-    
     const tick = (now) => {
       const elapsed = now - start;
       const sequence = Math.min(1, elapsed / duration);
-      // Smooth quintic ease-in-out for slow cinematic emergence
+      
+      // Smooth luxury cubic ease-in-out
       const ease = sequence < 0.5 
-        ? 16 * Math.pow(sequence, 5) 
-        : 1 - Math.pow(-2 * sequence + 2, 5) / 2;
+        ? 4 * sequence * sequence * sequence 
+        : 1 - Math.pow(-2 * sequence + 2, 3) / 2;
+      
       const value = Math.floor(ease * 100);
-      const canOpen = assetsReady || elapsed > 700;
-      setProgress(canOpen ? value : Math.min(value, 98));
+      setProgress(value);
 
-      if (sequence >= 1 && canOpen && !finishing) {
+      if (sequence >= 1 && !finishing) {
         finishing = true;
         setProgress(100);
         holdTimer = setTimeout(() => {
@@ -54,8 +144,8 @@ export default function HeritageLoader({ onComplete, onReveal, lang }) {
           document.body.scrollTop = 0;
           onReveal?.(true);
           setLeaving(true);
-          exitTimer = setTimeout(() => onComplete(false), reduced ? 0 : 180);
-        }, reduced ? 0 : 40);
+          exitTimer = setTimeout(() => onComplete(false), reduced ? 0 : 800);
+        }, reduced ? 0 : 200);
       } else {
         frame = requestAnimationFrame(tick);
       }
@@ -68,19 +158,19 @@ export default function HeritageLoader({ onComplete, onReveal, lang }) {
       cancelAnimationFrame(frame);
       clearTimeout(holdTimer);
       clearTimeout(exitTimer);
-      photo.onload = photo.onerror = null;
       document.body.style.overflow = previousOverflow;
     };
   }, [onComplete, onReveal]);
 
-  // Progressive Emergence Calculations
-  const normalizedProgress = Number.isFinite(progress) ? progress / 100 : 0;
-  // Title starts at 0 opacity, emerges slowly as loading progresses
-  const titleOpacity = Math.min(1, Math.pow(normalizedProgress, 1.3) * 1.1);
-  const titleBlur = Math.max(0, (1 - normalizedProgress) * 14);
-  const titleScale = 0.94 + normalizedProgress * 0.06;
-  const titleTracking = `${0.02 + normalizedProgress * 0.12}em`;
-  const titleTranslateY = (1 - normalizedProgress) * 14;
+  // Normalized progress (0 to 1)
+  const norm = Number.isFinite(progress) ? progress / 100 : 0;
+  
+  // Smooth Letter Convergence Calculations:
+  // Starts wide (0.38em) -> smoothly converges to elegant tight luxury spacing (0.05em)
+  const currentLetterSpacing = `${0.38 - norm * 0.32}em`;
+  const textOpacity = Math.min(1, Math.pow(norm, 0.75) * 1.3);
+  const textBlur = Math.max(0, (1 - norm) * 10);
+  const textScale = 0.92 + norm * 0.08;
 
   return (
     <div
@@ -88,96 +178,117 @@ export default function HeritageLoader({ onComplete, onReveal, lang }) {
       tabIndex={-1}
       className={`palace-entrance ${entered ? 'is-entered' : ''} ${leaving ? 'is-leaving' : ''}`}
       style={{
-        transition: 'opacity 1.25s cubic-bezier(0.22, 1, 0.36, 1), transform 1.25s cubic-bezier(0.22, 1, 0.36, 1)',
+        position: 'fixed',
+        inset: 0,
+        zIndex: 99999,
+        display: 'flex',
+        flexDirection: 'column',
+        alignItems: 'center',
+        justifyContent: 'space-between',
+        padding: '32px 24px',
+        backgroundColor: '#060303',
+        color: '#f5efe6',
         opacity: leaving ? 0 : entered ? 1 : 0,
-        transform: leaving ? 'scale(1.02)' : 'scale(1)',
+        transform: leaving ? 'scale(1.03)' : 'scale(1)',
+        transition: 'opacity 0.85s cubic-bezier(0.22, 1, 0.36, 1), transform 0.85s cubic-bezier(0.22, 1, 0.36, 1)',
         pointerEvents: leaving ? 'none' : 'auto',
-        backgroundColor: '#12080a'
+        overflow: 'hidden'
       }}
       role="status"
       aria-label={bn ? 'খেলাৎ ভবন লোড হচ্ছে' : 'Loading Khelat Bhawan'}
     >
-      {/* Background Architectural Atmosphere */}
-      <div 
-        className="palace-entrance__portrait" 
-        aria-hidden="true"
-        style={{
-          transform: `scale(${1.08 - normalizedProgress * 0.08})`,
-          transition: 'transform 0.5s ease-out'
-        }}
-      >
-        <img src={getAssetUrl('/images/SDP_0291.jpg')} alt="" />
-      </div>
+      {/* Background Canvas: Golden Sparkles & Floating Embers */}
+      <canvas
+        ref={canvasRef}
+        className="absolute inset-0 w-full h-full pointer-events-none z-0"
+      />
 
-      {/* Top Header Labels */}
-      <header className="fade-in-header" style={{ opacity: Math.min(1, normalizedProgress * 1.5) }}>
-        <span className="tracking-[0.25em] font-sans text-xs">{bn ? 'খেলাৎ ভবন' : 'Khelat Bhawan'}</span>
-        <span className="tracking-[0.25em] font-sans text-xs">{bn ? 'কলকাতা · স্থাপিত ১৮৪৫' : 'Kolkata · Est. 1845'}</span>
+      {/* Top Header Label */}
+      <header 
+        className="relative z-10 w-full max-w-6xl mx-auto flex items-center justify-between text-[11px] font-sans uppercase tracking-[0.3em] text-[#d8ae62]/80"
+        style={{ opacity: Math.min(1, norm * 1.6) }}
+      >
+        <span>{bn ? 'খেলাৎ ভবন রাজবাড়ি' : 'Khelat Bhawan Rajbari'}</span>
+        <span>{bn ? 'কলকাতা · স্থাপিত ১৮৪৫' : 'Kolkata · Est. 1845'}</span>
       </header>
 
-      {/* Central Composition with Slow Faded "Khelat Bhawan" Emergence */}
-      <div className="palace-entrance__composition">
-        <p 
-          className="palace-entrance__label"
+      {/* Center Composition with Letter Convergence Animation */}
+      <div className="relative z-10 flex flex-col items-center justify-center text-center my-auto px-4 max-w-4xl">
+        <p
+          className="text-xs sm:text-sm uppercase font-sans tracking-[0.35em] text-[#d8ae62]/90 mb-3"
           style={{
-            opacity: Math.min(1, Math.pow(normalizedProgress, 1.5)),
-            letterSpacing: `${0.25 + normalizedProgress * 0.1}em`,
-            transition: 'opacity 0.4s ease-out'
+            opacity: Math.min(1, Math.pow(norm, 1.2)),
+            transition: 'opacity 0.3s ease'
           }}
         >
           {bn ? 'পাথুরিয়াঘাটা ঘোষ বাড়ি' : 'Pathuria Ghata Ghosh Bari'}
         </p>
-        
-        {/* Progressive Title Emergence */}
-        <h2
-          className="palace-title-emerge"
-          style={{
-            opacity: titleOpacity,
-            filter: `blur(${titleBlur}px)`,
-            letterSpacing: titleTracking,
-            transform: `translate3d(0, ${titleTranslateY}px, 0) scale(${titleScale})`,
-            transition: 'opacity 0.25s ease-out, filter 0.25s ease-out, transform 0.25s ease-out, letter-spacing 0.25s ease-out'
-          }}
-        >
-          {bn ? (
-            <>খেলাৎ <em>ভবন</em></>
-          ) : (
-            <>Khelat <em>Bhawan</em></>
-          )}
-        </h2>
 
-        <span 
-          className="palace-entrance__caption"
+        {/* Main Title: Letter Convergence from Wide to Together */}
+        <h1
+          className="font-serif text-4xl sm:text-6xl md:text-7xl lg:text-8xl font-normal leading-tight select-none"
           style={{
-            opacity: Math.min(1, Math.max(0, (normalizedProgress - 0.25) * 1.4)),
-            transition: 'opacity 0.4s ease-out'
+            letterSpacing: currentLetterSpacing,
+            opacity: textOpacity,
+            filter: `blur(${textBlur}px)`,
+            transform: `scale(${textScale})`,
+            background: 'linear-gradient(135deg, #fff3d1 0%, #ffd27d 30%, #d8ae62 70%, #a67c2e 100%)',
+            WebkitBackgroundClip: 'text',
+            WebkitTextFillColor: 'transparent',
+            textShadow: '0 0 45px rgba(216, 174, 98, 0.45)',
+            transition: 'letter-spacing 0.12s ease-out, filter 0.12s ease-out, transform 0.12s ease-out'
           }}
         >
-          {bn ? 'এক জীবন্ত ঐতিহ্য ও সাবেকি উত্তরাধিকার' : 'A living legacy of Bengal since 1845'}
-        </span>
+          {bn ? 'খেলাৎ ভবন ম্যানশন' : 'Khelat Bhawan Mansion'}
+        </h1>
+
+        {/* Sub-header: Estd. 1845 */}
+        <div 
+          className="flex items-center gap-3 mt-4"
+          style={{
+            opacity: Math.min(1, Math.max(0, (norm - 0.2) * 1.4)),
+            transform: `translateY(${(1 - norm) * 12}px)`,
+            transition: 'opacity 0.3s ease-out, transform 0.3s ease-out'
+          }}
+        >
+          <div className="w-8 sm:w-16 h-[1px] bg-gradient-to-r from-transparent to-[#d8ae62]" />
+          <span className="font-serif italic text-base sm:text-xl text-[#ebd59b] tracking-widest">
+            {bn ? 'স্থাপিত: ১৮৪৫' : 'Estd: 1845'}
+          </span>
+          <div className="w-8 sm:w-16 h-[1px] bg-gradient-to-l from-transparent to-[#d8ae62]" />
+        </div>
+
+        <p
+          className="font-serif italic text-xs sm:text-sm text-[#c8b598] mt-4 max-w-lg"
+          style={{
+            opacity: Math.min(1, Math.max(0, (norm - 0.35) * 1.5)),
+            transition: 'opacity 0.3s ease-out'
+          }}
+        >
+          {bn 
+            ? 'বাংলার দেড় শতাব্দীরও প্রাচীন আভিজাত্য, মার্গ সঙ্গীত ও ঐতিহ্য' 
+            : 'Over 170 years of living Bengali aristocratic heritage, music & sacred tradition'}
+        </p>
       </div>
 
-      {/* Bottom Progress Bar & Counter */}
-      <footer>
-        <div className="palace-entrance__progress">
-          <div>
-            <span className="tracking-[0.22em] text-[10.5px] font-sans font-medium text-[#d8ae62]/90">
-              {bn ? 'প্রাসাদে প্রবেশাধিকার' : 'ENTERING THE PALACE'}
-            </span>
-            <output aria-hidden="true" className="font-serif text-2xl sm:text-3xl text-[#ecd69e]">
-              {String(progress).padStart(2, '0')}
-              <small className="text-xs text-[#d8ae62] ml-1 font-sans">%</small>
-            </output>
-          </div>
-          
-          {/* Custom Glowing Gold Hairline Progress Bar */}
-          <div className="w-full h-[2px] bg-white/10 rounded-full overflow-hidden relative">
-            <div 
-              className="h-full bg-gradient-to-r from-[#b78c43] via-[#ecd69e] to-[#ffffff] rounded-full transition-all duration-150 relative"
-              style={{ width: `${progress}%` }}
-            >
-              <div className="absolute right-0 top-1/2 -translate-y-1/2 w-3 h-3 bg-amber-200 rounded-full blur-[3px] opacity-80" />
-            </div>
+      {/* Bottom Progress Bar & Percentage */}
+      <footer className="relative z-10 w-full max-w-xl mx-auto space-y-2">
+        <div className="flex items-center justify-between text-xs text-[#d8ae62] font-sans tracking-widest uppercase">
+          <span className="text-[11px] font-medium text-[#d8ae62]/80">
+            {bn ? 'প্রাসাদে প্রবেশাধিকার' : 'Entering The Palace'}
+          </span>
+          <span className="font-serif text-lg sm:text-xl text-[#f3e1b0] font-semibold tabular-nums">
+            {String(progress).padStart(2, '0')}%
+          </span>
+        </div>
+
+        {/* Glowing Gold Hairline Progress Bar */}
+        <div className="w-full h-[2px] bg-white/10 rounded-full overflow-hidden relative shadow-inner">
+          <div
+            className="h-full bg-gradient-to-r from-[#9e7428] via-[#ffd27d] to-[#ffffff] rounded-full transition-all duration-75 relative"
+            style={{ width: `${progress}%` }}
+          >
+            <div className="absolute right-0 top-1/2 -translate-y-1/2 w-4 h-4 bg-amber-200 rounded-full blur-[4px] opacity-90" />
           </div>
         </div>
       </footer>
