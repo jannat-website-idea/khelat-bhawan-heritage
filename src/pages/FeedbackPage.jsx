@@ -3,6 +3,8 @@ import { Star, MessageSquare, ExternalLink, CheckCircle, Send, Heart, Award, Spa
 import SectionHeader from '../components/SectionHeader';
 import AlpanaDivider from '../components/AlpanaDivider';
 import { GOOGLE_REVIEWS_URL, googleReviews, googleReviewSummary } from '../data/googleReviews';
+import { submitEnquiry } from '../lib/enquiries';
+import { countWords, validateEnquiry } from '../lib/enquiryValidation';
 
 export default function FeedbackPage({ lang, content }) {
   const t = content[lang];
@@ -19,10 +21,28 @@ export default function FeedbackPage({ lang, content }) {
     message: ''
   });
   const [submitted, setSubmitted] = useState(false);
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const [submitError, setSubmitError] = useState('');
+  const [reference, setReference] = useState('');
+  const [fieldErrors, setFieldErrors] = useState({});
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    setSubmitted(true);
+    const validationErrors = validateEnquiry(formData);
+    setFieldErrors(validationErrors);
+    if (Object.keys(validationErrors).length) return;
+    setIsSubmitting(true);
+    setSubmitError('');
+    try {
+      const result = await submitEnquiry({...formData, eventType: formData.visitType, source: `Visitor feedback (${rating} stars)`});
+      setReference(result.reference);
+      setSubmitted(true);
+    } catch (error) {
+      setSubmitError(error.message);
+      if (error.validationErrors) setFieldErrors(error.validationErrors);
+    } finally {
+      setIsSubmitting(false);
+    }
   };
 
   return (
@@ -110,8 +130,8 @@ export default function FeedbackPage({ lang, content }) {
                 </h4>
                 <p className="text-xs text-muted-foreground font-body max-w-md mx-auto">
                   {isBn 
-                    ? 'আপনার প্রতিক্রিয়া গৃহীত হয়েছে। আপনি চাইলে আপনার অভিজ্ঞতা সরাসরি গুগলেও প্রকাশ করতে পারেন।' 
-                    : 'Your reflection has been sent to our estate coordinators. Please consider also leaving a review on our Google profile.'}
+                    ? `আপনার বার্তা গৃহীত হয়েছে। খেলাৎ ভবনের প্রতিনিধি দল ৪৮ ঘণ্টার মধ্যে যোগাযোগ করবে।${reference ? ` রেফারেন্স: ${reference}` : ''}`
+                    : `Your message has been received. The Khelat Bhawan team will connect within 48 hours.${reference ? ` Reference: ${reference}` : ''}`}
                 </p>
                 <div className="pt-2">
                   <a
@@ -127,6 +147,7 @@ export default function FeedbackPage({ lang, content }) {
               </div>
             ) : (
               <form onSubmit={handleSubmit} className="space-y-5">
+                {submitError && <p role="alert" className="rounded-sm border border-red-400/40 bg-red-500/10 p-3 text-xs text-red-700">{submitError}</p>}
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                   <div>
                     <label className="block text-xs font-semibold text-foreground mb-1">
@@ -149,12 +170,31 @@ export default function FeedbackPage({ lang, content }) {
                     <input
                       type="email"
                       required
+                      aria-invalid={!!fieldErrors.email}
                       value={formData.email}
-                      onChange={(e) => setFormData({ ...formData, email: e.target.value })}
+                      onChange={(e) => { setFormData({ ...formData, email: e.target.value }); setFieldErrors({...fieldErrors, email: ''}); }}
                       placeholder="name@example.com"
                       className="w-full px-4 py-2.5 rounded-sm bg-background border border-border focus:border-accent outline-none text-xs text-foreground"
                     />
+                    {fieldErrors.email && <p className="text-[11px] text-red-700 mt-1">{fieldErrors.email}</p>}
                   </div>
+                </div>
+
+                <div>
+                  <label className="block text-xs font-semibold text-foreground mb-1">
+                    {isBn ? 'ফোন নম্বর *' : 'Phone Number *'}
+                  </label>
+                  <input
+                    type="tel"
+                    required
+                    inputMode="tel"
+                    aria-invalid={!!fieldErrors.phone}
+                    value={formData.phone}
+                    onChange={(e) => { setFormData({ ...formData, phone: e.target.value }); setFieldErrors({...fieldErrors, phone: ''}); }}
+                    placeholder="e.g. +91 98310 00000"
+                    className="w-full px-4 py-2.5 rounded-sm bg-background border border-border focus:border-accent outline-none text-xs text-foreground"
+                  />
+                  {fieldErrors.phone && <p className="text-[11px] text-red-700 mt-1">{fieldErrors.phone}</p>}
                 </div>
 
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
@@ -213,20 +253,24 @@ export default function FeedbackPage({ lang, content }) {
                   <textarea
                     required
                     rows={4}
+                    aria-invalid={!!fieldErrors.message}
                     value={formData.message}
-                    onChange={(e) => setFormData({ ...formData, message: e.target.value })}
+                    onChange={(e) => { setFormData({ ...formData, message: e.target.value }); setFieldErrors({...fieldErrors, message: ''}); }}
                     placeholder={isBn ? 'খেলাৎ ভবন পরিদর্শন সম্পর্কিত আপনার অভিজ্ঞতা লিখুন...' : 'Share your impressions, memorable moments, or feedback regarding Khelat Bhawan...'}
                     className="w-full px-4 py-2.5 rounded-sm bg-background border border-border focus:border-accent outline-none text-xs text-foreground leading-relaxed resize-none"
                   />
+                  <p className={`text-[11px] mt-1 ${countWords(formData.message) >= 20 ? 'text-emerald-700' : 'text-muted-foreground'}`}>{countWords(formData.message)} / 20 words minimum</p>
+                  {fieldErrors.message && <p className="text-[11px] text-red-700 mt-1">{fieldErrors.message}</p>}
                 </div>
 
                 <div className="flex flex-col sm:flex-row items-center justify-between gap-4 pt-2">
                   <button
                     type="submit"
+                    disabled={isSubmitting}
                     className="w-full sm:w-auto px-8 py-3 bg-accent text-accent-foreground text-xs uppercase tracking-widest font-body font-semibold rounded-sm hover:bg-matte-red transition-all flex items-center justify-center gap-2"
                   >
                     <Send className="w-3.5 h-3.5" />
-                    <span>{isBn ? 'মতামত জমা দিন' : 'Submit Private Feedback'}</span>
+                    <span>{isSubmitting ? (isBn ? 'পাঠানো হচ্ছে…' : 'Sending…') : (isBn ? 'মতামত জমা দিন' : 'Submit Private Feedback')}</span>
                   </button>
 
                   <a

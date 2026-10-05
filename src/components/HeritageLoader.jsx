@@ -16,7 +16,9 @@ export default function HeritageLoader({ onComplete, onReveal, lang }) {
 
     const start = performance.now();
     const reduced = matchMedia('(prefers-reduced-motion: reduce)').matches;
-    const duration = reduced ? 400 : 3600; // Regal, leisurely luxury duration
+    // Keep the branded entrance brief so navigation and hero media become
+    // interactive as soon as the first meaningful paint is visible.
+    const duration = reduced ? 120 : 420;
     const previousOverflow = document.body.style.overflow;
     document.body.style.overflow = 'hidden';
     window.scrollTo({ top: 0, left: 0, behavior: 'instant' });
@@ -39,7 +41,7 @@ export default function HeritageLoader({ onComplete, onReveal, lang }) {
         ? 16 * Math.pow(sequence, 5) 
         : 1 - Math.pow(-2 * sequence + 2, 5) / 2;
       const value = Math.floor(ease * 100);
-      const canOpen = assetsReady || elapsed > 5000;
+      const canOpen = assetsReady || elapsed > 700;
       setProgress(canOpen ? value : Math.min(value, 98));
 
       if (sequence >= 1 && canOpen && !finishing) {
@@ -52,8 +54,8 @@ export default function HeritageLoader({ onComplete, onReveal, lang }) {
           document.body.scrollTop = 0;
           onReveal?.(true);
           setLeaving(true);
-          exitTimer = setTimeout(() => onComplete(false), reduced ? 0 : 1200);
-        }, reduced ? 0 : 320);
+          exitTimer = setTimeout(() => onComplete(false), reduced ? 0 : 180);
+        }, reduced ? 0 : 40);
       } else {
         frame = requestAnimationFrame(tick);
       }

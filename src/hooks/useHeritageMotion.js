@@ -10,9 +10,17 @@ export default function useHeritageMotion(route, lang, loading) {
     let dispose = () => {};
     const setup = () => {
       dispose();
-      if (preference.matches) return;
       const root = document.querySelector('[data-page-content]');
       if (!root) return;
+      const useNativeMotion = preference.matches || matchMedia('(max-width: 767px), (pointer: coarse)').matches;
+      if (useNativeMotion) {
+        root.querySelectorAll('[data-reveal],[data-line-reveal],[data-image-reveal],.heritage-story__copy,.heritage-heading-row,.heritage-lineage__copy,.heritage-booking__content,.heritage-trust-card,.heritage-review-card,.bento-card,.archive-entry,.trustee-lineage__item,.royal-family-tree__generation,main > .container > div').forEach(node => {
+          node.classList.add('is-revealed');
+        });
+        window.__lenis = null;
+        dispose = () => {};
+        return;
+      }
       const lenis = new Lenis({
         lerp: .085, smoothWheel: true, wheelMultiplier: .92, syncTouch: false,
         prevent: node => !!node.closest('[role="dialog"],.heritage-nav__drawer'),

@@ -155,7 +155,13 @@ export default function GalleryPage({ lang = 'en' }) {
                       aria-label={`${item.mediaType === 'video' ? 'Play' : 'Open'} ${title}`}
                       style={{ '--tile-index': displayIndex }}
                     >
-                      <img src={getAssetUrl(item.preview)} alt={title} loading={displayIndex < 8 ? 'eager' : 'lazy'} />
+                      <img
+                        src={getAssetUrl(item.preview)}
+                        alt={title}
+                        loading={displayIndex < 3 ? 'eager' : 'lazy'}
+                        decoding="async"
+                        fetchPriority={displayIndex === 0 ? 'high' : 'auto'}
+                      />
                       <span className="gallery-crest-tile__shade" aria-hidden="true" />
                       <span className="gallery-crest-tile__meta">
                         <strong>{label}</strong>
@@ -322,6 +328,7 @@ export default function GalleryPage({ lang = 'en' }) {
                   controls
                   autoPlay
                   playsInline
+                  preload="metadata"
                   className="w-full h-full object-contain"
                 />
               </div>

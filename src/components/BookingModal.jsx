@@ -2,6 +2,8 @@ import React, { useState, useEffect } from 'react';
 import { createPortal } from 'react-dom';
 import { X, CheckCircle2, Send, Calendar as CalendarIcon, Clock, ShieldCheck, Lock, Unlock, Mail, AlertCircle } from 'lucide-react';
 import { getBlockedDates, saveBlockedDates, isDateBlocked, isPastDate } from '../data/bookingData';
+import { submitEnquiry } from '../lib/enquiries';
+import { countWords, validateEnquiry } from '../lib/enquiryValidation';
 
 export default function BookingModal({ isOpen, onClose, lang = 'en', content, initialEvent = '' }) {
   const t = content[lang]?.bookingModal || {
@@ -32,6 +34,8 @@ export default function BookingModal({ isOpen, onClose, lang = 'en', content, in
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [submitted, setSubmitted] = useState(false);
   const [dispatchDetails, setDispatchDetails] = useState(null);
+  const [submitError, setSubmitError] = useState('');
+  const [fieldErrors, setFieldErrors] = useState({});
 
   useEffect(() => {
     if (initialEvent) {
@@ -89,31 +93,45 @@ export default function BookingModal({ isOpen, onClose, lang = 'en', content, in
     }
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
     if (!formData.preferredDate) {
       alert(lang === 'bn' ? 'অনুগ্রহ করে ক্যালেন্ডার থেকে একটি উপলব্ধ তারিখ নির্বাচন করুন।' : 'Please select an available date from the reservation calendar.');
       return;
     }
 
-    setIsSubmitting(true);
+    const validationErrors = validateEnquiry(formData);
+    setFieldErrors(validationErrors);
+    if (Object.keys(validationErrors).length) return;
 
-    setTimeout(() => {
+    setIsSubmitting(true);
+    setSubmitError('');
+    try {
+      const result = await submitEnquiry({
+        ...formData,
+        source: 'Reservation enquiry',
+        message: formData.message || `Reservation enquiry for ${formData.eventType}`,
+      });
       setIsSubmitting(false);
       setSubmitted(true);
       setDispatchDetails({
-        bookingRef: `KB-${Date.now().toString().slice(-6)}`,
+        bookingRef: result.reference,
         adminEmail: 'councilofculture.ghoshbari47@gmail.com',
         guestEmail: formData.email,
         date: formData.preferredDate,
         sla: '48 Hours Guaranteed Response'
       });
-    }, 700);
+    } catch (error) {
+      setIsSubmitting(false);
+      setSubmitError(error.message);
+      if (error.validationErrors) setFieldErrors(error.validationErrors);
+    }
   };
 
   const handleReset = () => {
     setSubmitted(false);
     setDispatchDetails(null);
+    setFieldErrors({});
     setFormData({
       name: '',
       email: '',
@@ -206,6 +224,7 @@ export default function BookingModal({ isOpen, onClose, lang = 'en', content, in
             </div>
           ) : (
             <form onSubmit={handleSubmit} className="space-y-6">
+              {submitError && <div role="alert" className="flex items-start gap-2 rounded-xl border border-red-400/40 bg-red-500/10 p-3 text-xs text-red-700"><AlertCircle className="w-4 h-4 shrink-0" />{submitError}</div>}
               {/* Top Details Grid */}
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                 <div>
@@ -229,11 +248,14 @@ export default function BookingModal({ isOpen, onClose, lang = 'en', content, in
                   <input
                     type="tel"
                     required
+                    inputMode="tel"
+                    aria-invalid={!!fieldErrors.phone}
                     value={formData.phone}
-                    onChange={(e) => setFormData({ ...formData, phone: e.target.value })}
+                    onChange={(e) => { setFormData({ ...formData, phone: e.target.value }); setFieldErrors({...fieldErrors, phone: ''}); }}
                     placeholder="+91 98310 00000"
                     className="w-full px-3.5 py-2.5 text-xs sm:text-sm bg-background border border-border/80 rounded-xl focus:outline-none focus:border-primary text-foreground"
                   />
+                  {fieldErrors.phone && <p className="text-[11px] text-red-700 mt-1">{fieldErrors.phone}</p>}
                 </div>
 
                 <div>
@@ -243,11 +265,13 @@ export default function BookingModal({ isOpen, onClose, lang = 'en', content, in
                   <input
                     type="email"
                     required
+                    aria-invalid={!!fieldErrors.email}
                     value={formData.email}
-                    onChange={(e) => setFormData({ ...formData, email: e.target.value })}
+                    onChange={(e) => { setFormData({ ...formData, email: e.target.value }); setFieldErrors({...fieldErrors, email: ''}); }}
                     placeholder="name@domain.com"
                     className="w-full px-3.5 py-2.5 text-xs sm:text-sm bg-background border border-border/80 rounded-xl focus:outline-none focus:border-primary text-foreground"
                   />
+                  {fieldErrors.email && <p className="text-[11px] text-red-700 mt-1">{fieldErrors.email}</p>}
                 </div>
 
                 <div>
@@ -410,13 +434,17 @@ export default function BookingModal({ isOpen, onClose, lang = 'en', content, in
                   <label className="block text-xs font-semibold uppercase tracking-wider text-muted-foreground mb-1">
                     {lang === 'bn' ? 'অতিরিক্ত তথ্য / অনুরোধ' : 'Special Inquiries & Requirements'}
                   </label>
-                  <input
-                    type="text"
+                  <textarea
+                    rows="3"
+                    required
+                    aria-invalid={!!fieldErrors.message}
                     value={formData.message}
-                    onChange={(e) => setFormData({ ...formData, message: e.target.value })}
-                    placeholder={lang === 'bn' ? 'প্রয়োজনে বিস্তারিত লিখুন' : 'Catering, lighting, photography setup, etc.'}
+                    onChange={(e) => { setFormData({ ...formData, message: e.target.value }); setFieldErrors({...fieldErrors, message: ''}); }}
+                    placeholder={lang === 'bn' ? 'কমপক্ষে ২০ শব্দে বিস্তারিত লিখুন' : 'Describe your enquiry in at least 20 words.'}
                     className="w-full px-3.5 py-2.5 text-xs sm:text-sm bg-background border border-border/80 rounded-xl focus:outline-none focus:border-primary text-foreground"
                   />
+                  <p className={`text-[11px] mt-1 ${countWords(formData.message) >= 20 ? 'text-emerald-700' : 'text-muted-foreground'}`}>{countWords(formData.message)} / 20 words minimum</p>
+                  {fieldErrors.message && <p className="text-[11px] text-red-700 mt-1">{fieldErrors.message}</p>}
                 </div>
               </div>
 

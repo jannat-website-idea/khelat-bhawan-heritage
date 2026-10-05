@@ -1,0 +1,31 @@
+import {
+  localizedText,
+  cmsGuide,
+  siteSettings,
+  homePage,
+  pageContent,
+  generation,
+  timelineEntry,
+  trustee,
+  galleryItem,
+  event,
+  unavailableDate,
+  review,
+  enquiry,
+} from './contentTypes'
+
+export const schemaTypes = [
+  localizedText,
+  cmsGuide,
+  siteSettings,
+  homePage,
+  pageContent,
+  generation,
+  timelineEntry,
+  trustee,
+  galleryItem,
+  event,
+  unavailableDate,
+  review,
+  enquiry,
+]

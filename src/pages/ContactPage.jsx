@@ -1,6 +1,8 @@
 import React, { useState } from 'react';
 import { Phone, Mail, MapPin, Clock, Send, CheckCircle, ExternalLink } from 'lucide-react';
 import SectionHeader from '../components/SectionHeader';
+import { submitEnquiry } from '../lib/enquiries';
+import { countWords, validateEnquiry } from '../lib/enquiryValidation';
 
 export default function ContactPage({ lang, content }) {
   const t = content[lang];
@@ -9,11 +11,27 @@ export default function ContactPage({ lang, content }) {
   const [formData, setFormData] = useState({ name: '', email: '', phone: '', message: '' });
   const [submitted, setSubmitted] = useState(false);
   const [isSubmitting, setIsSubmitting] = useState(false);
+  const [submitError, setSubmitError] = useState('');
+  const [reference, setReference] = useState('');
+  const [fieldErrors, setFieldErrors] = useState({});
 
-  const handleSubmit = (event) => {
+  const handleSubmit = async (event) => {
     event.preventDefault();
+    const validationErrors = validateEnquiry(formData);
+    setFieldErrors(validationErrors);
+    if (Object.keys(validationErrors).length) return;
     setIsSubmitting(true);
-    window.setTimeout(() => { setIsSubmitting(false); setSubmitted(true); }, 600);
+    setSubmitError('');
+    try {
+      const result = await submitEnquiry({...formData, source: 'Contact page'});
+      setReference(result.reference);
+      setSubmitted(true);
+    } catch (error) {
+      setSubmitError(error.message);
+      if (error.validationErrors) setFieldErrors(error.validationErrors);
+    } finally {
+      setIsSubmitting(false);
+    }
   };
 
   const contactCards = [
@@ -43,17 +61,18 @@ export default function ContactPage({ lang, content }) {
           <div className="contact-page__form-card">
             <p className="heritage-kicker">{isBn ? 'সরাসরি অনুসন্ধান' : 'Direct enquiry'}</p>
             <h2>{isBn ? 'আমাদের বার্তা পাঠান' : 'Send Us a Message'}</h2>
-            <p>{isBn ? 'আমাদের প্রতিনিধি দল আপনার সাথে ২৪ ঘণ্টার মধ্যে যোগাযোগ করবে।' : 'Our team will respond to your enquiry within 24 hours.'}</p>
+            <p>{isBn ? 'খেলাৎ ভবনের প্রতিনিধি দল আপনার সাথে ৪৮ ঘণ্টার মধ্যে যোগাযোগ করবে।' : 'The Khelat Bhawan team will respond to your enquiry within 48 hours.'}</p>
             {submitted ? (
-              <div className="contact-page__success"><CheckCircle /><h3>{isBn ? 'আপনার বার্তা সফলভাবে গৃহীত হয়েছে!' : 'Thank you! Your message has been sent.'}</h3></div>
+              <div className="contact-page__success"><CheckCircle /><h3>{isBn ? 'আপনার বার্তা গৃহীত হয়েছে। আমরা ৪৮ ঘণ্টার মধ্যে যোগাযোগ করব।' : 'Thank you! Your enquiry was received. We will connect within 48 hours.'}</h3>{reference && <small>Reference: {reference}</small>}</div>
             ) : (
               <form onSubmit={handleSubmit}>
+                {submitError && <p role="alert" className="text-red-700">{submitError}</p>}
                 <div className="contact-page__field-row">
                   <label>{isBn ? 'নাম' : 'Name'} *<input required value={formData.name} onChange={(e) => setFormData({ ...formData, name: e.target.value })} /></label>
-                  <label>{isBn ? 'ফোন' : 'Phone'} *<input type="tel" required value={formData.phone} onChange={(e) => setFormData({ ...formData, phone: e.target.value })} /></label>
+                  <label>{isBn ? 'ফোন' : 'Phone'} *<input type="tel" required inputMode="tel" aria-invalid={!!fieldErrors.phone} value={formData.phone} onChange={(e) => { setFormData({ ...formData, phone: e.target.value }); setFieldErrors({...fieldErrors, phone: ''}); }} />{fieldErrors.phone && <small className="text-red-700 block mt-1">{fieldErrors.phone}</small>}</label>
                 </div>
-                <label>{isBn ? 'ইমেল' : 'Email address'} *<input type="email" required value={formData.email} onChange={(e) => setFormData({ ...formData, email: e.target.value })} /></label>
-                <label>{isBn ? 'বার্তা' : 'Message'} *<textarea rows="5" required value={formData.message} onChange={(e) => setFormData({ ...formData, message: e.target.value })} /></label>
+                <label>{isBn ? 'ইমেল' : 'Email address'} *<input type="email" required aria-invalid={!!fieldErrors.email} value={formData.email} onChange={(e) => { setFormData({ ...formData, email: e.target.value }); setFieldErrors({...fieldErrors, email: ''}); }} />{fieldErrors.email && <small className="text-red-700 block mt-1">{fieldErrors.email}</small>}</label>
+                <label>{isBn ? 'বার্তা' : 'Message'} *<textarea rows="5" required aria-invalid={!!fieldErrors.message} value={formData.message} onChange={(e) => { setFormData({ ...formData, message: e.target.value }); setFieldErrors({...fieldErrors, message: ''}); }} /><small className={countWords(formData.message) >= 20 ? 'text-emerald-700 block mt-1' : 'text-muted-foreground block mt-1'}>{countWords(formData.message)} / 20 words minimum</small>{fieldErrors.message && <small className="text-red-700 block mt-1">{fieldErrors.message}</small>}</label>
                 <button type="submit" disabled={isSubmitting}><Send />{isSubmitting ? (isBn ? 'পাঠানো হচ্ছে…' : 'Sending…') : (isBn ? 'বার্তা পাঠান' : 'Submit Message')}</button>
               </form>
             )}
