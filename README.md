@@ -30,7 +30,7 @@ A luxury, modern heritage web application commemorating over 175+ years of Benga
 - **Framework**: React 18, Vite
 - **Styling**: Tailwind CSS
 - **Icons**: Lucide React
-- **Deployment**: GitHub Pages (Automated CI/CD via GitHub Actions)
+- **Deployment**: Vercel, with the production domain managed through GoDaddy
 
 ---
 
@@ -49,6 +49,8 @@ npm run dev
 # Build for production
 npm run build
 ```
+
+For production-domain, GoDaddy, DNS, deployment, and handover information, see [HOSTING.md](./HOSTING.md).
 
 ---
 
