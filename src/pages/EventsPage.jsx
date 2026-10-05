@@ -1,68 +1,45 @@
-import React, { useState, useEffect } from 'react';
-import { getStoredEvents, saveStoredEvents, resetStoredEvents, isPastEvent, getWhatsAppLink } from '../data/eventsData';
-import { Calendar, Clock, MapPin, Sparkles, MessageCircle, ArrowRight, X, CheckCircle2, Sliders, History, CalendarCheck } from 'lucide-react';
+import React, { useState } from 'react';
+import { defaultEventsData, isPastEvent, getWhatsAppLink } from '../data/eventsData';
+import { Calendar, Clock, MapPin, Sparkles, MessageCircle, ArrowRight, X, CheckCircle2, Layers, History, CalendarCheck } from 'lucide-react';
 import { getAssetUrl } from '../utils/assetHelper';
-import EventManagerModal from '../components/EventManagerModal';
 
 const EventsPage = ({ lang = 'en', setActiveTab, onOpenBooking }) => {
   const isBn = lang === 'bn';
-  const [eventsList, setEventsList] = useState([]);
-  const [selectedCategory, setSelectedCategory] = useState('upcoming'); // 'upcoming' or 'past'
+  const [selectedCategory, setSelectedCategory] = useState('all'); // 'all', 'upcoming', 'past'
   const [activeModalEvent, setActiveModalEvent] = useState(null);
-  const [isManagerOpen, setIsManagerOpen] = useState(false);
 
-  // Load events from storage on mount
-  useEffect(() => {
-    setEventsList(getStoredEvents());
-  }, []);
+  const eventsList = defaultEventsData;
 
-  const handleSaveEvent = (savedEvent) => {
-    setEventsList((prevEvents) => {
-      const exists = prevEvents.some((e) => e.id === savedEvent.id);
-      let updated;
-      if (exists) {
-        updated = prevEvents.map((e) => (e.id === savedEvent.id ? savedEvent : e));
-      } else {
-        updated = [savedEvent, ...prevEvents];
-      }
-      saveStoredEvents(updated);
-      return updated;
-    });
-  };
-
-  const handleDeleteEvent = (eventId) => {
-    setEventsList((prevEvents) => {
-      const updated = prevEvents.filter((e) => e.id !== eventId);
-      saveStoredEvents(updated);
-      return updated;
-    });
-  };
-
-  const handleResetDefaults = () => {
-    const defaults = resetStoredEvents();
-    setEventsList(defaults);
-  };
-
-  // Categorize events dynamically based on their date
+  // Categorize events dynamically based on current date
   const upcomingEvents = eventsList.filter((event) => !isPastEvent(event));
   const pastEvents = eventsList.filter((event) => isPastEvent(event));
 
   const categories = [
     { 
+      id: 'all', 
+      label: { en: 'All Events', bn: 'সকল অনুষ্ঠান' },
+      count: eventsList.length,
+      icon: Layers
+    },
+    { 
       id: 'upcoming', 
-      label: { en: 'Upcoming Events', bn: 'আসন্ন অনুষ্ঠান' },
+      label: { en: 'Upcoming', bn: 'আসন্ন অনুষ্ঠান' },
       count: upcomingEvents.length,
       icon: CalendarCheck
     },
     { 
       id: 'past', 
-      label: { en: 'Past Events', bn: 'পূর্ববর্তী অনুষ্ঠান' },
+      label: { en: 'Past Archives', bn: 'পূর্ববর্তী অনুষ্ঠান' },
       count: pastEvents.length,
       icon: History
     }
   ];
 
-  const filteredEvents = selectedCategory === 'upcoming' ? upcomingEvents : pastEvents;
+  const filteredEvents = selectedCategory === 'all' 
+    ? eventsList 
+    : selectedCategory === 'upcoming' 
+      ? upcomingEvents 
+      : pastEvents;
 
   return (
     <div className="pt-28 pb-20 bg-background text-foreground min-h-screen">
@@ -81,9 +58,9 @@ const EventsPage = ({ lang = 'en', setActiveTab, onOpenBooking }) => {
             : 'Experience over 170 years of living tradition through our curated classical soirees, sacred annual Durga Puja, and exclusive architectural heritage tours.'}
         </p>
 
-        {/* Action Controls & Two Primary Sections (Upcoming / Past) */}
-        <div className="flex flex-col sm:flex-row items-center justify-center gap-4 mt-8">
-          <div className="inline-flex p-1.5 rounded-full bg-card/80 border border-border/70 shadow-lg backdrop-blur-md">
+        {/* Action Controls: All Events, Upcoming, Past */}
+        <div className="flex flex-wrap items-center justify-center gap-3 mt-8">
+          <div className="inline-flex flex-wrap justify-center p-1.5 rounded-full bg-card/80 border border-border/70 shadow-lg backdrop-blur-md gap-1">
             {categories.map((cat) => {
               const Icon = cat.icon;
               const isSelected = selectedCategory === cat.id;
@@ -91,31 +68,21 @@ const EventsPage = ({ lang = 'en', setActiveTab, onOpenBooking }) => {
                 <button
                   key={cat.id}
                   onClick={() => setSelectedCategory(cat.id)}
-                  className={`flex items-center gap-2 px-6 py-2.5 rounded-full text-xs sm:text-sm font-sans tracking-wider transition-all duration-300 ${
+                  className={`flex items-center gap-2 px-5 sm:px-6 py-2 sm:py-2.5 rounded-full text-xs sm:text-sm font-sans tracking-wider transition-all duration-300 cursor-pointer ${
                     isSelected
                       ? 'bg-primary text-primary-foreground shadow-md font-bold scale-102'
                       : 'text-muted-foreground hover:text-foreground hover:bg-muted/40'
                   }`}
                 >
-                  <Icon className="w-4 h-4" />
+                  <Icon className="w-3.5 h-3.5 sm:w-4 sm:h-4" />
                   <span>{cat.label[lang] || cat.label.en}</span>
-                  <span className={`text-[11px] px-2 py-0.5 rounded-full ${isSelected ? 'bg-primary-foreground/20 text-primary-foreground' : 'bg-muted text-muted-foreground'}`}>
+                  <span className={`text-[11px] px-2 py-0.5 rounded-full font-semibold ${isSelected ? 'bg-primary-foreground/20 text-primary-foreground' : 'bg-muted text-muted-foreground'}`}>
                     {cat.count}
                   </span>
                 </button>
               );
             })}
           </div>
-
-          {/* Client Admin Event Management Trigger */}
-          <button
-            onClick={() => setIsManagerOpen(true)}
-            className="inline-flex items-center gap-2 px-4 py-2.5 rounded-full text-xs font-sans tracking-wider bg-card/80 hover:bg-[#8a2034] text-[#d8ae62] hover:text-white border border-[#d8ae62]/50 transition-all shadow-md hover:scale-105"
-            title="Manage, Edit, Add or Delete Events"
-          >
-            <Sliders className="w-3.5 h-3.5" />
-            <span>{isBn ? 'ইভেন্ট ম্যানেজমেন্ট (অ্যাডমিন)' : 'Manage Events (Admin)'}</span>
-          </button>
         </div>
       </section>
 
@@ -129,18 +96,6 @@ const EventsPage = ({ lang = 'en', setActiveTab, onOpenBooking }) => {
                 ? (isBn ? 'বর্তমানে কোনো আসন্ন অনুষ্ঠান তালিকাভুক্ত নেই' : 'No Upcoming Events Scheduled')
                 : (isBn ? 'কোনো পূর্ববর্তী অনুষ্ঠান পাওয়া যায়নি' : 'No Past Events Found')}
             </h3>
-            <p className="text-muted-foreground text-xs sm:text-sm mb-6">
-              {isBn
-                ? 'নতুন ইভেন্ট যোগ করতে উপরের "ইভেন্ট ম্যানেজমেন্ট" বাটনে ক্লিক করুন।'
-                : 'Click "Manage Events (Admin)" above to add new events or update the cultural calendar.'}
-            </p>
-            <button
-              onClick={() => setIsManagerOpen(true)}
-              className="inline-flex items-center gap-2 px-5 py-2.5 rounded-full bg-primary text-primary-foreground text-xs font-semibold shadow-md"
-            >
-              <Sparkles className="w-3.5 h-3.5" />
-              <span>{isBn ? 'নতুন ইভেন্ট যোগ করুন' : '+ Add New Event'}</span>
-            </button>
           </div>
         ) : (
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
@@ -173,27 +128,22 @@ const EventsPage = ({ lang = 'en', setActiveTab, onOpenBooking }) => {
                       />
                       <div className="absolute inset-0 bg-gradient-to-t from-black/85 via-black/30 to-transparent" />
                       
-                      {/* Left Badge */}
+                      {/* Left Badge: Cultural Category */}
                       <div className="absolute top-3 left-3 flex flex-col gap-1.5">
                         <span className="px-3 py-1 text-xs uppercase tracking-wider font-semibold rounded-full bg-primary text-primary-foreground shadow-md backdrop-blur-sm">
                           {badgeText}
                         </span>
                       </div>
 
-                      {/* Right Status Badge */}
+                      {/* Right Status Badge: Strictly "PAST" or "UPCOMING" */}
                       <div className="absolute top-3 right-3 flex items-center gap-1.5">
                         {isPast ? (
                           <span className="px-3 py-1 text-[11px] uppercase tracking-wider font-bold rounded-full bg-stone-800/95 text-stone-200 border border-stone-500/50 shadow-md backdrop-blur-md">
-                            {isBn ? 'অনুষ্ঠিত ইভেন্ট' : 'Past Event'}
-                          </span>
-                        ) : event.featured ? (
-                          <span className="px-2.5 py-1 text-[11px] uppercase tracking-wider font-bold rounded-full bg-amber-500 text-black shadow-md flex items-center gap-1">
-                            <Sparkles className="w-3 h-3" />
-                            {isBn ? 'বিশেষ উৎসব' : 'Featured'}
+                            {isBn ? 'পূর্ববর্তী ইভেন্ট' : 'Past'}
                           </span>
                         ) : (
-                          <span className="px-2.5 py-1 text-[11px] uppercase tracking-wider font-bold rounded-full bg-emerald-800/90 text-emerald-100 border border-emerald-500/40 shadow-md">
-                            {isBn ? 'আসন্ন' : 'Upcoming'}
+                          <span className="px-3 py-1 text-[11px] uppercase tracking-wider font-bold rounded-full bg-emerald-800/90 text-emerald-100 border border-emerald-500/40 shadow-md backdrop-blur-md">
+                            {isBn ? 'আসন্ন ইভেন্ট' : 'Upcoming'}
                           </span>
                         )}
                       </div>
@@ -230,7 +180,7 @@ const EventsPage = ({ lang = 'en', setActiveTab, onOpenBooking }) => {
                   <div className="p-6 pt-0 border-t border-border/30 flex items-center justify-between gap-3 mt-auto">
                     <button
                       onClick={() => setActiveModalEvent(event)}
-                      className="text-xs uppercase tracking-wider text-primary font-semibold hover:underline flex items-center gap-1 py-2"
+                      className="text-xs uppercase tracking-wider text-primary font-semibold hover:underline flex items-center gap-1 py-2 cursor-pointer"
                     >
                       {isBn ? 'বিস্তারিত দেখুন' : 'View Details'}
                       <ArrowRight className="w-3.5 h-3.5" />
@@ -278,7 +228,7 @@ const EventsPage = ({ lang = 'en', setActiveTab, onOpenBooking }) => {
               />
               <button
                 onClick={() => setActiveModalEvent(null)}
-                className="absolute top-4 right-4 bg-black/60 hover:bg-black text-white p-2 rounded-full backdrop-blur-md transition-all"
+                className="absolute top-4 right-4 bg-black/60 hover:bg-black text-white p-2 rounded-full backdrop-blur-md transition-all cursor-pointer"
                 aria-label="Close modal"
               >
                 <X className="w-5 h-5" />
@@ -287,9 +237,13 @@ const EventsPage = ({ lang = 'en', setActiveTab, onOpenBooking }) => {
                 <span className="px-3 py-1 text-xs uppercase tracking-wider font-semibold rounded-full bg-primary text-primary-foreground shadow-md">
                   {typeof activeModalEvent.badge === 'object' ? (activeModalEvent.badge[lang] || activeModalEvent.badge.en) : activeModalEvent.badge}
                 </span>
-                {isPastEvent(activeModalEvent) && (
+                {isPastEvent(activeModalEvent) ? (
                   <span className="px-3 py-1 text-xs uppercase tracking-wider font-bold rounded-full bg-stone-800 text-stone-200 border border-stone-500/50 shadow-md">
-                    {isBn ? 'অনুষ্ঠিত ইভেন্ট' : 'Past Event'}
+                    {isBn ? 'পূর্ববর্তী ইভেন্ট' : 'Past Event'}
+                  </span>
+                ) : (
+                  <span className="px-3 py-1 text-xs uppercase tracking-wider font-bold rounded-full bg-emerald-800 text-emerald-100 border border-emerald-500/50 shadow-md">
+                    {isBn ? 'আসন্ন ইভেন্ট' : 'Upcoming'}
                   </span>
                 )}
               </div>
@@ -385,17 +339,6 @@ const EventsPage = ({ lang = 'en', setActiveTab, onOpenBooking }) => {
           </div>
         </div>
       )}
-
-      {/* Admin Event Manager Modal */}
-      <EventManagerModal
-        isOpen={isManagerOpen}
-        onClose={() => setIsManagerOpen(false)}
-        events={eventsList}
-        onSaveEvent={handleSaveEvent}
-        onDeleteEvent={handleDeleteEvent}
-        onResetDefaults={handleResetDefaults}
-        lang={lang}
-      />
     </div>
   );
 };
