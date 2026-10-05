@@ -70,9 +70,37 @@ export default function HeritageRentalPage({ lang = 'en', onOpenBooking, onOpenL
             {/* Visual Calendar */}
             <div className="lg:col-span-7 bg-background/80 p-5 rounded-2xl border border-border/80 shadow-inner">
               <div className="flex items-center justify-between pb-3 mb-3 border-b border-border/40">
-                <span className="font-serif text-base sm:text-lg font-semibold text-foreground">
-                  {monthName}
-                </span>
+                <div className="flex items-center gap-2">
+                  <select 
+                    value={month} 
+                    onChange={(e) => {
+                      const newMonth = Number(e.target.value);
+                      const monthDiff = (year - today.getFullYear()) * 12 + (newMonth - today.getMonth());
+                      setCurrentMonthOffset(Math.max(0, monthDiff));
+                    }}
+                    className="bg-background border border-border/60 rounded-md px-2 py-1 text-sm font-serif font-semibold text-foreground focus:outline-none focus:border-primary"
+                  >
+                    {Array.from({ length: 12 }, (_, i) => {
+                      const date = new Date(2000, i, 1);
+                      const label = date.toLocaleString(lang === 'bn' ? 'bn-IN' : 'en-US', { month: 'long' });
+                      return <option key={i} value={i} disabled={year === today.getFullYear() && i < today.getMonth()}>{label}</option>;
+                    })}
+                  </select>
+                  <select 
+                    value={year} 
+                    onChange={(e) => {
+                      const newYear = Number(e.target.value);
+                      let monthDiff = (newYear - today.getFullYear()) * 12 + (month - today.getMonth());
+                      if (monthDiff < 0) monthDiff = 0;
+                      setCurrentMonthOffset(monthDiff);
+                    }}
+                    className="bg-background border border-border/60 rounded-md px-2 py-1 text-sm font-serif font-semibold text-foreground focus:outline-none focus:border-primary"
+                  >
+                    {Array.from({ length: 10 }, (_, i) => today.getFullYear() + i).map(y => (
+                      <option key={y} value={y}>{y}</option>
+                    ))}
+                  </select>
+                </div>
                 <div className="flex items-center gap-2">
                   <button
                     disabled={currentMonthOffset <= 0}
@@ -163,9 +191,6 @@ export default function HeritageRentalPage({ lang = 'en', onOpenBooking, onOpenL
                       src: srv.image
                     })}
                   />
-                  <div className="absolute top-4 right-4 bg-black/80 backdrop-blur-md px-3.5 py-1.5 text-primary text-xs uppercase font-sans font-semibold tracking-wider rounded-full border border-primary/30">
-                    {srv.pricing}
-                  </div>
                 </div>
 
                 <div className="p-8 space-y-4 text-left">

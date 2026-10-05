@@ -1,16 +1,12 @@
 export const countWords = (value = '') => value.trim().split(/\s+/).filter(Boolean).length;
 
 export const isValidPhone = (value = '') => {
-  const raw = value.trim();
-  let digits = raw.replace(/\D/g, '');
-  if ((raw.startsWith('+91') || raw.startsWith('0091')) && digits.length === 12) digits = digits.slice(-10);
-  return /^\d{10,11}$/.test(digits) && !/^(\d)\1+$/.test(digits);
+  const digits = value.replace(/\D/g, '');
+  return digits.length >= 10 && digits.length <= 11;
 };
 
 export const isValidEmail = (value = '') => {
-  const email = value.trim().toLowerCase();
-  if (email.length > 254 || email.includes('..')) return false;
-  return /^[a-z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-z0-9](?:[a-z0-9-]{0,61}[a-z0-9])?(?:\.[a-z0-9](?:[a-z0-9-]{0,61}[a-z0-9])?)+$/i.test(email);
+  return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(value.trim());
 };
 
 export const validateEnquiry = ({phone, email, message}) => {

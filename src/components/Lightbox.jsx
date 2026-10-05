@@ -51,10 +51,9 @@ export default function Lightbox({ item, onClose, onNext, onPrev, hasNext, hasPr
 
         <button
           onClick={onClose}
-          className="flex items-center gap-2 px-4 py-2 rounded-full bg-[#741e30] hover:bg-[#8f273d] text-[#fff] border border-[#d8ae62]/60 hover:border-[#d8ae62] text-xs md:text-sm font-semibold tracking-wider uppercase transition-all duration-300 shadow-lg hover:scale-105 active:scale-95 cursor-pointer"
+          className="w-11 h-11 rounded-full bg-[#741e30] hover:bg-[#8f273d] text-[#fff] border border-[#d8ae62]/60 hover:border-[#d8ae62] flex items-center justify-center transition-all duration-300 shadow-lg hover:scale-110 hover:rotate-90 active:scale-95 cursor-pointer"
           aria-label="Close Lightbox"
         >
-          <span>Close</span>
           <X className="w-5 h-5" />
         </button>
       </div>
@@ -62,20 +61,20 @@ export default function Lightbox({ item, onClose, onNext, onPrev, hasNext, hasPr
       {/* Main Content Area */}
       <div className="heritage-lightbox__stage relative flex-1 flex items-center justify-center my-3 overflow-hidden" onClick={(e) => e.stopPropagation()}>
         {item.type === 'video' ? (
-          <div className="max-w-5xl max-h-[70vh] w-full rounded-xl overflow-hidden shadow-2xl bg-black border border-[#d8ae62]/30">
+          <div className="max-w-[95vw] max-h-[85vh] w-full rounded-xl overflow-hidden shadow-2xl bg-black border border-[#d8ae62]/30">
             <video
               src={finalSrc}
               controls
               autoPlay
               playsInline
-              className="w-full h-full max-h-[70vh] object-contain mx-auto"
+              className="w-full h-full max-h-[85vh] object-contain mx-auto"
             />
           </div>
         ) : (
           <img
             src={finalSrc}
             alt={item.title}
-            className="max-w-full max-h-[70vh] object-contain rounded-xl shadow-2xl border border-[#d8ae62]/20"
+            className="max-w-[95vw] max-h-[85vh] object-contain rounded-xl shadow-2xl border border-[#d8ae62]/20"
           />
         )}
 

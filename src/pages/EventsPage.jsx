@@ -20,6 +20,23 @@ const EventsPage = ({ lang = 'en', setActiveTab, onOpenBooking }) => {
     return event.category === selectedCategory;
   });
 
+  const isFutureEvent = (dateStr) => {
+    if (!dateStr) return true;
+    try {
+      const firstPart = dateStr.split('–')[0].split('-')[0].trim();
+      const yearMatch = dateStr.match(/\d{4}/);
+      const year = yearMatch ? yearMatch[0] : new Date().getFullYear();
+      const parseable = firstPart.includes(year) ? firstPart : `${firstPart} ${year}`;
+      const d = new Date(parseable);
+      // Set to start of today for comparison
+      const today = new Date();
+      today.setHours(0, 0, 0, 0);
+      return isNaN(d.getTime()) ? true : d >= today;
+    } catch {
+      return true;
+    }
+  };
+
   return (
     <div className="pt-28 pb-20 bg-background text-foreground min-h-screen">
       {/* Hero Header */}
@@ -125,15 +142,17 @@ const EventsPage = ({ lang = 'en', setActiveTab, onOpenBooking }) => {
                   <ArrowRight className="w-3.5 h-3.5" />
                 </button>
 
-                <a
-                  href={getWhatsAppLink(event.whatsappMessage)}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="inline-flex items-center gap-1.5 px-4 py-2 rounded-lg bg-emerald-700 hover:bg-emerald-600 text-white text-xs font-sans tracking-wide transition-all shadow-sm"
-                >
-                  <MessageCircle className="w-3.5 h-3.5" />
-                  <span>{language === 'bn' ? 'হোয়াটসঅ্যাপ অনুসন্ধান' : 'Click to Enquire'}</span>
-                </a>
+                {isFutureEvent(event.date.en) && (
+                  <a
+                    href={getWhatsAppLink(event.whatsappMessage)}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="inline-flex items-center gap-1.5 px-4 py-2 rounded-lg bg-emerald-700 hover:bg-emerald-600 text-white text-xs font-sans tracking-wide transition-all shadow-sm"
+                  >
+                    <MessageCircle className="w-3.5 h-3.5" />
+                    <span>{language === 'bn' ? 'হোয়াটসঅ্যাপ অনুসন্ধান' : 'Click to Enquire'}</span>
+                  </a>
+                )}
               </div>
             </div>
           ))}
@@ -236,15 +255,17 @@ const EventsPage = ({ lang = 'en', setActiveTab, onOpenBooking }) => {
                     ? 'আসন সংরক্ষণের জন্য আমাদের হোয়াটসঅ্যাপ হেল্পডেস্কে যোগাযোগ করুন।'
                     : 'For invitations, reservations, or bespoke inquiries, please connect via WhatsApp.'}
                 </p>
-                <a
-                  href={getWhatsAppLink(activeModalEvent.whatsappMessage)}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="w-full sm:w-auto inline-flex items-center justify-center gap-2 px-6 py-3 rounded-xl bg-emerald-700 hover:bg-emerald-600 text-white font-medium text-sm transition-all shadow-md"
-                >
-                  <MessageCircle className="w-4 h-4" />
-                  <span>{language === 'bn' ? 'সরাসরি হোয়াটসঅ্যাপে যোগাযোগ করুন' : 'Click to Enquire (WhatsApp)'}</span>
-                </a>
+                {isFutureEvent(activeModalEvent.date.en) && (
+                  <a
+                    href={getWhatsAppLink(activeModalEvent.whatsappMessage)}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="w-full sm:w-auto inline-flex items-center justify-center gap-2 px-6 py-3 rounded-xl bg-emerald-700 hover:bg-emerald-600 text-white font-medium text-sm transition-all shadow-md"
+                  >
+                    <MessageCircle className="w-4 h-4" />
+                    <span>{language === 'bn' ? 'সরাসরি হোয়াটসঅ্যাপে যোগাযোগ করুন' : 'Click to Enquire (WhatsApp)'}</span>
+                  </a>
+                )}
               </div>
             </div>
           </div>

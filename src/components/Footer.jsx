@@ -1,7 +1,7 @@
 import React from 'react';
 import { Phone, Mail, MapPin, Clock } from 'lucide-react';
 
-export default function Footer({ lang, setActiveTab, onOpenBooking, content }) {
+export default function Footer({ lang, setActiveTab, onOpenBooking, onOpenLegal, content }) {
   const t = content[lang];
 
   const handleNav = (tab) => {
@@ -131,7 +131,7 @@ export default function Footer({ lang, setActiveTab, onOpenBooking, content }) {
               </div>
               <div className="flex items-start gap-2 pt-2 border-t border-white/10">
                 <Clock className="w-4 h-4 text-rose-gold mt-0.5 flex-shrink-0" />
-                <span>Daily: 6:00 AM – 10:00 PM</span>
+                <span>Daily: 11:00 AM – 7:00 PM</span>
               </div>
             </div>
           </div>
@@ -140,6 +140,21 @@ export default function Footer({ lang, setActiveTab, onOpenBooking, content }) {
         {/* Bottom copyright */}
         <div className="border-t border-white/10 mt-12 pt-8 flex flex-col sm:flex-row items-center justify-between text-xs text-primary-foreground/50 font-body gap-4">
           <p>© 1845 – {new Date().getFullYear()} Khelat Bhavan Rajbari. All rights reserved.</p>
+          <div className="flex items-center gap-4">
+            <button 
+              onClick={() => onOpenLegal ? onOpenLegal('privacy') : null}
+              className="hover:text-rose-gold transition-colors underline-offset-2 hover:underline cursor-pointer"
+            >
+              Privacy Policy
+            </button>
+            <span className="text-primary-foreground/30">|</span>
+            <button 
+              onClick={() => onOpenLegal ? onOpenLegal('terms') : null}
+              className="hover:text-rose-gold transition-colors underline-offset-2 hover:underline cursor-pointer"
+            >
+              Terms of Use
+            </button>
+          </div>
           <p className="font-serif italic text-rose-gold">
             Official digital heritage archive of Pathuria Ghata Ghosh Bari.
           </p>

@@ -238,7 +238,7 @@ export default function TimelinePage({ lang = 'en', setActiveTab, onOpenLightbox
           1. HERO / INTRODUCTION
          ========================================================================= */}
       <section className="heritage-timeline-hero relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-8 pb-10 sm:pb-14 text-left z-10">
-        <div className="max-w-5xl space-y-3.5">
+        <div className="relative max-w-5xl space-y-3.5">
           <span className="heritage-timeline-hero__eyebrow">
             {isBn ? 'সময়ের পরিক্রমায়' : 'A JOURNEY THROUGH TIME'}
           </span>
@@ -268,17 +268,18 @@ export default function TimelinePage({ lang = 'en', setActiveTab, onOpenLightbox
               <Users className="w-3.5 h-3.5" />
               <span>{isBn ? '৭ প্রজন্মের পারিবারিক বংশতালিকা' : '7-Generation Family Tree'}</span>
             </button>
-
-            <a
-              href={getAssetUrl('/Khelat_Bhawan_Heritage_eBook.pdf')}
-              download="Khelat_Bhawan_Heritage_Compendium.pdf"
-              className="heritage-timeline-toggle-btn heritage-timeline-toggle-btn--download"
-              aria-label={isBn ? 'বিনামূল্যে হেরিটেজ পিডিএফ ডাউনলোড করুন' : 'Download the free Khelat Bhawan heritage PDF'}
-            >
-              <Download className="w-3.5 h-3.5" aria-hidden="true" />
-              <span>{isBn ? 'বিনামূল্যে হেরিটেজ পিডিএফ' : 'Free Heritage PDF'}</span>
-            </a>
           </div>
+
+          {/* Download PDF - Large Square Button */}
+          <a
+            href={getAssetUrl('/Khelat_Bhawan_Heritage_eBook.pdf')}
+            download="Khelat_Bhawan_Heritage_Compendium.pdf"
+            className="heritage-timeline-download-btn"
+            aria-label={isBn ? 'পিডিএফ ডাউনলোড করুন' : 'Download the Khelat Bhawan heritage PDF'}
+          >
+            <Download className="w-5 h-5" aria-hidden="true" />
+            <span>{isBn ? 'পিডিএফ ডাউনলোড' : 'Download PDF'}</span>
+          </a>
         </div>
       </section>
 

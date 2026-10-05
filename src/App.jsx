@@ -3,6 +3,7 @@ import Navbar from './components/Navbar';
 import Footer from './components/Footer';
 import BookingModal from './components/BookingModal';
 import Lightbox from './components/Lightbox';
+import LegalModal from './components/LegalModal';
 import HeritageLoader from './components/HeritageLoader';
 import useHeritageMotion from './hooks/useHeritageMotion';
 
@@ -28,11 +29,18 @@ export default function App() {
   const [isBookingOpen, setIsBookingOpen] = useState(false);
   const [bookingEvent, setBookingEvent] = useState('');
   const [lightboxItem, setLightboxItem] = useState(null);
+  const [isLegalOpen, setIsLegalOpen] = useState(false);
+  const [legalType, setLegalType] = useState('privacy');
   useHeritageMotion(activeTab, lang, loading);
 
   const handleOpenBooking = (eventName = '') => {
     setBookingEvent(typeof eventName === 'string' ? eventName : '');
     setIsBookingOpen(true);
+  };
+
+  const handleOpenLegal = (type = 'privacy') => {
+    setLegalType(type);
+    setIsLegalOpen(true);
   };
 
   const scrollToTop = () => {
@@ -267,6 +275,7 @@ export default function App() {
         lang={lang}
         setActiveTab={handleTabChange}
         onOpenBooking={handleOpenBooking}
+        onOpenLegal={handleOpenLegal}
         content={siteData}
       />
 
@@ -280,6 +289,14 @@ export default function App() {
         lang={lang}
         content={siteData}
         initialEvent={bookingEvent}
+      />
+
+      {/* Legal & Compliance Modal */}
+      <LegalModal
+        isOpen={isLegalOpen}
+        onClose={() => setIsLegalOpen(false)}
+        defaultType={legalType}
+        lang={lang}
       />
 
       {/* Full-Screen Lightbox */}

@@ -2796,15 +2796,15 @@ iframe {
   justify-content: center;
   flex: 1 1 0%;
   gap: 7px;
-  padding: 8px 18px;
+  padding: 14px 28px;
   border-radius: 999px;
-  font-size: 11px;
+  font-size: 13px;
   font-weight: 600;
   letter-spacing: 0.1em;
   text-transform: uppercase;
   background: #f1ebd9;
   color: #6d533a;
-  border: 1px solid rgba(182, 138, 50, 0.3);
+  border: 1.5px solid rgba(182, 138, 50, 0.3);
   box-shadow: 0 3px 10px rgba(70, 45, 25, 0.04);
   transition: all 0.3s ease;
   cursor: pointer;
@@ -2815,6 +2815,8 @@ iframe {
   background: #eae2cc;
   color: #2b1713;
   border-color: rgba(182, 138, 50, 0.5);
+  transform: translateY(-2px) scale(1.03);
+  box-shadow: 0 6px 20px rgba(70, 45, 25, 0.15);
 }
 
 .heritage-timeline-toggle-btn.is-active {
@@ -2824,24 +2826,47 @@ iframe {
   box-shadow: 0 5px 16px rgba(43, 23, 19, 0.22);
 }
 
-.heritage-timeline-toggle-btn--download {
+.heritage-timeline-download-btn {
+  position: absolute;
+  right: 0;
+  top: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  width: 120px;
+  height: 120px;
+  border-radius: 16px;
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  text-align: center;
   background: #5a1722;
   color: #fff8e8;
-  border-color: #5a1722;
-  box-shadow: 0 5px 16px rgba(74, 23, 32, 0.2);
+  border: 2px solid #5a1722;
+  box-shadow: 0 8px 24px rgba(74, 23, 32, 0.25);
+  transition: all 0.35s cubic-bezier(0.2, 0.8, 0.2, 1);
+  cursor: pointer;
+  text-decoration: none;
 }
-
-.heritage-timeline-toggle-btn--download:hover {
+.heritage-timeline-download-btn:hover {
   background: #721d2b;
-  color: #fff8e8;
-  border-color: #721d2b;
-  transform: translateY(-1px);
-  box-shadow: 0 8px 20px rgba(74, 23, 32, 0.24);
+  border-color: #d8ae62;
+  transform: translateY(-3px) scale(1.04);
+  box-shadow: 0 12px 32px rgba(74, 23, 32, 0.35);
 }
 
-.heritage-timeline-toggle-btn--download:focus-visible {
-  outline: 3px solid rgba(198, 155, 67, 0.42);
-  outline-offset: 3px;
+@media (max-width: 900px) {
+  .heritage-timeline-download-btn {
+    position: static;
+    width: 100%;
+    height: 48px;
+    flex-direction: row;
+    margin-top: 14px;
+    border-radius: 999px;
+  }
 }
 
 /* ==========================================================================

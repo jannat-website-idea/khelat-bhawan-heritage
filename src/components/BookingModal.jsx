@@ -330,18 +330,6 @@ export default function BookingModal({ isOpen, onClose, lang = 'en', content, in
                       {lang === 'bn' ? 'পরবর্তী' : 'Next'} →
                     </button>
 
-                    {/* Admin Mode Toggle */}
-                    <button
-                      type="button"
-                      onClick={() => setAdminMode(!adminMode)}
-                      title="Admin Date Blocking CMS"
-                      className={`ml-2 px-2.5 py-1 text-[11px] rounded-lg border flex items-center gap-1 transition-all ${
-                        adminMode ? 'bg-amber-500/20 text-amber-500 border-amber-500/50' : 'bg-card text-muted-foreground border-border/60'
-                      }`}
-                    >
-                      {adminMode ? <Unlock className="w-3 h-3" /> : <Lock className="w-3 h-3" />}
-                      <span>{adminMode ? 'CMS Active' : 'Admin'}</span>
-                    </button>
                   </div>
                 </div>
 
@@ -416,7 +404,7 @@ export default function BookingModal({ isOpen, onClose, lang = 'en', content, in
               </div>
 
               {/* Guest Count & Message */}
-              <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+              <div className="grid grid-cols-1 gap-4">
                 <div>
                   <label className="block text-xs font-semibold uppercase tracking-wider text-muted-foreground mb-1">
                     {lang === 'bn' ? 'অতিথির সম্ভাব্য সংখ্যা' : 'Estimated Guest Count'}
@@ -429,23 +417,23 @@ export default function BookingModal({ isOpen, onClose, lang = 'en', content, in
                     className="w-full px-3.5 py-2.5 text-xs sm:text-sm bg-background border border-border/80 rounded-xl focus:outline-none focus:border-primary text-foreground"
                   />
                 </div>
+              </div>
 
-                <div>
-                  <label className="block text-xs font-semibold uppercase tracking-wider text-muted-foreground mb-1">
-                    {lang === 'bn' ? 'অতিরিক্ত তথ্য / অনুরোধ' : 'Special Inquiries & Requirements'}
-                  </label>
-                  <textarea
-                    rows="3"
-                    required
-                    aria-invalid={!!fieldErrors.message}
-                    value={formData.message}
-                    onChange={(e) => { setFormData({ ...formData, message: e.target.value }); setFieldErrors({...fieldErrors, message: ''}); }}
-                    placeholder={lang === 'bn' ? 'কমপক্ষে ২০ শব্দে বিস্তারিত লিখুন' : 'Describe your enquiry in at least 20 words.'}
-                    className="w-full px-3.5 py-2.5 text-xs sm:text-sm bg-background border border-border/80 rounded-xl focus:outline-none focus:border-primary text-foreground"
-                  />
-                  <p className={`text-[11px] mt-1 ${countWords(formData.message) >= 20 ? 'text-emerald-700' : 'text-muted-foreground'}`}>{countWords(formData.message)} / 20 words minimum</p>
-                  {fieldErrors.message && <p className="text-[11px] text-red-700 mt-1">{fieldErrors.message}</p>}
-                </div>
+              <div>
+                <label className="block text-xs font-semibold uppercase tracking-wider text-muted-foreground mb-1">
+                  {lang === 'bn' ? 'অতিরিক্ত তথ্য / অনুরোধ' : 'Special Inquiries & Requirements'}
+                </label>
+                <textarea
+                  rows="6"
+                  required
+                  aria-invalid={!!fieldErrors.message}
+                  value={formData.message}
+                  onChange={(e) => { setFormData({ ...formData, message: e.target.value }); setFieldErrors({...fieldErrors, message: ''}); }}
+                  placeholder={lang === 'bn' ? 'কমপক্ষে ২০ শব্দে বিস্তারিত লিখুন' : 'Describe your enquiry in at least 20 words.'}
+                  className="w-full px-3.5 py-2.5 text-xs sm:text-sm bg-background border border-border/80 rounded-xl focus:outline-none focus:border-primary text-foreground"
+                />
+                <p className={`text-[11px] mt-1 ${countWords(formData.message) >= 20 ? 'text-emerald-700' : 'text-muted-foreground'}`}>{countWords(formData.message)} / 20 words minimum</p>
+                {fieldErrors.message && <p className="text-[11px] text-red-700 mt-1">{fieldErrors.message}</p>}
               </div>
 
               {/* Submit CTA */}
