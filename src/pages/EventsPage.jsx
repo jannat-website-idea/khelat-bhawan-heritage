@@ -1,4 +1,5 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
+import { createPortal } from 'react-dom';
 import { defaultEventsData, isPastEvent, getWhatsAppLink } from '../data/eventsData';
 import { Calendar, Clock, MapPin, Sparkles, MessageCircle, ArrowRight, X, CheckCircle2, Layers, History, CalendarCheck } from 'lucide-react';
 import { getAssetUrl } from '../utils/assetHelper';
@@ -9,6 +10,25 @@ const EventsPage = ({ lang = 'en', setActiveTab, onOpenBooking }) => {
   const [activeModalEvent, setActiveModalEvent] = useState(null);
 
   const eventsList = defaultEventsData;
+
+  // Lock body scroll and listen for Escape key when modal is open
+  useEffect(() => {
+    if (!activeModalEvent) return undefined;
+    const prevOverflow = document.body.style.overflow;
+    document.body.style.overflow = 'hidden';
+
+    const handleKeyDown = (e) => {
+      if (e.key === 'Escape') {
+        setActiveModalEvent(null);
+      }
+    };
+    window.addEventListener('keydown', handleKeyDown);
+
+    return () => {
+      document.body.style.overflow = prevOverflow;
+      window.removeEventListener('keydown', handleKeyDown);
+    };
+  }, [activeModalEvent]);
 
   // Categorize events dynamically based on current date
   const upcomingEvents = eventsList.filter((event) => !isPastEvent(event));
@@ -209,32 +229,39 @@ const EventsPage = ({ lang = 'en', setActiveTab, onOpenBooking }) => {
         )}
       </section>
 
-      {/* Event Details Modal */}
-      {activeModalEvent && (
+      {/* Event Details Modal mounted cleanly via Portal */}
+      {activeModalEvent && createPortal(
         <div 
-          className="fixed inset-0 z-50 bg-black/80 backdrop-blur-sm flex items-center justify-center p-4"
+          className="fixed inset-0 z-[100000] bg-black/85 backdrop-blur-md flex items-center justify-center p-3 sm:p-6 overflow-y-auto"
           onClick={() => setActiveModalEvent(null)}
+          role="dialog"
+          aria-modal="true"
         >
           <div
-            className="bg-card border border-border/80 rounded-2xl max-w-2xl w-full max-h-[90vh] overflow-y-auto shadow-2xl relative animate-in fade-in zoom-in-95 duration-200"
+            className="bg-[#140b08] text-[#f5efe6] border border-[#d8ae62]/50 rounded-2xl max-w-2xl w-full max-h-[92vh] overflow-y-auto shadow-2xl relative my-auto animate-in fade-in zoom-in-95 duration-200"
             onClick={(e) => e.stopPropagation()}
           >
+            {/* Top Floating Close Button */}
+            <button
+              onClick={() => setActiveModalEvent(null)}
+              className="absolute top-4 right-4 z-30 w-11 h-11 rounded-full bg-[#761628] hover:bg-[#8a2034] text-white border border-[#d8ae62] flex items-center justify-center transition-all duration-300 shadow-2xl hover:scale-110 hover:rotate-90 active:scale-95 cursor-pointer"
+              aria-label="Close modal"
+              title="Close Event Details"
+            >
+              <X className="w-5 h-5" />
+            </button>
+
             {/* Modal Image */}
-            <div className="relative aspect-[16/9] w-full bg-muted">
+            <div className="relative aspect-[16/9] w-full bg-black overflow-hidden">
               <img
                 src={getAssetUrl(activeModalEvent.image)}
                 alt={typeof activeModalEvent.title === 'object' ? (activeModalEvent.title[lang] || activeModalEvent.title.en) : activeModalEvent.title}
                 className="w-full h-full object-cover"
               />
-              <button
-                onClick={() => setActiveModalEvent(null)}
-                className="absolute top-4 right-4 bg-black/60 hover:bg-black text-white p-2 rounded-full backdrop-blur-md transition-all cursor-pointer"
-                aria-label="Close modal"
-              >
-                <X className="w-5 h-5" />
-              </button>
+              <div className="absolute inset-0 bg-gradient-to-t from-[#140b08] via-transparent to-black/50" />
+              
               <div className="absolute bottom-4 left-4 flex items-center gap-2">
-                <span className="px-3 py-1 text-xs uppercase tracking-wider font-semibold rounded-full bg-primary text-primary-foreground shadow-md">
+                <span className="px-3 py-1 text-xs uppercase tracking-wider font-semibold rounded-full bg-[#8a2034] text-white border border-[#d8ae62]/40 shadow-md">
                   {typeof activeModalEvent.badge === 'object' ? (activeModalEvent.badge[lang] || activeModalEvent.badge.en) : activeModalEvent.badge}
                 </span>
                 {isPastEvent(activeModalEvent) ? (
@@ -250,65 +277,65 @@ const EventsPage = ({ lang = 'en', setActiveTab, onOpenBooking }) => {
             </div>
 
             {/* Modal Body */}
-            <div className="p-6 sm:p-8">
-              <h2 className="font-serif text-2xl sm:text-3xl text-foreground font-semibold mb-4">
+            <div className="p-6 sm:p-8 space-y-6">
+              <h2 className="font-serif text-2xl sm:text-3xl text-white font-bold tracking-wide">
                 {typeof activeModalEvent.title === 'object' ? (activeModalEvent.title[lang] || activeModalEvent.title.en) : activeModalEvent.title}
               </h2>
 
-              <div className="grid grid-cols-1 sm:grid-cols-3 gap-3 p-4 rounded-xl bg-background/50 border border-border/40 mb-6 text-xs text-muted-foreground">
-                <div className="flex items-center gap-2">
-                  <Calendar className="w-4 h-4 text-primary shrink-0" />
+              <div className="grid grid-cols-1 sm:grid-cols-3 gap-3 p-4 rounded-xl bg-white/5 border border-[#d8ae62]/30 text-xs text-[#d8ae62]">
+                <div className="flex items-center gap-2.5">
+                  <Calendar className="w-4 h-4 text-[#d8ae62] shrink-0" />
                   <div>
-                    <div className="text-[10px] uppercase tracking-wider text-muted-foreground font-medium">
+                    <div className="text-[10px] uppercase tracking-wider text-[#f0e8d8]/60 font-medium">
                       {isBn ? 'তারিখ' : 'Date'}
                     </div>
-                    <div className="text-foreground font-medium">
+                    <div className="text-white font-semibold">
                       {typeof activeModalEvent.date === 'object' ? (activeModalEvent.date[lang] || activeModalEvent.date.en) : activeModalEvent.date}
                     </div>
                   </div>
                 </div>
-                <div className="flex items-center gap-2">
-                  <Clock className="w-4 h-4 text-primary shrink-0" />
+                <div className="flex items-center gap-2.5">
+                  <Clock className="w-4 h-4 text-[#d8ae62] shrink-0" />
                   <div>
-                    <div className="text-[10px] uppercase tracking-wider text-muted-foreground font-medium">
+                    <div className="text-[10px] uppercase tracking-wider text-[#f0e8d8]/60 font-medium">
                       {isBn ? 'সময়' : 'Time'}
                     </div>
-                    <div className="text-foreground font-medium">
+                    <div className="text-white font-semibold">
                       {typeof activeModalEvent.time === 'object' ? (activeModalEvent.time[lang] || activeModalEvent.time.en) : activeModalEvent.time}
                     </div>
                   </div>
                 </div>
-                <div className="flex items-center gap-2">
-                  <MapPin className="w-4 h-4 text-primary shrink-0" />
+                <div className="flex items-center gap-2.5">
+                  <MapPin className="w-4 h-4 text-[#d8ae62] shrink-0" />
                   <div>
-                    <div className="text-[10px] uppercase tracking-wider text-muted-foreground font-medium">
+                    <div className="text-[10px] uppercase tracking-wider text-[#f0e8d8]/60 font-medium">
                       {isBn ? 'স্থান' : 'Location'}
                     </div>
-                    <div className="text-foreground font-medium">
+                    <div className="text-white font-semibold">
                       {typeof activeModalEvent.location === 'object' ? (activeModalEvent.location[lang] || activeModalEvent.location.en) : activeModalEvent.location}
                     </div>
                   </div>
                 </div>
               </div>
 
-              <div className="mb-6">
-                <h3 className="text-xs uppercase tracking-wider font-sans font-semibold text-primary mb-2">
+              <div>
+                <h3 className="text-xs uppercase tracking-wider font-sans font-semibold text-[#d8ae62] mb-2">
                   {isBn ? 'অনুষ্ঠানের বিবরণ' : 'Event Overview'}
                 </h3>
-                <p className="text-muted-foreground text-sm sm:text-base leading-relaxed">
+                <p className="text-[#e2d5c3] text-sm sm:text-base leading-relaxed font-sans">
                   {typeof activeModalEvent.desc === 'object' ? (activeModalEvent.desc[lang] || activeModalEvent.desc.en) : activeModalEvent.desc}
                 </p>
               </div>
 
               {activeModalEvent.highlights && (
-                <div className="mb-8">
-                  <h3 className="text-xs uppercase tracking-wider font-sans font-semibold text-primary mb-3">
+                <div>
+                  <h3 className="text-xs uppercase tracking-wider font-sans font-semibold text-[#d8ae62] mb-3">
                     {isBn ? 'মূল আকর্ষণসমূহ' : 'Key Highlights'}
                   </h3>
-                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-2">
+                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-2.5">
                     {(activeModalEvent.highlights[lang] || activeModalEvent.highlights.en || activeModalEvent.highlights).map((h, i) => (
-                      <div key={i} className="flex items-center gap-2 text-xs sm:text-sm text-foreground">
-                        <CheckCircle2 className="w-4 h-4 text-emerald-500 shrink-0" />
+                      <div key={i} className="flex items-center gap-2 text-xs sm:text-sm text-[#f5efe6]">
+                        <CheckCircle2 className="w-4 h-4 text-emerald-400 shrink-0" />
                         <span>{h}</span>
                       </div>
                     ))}
@@ -317,27 +344,36 @@ const EventsPage = ({ lang = 'en', setActiveTab, onOpenBooking }) => {
               )}
 
               {/* Action */}
-              <div className="flex flex-col sm:flex-row items-center justify-between gap-4 pt-4 border-t border-border/40">
-                <p className="text-xs text-muted-foreground text-center sm:text-left">
+              <div className="flex flex-col sm:flex-row items-center justify-between gap-4 pt-4 border-t border-white/15">
+                <p className="text-xs text-[#f0e8d8]/70 text-center sm:text-left">
                   {!isPastEvent(activeModalEvent)
                     ? (isBn ? 'আসন সংরক্ষণের জন্য আমাদের হোয়াটসঅ্যাপ হেল্পডেস্কে যোগাযোগ করুন।' : 'For invitations, reservations, or bespoke inquiries, please connect via WhatsApp.')
                     : (isBn ? 'এই অনুষ্ঠানটি সম্পন্ন হয়েছে। আর্কাইভ এবং স্মারক তথ্যের জন্য আমাদের সাথে যোগাযোগ করতে পারেন।' : 'This event has concluded. For archival inquiries, please contact estate management.')}
                 </p>
-                {!isPastEvent(activeModalEvent) && (
-                  <a
-                    href={getWhatsAppLink(activeModalEvent.whatsappMessage)}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="w-full sm:w-auto inline-flex items-center justify-center gap-2 px-6 py-3 rounded-xl bg-emerald-700 hover:bg-emerald-600 text-white font-medium text-sm transition-all shadow-md"
+                <div className="flex items-center gap-3 w-full sm:w-auto justify-end">
+                  <button
+                    onClick={() => setActiveModalEvent(null)}
+                    className="px-4 py-2.5 rounded-xl bg-white/10 hover:bg-white/20 text-white text-xs font-semibold tracking-wider uppercase transition-all border border-white/20 cursor-pointer"
                   >
-                    <MessageCircle className="w-4 h-4" />
-                    <span>{isBn ? 'সরাসরি হোয়াটসঅ্যাপে যোগাযোগ করুন' : 'Click to Enquire (WhatsApp)'}</span>
-                  </a>
-                )}
+                    {isBn ? 'বন্ধ করুন' : 'Close'}
+                  </button>
+                  {!isPastEvent(activeModalEvent) && (
+                    <a
+                      href={getWhatsAppLink(activeModalEvent.whatsappMessage)}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="inline-flex items-center justify-center gap-2 px-6 py-2.5 rounded-xl bg-emerald-700 hover:bg-emerald-600 text-white font-semibold text-xs tracking-wider uppercase transition-all shadow-md"
+                    >
+                      <MessageCircle className="w-4 h-4" />
+                      <span>{isBn ? 'হোয়াটসঅ্যাপ' : 'Click to Enquire'}</span>
+                    </a>
+                  )}
+                </div>
               </div>
             </div>
           </div>
-        </div>
+        </div>,
+        document.body
       )}
     </div>
   );
