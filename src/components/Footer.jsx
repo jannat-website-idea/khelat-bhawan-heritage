@@ -69,6 +69,12 @@ export default function Footer({ lang, setActiveTab, onOpenBooking, onOpenLegal,
               <button onClick={() => handleNav('contact')} className="text-left hover:text-rose-gold transition-colors">
                 {t.nav.contact}
               </button>
+              <button 
+                onClick={() => onOpenLegal ? onOpenLegal('terms') : null} 
+                className="text-left hover:text-rose-gold transition-colors cursor-pointer"
+              >
+                {lang === 'bn' ? 'শর্তাবলী ও নীতিমালা' : 'Terms & Policy'}
+              </button>
             </div>
           </div>
 
