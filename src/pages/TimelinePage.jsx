@@ -278,10 +278,10 @@ export default function TimelinePage({ lang = 'en', setActiveTab, onOpenLightbox
               href={getAssetUrl('/Khelat_Bhawan_Heritage_eBook.pdf')}
               download="Khelat_Bhawan_Heritage_Compendium.pdf"
               className="heritage-timeline-download-btn"
-              aria-label={isBn ? 'বিনামূল্যে হেরিটেজ পিডিএফ' : 'Free Heritage PDF'}
+              aria-label={isBn ? 'বিনামূল্যে পিডিএফ' : 'Free PDF'}
             >
               <Download className="w-4 h-4" aria-hidden="true" />
-              <span>{isBn ? 'বিনামূল্যে হেরিটেজ পিডিএফ' : 'Free Heritage PDF'}</span>
+              <span>{isBn ? 'বিনামূল্যে পিডিএফ' : 'Free PDF'}</span>
             </a>
           </div>
         </div>
