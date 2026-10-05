@@ -36,10 +36,27 @@ export default function AboutPage({ lang = 'en', setActiveTab, onOpenBooking, on
               : 'A 175-year journey of preserving Bengali aristocratic heritage, sacred traditions, and classical arts'}
           />
 
-          <div className="heritage-pdf-link-row">
-            <a href="/Khelat_Bhawan_Heritage_eBook.pdf" download="Khelat_Bhawan_Heritage_eBook.pdf" className="heritage-pdf-link">
-              <Download className="w-3.5 h-3.5" />
-              <span>{isBn ? 'বিনামূল্যে হেরিটেজ পিডিএফ' : 'Free heritage PDF'}</span>
+          <div className="flex justify-end pt-1 pb-2">
+            <a
+              href={getAssetUrl('/Khelat_Bhawan_Heritage_eBook.pdf')}
+              download="Khelat_Bhawan_Heritage_Compendium.pdf"
+              className="heritage-timeline-download-btn"
+              aria-label={isBn ? 'বিনামূল্যে হেরিটেজ পিডিএফ ডাউনলোড করুন' : 'Download the free Khelat Bhawan heritage PDF'}
+            >
+              <div className="heritage-timeline-download-btn__icon">
+                <Download className="w-4 h-4" aria-hidden="true" />
+              </div>
+              <div className="heritage-timeline-download-btn__content">
+                <span className="heritage-timeline-download-btn__kicker">
+                  {isBn ? 'ডিজিটাল মহাফেজখানা' : 'Digital Archive'}
+                </span>
+                <span className="heritage-timeline-download-btn__title">
+                  {isBn ? 'বিনামূল্যে হেরিটেজ পিডিএফ' : 'Free Heritage PDF'}
+                </span>
+                <span className="heritage-timeline-download-btn__sub">
+                  {isBn ? 'ডাউনলোড সংস্করণ (PDF)' : 'Download Edition (PDF)'}
+                </span>
+              </div>
             </a>
           </div>
 

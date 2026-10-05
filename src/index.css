@@ -2827,46 +2827,77 @@ iframe {
 }
 
 .heritage-timeline-download-btn {
-  position: absolute;
-  right: 0;
-  top: 0;
-  display: flex;
-  flex-direction: column;
+  display: inline-flex;
   align-items: center;
-  justify-content: center;
-  gap: 8px;
-  width: 120px;
-  height: 120px;
+  gap: 14px;
+  padding: 12px 22px;
   border-radius: 16px;
-  font-size: 12px;
-  font-weight: 700;
-  letter-spacing: 0.08em;
-  text-transform: uppercase;
-  text-align: center;
-  background: #5a1722;
-  color: #fff8e8;
-  border: 2px solid #5a1722;
-  box-shadow: 0 8px 24px rgba(74, 23, 32, 0.25);
+  background: linear-gradient(135deg, #8a2034 0%, #a42a42 45%, #761628 100%);
+  border: 1.5px solid rgba(216, 174, 98, 0.65);
+  color: #fffaf0;
+  box-shadow: 0 8px 24px rgba(138, 32, 52, 0.28), inset 0 1px 1px rgba(255, 255, 255, 0.25);
   transition: all 0.35s cubic-bezier(0.2, 0.8, 0.2, 1);
   cursor: pointer;
   text-decoration: none;
-}
-.heritage-timeline-download-btn:hover {
-  background: #721d2b;
-  border-color: #d8ae62;
-  transform: translateY(-3px) scale(1.04);
-  box-shadow: 0 12px 32px rgba(74, 23, 32, 0.35);
+  text-align: left;
 }
 
-@media (max-width: 900px) {
-  .heritage-timeline-download-btn {
-    position: static;
-    width: 100%;
-    height: 48px;
-    flex-direction: row;
-    margin-top: 14px;
-    border-radius: 999px;
-  }
+.heritage-timeline-download-btn:hover {
+  background: linear-gradient(135deg, #a02840 0%, #ba324d 45%, #8c1e33 100%);
+  border-color: rgba(245, 215, 145, 0.95);
+  transform: translateY(-3px) scale(1.025);
+  box-shadow: 0 14px 36px rgba(138, 32, 52, 0.42), 0 0 22px rgba(216, 174, 98, 0.35);
+}
+
+.heritage-timeline-download-btn__icon {
+  width: 40px;
+  height: 40px;
+  border-radius: 12px;
+  background: rgba(255, 255, 255, 0.16);
+  border: 1px solid rgba(216, 174, 98, 0.55);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #fffaf0;
+  flex-shrink: 0;
+  transition: transform 0.3s ease;
+}
+
+.heritage-timeline-download-btn:hover .heritage-timeline-download-btn__icon {
+  transform: translateY(2px);
+  background: rgba(255, 255, 255, 0.25);
+}
+
+.heritage-timeline-download-btn__content {
+  display: flex;
+  flex-direction: column;
+}
+
+.heritage-timeline-download-btn__kicker {
+  color: #f5d590;
+  font-size: 9px;
+  font-weight: 700;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  line-height: 1.2;
+}
+
+.heritage-timeline-download-btn__title {
+  color: #ffffff;
+  font-family: var(--font-serif);
+  font-size: 15px;
+  font-weight: 700;
+  letter-spacing: 0.02em;
+  line-height: 1.3;
+  margin-top: 1px;
+}
+
+.heritage-timeline-download-btn__sub {
+  color: rgba(255, 250, 240, 0.75);
+  font-size: 10px;
+  font-weight: 500;
+  letter-spacing: 0.05em;
+  line-height: 1.2;
 }
 
 /* ==========================================================================

@@ -5,7 +5,7 @@ import HeritageFamilyTree from '../components/HeritageFamilyTree';
 import { Clock, Users, Calendar, ArrowRight, Sparkles, CheckCircle2, Landmark, Heart, Music, Shield, BookOpen, Film, Flame, Download } from 'lucide-react';
 
 export default function TimelinePage({ lang = 'en', setActiveTab, onOpenLightbox, content }) {
-  const [activeView, setActiveView] = useState('timeline'); // 'timeline' | 'family-tree'
+  const [activeView, setActiveView] = useState('family-tree'); // default to 'family-tree'
   const [expandedGen, setExpandedGen] = useState(1);
   const [activeHoverNode, setActiveHoverNode] = useState(null);
 
@@ -238,48 +238,64 @@ export default function TimelinePage({ lang = 'en', setActiveTab, onOpenLightbox
           1. HERO / INTRODUCTION
          ========================================================================= */}
       <section className="heritage-timeline-hero relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-8 pb-10 sm:pb-14 text-left z-10">
-        <div className="relative max-w-5xl space-y-3.5">
-          <span className="heritage-timeline-hero__eyebrow">
-            {isBn ? 'সময়ের পরিক্রমায়' : 'A JOURNEY THROUGH TIME'}
-          </span>
-          <h1 className="heritage-timeline-hero__title">
-            {isBn ? 'ইতিহাস সময়রেখা' : 'History Timeline'}
-          </h1>
-          <p className="heritage-timeline-hero__desc">
-            {isBn 
-              ? '১৮৪৫ সাল থেকে বর্তমান পর্যন্ত ভক্তি, শিল্প, সংস্কৃতি এবং ঐতিহ্যবাহী অভিভাবকত্বের গৌরবময় পথচলা।' 
-              : 'Key milestones from 1845 to the present, preserving a legacy of devotion, art, culture and community.'}
-          </p>
+        <div className="flex flex-col lg:flex-row lg:items-end justify-between gap-6">
+          <div className="max-w-3xl space-y-3.5">
+            <span className="heritage-timeline-hero__eyebrow">
+              {isBn ? 'সময়ের পরিক্রমায়' : 'A JOURNEY THROUGH TIME'}
+            </span>
+            <h1 className="heritage-timeline-hero__title">
+              {isBn ? 'ইতিহাস সময়রেখা' : 'History Timeline'}
+            </h1>
+            <p className="heritage-timeline-hero__desc">
+              {isBn 
+                ? '১৮৪৫ সাল থেকে বর্তমান পর্যন্ত ভক্তি, শিল্প, সংস্কৃতি এবং ঐতিহ্যবাহী অভিভাবকত্বের গৌরবময় পথচলা।' 
+                : 'Key milestones from 1845 to the present, preserving a legacy of devotion, art, culture and community.'}
+            </p>
 
-          {/* Compact View Switcher Controls */}
-          <div className="flex flex-wrap lg:flex-nowrap items-center gap-2.5 pt-3 w-full">
-            <button
-              onClick={() => setActiveView('timeline')}
-              className={`heritage-timeline-toggle-btn ${activeView === 'timeline' ? 'is-active' : ''}`}
-            >
-              <Clock className="w-3.5 h-3.5" />
-              <span>{isBn ? 'ঐতিহাসিক সময়রেখা (১৮৪৫ – ২০২৬)' : 'Chronological Milestones (1845–2026)'}</span>
-            </button>
+            {/* View Switcher Controls */}
+            <div className="flex flex-wrap sm:flex-nowrap items-center gap-3 pt-3">
+              <button
+                onClick={() => setActiveView('timeline')}
+                className={`heritage-timeline-toggle-btn ${activeView === 'timeline' ? 'is-active' : ''}`}
+              >
+                <Clock className="w-4 h-4" />
+                <span>{isBn ? 'ঐতিহাসিক সময়রেখা (১৮৪৫ – ২০২৬)' : 'Chronological Milestones (1845–2026)'}</span>
+              </button>
 
-            <button
-              onClick={() => setActiveView('family-tree')}
-              className={`heritage-timeline-toggle-btn ${activeView === 'family-tree' ? 'is-active' : ''}`}
-            >
-              <Users className="w-3.5 h-3.5" />
-              <span>{isBn ? '৭ প্রজন্মের পারিবারিক বংশতালিকা' : '7-Generation Family Tree'}</span>
-            </button>
+              <button
+                onClick={() => setActiveView('family-tree')}
+                className={`heritage-timeline-toggle-btn ${activeView === 'family-tree' ? 'is-active' : ''}`}
+              >
+                <Users className="w-4 h-4" />
+                <span>{isBn ? '৭ প্রজন্মের পারিবারিক বংশতালিকা' : '7-Generation Family Tree'}</span>
+              </button>
+            </div>
           </div>
 
-          {/* Download PDF - Large Square Button */}
-          <a
-            href={getAssetUrl('/Khelat_Bhawan_Heritage_eBook.pdf')}
-            download="Khelat_Bhawan_Heritage_Compendium.pdf"
-            className="heritage-timeline-download-btn"
-            aria-label={isBn ? 'পিডিএফ ডাউনলোড করুন' : 'Download the Khelat Bhawan heritage PDF'}
-          >
-            <Download className="w-5 h-5" aria-hidden="true" />
-            <span>{isBn ? 'পিডিএফ ডাউনলোড' : 'Download PDF'}</span>
-          </a>
+          {/* Right Side: Free Heritage PDF Download Button */}
+          <div className="lg:self-end flex-shrink-0 pt-2 lg:pt-0">
+            <a
+              href={getAssetUrl('/Khelat_Bhawan_Heritage_eBook.pdf')}
+              download="Khelat_Bhawan_Heritage_Compendium.pdf"
+              className="heritage-timeline-download-btn"
+              aria-label={isBn ? 'বিনামূল্যে হেরিটেজ পিডিএফ ডাউনলোড করুন' : 'Download the free Khelat Bhawan heritage PDF'}
+            >
+              <div className="heritage-timeline-download-btn__icon">
+                <Download className="w-4 h-4" aria-hidden="true" />
+              </div>
+              <div className="heritage-timeline-download-btn__content">
+                <span className="heritage-timeline-download-btn__kicker">
+                  {isBn ? 'ডিজিটাল মহাফেজখানা' : 'Digital Archive'}
+                </span>
+                <span className="heritage-timeline-download-btn__title">
+                  {isBn ? 'বিনামূল্যে হেরিটেজ পিডিএফ' : 'Free Heritage PDF'}
+                </span>
+                <span className="heritage-timeline-download-btn__sub">
+                  {isBn ? 'ডাউনলোড সংস্করণ (PDF)' : 'Download Edition (PDF)'}
+                </span>
+              </div>
+            </a>
+          </div>
         </div>
       </section>
 
