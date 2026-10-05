@@ -8,7 +8,7 @@ export default function HeritageLoader({ onComplete, onReveal, lang }) {
   const dialog = useRef(null);
   const bn = lang === 'bn';
 
-  // 1. Particle Canvas System (Reference image: Golden Sparkles & Floating Bokeh Embers)
+  // 1. Particle Canvas System (Golden Sparkles & Floating Bokeh Embers)
   useEffect(() => {
     const canvas = canvasRef.current;
     if (!canvas) return;
@@ -24,33 +24,33 @@ export default function HeritageLoader({ onComplete, onReveal, lang }) {
     };
     window.addEventListener('resize', handleResize);
 
-    const particleCount = 60;
+    const particleCount = 70;
     const particles = Array.from({ length: particleCount }, () => ({
-      x: width / 2 + (Math.random() - 0.5) * (width * 0.75),
-      y: height / 2 + (Math.random() - 0.5) * (height * 0.65),
+      x: width / 2 + (Math.random() - 0.5) * (width * 0.8),
+      y: height / 2 + (Math.random() - 0.5) * (height * 0.7),
       radius: Math.random() * 2.2 + 0.6,
-      vx: (Math.random() - 0.5) * 0.3,
-      vy: (Math.random() - 0.5) * 0.3 - 0.12,
+      vx: (Math.random() - 0.5) * 0.25,
+      vy: (Math.random() - 0.5) * 0.25 - 0.1,
       alpha: Math.random() * 0.7 + 0.2,
-      twinkleSpeed: Math.random() * 0.03 + 0.015,
+      twinkleSpeed: Math.random() * 0.02 + 0.01,
       color: Math.random() > 0.35 ? '#fcdb8a' : '#e6ab47',
-      isStar: Math.random() > 0.65
+      isStar: Math.random() > 0.6
     }));
 
     const render = () => {
       ctx.clearRect(0, 0, width, height);
 
-      // Subtle center ambient glow
+      // Soft center ambient warm glow
       const grad = ctx.createRadialGradient(
         width / 2,
         height / 2,
-        20,
+        30,
         width / 2,
         height / 2,
-        Math.max(width, height) * 0.45
+        Math.max(width, height) * 0.5
       );
-      grad.addColorStop(0, 'rgba(75, 38, 18, 0.25)');
-      grad.addColorStop(0.5, 'rgba(25, 9, 14, 0.15)');
+      grad.addColorStop(0, 'rgba(80, 40, 18, 0.28)');
+      grad.addColorStop(0.5, 'rgba(28, 10, 14, 0.16)');
       grad.addColorStop(1, 'rgba(0, 0, 0, 0)');
       ctx.fillStyle = grad;
       ctx.fillRect(0, 0, width, height);
@@ -58,7 +58,7 @@ export default function HeritageLoader({ onComplete, onReveal, lang }) {
       particles.forEach((p) => {
         p.x += p.vx;
         p.y += p.vy;
-        p.alpha += Math.sin(Date.now() * p.twinkleSpeed) * 0.015;
+        p.alpha += Math.sin(Date.now() * p.twinkleSpeed) * 0.012;
         const currentAlpha = Math.max(0.1, Math.min(0.95, p.alpha));
 
         if (p.x < 0) p.x = width;
@@ -100,14 +100,16 @@ export default function HeritageLoader({ onComplete, onReveal, lang }) {
     };
   }, []);
 
-  // 2. Cinematic Loading Timer (~2.2 seconds for smooth letter convergence)
+  // 2. Cinematic Timer with Generous Breathing Space (~3.8 seconds)
   useEffect(() => {
     let disposed = false, finishing = false, frame, holdTimer, exitTimer;
     
-    const enterTimer = setTimeout(() => setEntered(true), 60);
+    const enterTimer = setTimeout(() => setEntered(true), 80);
     const start = performance.now();
     const reduced = matchMedia('(prefers-reduced-motion: reduce)').matches;
-    const duration = reduced ? 300 : 2200;
+    
+    // 3800ms total duration for luxurious calm pacing
+    const duration = reduced ? 300 : 3800;
     const previousOverflow = document.body.style.overflow;
     document.body.style.overflow = 'hidden';
     window.scrollTo({ top: 0, left: 0, behavior: 'instant' });
@@ -119,6 +121,7 @@ export default function HeritageLoader({ onComplete, onReveal, lang }) {
       const elapsed = now - start;
       const sequence = Math.min(1, elapsed / duration);
       
+      // Smooth natural ease curve
       const ease = sequence < 0.5 
         ? 4 * sequence * sequence * sequence 
         : 1 - Math.pow(-2 * sequence + 2, 3) / 2;
@@ -136,8 +139,8 @@ export default function HeritageLoader({ onComplete, onReveal, lang }) {
           document.body.scrollTop = 0;
           onReveal?.(true);
           setLeaving(true);
-          exitTimer = setTimeout(() => onComplete(false), reduced ? 0 : 700);
-        }, reduced ? 0 : 150);
+          exitTimer = setTimeout(() => onComplete(false), reduced ? 0 : 800);
+        }, reduced ? 0 : 350); // Generous final hold
       } else {
         frame = requestAnimationFrame(tick);
       }
@@ -154,14 +157,15 @@ export default function HeritageLoader({ onComplete, onReveal, lang }) {
     };
   }, [onComplete, onReveal]);
 
-  const normalizedProgress = Number.isFinite(progress) ? progress / 100 : 0;
+  const norm = Number.isFinite(progress) ? progress / 100 : 0;
   
-  // Letter Convergence Calculations:
-  // Starts wide apart (0.35em) -> smoothly converges together (0.015em)
-  const titleTracking = `${0.35 - normalizedProgress * 0.335}em`;
-  const titleOpacity = Math.min(1, Math.pow(normalizedProgress, 0.8) * 1.25);
-  const titleBlur = Math.max(0, (1 - normalizedProgress) * 8);
-  const titleScale = 0.94 + normalizedProgress * 0.06;
+  // Phase 1: 1st show Khelat Bhawan with natural normal spacing
+  // Phase 2: Gentle shimmer and subtle breathing animation
+  const titleOpacity = Math.min(1, norm * 2.2);
+  const titleGlow = Math.min(50, 15 + norm * 35);
+  // Natural letter spacing with subtle graceful breathing expansion from 0.015em to 0.04em
+  const letterSpacing = `${0.015 + Math.sin(norm * Math.PI) * 0.03}em`;
+  const textScale = 0.97 + norm * 0.03;
 
   return (
     <div
@@ -175,56 +179,58 @@ export default function HeritageLoader({ onComplete, onReveal, lang }) {
         display: 'flex',
         flexDirection: 'column',
         justifyContent: 'space-between',
-        padding: '28px 4vw 5vh',
+        padding: '32px 5vw 6vh',
         backgroundColor: '#060303',
         color: '#f0e7d5',
         opacity: leaving ? 0 : entered ? 1 : 0,
         transform: leaving ? 'scale(1.02)' : 'scale(1)',
-        transition: 'opacity 0.8s cubic-bezier(0.22, 1, 0.36, 1), transform 0.8s cubic-bezier(0.22, 1, 0.36, 1)',
+        transition: 'opacity 0.95s cubic-bezier(0.22, 1, 0.36, 1), transform 0.95s cubic-bezier(0.22, 1, 0.36, 1)',
         pointerEvents: leaving ? 'none' : 'auto',
         overflow: 'hidden'
       }}
       role="status"
       aria-label={bn ? 'খেলাৎ ভবন লোড হচ্ছে' : 'Loading Khelat Bhawan'}
     >
-      {/* Background Canvas: Golden Sparkles & Embers */}
+      {/* Background Canvas: Golden Sparkles & Floating Embers */}
       <canvas
         ref={canvasRef}
         className="absolute inset-0 w-full h-full pointer-events-none z-0"
       />
 
-      {/* Top Header Labels (Original exact text) */}
+      {/* Top Header Labels */}
       <header 
         className="relative z-10 flex justify-between gap-6 uppercase text-[11px] font-sans tracking-[0.2em] text-[#e2d3b7]"
-        style={{ opacity: Math.min(1, normalizedProgress * 1.6) }}
+        style={{ 
+          opacity: Math.min(1, norm * 2),
+          transition: 'opacity 0.5s ease-out'
+        }}
       >
         <span>{bn ? 'খেলাৎ ভবন' : 'Khelat Bhawan'}</span>
         <span>{bn ? 'কলকাতা · স্থাপিত ১৮৪৫' : 'Kolkata · Est. 1845'}</span>
       </header>
 
-      {/* Central Composition with Original Exact Text + Smooth Letter Convergence */}
+      {/* Central Composition with Natural Spacing & Smooth Shimmer Animation */}
       <div className="relative z-10 flex flex-col items-center justify-center text-center my-auto py-8">
         <p 
           className="text-[11px] uppercase tracking-[0.3em] text-[#dbc59d] mb-6 font-sans"
           style={{
-            opacity: Math.min(1, Math.pow(normalizedProgress, 1.2)),
-            transition: 'opacity 0.3s ease-out'
+            opacity: Math.min(1, norm * 2.5),
+            transition: 'opacity 0.5s ease-out'
           }}
         >
           {bn ? 'পাথুরিয়াঘাটা ঘোষ বাড়ি' : 'Pathuria Ghata Ghosh Bari'}
         </p>
         
-        {/* Title Emergence with Letter Convergence */}
+        {/* Title: Appears at natural spacing with subtle golden shimmer & breathing */}
         <h2
           className="font-serif text-[clamp(56px,8vw,120px)] leading-[0.95] select-none"
           style={{
-            letterSpacing: titleTracking,
+            letterSpacing,
             opacity: titleOpacity,
-            filter: `blur(${titleBlur}px)`,
-            transform: `scale(${titleScale})`,
+            transform: `scale(${textScale})`,
             color: '#f0e7d5',
-            textShadow: '0 0 40px rgba(216, 174, 98, 0.45)',
-            transition: 'letter-spacing 0.12s ease-out, filter 0.12s ease-out, transform 0.12s ease-out'
+            textShadow: `0 0 ${titleGlow}px rgba(216, 174, 98, ${0.3 + norm * 0.4})`,
+            transition: 'opacity 0.4s ease-out, transform 0.4s ease-out, letter-spacing 0.3s ease-out'
           }}
         >
           {bn ? (
@@ -237,15 +243,16 @@ export default function HeritageLoader({ onComplete, onReveal, lang }) {
         <span 
           className="font-serif italic text-base sm:text-[18px] text-[#ccbaa1] mt-8"
           style={{
-            opacity: Math.min(1, Math.max(0, (normalizedProgress - 0.25) * 1.4)),
-            transition: 'opacity 0.3s ease-out'
+            opacity: Math.min(1, Math.max(0, (norm - 0.2) * 1.5)),
+            transform: `translateY(${(1 - Math.min(1, norm * 1.5)) * 8}px)`,
+            transition: 'opacity 0.5s ease-out, transform 0.5s ease-out'
           }}
         >
           {bn ? 'এক জীবন্ত ঐতিহ্য ও সাবেকি উত্তরাধিকার' : 'A living legacy of Bengal since 1845'}
         </span>
       </div>
 
-      {/* Bottom Progress Bar & Counter (Original exact layout) */}
+      {/* Bottom Progress Bar & Percentage */}
       <footer className="relative z-10 w-full max-w-[760px] mx-auto">
         <div className="w-full">
           <div className="flex items-end justify-between mb-4">
@@ -261,10 +268,10 @@ export default function HeritageLoader({ onComplete, onReveal, lang }) {
           {/* Custom Glowing Gold Hairline Progress Bar */}
           <div className="w-full h-[2px] bg-white/10 rounded-full overflow-hidden relative shadow-inner">
             <div 
-              className="h-full bg-gradient-to-r from-[#b78c43] via-[#ecd69e] to-[#ffffff] rounded-full transition-all duration-75 relative"
+              className="h-full bg-gradient-to-r from-[#b78c43] via-[#ecd69e] to-[#ffffff] rounded-full transition-all duration-100 relative"
               style={{ width: `${progress}%` }}
             >
-              <div className="absolute right-0 top-1/2 -translate-y-1/2 w-3 h-3 bg-amber-200 rounded-full blur-[3px] opacity-90" />
+              <div className="absolute right-0 top-1/2 -translate-y-1/2 w-3.5 h-3.5 bg-amber-200 rounded-full blur-[3px] opacity-90" />
             </div>
           </div>
         </div>
