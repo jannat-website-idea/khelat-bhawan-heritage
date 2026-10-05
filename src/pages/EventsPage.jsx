@@ -29,7 +29,7 @@ const EventsPage = ({ lang = 'en', setActiveTab, onOpenBooking }) => {
     },
     { 
       id: 'past', 
-      label: { en: 'Past Archives', bn: 'পূর্ববর্তী অনুষ্ঠান' },
+      label: { en: 'Past', bn: 'পূর্ববর্তী' },
       count: pastEvents.length,
       icon: History
     }
