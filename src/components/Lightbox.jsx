@@ -25,38 +25,14 @@ export default function Lightbox({ item, onClose, onNext, onPrev, hasNext, hasPr
       aria-modal="true"
       aria-label={item.title || 'Visual Archive Lightbox'}
     >
-      {/* Top Header Bar */}
-      <div 
-        className="heritage-lightbox__header flex items-center justify-between z-20 w-full max-w-7xl mx-auto pb-4 border-b border-[#d8ae62]/30" 
-        onClick={(e) => e.stopPropagation()}
+      {/* Floating Minimalist Close Button on Top Right */}
+      <button
+        onClick={onClose}
+        className="absolute top-4 sm:top-6 right-4 sm:right-6 z-30 w-11 h-11 rounded-full bg-[#1e100c]/90 hover:bg-[#8a2034] text-[#d8ae62] hover:text-[#fff] border border-[#d8ae62]/50 hover:border-[#d8ae62] flex items-center justify-center transition-all duration-300 shadow-xl hover:scale-110 hover:rotate-90 active:scale-95 cursor-pointer"
+        aria-label="Close Lightbox"
       >
-        <div className="heritage-lightbox__heading flex items-center gap-4">
-          <button
-            onClick={onClose}
-            className="flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-[#1e100c] hover:bg-[#8a2034] border border-[#d8ae62]/40 text-[#d8ae62] hover:text-[#fff] text-xs font-semibold tracking-wider uppercase transition-all duration-300 shadow-md cursor-pointer"
-            aria-label="Go back and close"
-          >
-            <ArrowLeft className="w-4 h-4" />
-            <span className="hidden sm:inline">Back</span>
-          </button>
-          <div className="heritage-lightbox__title text-left">
-            <span className="text-[10px] md:text-xs tracking-[0.25em] uppercase text-[#d8ae62] font-semibold block">
-              Khelat Bhawan · Visual Archive {item.category && `· ${item.category.toUpperCase()}`}
-            </span>
-            <h3 className="font-serif text-base md:text-2xl font-bold text-[#ffffff] mt-0.5 leading-tight line-clamp-1 drop-shadow-md">
-              {item.title}
-            </h3>
-          </div>
-        </div>
-
-        <button
-          onClick={onClose}
-          className="w-11 h-11 rounded-full bg-[#8a2034] hover:bg-[#a42a42] text-[#fff] border border-[#d8ae62]/60 hover:border-[#d8ae62] flex items-center justify-center transition-all duration-300 shadow-lg hover:scale-110 hover:rotate-90 active:scale-95 cursor-pointer"
-          aria-label="Close Lightbox"
-        >
-          <X className="w-5 h-5" />
-        </button>
-      </div>
+        <X className="w-5 h-5" />
+      </button>
 
       {/* Main Content Area */}
       <div className="heritage-lightbox__stage relative flex-1 flex items-center justify-center my-3 overflow-hidden" onClick={(e) => e.stopPropagation()}>

@@ -216,43 +216,24 @@ export default function GalleryPage({ lang = 'en' }) {
           role="dialog"
           aria-modal="true"
         >
-          {/* Top Bar */}
-          <div 
-            className="flex items-center justify-between z-20 w-full max-w-7xl mx-auto pb-4 border-b border-[#d8ae62]/30"
-            onClick={(e) => e.stopPropagation()}
+          {/* Floating Minimalist Close Button on Top Right */}
+          <button
+            onClick={closePhoto}
+            className="absolute top-4 sm:top-6 right-4 sm:right-6 z-30 w-11 h-11 rounded-full bg-[#1e100c]/90 hover:bg-[#8a2034] text-[#d8ae62] hover:text-[#fff] border border-[#d8ae62]/50 hover:border-[#d8ae62] flex items-center justify-center transition-all duration-300 shadow-xl hover:scale-110 hover:rotate-90 active:scale-95 cursor-pointer"
+            aria-label={isBn ? 'বন্ধ করুন' : 'Close image'}
           >
-            <div className="flex items-center gap-4">
-              <span className="font-mono text-xs sm:text-sm font-bold tracking-widest text-[#d8ae62] px-3 py-1 rounded-full bg-white/5 border border-[#d8ae62]/35">
-                {String(selectedPhotoIndex + 1).padStart(2, '0')} / {String(photographyGalleryData.length).padStart(2, '0')}
-              </span>
-              <div className="text-left">
-                <span className="text-[10px] sm:text-xs uppercase font-sans tracking-[0.25em] text-[#d8ae62] font-semibold block">
-                  Khelat Bhawan · Visual Archive
-                </span>
-                <span className="text-xs uppercase font-serif tracking-widest text-[#e8dfd3] hidden sm:inline">
-                  {typeof activePhoto.category === 'object' ? (activePhoto.category[lang] || activePhoto.category.en) : activePhoto.category}
-                </span>
-              </div>
-            </div>
-
-            <button
-              onClick={closePhoto}
-              className="w-11 h-11 rounded-full bg-[#8a2034] hover:bg-[#a42a42] text-[#fff] border border-[#d8ae62]/60 hover:border-[#d8ae62] flex items-center justify-center transition-all duration-300 shadow-lg hover:scale-110 hover:rotate-90 active:scale-95 cursor-pointer"
-              aria-label={isBn ? 'বন্ধ করুন' : 'Close image'}
-            >
-              <X className="w-5 h-5" />
-            </button>
-          </div>
+            <X className="w-5 h-5" />
+          </button>
 
           {/* Main Photo Center Stage */}
           <div 
-            className="relative flex-1 flex items-center justify-center my-3 overflow-hidden"
+            className="relative flex-1 flex items-center justify-center my-auto overflow-hidden pt-4"
             onClick={(e) => e.stopPropagation()}
           >
             <img
               src={getAssetUrl(activePhoto.src)}
               alt={typeof activePhoto.title === 'object' ? (activePhoto.title[lang] || activePhoto.title.en) : activePhoto.title}
-              className="gallery-lightbox__image max-h-[75vh] max-w-[92vw] object-contain rounded-xl shadow-2xl border border-[#d8ae62]/35"
+              className="gallery-lightbox__image max-h-[78vh] max-w-[94vw] object-contain rounded-xl shadow-2xl border border-[#d8ae62]/35"
             />
 
             {/* Left Arrow Navigation */}
@@ -282,7 +263,7 @@ export default function GalleryPage({ lang = 'en' }) {
 
           {/* Caption & Description Bottom Bar */}
           <div 
-            className="max-w-4xl mx-auto text-center px-4 space-y-1.5 z-10"
+            className="max-w-4xl mx-auto text-center px-4 pt-2 pb-2 space-y-1 z-10"
             onClick={(e) => e.stopPropagation()}
           >
             <h3 className="font-serif text-xl sm:text-2xl font-bold text-[#ffffff] tracking-wide drop-shadow-md">
@@ -314,40 +295,21 @@ export default function GalleryPage({ lang = 'en' }) {
           role="dialog"
           aria-modal="true"
         >
-          {/* Top Bar */}
-          <div 
-            className="flex items-center justify-between z-20 w-full max-w-7xl mx-auto pb-4 border-b border-[#d8ae62]/30"
-            onClick={(e) => e.stopPropagation()}
+          {/* Floating Minimalist Close Button on Top Right */}
+          <button
+            onClick={() => setSelectedFilmIndex(null)}
+            className="absolute top-4 sm:top-6 right-4 sm:right-6 z-30 w-11 h-11 rounded-full bg-[#1e100c]/90 hover:bg-[#8a2034] text-[#d8ae62] hover:text-[#fff] border border-[#d8ae62]/50 hover:border-[#d8ae62] flex items-center justify-center transition-all duration-300 shadow-xl hover:scale-110 hover:rotate-90 active:scale-95 cursor-pointer"
+            aria-label={isBn ? 'বন্ধ করুন' : 'Close film'}
           >
-            <div className="flex items-center gap-4">
-              <span className="font-mono text-xs sm:text-sm font-bold tracking-widest text-[#d8ae62] px-3 py-1 rounded-full bg-white/5 border border-[#d8ae62]/35">
-                {String(selectedFilmIndex + 1).padStart(2, '0')} / {String(filmsGalleryData.length).padStart(2, '0')}
-              </span>
-              <div className="text-left">
-                <span className="text-[10px] sm:text-xs uppercase font-sans tracking-[0.25em] text-[#d8ae62] font-semibold block">
-                  Khelat Bhawan · Cinema Archive
-                </span>
-                <span className="text-xs uppercase font-serif tracking-widest text-[#e8dfd3] hidden sm:inline">
-                  {typeof activeFilm.category === 'object' ? (activeFilm.category[lang] || activeFilm.category.en) : activeFilm.category}
-                </span>
-              </div>
-            </div>
-
-            <button
-              onClick={() => setSelectedFilmIndex(null)}
-              className="w-11 h-11 rounded-full bg-[#8a2034] hover:bg-[#a42a42] text-[#fff] border border-[#d8ae62]/60 hover:border-[#d8ae62] flex items-center justify-center transition-all duration-300 shadow-lg hover:scale-110 hover:rotate-90 active:scale-95 cursor-pointer"
-              aria-label={isBn ? 'বন্ধ করুন' : 'Close film'}
-            >
-              <X className="w-5 h-5" />
-            </button>
-          </div>
+            <X className="w-5 h-5" />
+          </button>
 
           {/* Film Video Player Container */}
           <div 
-            className="relative flex-1 flex items-center justify-center my-3 overflow-hidden"
+            className="relative flex-1 flex items-center justify-center my-auto overflow-hidden pt-4"
             onClick={(e) => e.stopPropagation()}
           >
-            <div className="relative w-full max-w-5xl max-h-[75vh] aspect-video rounded-xl sm:rounded-2xl overflow-hidden bg-black shadow-2xl border border-[#d8ae62]/40">
+            <div className="relative w-full max-w-5xl max-h-[78vh] aspect-video rounded-xl sm:rounded-2xl overflow-hidden bg-black shadow-2xl border border-[#d8ae62]/40">
               <video
                 src={getAssetUrl(activeFilm.src)}
                 poster={getAssetUrl(activeFilm.poster)}
@@ -386,7 +348,7 @@ export default function GalleryPage({ lang = 'en' }) {
 
           {/* Video Meta Underneath */}
           <div 
-            className="max-w-4xl mx-auto text-center px-4 space-y-1 z-10"
+            className="max-w-4xl mx-auto text-center px-4 pt-2 pb-2 space-y-1 z-10"
             onClick={(e) => e.stopPropagation()}
           >
             <h3 className="font-serif text-xl sm:text-2xl font-bold text-[#ffffff] tracking-wide drop-shadow-md">
