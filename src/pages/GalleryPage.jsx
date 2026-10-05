@@ -13,87 +13,69 @@ import {
 export default function GalleryPage({ lang = 'en' }) {
   const isBn = lang === 'bn';
 
-  // Fullscreen State for Photography Lightbox
-  const [selectedPhotoIndex, setSelectedPhotoIndex] = useState(null);
-  const [isPhotoClosing, setIsPhotoClosing] = useState(false);
-
-  // Cinematic Theater State for Film Player
-  const [selectedFilmIndex, setSelectedFilmIndex] = useState(null);
+  // Unified Fullscreen Lightbox for both Photography and Films
+  const [activeIndex, setActiveIndex] = useState(null);
+  const [isClosing, setIsClosing] = useState(false);
   const [activeFilter, setActiveFilter] = useState('all');
 
   const galleryItems = useMemo(() => {
     const photos = photographyGalleryData.map((item, index) => ({
       ...item,
       mediaType: 'image',
-      sourceIndex: index,
-      preview: item.src
+      preview: item.src,
+      src: item.src
     }));
     const films = filmsGalleryData.map((item, index) => ({
       ...item,
       mediaType: 'video',
-      sourceIndex: index,
-      preview: item.poster
+      preview: item.poster,
+      src: item.src
     }));
     if (activeFilter === 'photography') return photos;
     if (activeFilter === 'films') return films;
     return [...photos, ...films];
   }, [activeFilter]);
 
-  const openGalleryItem = (item) => {
-    if (item.mediaType === 'video') {
-      setSelectedFilmIndex(item.sourceIndex);
-      return;
-    }
-    setIsPhotoClosing(false);
-    setSelectedPhotoIndex(item.sourceIndex);
+  const openGalleryItem = (index) => {
+    setIsClosing(false);
+    setActiveIndex(index);
   };
 
-  const closePhoto = useCallback(() => {
-    if (selectedPhotoIndex === null || isPhotoClosing) return;
-    setIsPhotoClosing(true);
+  const closeLightbox = useCallback(() => {
+    if (activeIndex === null || isClosing) return;
+    setIsClosing(true);
     window.setTimeout(() => {
-      setSelectedPhotoIndex(null);
-      setIsPhotoClosing(false);
-    }, 650);
-  }, [isPhotoClosing, selectedPhotoIndex]);
+      setActiveIndex(null);
+      setIsClosing(false);
+    }, 450);
+  }, [isClosing, activeIndex]);
 
-  // Keyboard navigation inside modal viewers
+  // Keyboard navigation inside lightbox
   useEffect(() => {
     const handleKeyDown = (e) => {
       if (e.key === 'Escape') {
-        closePhoto();
-        setSelectedFilmIndex(null);
+        closeLightbox();
       }
-      // Photo modal navigation
-      if (selectedPhotoIndex !== null) {
+      if (activeIndex !== null) {
         if (e.key === 'ArrowLeft') {
-          setSelectedPhotoIndex((prev) => (prev - 1 + photographyGalleryData.length) % photographyGalleryData.length);
+          setActiveIndex((prev) => (prev - 1 + galleryItems.length) % galleryItems.length);
         } else if (e.key === 'ArrowRight') {
-          setSelectedPhotoIndex((prev) => (prev + 1) % photographyGalleryData.length);
-        }
-      }
-      // Film modal navigation
-      if (selectedFilmIndex !== null) {
-        if (e.key === 'ArrowLeft') {
-          setSelectedFilmIndex((prev) => (prev - 1 + filmsGalleryData.length) % filmsGalleryData.length);
-        } else if (e.key === 'ArrowRight') {
-          setSelectedFilmIndex((prev) => (prev + 1) % filmsGalleryData.length);
+          setActiveIndex((prev) => (prev + 1) % galleryItems.length);
         }
       }
     };
     window.addEventListener('keydown', handleKeyDown);
     return () => window.removeEventListener('keydown', handleKeyDown);
-  }, [selectedPhotoIndex, selectedFilmIndex, closePhoto]);
+  }, [activeIndex, galleryItems.length, closeLightbox]);
 
   useEffect(() => {
-    if (selectedPhotoIndex === null && selectedFilmIndex === null) return undefined;
+    if (activeIndex === null) return undefined;
     const previousOverflow = document.body.style.overflow;
     document.body.style.overflow = 'hidden';
     return () => { document.body.style.overflow = previousOverflow; };
-  }, [selectedPhotoIndex, selectedFilmIndex]);
+  }, [activeIndex]);
 
-  const activePhoto = selectedPhotoIndex !== null ? photographyGalleryData[selectedPhotoIndex] : null;
-  const activeFilm = selectedFilmIndex !== null ? filmsGalleryData[selectedFilmIndex] : null;
+  const activeItem = activeIndex !== null ? galleryItems[activeIndex] : null;
 
   return (
     <main className="gallery-mosaic-page pt-20 sm:pt-24 min-h-screen text-foreground relative overflow-x-clip">
@@ -149,9 +131,9 @@ export default function GalleryPage({ lang = 'en' }) {
               return (
                 <button
                   type="button"
-                  key={`${item.mediaType}-${item.id || item.displayIndex}`}
+                  key={`${item.mediaType}-${item.id || item.displayIndex || displayIndex}`}
                   className={`gallery-editorial-tile ${item.mediaType === 'video' ? 'gallery-editorial-tile--video' : 'gallery-editorial-tile--photo'} group`}
-                  onClick={() => openGalleryItem(item)}
+                  onClick={() => openGalleryItem(displayIndex)}
                   aria-label={`${item.mediaType === 'video' ? 'Play' : 'Open'} ${title}`}
                   style={{ '--tile-index': displayIndex }}
                 >
@@ -207,43 +189,58 @@ export default function GalleryPage({ lang = 'en' }) {
       </div>
 
       {/* =========================================================================
-          FULLSCREEN IMAGE VIEWER LIGHTBOX
+          UNIFIED FULLSCREEN LIGHTBOX (IMAGES & VIDEOS)
          ========================================================================= */}
-      {activePhoto && createPortal(
+      {activeItem && createPortal(
         <div 
-          className={`gallery-lightbox fixed inset-0 z-[100000] flex flex-col justify-between p-4 sm:p-8 bg-[#090403]/98 backdrop-blur-2xl ${isPhotoClosing ? 'is-closing' : 'is-open'} text-[#f4efe6] select-none`}
-          onClick={closePhoto}
+          className={`gallery-lightbox fixed inset-0 z-[100000] flex flex-col justify-between p-4 sm:p-8 bg-[#090403]/98 backdrop-blur-2xl ${isClosing ? 'is-closing' : 'is-open'} text-[#f4efe6] select-none`}
+          onClick={closeLightbox}
           role="dialog"
           aria-modal="true"
         >
           {/* Floating Minimalist Close Button on Top Right */}
           <button
-            onClick={closePhoto}
+            onClick={closeLightbox}
             className="absolute top-4 sm:top-6 right-4 sm:right-6 z-30 w-11 h-11 rounded-full bg-[#1e100c]/90 hover:bg-[#8a2034] text-[#d8ae62] hover:text-[#fff] border border-[#d8ae62]/50 hover:border-[#d8ae62] flex items-center justify-center transition-all duration-300 shadow-xl hover:scale-110 hover:rotate-90 active:scale-95 cursor-pointer"
-            aria-label={isBn ? 'বন্ধ করুন' : 'Close image'}
+            aria-label={isBn ? 'বন্ধ করুন' : 'Close viewer'}
           >
             <X className="w-5 h-5" />
           </button>
 
-          {/* Main Photo Center Stage */}
+          {/* Main Media Center Stage */}
           <div 
             className="relative flex-1 flex items-center justify-center my-auto overflow-hidden pt-4"
             onClick={(e) => e.stopPropagation()}
           >
-            <img
-              src={getAssetUrl(activePhoto.src)}
-              alt={typeof activePhoto.title === 'object' ? (activePhoto.title[lang] || activePhoto.title.en) : activePhoto.title}
-              className="gallery-lightbox__image max-h-[78vh] max-w-[94vw] object-contain rounded-xl shadow-2xl border border-[#d8ae62]/35"
-            />
+            {activeItem.mediaType === 'video' ? (
+              <div className="relative w-full max-w-5xl max-h-[78vh] aspect-video rounded-xl sm:rounded-2xl overflow-hidden bg-black shadow-2xl border border-[#d8ae62]/40">
+                <video
+                  key={activeItem.src}
+                  src={getAssetUrl(activeItem.src)}
+                  poster={getAssetUrl(activeItem.preview)}
+                  controls
+                  autoPlay
+                  playsInline
+                  preload="metadata"
+                  className="w-full h-full object-contain mx-auto"
+                />
+              </div>
+            ) : (
+              <img
+                src={getAssetUrl(activeItem.src)}
+                alt={typeof activeItem.title === 'object' ? (activeItem.title[lang] || activeItem.title.en) : activeItem.title}
+                className="gallery-lightbox__image max-h-[78vh] max-w-[94vw] object-contain rounded-xl shadow-2xl border border-[#d8ae62]/35"
+              />
+            )}
 
             {/* Left Arrow Navigation */}
             <button
               onClick={(e) => {
                 e.stopPropagation();
-                setSelectedPhotoIndex((prev) => (prev - 1 + photographyGalleryData.length) % photographyGalleryData.length);
+                setActiveIndex((prev) => (prev - 1 + galleryItems.length) % galleryItems.length);
               }}
               className="absolute left-2 sm:left-6 w-12 h-12 rounded-full bg-[#1e100c]/90 hover:bg-[#8a2034] text-[#d8ae62] hover:text-white flex items-center justify-center transition-all border border-[#d8ae62]/40 backdrop-blur-md shadow-xl hover:scale-110 cursor-pointer z-20"
-              aria-label={isBn ? 'পূর্ববর্তী ছবি' : 'Previous photograph'}
+              aria-label={isBn ? 'পূর্ববর্তী' : 'Previous'}
             >
               <ChevronLeft className="w-7 h-7" />
             </button>
@@ -252,10 +249,10 @@ export default function GalleryPage({ lang = 'en' }) {
             <button
               onClick={(e) => {
                 e.stopPropagation();
-                setSelectedPhotoIndex((prev) => (prev + 1) % photographyGalleryData.length);
+                setActiveIndex((prev) => (prev + 1) % galleryItems.length);
               }}
               className="absolute right-2 sm:right-6 w-12 h-12 rounded-full bg-[#1e100c]/90 hover:bg-[#8a2034] text-[#d8ae62] hover:text-white flex items-center justify-center transition-all border border-[#d8ae62]/40 backdrop-blur-md shadow-xl hover:scale-110 cursor-pointer z-20"
-              aria-label={isBn ? 'পরবর্তী ছবি' : 'Next photograph'}
+              aria-label={isBn ? 'পরবর্তী' : 'Next'}
             >
               <ChevronRight className="w-7 h-7" />
             </button>
@@ -267,97 +264,18 @@ export default function GalleryPage({ lang = 'en' }) {
             onClick={(e) => e.stopPropagation()}
           >
             <h3 className="font-serif text-xl sm:text-2xl font-bold text-[#ffffff] tracking-wide drop-shadow-md">
-              {typeof activePhoto.title === 'object' ? (activePhoto.title[lang] || activePhoto.title.en) : activePhoto.title}
+              {typeof activeItem.title === 'object' ? (activeItem.title[lang] || activeItem.title.en) : activeItem.title}
             </h3>
-            {activePhoto.desc && (
+            {activeItem.desc && (
               <p className="font-sans text-xs sm:text-sm text-[#f0e8d8] font-normal leading-relaxed max-w-2xl mx-auto drop-shadow-sm">
-                {typeof activePhoto.desc === 'object' ? (activePhoto.desc[lang] || activePhoto.desc.en) : activePhoto.desc}
+                {typeof activeItem.desc === 'object' ? (activeItem.desc[lang] || activeItem.desc.en) : activeItem.desc}
               </p>
             )}
-            {activePhoto.photographer && (
+            {activeItem.photographer && (
               <div className="text-[11px] text-[#d8ae62] tracking-wider uppercase font-sans font-semibold pt-0.5">
-                <span>Credit: {activePhoto.photographer}</span>
-                {activePhoto.year && <span> · {activePhoto.year}</span>}
+                <span>Credit: {activeItem.photographer}</span>
+                {activeItem.year && <span> · {activeItem.year}</span>}
               </div>
-            )}
-          </div>
-        </div>,
-        document.body
-      )}
-
-      {/* =========================================================================
-          CINEMATIC FILM THEATER PLAYER
-         ========================================================================= */}
-      {activeFilm && createPortal(
-        <div 
-          className="gallery-film-theater fixed inset-0 z-[100000] flex flex-col justify-between p-4 sm:p-8 bg-[#090403]/98 backdrop-blur-2xl animate-in fade-in duration-300 text-[#f4efe6]"
-          onClick={() => setSelectedFilmIndex(null)}
-          role="dialog"
-          aria-modal="true"
-        >
-          {/* Floating Minimalist Close Button on Top Right */}
-          <button
-            onClick={() => setSelectedFilmIndex(null)}
-            className="absolute top-4 sm:top-6 right-4 sm:right-6 z-30 w-11 h-11 rounded-full bg-[#1e100c]/90 hover:bg-[#8a2034] text-[#d8ae62] hover:text-[#fff] border border-[#d8ae62]/50 hover:border-[#d8ae62] flex items-center justify-center transition-all duration-300 shadow-xl hover:scale-110 hover:rotate-90 active:scale-95 cursor-pointer"
-            aria-label={isBn ? 'বন্ধ করুন' : 'Close film'}
-          >
-            <X className="w-5 h-5" />
-          </button>
-
-          {/* Film Video Player Container */}
-          <div 
-            className="relative flex-1 flex items-center justify-center my-auto overflow-hidden pt-4"
-            onClick={(e) => e.stopPropagation()}
-          >
-            <div className="relative w-full max-w-5xl max-h-[78vh] aspect-video rounded-xl sm:rounded-2xl overflow-hidden bg-black shadow-2xl border border-[#d8ae62]/40">
-              <video
-                src={getAssetUrl(activeFilm.src)}
-                poster={getAssetUrl(activeFilm.poster)}
-                controls
-                autoPlay
-                playsInline
-                preload="metadata"
-                className="w-full h-full object-contain mx-auto"
-              />
-            </div>
-
-            {/* Left Film Navigation */}
-            <button
-              onClick={(e) => {
-                e.stopPropagation();
-                setSelectedFilmIndex((prev) => (prev - 1 + filmsGalleryData.length) % filmsGalleryData.length);
-              }}
-              className="absolute left-2 sm:left-6 w-12 h-12 rounded-full bg-[#1e100c]/90 hover:bg-[#8a2034] text-[#d8ae62] hover:text-white flex items-center justify-center transition-all border border-[#d8ae62]/40 backdrop-blur-md shadow-xl hover:scale-110 cursor-pointer z-20"
-              aria-label={isBn ? 'পূর্ববর্তী চলচ্চিত্র' : 'Previous film'}
-            >
-              <ChevronLeft className="w-7 h-7" />
-            </button>
-
-            {/* Right Film Navigation */}
-            <button
-              onClick={(e) => {
-                e.stopPropagation();
-                setSelectedFilmIndex((prev) => (prev + 1) % filmsGalleryData.length);
-              }}
-              className="absolute right-2 sm:right-6 w-12 h-12 rounded-full bg-[#1e100c]/90 hover:bg-[#8a2034] text-[#d8ae62] hover:text-white flex items-center justify-center transition-all border border-[#d8ae62]/40 backdrop-blur-md shadow-xl hover:scale-110 cursor-pointer z-20"
-              aria-label={isBn ? 'পরবর্তী চলচ্চিত্র' : 'Next film'}
-            >
-              <ChevronRight className="w-7 h-7" />
-            </button>
-          </div>
-
-          {/* Video Meta Underneath */}
-          <div 
-            className="max-w-4xl mx-auto text-center px-4 pt-2 pb-2 space-y-1 z-10"
-            onClick={(e) => e.stopPropagation()}
-          >
-            <h3 className="font-serif text-xl sm:text-2xl font-bold text-[#ffffff] tracking-wide drop-shadow-md">
-              {typeof activeFilm.title === 'object' ? (activeFilm.title[lang] || activeFilm.title.en) : activeFilm.title}
-            </h3>
-            {activeFilm.desc && (
-              <p className="font-sans text-xs sm:text-sm text-[#f0e8d8] font-normal leading-relaxed max-w-2xl mx-auto drop-shadow-sm">
-                {typeof activeFilm.desc === 'object' ? (activeFilm.desc[lang] || activeFilm.desc.en) : activeFilm.desc}
-              </p>
             )}
           </div>
         </div>,
