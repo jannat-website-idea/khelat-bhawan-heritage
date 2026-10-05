@@ -1,4 +1,5 @@
 import React, { useEffect, useRef, useState } from 'react';
+import { getAssetUrl } from '../utils/assetHelper';
 
 export default function HeritageLoader({ onComplete, onReveal, lang }) {
   const [progress, setProgress] = useState(0);
@@ -8,7 +9,7 @@ export default function HeritageLoader({ onComplete, onReveal, lang }) {
   const dialog = useRef(null);
   const bn = lang === 'bn';
 
-  // 1. Particle Canvas System (Golden Sparkles & Floating Bokeh Embers)
+  // 1. Rich Golden Glitter Canvas (130+ sparkles, embers, starbursts)
   useEffect(() => {
     const canvas = canvasRef.current;
     if (!canvas) return;
@@ -24,41 +25,46 @@ export default function HeritageLoader({ onComplete, onReveal, lang }) {
     };
     window.addEventListener('resize', handleResize);
 
-    const particleCount = 70;
+    const particleCount = 130;
     const particles = Array.from({ length: particleCount }, () => ({
-      x: width / 2 + (Math.random() - 0.5) * (width * 0.8),
-      y: height / 2 + (Math.random() - 0.5) * (height * 0.7),
-      radius: Math.random() * 2.2 + 0.6,
-      vx: (Math.random() - 0.5) * 0.25,
-      vy: (Math.random() - 0.5) * 0.25 - 0.1,
-      alpha: Math.random() * 0.7 + 0.2,
-      twinkleSpeed: Math.random() * 0.02 + 0.01,
-      color: Math.random() > 0.35 ? '#fcdb8a' : '#e6ab47',
-      isStar: Math.random() > 0.6
+      x: Math.random() * width,
+      y: Math.random() * height,
+      radius: Math.random() * 2.4 + 0.5,
+      vx: (Math.random() - 0.5) * 0.35,
+      vy: (Math.random() - 0.5) * 0.35 - 0.15,
+      alpha: Math.random() * 0.8 + 0.2,
+      twinkleSpeed: Math.random() * 0.035 + 0.015,
+      color: Math.random() > 0.4 ? '#ffdf88' : Math.random() > 0.2 ? '#e6ab47' : '#ffffff',
+      isStar: Math.random() > 0.5,
+      sparkleAngle: Math.random() * Math.PI
     }));
 
     const render = () => {
       ctx.clearRect(0, 0, width, height);
 
-      // Soft center ambient warm glow
-      const grad = ctx.createRadialGradient(
-        width / 2,
-        height / 2,
-        30,
-        width / 2,
-        height / 2,
-        Math.max(width, height) * 0.5
+      // Top overhead golden light cone (god rays / ambient spotlight)
+      const topBeam = ctx.createRadialGradient(
+        width / 2, 0, 10,
+        width / 2, height * 0.45, Math.max(width, height) * 0.6
       );
-      grad.addColorStop(0, 'rgba(80, 40, 18, 0.28)');
-      grad.addColorStop(0.5, 'rgba(28, 10, 14, 0.16)');
-      grad.addColorStop(1, 'rgba(0, 0, 0, 0)');
-      ctx.fillStyle = grad;
+      topBeam.addColorStop(0, 'rgba(216, 174, 98, 0.35)');
+      topBeam.addColorStop(0.35, 'rgba(120, 60, 20, 0.18)');
+      topBeam.addColorStop(1, 'rgba(0, 0, 0, 0)');
+      ctx.fillStyle = topBeam;
       ctx.fillRect(0, 0, width, height);
 
+      // Bottom warm reflective floor glow
+      const floorGlow = ctx.createLinearGradient(0, height * 0.65, 0, height);
+      floorGlow.addColorStop(0, 'rgba(0, 0, 0, 0)');
+      floorGlow.addColorStop(1, 'rgba(180, 120, 45, 0.22)');
+      ctx.fillStyle = floorGlow;
+      ctx.fillRect(0, height * 0.65, width, height * 0.35);
+
+      // Render all glitter particles
       particles.forEach((p) => {
         p.x += p.vx;
         p.y += p.vy;
-        p.alpha += Math.sin(Date.now() * p.twinkleSpeed) * 0.012;
+        p.alpha += Math.sin(Date.now() * p.twinkleSpeed) * 0.02;
         const currentAlpha = Math.max(0.1, Math.min(0.95, p.alpha));
 
         if (p.x < 0) p.x = width;
@@ -69,21 +75,23 @@ export default function HeritageLoader({ onComplete, onReveal, lang }) {
         ctx.save();
         ctx.globalAlpha = currentAlpha;
         ctx.fillStyle = p.color;
-        ctx.shadowColor = '#ffd270';
-        ctx.shadowBlur = p.radius * 6;
+        ctx.shadowColor = '#ffe082';
+        ctx.shadowBlur = p.radius * 7;
 
         ctx.beginPath();
         ctx.arc(p.x, p.y, p.radius, 0, Math.PI * 2);
         ctx.fill();
 
-        if (p.isStar && p.radius > 1.4) {
-          ctx.strokeStyle = `rgba(255, 235, 175, ${currentAlpha * 0.8})`;
-          ctx.lineWidth = 0.5;
+        // Cross starbursts for larger glitter particles
+        if (p.isStar && p.radius > 1.2) {
+          ctx.strokeStyle = `rgba(255, 245, 200, ${currentAlpha * 0.9})`;
+          ctx.lineWidth = 0.6;
+          const starLen = p.radius * 3;
           ctx.beginPath();
-          ctx.moveTo(p.x - p.radius * 2.5, p.y);
-          ctx.lineTo(p.x + p.radius * 2.5, p.y);
-          ctx.moveTo(p.x, p.y - p.radius * 2.5);
-          ctx.lineTo(p.x, p.y + p.radius * 2.5);
+          ctx.moveTo(p.x - starLen, p.y);
+          ctx.lineTo(p.x + starLen, p.y);
+          ctx.moveTo(p.x, p.y - starLen);
+          ctx.lineTo(p.x, p.y + starLen);
           ctx.stroke();
         }
         ctx.restore();
@@ -100,15 +108,13 @@ export default function HeritageLoader({ onComplete, onReveal, lang }) {
     };
   }, []);
 
-  // 2. Cinematic Timer with Generous Breathing Space (~3.8 seconds)
+  // 2. Cinematic Loading Timer (~3.8 seconds)
   useEffect(() => {
     let disposed = false, finishing = false, frame, holdTimer, exitTimer;
     
-    const enterTimer = setTimeout(() => setEntered(true), 80);
+    const enterTimer = setTimeout(() => setEntered(true), 60);
     const start = performance.now();
     const reduced = matchMedia('(prefers-reduced-motion: reduce)').matches;
-    
-    // 3800ms total duration for luxurious calm pacing
     const duration = reduced ? 300 : 3800;
     const previousOverflow = document.body.style.overflow;
     document.body.style.overflow = 'hidden';
@@ -121,7 +127,6 @@ export default function HeritageLoader({ onComplete, onReveal, lang }) {
       const elapsed = now - start;
       const sequence = Math.min(1, elapsed / duration);
       
-      // Smooth natural ease curve
       const ease = sequence < 0.5 
         ? 4 * sequence * sequence * sequence 
         : 1 - Math.pow(-2 * sequence + 2, 3) / 2;
@@ -140,7 +145,7 @@ export default function HeritageLoader({ onComplete, onReveal, lang }) {
           onReveal?.(true);
           setLeaving(true);
           exitTimer = setTimeout(() => onComplete(false), reduced ? 0 : 800);
-        }, reduced ? 0 : 350); // Generous final hold
+        }, reduced ? 0 : 350);
       } else {
         frame = requestAnimationFrame(tick);
       }
@@ -159,13 +164,24 @@ export default function HeritageLoader({ onComplete, onReveal, lang }) {
 
   const norm = Number.isFinite(progress) ? progress / 100 : 0;
   
-  // Phase 1: 1st show Khelat Bhawan with natural normal spacing
-  // Phase 2: Gentle shimmer and subtle breathing animation
+  // Animation Progression:
+  // 1. Initial fade-in at natural spacing (norm 0 -> 0.15)
+  // 2. In the middle (norm 0.2 -> 0.85): Smoothly expands outward to majestic gaps between each letter (like reference image: K h e l a t  B h a w a n)
+  // 3. Smooth letter-spacing expansion curve:
+  const expansionProgress = Math.min(1, Math.max(0, (norm - 0.12) / 0.65));
+  // Smooth cubic ease for spacing expansion
+  const expansionEase = expansionProgress < 0.5
+    ? 2 * expansionProgress * expansionProgress
+    : 1 - Math.pow(-2 * expansionProgress + 2, 2) / 2;
+
+  // Spacing for "Khelat": starts at 0.05em -> expands to 0.32em (wide gap matching reference image)
+  const khelatSpacing = `${0.05 + expansionEase * 0.28}em`;
+  // Spacing for "Bhawan": starts at 0.04em -> expands to 0.22em
+  const bhawanSpacing = `${0.04 + expansionEase * 0.20}em`;
+
   const titleOpacity = Math.min(1, norm * 2.2);
-  const titleGlow = Math.min(50, 15 + norm * 35);
-  // Natural letter spacing with subtle graceful breathing expansion from 0.015em to 0.04em
-  const letterSpacing = `${0.015 + Math.sin(norm * Math.PI) * 0.03}em`;
-  const textScale = 0.97 + norm * 0.03;
+  const titleGlow = Math.min(55, 18 + norm * 35);
+  const textScale = 0.96 + norm * 0.04;
 
   return (
     <div
@@ -179,8 +195,8 @@ export default function HeritageLoader({ onComplete, onReveal, lang }) {
         display: 'flex',
         flexDirection: 'column',
         justifyContent: 'space-between',
-        padding: '32px 5vw 6vh',
-        backgroundColor: '#060303',
+        padding: '36px 6vw 7vh',
+        backgroundColor: '#040202',
         color: '#f0e7d5',
         opacity: leaving ? 0 : entered ? 1 : 0,
         transform: leaving ? 'scale(1.02)' : 'scale(1)',
@@ -191,87 +207,84 @@ export default function HeritageLoader({ onComplete, onReveal, lang }) {
       role="status"
       aria-label={bn ? 'খেলাৎ ভবন লোড হচ্ছে' : 'Loading Khelat Bhawan'}
     >
-      {/* Background Canvas: Golden Sparkles & Floating Embers */}
-      <canvas
-        ref={canvasRef}
-        className="absolute inset-0 w-full h-full pointer-events-none z-0"
+      {/* Background Architectural Columns Silhouette */}
+      <div
+        className="absolute inset-0 z-0 bg-cover bg-center pointer-events-none opacity-20 filter contrast-125 brightness-75"
+        style={{
+          backgroundImage: `url(${getAssetUrl('/images/SDP_0291.jpg')})`,
+          mixBlendMode: 'luminosity'
+        }}
       />
 
-      {/* Top Header Labels */}
+      {/* Background Canvas: Golden Sparkles & Floating Glitter */}
+      <canvas
+        ref={canvasRef}
+        className="absolute inset-0 w-full h-full pointer-events-none z-10"
+      />
+
+      {/* Top Header Labels (Matching reference image: KHELAT BHAWAN | KOLKATA · EST. 1845) */}
       <header 
-        className="relative z-10 flex justify-between gap-6 uppercase text-[11px] font-sans tracking-[0.2em] text-[#e2d3b7]"
+        className="relative z-20 flex justify-between gap-6 uppercase text-xs font-sans tracking-[0.25em] text-[#d8ae62]"
         style={{ 
           opacity: Math.min(1, norm * 2),
           transition: 'opacity 0.5s ease-out'
         }}
       >
-        <span>{bn ? 'খেলাৎ ভবন' : 'Khelat Bhawan'}</span>
-        <span>{bn ? 'কলকাতা · স্থাপিত ১৮৪৫' : 'Kolkata · Est. 1845'}</span>
+        <span className="font-medium drop-shadow">{bn ? 'খেলাৎ ভবন' : 'KHELAT BHAWAN'}</span>
+        <span className="font-medium drop-shadow">{bn ? 'কলকাতা · স্থাপিত ১৮৪৫' : 'KOLKATA · EST. 1845'}</span>
       </header>
 
-      {/* Central Composition with Natural Spacing & Smooth Shimmer Animation */}
-      <div className="relative z-10 flex flex-col items-center justify-center text-center my-auto py-8">
-        <p 
-          className="text-[11px] uppercase tracking-[0.3em] text-[#dbc59d] mb-6 font-sans"
+      {/* Central Composition with Stacked Typography & Gap-Expansion Animation */}
+      <div className="relative z-20 flex flex-col items-center justify-center text-center my-auto py-6 max-w-5xl mx-auto">
+        {/* Line 1: Khelat (Serif, starts normal and expands with gap between each letter) */}
+        <div
+          className="font-serif text-[clamp(60px,10vw,140px)] font-light leading-[1.0] select-none text-[#ffeed1] tracking-wide"
           style={{
-            opacity: Math.min(1, norm * 2.5),
-            transition: 'opacity 0.5s ease-out'
-          }}
-        >
-          {bn ? 'পাথুরিয়াঘাটা ঘোষ বাড়ি' : 'Pathuria Ghata Ghosh Bari'}
-        </p>
-        
-        {/* Title: Appears at natural spacing with subtle golden shimmer & breathing */}
-        <h2
-          className="font-serif text-[clamp(56px,8vw,120px)] leading-[0.95] select-none"
-          style={{
-            letterSpacing,
+            letterSpacing: khelatSpacing,
             opacity: titleOpacity,
             transform: `scale(${textScale})`,
-            color: '#f0e7d5',
-            textShadow: `0 0 ${titleGlow}px rgba(216, 174, 98, ${0.3 + norm * 0.4})`,
-            transition: 'opacity 0.4s ease-out, transform 0.4s ease-out, letter-spacing 0.3s ease-out'
+            textShadow: `0 0 ${titleGlow}px rgba(230, 185, 110, ${0.4 + norm * 0.45})`,
+            transition: 'letter-spacing 0.1s ease-out, transform 0.1s ease-out'
           }}
         >
-          {bn ? (
-            <>খেলাৎ <em className="italic text-[#e2c996] font-normal">ভবন</em></>
-          ) : (
-            <>Khelat <em className="italic text-[#e2c996] font-normal">Bhawan</em></>
-          )}
-        </h2>
+          {bn ? 'খেলাৎ' : 'Khelat'}
+        </div>
 
-        <span 
-          className="font-serif italic text-base sm:text-[18px] text-[#ccbaa1] mt-8"
+        {/* Line 2: Bhawan (Italic Luxury Script, starts normal and expands with gaps) */}
+        <div
+          className="font-serif italic text-[clamp(65px,11vw,150px)] font-normal leading-[0.95] select-none text-[#ecd497] mt-1 sm:mt-2"
           style={{
-            opacity: Math.min(1, Math.max(0, (norm - 0.2) * 1.5)),
-            transform: `translateY(${(1 - Math.min(1, norm * 1.5)) * 8}px)`,
-            transition: 'opacity 0.5s ease-out, transform 0.5s ease-out'
+            letterSpacing: bhawanSpacing,
+            opacity: titleOpacity,
+            transform: `scale(${textScale})`,
+            textShadow: `0 0 ${titleGlow}px rgba(216, 174, 98, ${0.4 + norm * 0.45})`,
+            transition: 'letter-spacing 0.1s ease-out, transform 0.1s ease-out'
           }}
         >
-          {bn ? 'এক জীবন্ত ঐতিহ্য ও সাবেকি উত্তরাধিকার' : 'A living legacy of Bengal since 1845'}
-        </span>
+          {bn ? 'ভবন' : 'Bhawan'}
+        </div>
       </div>
 
-      {/* Bottom Progress Bar & Percentage */}
-      <footer className="relative z-10 w-full max-w-[760px] mx-auto">
+      {/* Bottom Progress Bar & Percentage (Exact match to reference image) */}
+      <footer className="relative z-20 w-full max-w-[840px] mx-auto">
         <div className="w-full">
-          <div className="flex items-end justify-between mb-4">
-            <span className="text-[10.5px] uppercase tracking-[0.22em] font-sans font-medium text-[#c6b69a]">
+          <div className="flex items-end justify-between mb-3 text-xs tracking-[0.25em] font-sans uppercase">
+            <span className="text-[11px] font-medium text-[#d8ae62]/90 drop-shadow">
               {bn ? 'প্রাসাদে প্রবেশাধিকার' : 'ENTERING THE PALACE'}
             </span>
-            <output aria-hidden="true" className="font-serif text-3xl sm:text-4xl text-[#ecd69e] tabular-nums">
-              {String(progress).padStart(2, '0')}
-              <small className="text-xs text-[#d8ae62] ml-1 font-sans font-normal">%</small>
-            </output>
+            <div className="font-serif text-2xl sm:text-3xl text-[#ffeec9] font-normal tabular-nums drop-shadow">
+              <span>{progress}</span>
+              <span className="text-xs text-[#d8ae62] ml-1 font-sans">%</span>
+            </div>
           </div>
           
-          {/* Custom Glowing Gold Hairline Progress Bar */}
-          <div className="w-full h-[2px] bg-white/10 rounded-full overflow-hidden relative shadow-inner">
+          {/* Glowing Gold Hairline Progress Bar with Traveling Spark */}
+          <div className="w-full h-[2px] bg-white/15 rounded-full overflow-hidden relative shadow-inner">
             <div 
-              className="h-full bg-gradient-to-r from-[#b78c43] via-[#ecd69e] to-[#ffffff] rounded-full transition-all duration-100 relative"
+              className="h-full bg-gradient-to-r from-[#b78c43] via-[#ffd68a] to-[#ffffff] rounded-full transition-all duration-100 relative"
               style={{ width: `${progress}%` }}
             >
-              <div className="absolute right-0 top-1/2 -translate-y-1/2 w-3.5 h-3.5 bg-amber-200 rounded-full blur-[3px] opacity-90" />
+              <div className="absolute right-0 top-1/2 -translate-y-1/2 w-4 h-4 bg-amber-100 rounded-full blur-[3px] opacity-95 shadow-[0_0_10px_#ffd270]" />
             </div>
           </div>
         </div>
