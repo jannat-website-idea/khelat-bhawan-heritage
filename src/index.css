@@ -3610,37 +3610,42 @@ iframe {
 }
 
 .gallery-lightbox {
-  z-index: 1000;
+  z-index: 100000 !important;
+  background: rgba(9, 4, 3, 0.98) !important;
   opacity: 0;
   backdrop-filter: blur(0);
-  transition: opacity 650ms cubic-bezier(.16, 1, .3, 1), backdrop-filter 650ms cubic-bezier(.16, 1, .3, 1);
+  transition: opacity 450ms cubic-bezier(.16, 1, .3, 1), backdrop-filter 450ms cubic-bezier(.16, 1, .3, 1);
 }
 
 .gallery-lightbox.is-open {
   opacity: 1;
-  backdrop-filter: blur(14px);
-  animation: galleryBackdropIn 650ms cubic-bezier(.16, 1, .3, 1) both;
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
 }
 .gallery-lightbox.is-closing { opacity: 0; backdrop-filter: blur(0); }
 
 .gallery-lightbox__image {
-  border-radius: 2px;
-  transform: translateY(54px) scale(.72);
+  border-radius: 8px;
+  transform: translateY(30px) scale(.88);
   opacity: 0;
-  transition: transform 900ms cubic-bezier(.16, 1, .3, 1), opacity 520ms ease;
+  transition: transform 600ms cubic-bezier(.16, 1, .3, 1), opacity 400ms ease;
 }
 
 .gallery-lightbox.is-open .gallery-lightbox__image {
   transform: translateY(0) scale(1);
   opacity: 1;
-  animation: galleryImageForward 900ms cubic-bezier(.16, 1, .3, 1) both;
 }
-.gallery-lightbox.is-closing .gallery-lightbox__image { transform: translateY(42px) scale(.74); opacity: 0; }
-.gallery-lightbox__close { border-radius: 2px; }
-.gallery-film-theater { z-index: 1000; }
-.gallery-film-theater__topbar { position: fixed !important; z-index: 1003 !important; }
+.gallery-lightbox.is-closing .gallery-lightbox__image { transform: translateY(24px) scale(.88); opacity: 0; }
+.gallery-lightbox__close { border-radius: 999px; }
+.gallery-film-theater { 
+  z-index: 100000 !important; 
+  background: rgba(9, 4, 3, 0.98) !important;
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+}
+.gallery-film-theater__topbar { position: relative !important; z-index: 1003 !important; }
 .gallery-film-theater__close { min-height: 44px; box-shadow: 0 10px 30px rgba(0,0,0,.42); }
-.gallery-film-theater__content { max-height: 100dvh !important; padding-top: 5.75rem !important; padding-bottom: 1.25rem !important; }
+.gallery-film-theater__content { max-height: 100dvh !important; }
 
 .gallery-film-stage {
   position: relative;

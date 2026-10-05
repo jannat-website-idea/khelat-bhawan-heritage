@@ -142,41 +142,54 @@ export default function GalleryPage({ lang = 'en' }) {
 
           <div className="gallery-editorial-grid" aria-live="polite">
             {galleryItems.map((item, displayIndex) => {
-                  const title = typeof item.title === 'object' ? (item.title[lang] || item.title.en) : item.title;
-                  const label = item.shortLabel
-                    ? (typeof item.shortLabel === 'object' ? (item.shortLabel[lang] || item.shortLabel.en) : item.shortLabel)
-                    : title;
-                  return (
-                    <button
-                      type="button"
-                      key={`${item.mediaType}-${item.id || item.displayIndex}`}
-                      className={`gallery-editorial-tile ${item.mediaType === 'video' ? 'gallery-editorial-tile--video' : 'gallery-editorial-tile--photo'} group`}
-                      onClick={() => openGalleryItem(item)}
-                      aria-label={`${item.mediaType === 'video' ? 'Play' : 'Open'} ${title}`}
-                      style={{ '--tile-index': displayIndex }}
-                    >
-                      <img
-                        src={getAssetUrl(item.preview)}
-                        alt={title}
-                        loading={displayIndex < 3 ? 'eager' : 'lazy'}
-                        decoding="async"
-                        fetchPriority={displayIndex === 0 ? 'high' : 'auto'}
-                      />
-                      <span className="gallery-crest-tile__shade" aria-hidden="true" />
-                      <span className="gallery-crest-tile__meta">
-                        <strong>{label}</strong>
-                      </span>
-                      <span className="gallery-crest-tile__action" aria-hidden="true">
-                        {item.mediaType === 'video' ? <Play className="w-4 h-4 fill-current" /> : <Maximize2 className="w-4 h-4" />}
-                      </span>
-                    </button>
-                  );
+              const title = typeof item.title === 'object' ? (item.title[lang] || item.title.en) : item.title;
+              const label = item.shortLabel
+                ? (typeof item.shortLabel === 'object' ? (item.shortLabel[lang] || item.shortLabel.en) : item.shortLabel)
+                : title;
+              return (
+                <button
+                  type="button"
+                  key={`${item.mediaType}-${item.id || item.displayIndex}`}
+                  className={`gallery-editorial-tile ${item.mediaType === 'video' ? 'gallery-editorial-tile--video' : 'gallery-editorial-tile--photo'} group`}
+                  onClick={() => openGalleryItem(item)}
+                  aria-label={`${item.mediaType === 'video' ? 'Play' : 'Open'} ${title}`}
+                  style={{ '--tile-index': displayIndex }}
+                >
+                  {item.mediaType === 'video' ? (
+                    <video
+                      src={getAssetUrl(item.src)}
+                      poster={getAssetUrl(item.preview)}
+                      muted
+                      autoPlay
+                      loop
+                      playsInline
+                      className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700"
+                    />
+                  ) : (
+                    <img
+                      src={getAssetUrl(item.preview)}
+                      alt={title}
+                      loading={displayIndex < 3 ? 'eager' : 'lazy'}
+                      decoding="async"
+                      fetchPriority={displayIndex === 0 ? 'high' : 'auto'}
+                      className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700"
+                    />
+                  )}
+                  <span className="gallery-crest-tile__shade" aria-hidden="true" />
+                  <span className="gallery-crest-tile__meta">
+                    <strong>{label}</strong>
+                  </span>
+                  <span className="gallery-crest-tile__action" aria-hidden="true">
+                    {item.mediaType === 'video' ? <Play className="w-4 h-4 fill-current" /> : <Maximize2 className="w-4 h-4" />}
+                  </span>
+                </button>
+              );
             })}
           </div>
         </section>
 
         {/* =========================================================================
-            CORNER EDITORIAL BADGES (Exact Reference Layout)
+            CORNER EDITORIAL BADGES
            ========================================================================= */}
         <footer className="gallery-mosaic-footer max-w-[1500px] mx-auto px-6 sm:px-10 pt-10 pb-10 flex items-center justify-between text-[10px] sm:text-xs tracking-[0.2em] font-serif uppercase text-[#bda88a]">
           <div className="space-y-0.5 text-left">
@@ -198,79 +211,95 @@ export default function GalleryPage({ lang = 'en' }) {
          ========================================================================= */}
       {activePhoto && createPortal(
         <div 
-          className={`gallery-lightbox fixed inset-0 z-50 flex items-center justify-center bg-[#100806]/96 ${isPhotoClosing ? 'is-closing' : 'is-open'}`}
+          className={`gallery-lightbox fixed inset-0 z-[100000] flex flex-col justify-between p-4 sm:p-8 bg-[#090403]/98 backdrop-blur-2xl ${isPhotoClosing ? 'is-closing' : 'is-open'} text-[#f4efe6] select-none`}
           onClick={closePhoto}
           role="dialog"
           aria-modal="true"
         >
           {/* Top Bar */}
-          <div className="gallery-film-theater__topbar absolute top-0 left-0 right-0 p-4 sm:p-6 flex items-center justify-between text-[#f4efe6] z-20">
-            <div className="flex items-center gap-3">
-              <span className="font-mono text-xs font-bold tracking-widest text-[#c99a4a]">
+          <div 
+            className="flex items-center justify-between z-20 w-full max-w-7xl mx-auto pb-4 border-b border-[#d8ae62]/30"
+            onClick={(e) => e.stopPropagation()}
+          >
+            <div className="flex items-center gap-4">
+              <span className="font-mono text-xs sm:text-sm font-bold tracking-widest text-[#d8ae62] px-3 py-1 rounded-full bg-white/5 border border-[#d8ae62]/35">
                 {String(selectedPhotoIndex + 1).padStart(2, '0')} / {String(photographyGalleryData.length).padStart(2, '0')}
               </span>
-              <span className="text-xs uppercase font-serif tracking-widest text-[#a89083] hidden sm:inline">
-                {typeof activePhoto.category === 'object' ? (activePhoto.category[lang] || activePhoto.category.en) : activePhoto.category}
-              </span>
+              <div className="text-left">
+                <span className="text-[10px] sm:text-xs uppercase font-sans tracking-[0.25em] text-[#d8ae62] font-semibold block">
+                  Khelat Bhawan · Visual Archive
+                </span>
+                <span className="text-xs uppercase font-serif tracking-widest text-[#e8dfd3] hidden sm:inline">
+                  {typeof activePhoto.category === 'object' ? (activePhoto.category[lang] || activePhoto.category.en) : activePhoto.category}
+                </span>
+              </div>
             </div>
 
             <button
               onClick={closePhoto}
-              className="gallery-lightbox__close inline-flex items-center gap-2 px-4 py-2 bg-[#1e100c] border border-[#c99a4a]/40 text-xs font-mono uppercase tracking-widest text-[#f4efe6] hover:bg-[#c99a4a] hover:text-[#120a08] transition-colors"
+              className="w-11 h-11 rounded-full bg-[#8a2034] hover:bg-[#a42a42] text-[#fff] border border-[#d8ae62]/60 hover:border-[#d8ae62] flex items-center justify-center transition-all duration-300 shadow-lg hover:scale-110 hover:rotate-90 active:scale-95 cursor-pointer"
               aria-label={isBn ? 'বন্ধ করুন' : 'Close image'}
             >
-              <span>{isBn ? 'বন্ধ করুন' : 'CLOSE IMAGE'}</span>
-              <X className="w-4 h-4" />
+              <X className="w-5 h-5" />
             </button>
           </div>
 
-          {/* Left Arrow Navigation */}
-          <button
-            onClick={(e) => {
-              e.stopPropagation();
-              setSelectedPhotoIndex((prev) => (prev - 1 + photographyGalleryData.length) % photographyGalleryData.length);
-            }}
-            className="absolute left-4 sm:left-8 top-1/2 -translate-y-1/2 w-12 h-12 rounded-full bg-[#1e100c]/80 border border-[#c99a4a]/40 text-[#f4efe6] flex items-center justify-center hover:bg-[#c99a4a] hover:text-[#120a08] transition-colors z-20"
-            aria-label={isBn ? 'পূর্ববর্তী ছবি' : 'Previous photograph'}
-          >
-            <ChevronLeft className="w-6 h-6" />
-          </button>
-
-          {/* Main Photo Center Container */}
+          {/* Main Photo Center Stage */}
           <div 
-            className="relative max-w-5xl max-h-[82vh] p-2 flex flex-col items-center justify-center z-10"
+            className="relative flex-1 flex items-center justify-center my-3 overflow-hidden"
             onClick={(e) => e.stopPropagation()}
           >
             <img
               src={getAssetUrl(activePhoto.src)}
               alt={typeof activePhoto.title === 'object' ? (activePhoto.title[lang] || activePhoto.title.en) : activePhoto.title}
-              className="gallery-lightbox__image max-h-[72vh] max-w-full object-contain shadow-2xl border border-[#c99a4a]/45"
+              className="gallery-lightbox__image max-h-[75vh] max-w-[92vw] object-contain rounded-xl shadow-2xl border border-[#d8ae62]/35"
             />
-            
-            {/* Caption & Description */}
-            <div className="mt-4 text-center space-y-1">
-              <h3 className="font-serif text-lg sm:text-2xl font-bold text-[#fdfbf7] tracking-wide">
-                {typeof activePhoto.title === 'object' ? (activePhoto.title[lang] || activePhoto.title.en) : activePhoto.title}
-              </h3>
-              {activePhoto.desc && (
-                <p className="font-serif italic text-xs sm:text-sm text-[#a89083] max-w-xl mx-auto">
-                  {typeof activePhoto.desc === 'object' ? (activePhoto.desc[lang] || activePhoto.desc.en) : activePhoto.desc}
-                </p>
-              )}
-            </div>
+
+            {/* Left Arrow Navigation */}
+            <button
+              onClick={(e) => {
+                e.stopPropagation();
+                setSelectedPhotoIndex((prev) => (prev - 1 + photographyGalleryData.length) % photographyGalleryData.length);
+              }}
+              className="absolute left-2 sm:left-6 w-12 h-12 rounded-full bg-[#1e100c]/90 hover:bg-[#8a2034] text-[#d8ae62] hover:text-white flex items-center justify-center transition-all border border-[#d8ae62]/40 backdrop-blur-md shadow-xl hover:scale-110 cursor-pointer z-20"
+              aria-label={isBn ? 'পূর্ববর্তী ছবি' : 'Previous photograph'}
+            >
+              <ChevronLeft className="w-7 h-7" />
+            </button>
+
+            {/* Right Arrow Navigation */}
+            <button
+              onClick={(e) => {
+                e.stopPropagation();
+                setSelectedPhotoIndex((prev) => (prev + 1) % photographyGalleryData.length);
+              }}
+              className="absolute right-2 sm:right-6 w-12 h-12 rounded-full bg-[#1e100c]/90 hover:bg-[#8a2034] text-[#d8ae62] hover:text-white flex items-center justify-center transition-all border border-[#d8ae62]/40 backdrop-blur-md shadow-xl hover:scale-110 cursor-pointer z-20"
+              aria-label={isBn ? 'পরবর্তী ছবি' : 'Next photograph'}
+            >
+              <ChevronRight className="w-7 h-7" />
+            </button>
           </div>
 
-          {/* Right Arrow Navigation */}
-          <button
-            onClick={(e) => {
-              e.stopPropagation();
-              setSelectedPhotoIndex((prev) => (prev + 1) % photographyGalleryData.length);
-            }}
-            className="absolute right-4 sm:right-8 top-1/2 -translate-y-1/2 w-12 h-12 rounded-full bg-[#1e100c]/80 border border-[#c99a4a]/40 text-[#f4efe6] flex items-center justify-center hover:bg-[#c99a4a] hover:text-[#120a08] transition-colors z-20"
-            aria-label={isBn ? 'পরবর্তী ছবি' : 'Next photograph'}
+          {/* Caption & Description Bottom Bar */}
+          <div 
+            className="max-w-4xl mx-auto text-center px-4 space-y-1.5 z-10"
+            onClick={(e) => e.stopPropagation()}
           >
-            <ChevronRight className="w-6 h-6" />
-          </button>
+            <h3 className="font-serif text-xl sm:text-2xl font-bold text-[#ffffff] tracking-wide drop-shadow-md">
+              {typeof activePhoto.title === 'object' ? (activePhoto.title[lang] || activePhoto.title.en) : activePhoto.title}
+            </h3>
+            {activePhoto.desc && (
+              <p className="font-sans text-xs sm:text-sm text-[#f0e8d8] font-normal leading-relaxed max-w-2xl mx-auto drop-shadow-sm">
+                {typeof activePhoto.desc === 'object' ? (activePhoto.desc[lang] || activePhoto.desc.en) : activePhoto.desc}
+              </p>
+            )}
+            {activePhoto.photographer && (
+              <div className="text-[11px] text-[#d8ae62] tracking-wider uppercase font-sans font-semibold pt-0.5">
+                <span>Credit: {activePhoto.photographer}</span>
+                {activePhoto.year && <span> · {activePhoto.year}</span>}
+              </div>
+            )}
+          </div>
         </div>,
         document.body
       )}
@@ -280,101 +309,94 @@ export default function GalleryPage({ lang = 'en' }) {
          ========================================================================= */}
       {activeFilm && createPortal(
         <div 
-          className="gallery-film-theater fixed inset-0 flex items-center justify-center bg-[#0d0605]/98 backdrop-blur-2xl animate-in fade-in duration-300"
+          className="gallery-film-theater fixed inset-0 z-[100000] flex flex-col justify-between p-4 sm:p-8 bg-[#090403]/98 backdrop-blur-2xl animate-in fade-in duration-300 text-[#f4efe6]"
           onClick={() => setSelectedFilmIndex(null)}
           role="dialog"
           aria-modal="true"
         >
           {/* Top Bar */}
-          <div className="absolute top-0 left-0 right-0 p-4 sm:p-6 flex items-center justify-between text-[#f4efe6] z-20">
-            <div className="flex items-center gap-3">
-              <span className="font-mono text-xs font-bold tracking-widest text-[#d4af37]">
+          <div 
+            className="flex items-center justify-between z-20 w-full max-w-7xl mx-auto pb-4 border-b border-[#d8ae62]/30"
+            onClick={(e) => e.stopPropagation()}
+          >
+            <div className="flex items-center gap-4">
+              <span className="font-mono text-xs sm:text-sm font-bold tracking-widest text-[#d8ae62] px-3 py-1 rounded-full bg-white/5 border border-[#d8ae62]/35">
                 {String(selectedFilmIndex + 1).padStart(2, '0')} / {String(filmsGalleryData.length).padStart(2, '0')}
               </span>
-              <span className="text-xs uppercase font-serif tracking-widest text-[#a89083] hidden sm:inline">
-                {typeof activeFilm.category === 'object' ? (activeFilm.category[lang] || activeFilm.category.en) : activeFilm.category}
-              </span>
+              <div className="text-left">
+                <span className="text-[10px] sm:text-xs uppercase font-sans tracking-[0.25em] text-[#d8ae62] font-semibold block">
+                  Khelat Bhawan · Cinema Archive
+                </span>
+                <span className="text-xs uppercase font-serif tracking-widest text-[#e8dfd3] hidden sm:inline">
+                  {typeof activeFilm.category === 'object' ? (activeFilm.category[lang] || activeFilm.category.en) : activeFilm.category}
+                </span>
+              </div>
             </div>
 
             <button
               onClick={() => setSelectedFilmIndex(null)}
-              className="gallery-film-theater__close inline-flex items-center gap-2 px-4 py-2 rounded-full bg-[#1e100c] border border-[#d4af37]/40 text-xs font-mono uppercase tracking-widest text-[#f4efe6] hover:bg-[#d4af37] hover:text-[#120a08] transition-colors"
+              className="w-11 h-11 rounded-full bg-[#8a2034] hover:bg-[#a42a42] text-[#fff] border border-[#d8ae62]/60 hover:border-[#d8ae62] flex items-center justify-center transition-all duration-300 shadow-lg hover:scale-110 hover:rotate-90 active:scale-95 cursor-pointer"
               aria-label={isBn ? 'বন্ধ করুন' : 'Close film'}
             >
-              <span>{isBn ? 'বন্ধ করুন' : 'CLOSE FILM'}</span>
-              <X className="w-4 h-4" />
+              <X className="w-5 h-5" />
             </button>
           </div>
 
           {/* Film Video Player Container */}
           <div 
-            className="gallery-film-theater__content relative w-full max-w-5xl max-h-[85vh] p-4 flex flex-col items-center justify-center z-10"
+            className="relative flex-1 flex items-center justify-center my-3 overflow-hidden"
             onClick={(e) => e.stopPropagation()}
           >
-            <div className="gallery-film-stage">
-              <button
-                type="button"
-                onClick={() => setSelectedFilmIndex((prev) => (prev - 1 + filmsGalleryData.length) % filmsGalleryData.length)}
-                className="gallery-film-side-control gallery-film-side-control--prev"
-                aria-label={isBn ? 'পূর্ববর্তী চলচ্চিত্র' : 'Previous film'}
-              >
-                <ChevronLeft aria-hidden="true" />
-              </button>
-
-              <div className="relative w-full aspect-video rounded-xl sm:rounded-2xl overflow-hidden bg-black shadow-2xl border border-[#d4af37]/40">
-                <video
-                  src={getAssetUrl(activeFilm.src)}
-                  poster={getAssetUrl(activeFilm.poster)}
-                  controls
-                  autoPlay
-                  playsInline
-                  preload="metadata"
-                  className="w-full h-full object-contain"
-                />
-              </div>
-
-              <button
-                type="button"
-                onClick={() => setSelectedFilmIndex((prev) => (prev + 1) % filmsGalleryData.length)}
-                className="gallery-film-side-control gallery-film-side-control--next"
-                aria-label={isBn ? 'পরবর্তী চলচ্চিত্র' : 'Next film'}
-              >
-                <ChevronRight aria-hidden="true" />
-              </button>
+            <div className="relative w-full max-w-5xl max-h-[75vh] aspect-video rounded-xl sm:rounded-2xl overflow-hidden bg-black shadow-2xl border border-[#d8ae62]/40">
+              <video
+                src={getAssetUrl(activeFilm.src)}
+                poster={getAssetUrl(activeFilm.poster)}
+                controls
+                autoPlay
+                playsInline
+                preload="metadata"
+                className="w-full h-full object-contain mx-auto"
+              />
             </div>
 
-            {/* Video Meta & Prev/Next Controls Underneath */}
-            <div className="w-full mt-4 flex flex-col sm:flex-row items-center justify-between gap-4">
-              <div className="text-center sm:text-left space-y-0.5">
-                <h3 className="font-serif text-lg sm:text-xl font-bold text-[#fdfbf7]">
-                  {typeof activeFilm.title === 'object' ? (activeFilm.title[lang] || activeFilm.title.en) : activeFilm.title}
-                </h3>
-                {activeFilm.desc && (
-                  <p className="font-serif text-xs text-[#a89083] max-w-xl">
-                    {typeof activeFilm.desc === 'object' ? (activeFilm.desc[lang] || activeFilm.desc.en) : activeFilm.desc}
-                  </p>
-                )}
-              </div>
+            {/* Left Film Navigation */}
+            <button
+              onClick={(e) => {
+                e.stopPropagation();
+                setSelectedFilmIndex((prev) => (prev - 1 + filmsGalleryData.length) % filmsGalleryData.length);
+              }}
+              className="absolute left-2 sm:left-6 w-12 h-12 rounded-full bg-[#1e100c]/90 hover:bg-[#8a2034] text-[#d8ae62] hover:text-white flex items-center justify-center transition-all border border-[#d8ae62]/40 backdrop-blur-md shadow-xl hover:scale-110 cursor-pointer z-20"
+              aria-label={isBn ? 'পূর্ববর্তী চলচ্চিত্র' : 'Previous film'}
+            >
+              <ChevronLeft className="w-7 h-7" />
+            </button>
 
-              {/* Prev / Next Film Quick Controls */}
-              <div className="flex items-center gap-3 shrink-0">
-                <button
-                  onClick={() => setSelectedFilmIndex((prev) => (prev - 1 + filmsGalleryData.length) % filmsGalleryData.length)}
-                  className="inline-flex items-center gap-1.5 px-3.5 py-1.5 rounded-full bg-[#1e100c] border border-[#d4af37]/40 text-xs font-serif text-[#f4efe6] hover:bg-[#d4af37] hover:text-[#120a08] transition-colors"
-                >
-                  <ChevronLeft className="w-3.5 h-3.5" />
-                  <span>{isBn ? 'পূর্ববর্তী' : 'PREV FILM'}</span>
-                </button>
+            {/* Right Film Navigation */}
+            <button
+              onClick={(e) => {
+                e.stopPropagation();
+                setSelectedFilmIndex((prev) => (prev + 1) % filmsGalleryData.length);
+              }}
+              className="absolute right-2 sm:right-6 w-12 h-12 rounded-full bg-[#1e100c]/90 hover:bg-[#8a2034] text-[#d8ae62] hover:text-white flex items-center justify-center transition-all border border-[#d8ae62]/40 backdrop-blur-md shadow-xl hover:scale-110 cursor-pointer z-20"
+              aria-label={isBn ? 'পরবর্তী চলচ্চিত্র' : 'Next film'}
+            >
+              <ChevronRight className="w-7 h-7" />
+            </button>
+          </div>
 
-                <button
-                  onClick={() => setSelectedFilmIndex((prev) => (prev + 1) % filmsGalleryData.length)}
-                  className="inline-flex items-center gap-1.5 px-3.5 py-1.5 rounded-full bg-[#1e100c] border border-[#d4af37]/40 text-xs font-serif text-[#f4efe6] hover:bg-[#d4af37] hover:text-[#120a08] transition-colors"
-                >
-                  <span>{isBn ? 'পরবর্তী' : 'NEXT FILM'}</span>
-                  <ChevronRight className="w-3.5 h-3.5" />
-                </button>
-              </div>
-            </div>
+          {/* Video Meta Underneath */}
+          <div 
+            className="max-w-4xl mx-auto text-center px-4 space-y-1 z-10"
+            onClick={(e) => e.stopPropagation()}
+          >
+            <h3 className="font-serif text-xl sm:text-2xl font-bold text-[#ffffff] tracking-wide drop-shadow-md">
+              {typeof activeFilm.title === 'object' ? (activeFilm.title[lang] || activeFilm.title.en) : activeFilm.title}
+            </h3>
+            {activeFilm.desc && (
+              <p className="font-sans text-xs sm:text-sm text-[#f0e8d8] font-normal leading-relaxed max-w-2xl mx-auto drop-shadow-sm">
+                {typeof activeFilm.desc === 'object' ? (activeFilm.desc[lang] || activeFilm.desc.en) : activeFilm.desc}
+              </p>
+            )}
           </div>
         </div>,
         document.body
