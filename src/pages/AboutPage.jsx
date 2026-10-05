@@ -41,22 +41,10 @@ export default function AboutPage({ lang = 'en', setActiveTab, onOpenBooking, on
               href={getAssetUrl('/Khelat_Bhawan_Heritage_eBook.pdf')}
               download="Khelat_Bhawan_Heritage_Compendium.pdf"
               className="heritage-timeline-download-btn"
-              aria-label={isBn ? 'বিনামূল্যে হেরিটেজ পিডিএফ ডাউনলোড করুন' : 'Download the free Khelat Bhawan heritage PDF'}
+              aria-label={isBn ? 'বিনামূল্যে হেরিটেজ পিডিএফ' : 'Free Heritage PDF'}
             >
-              <div className="heritage-timeline-download-btn__icon">
-                <Download className="w-4 h-4" aria-hidden="true" />
-              </div>
-              <div className="heritage-timeline-download-btn__content">
-                <span className="heritage-timeline-download-btn__kicker">
-                  {isBn ? 'ডিজিটাল মহাফেজখানা' : 'Digital Archive'}
-                </span>
-                <span className="heritage-timeline-download-btn__title">
-                  {isBn ? 'বিনামূল্যে হেরিটেজ পিডিএফ' : 'Free Heritage PDF'}
-                </span>
-                <span className="heritage-timeline-download-btn__sub">
-                  {isBn ? 'ডাউনলোড সংস্করণ (PDF)' : 'Download Edition (PDF)'}
-                </span>
-              </div>
+              <Download className="w-4 h-4" aria-hidden="true" />
+              <span>{isBn ? 'বিনামূল্যে হেরিটেজ পিডিএফ' : 'Free Heritage PDF'}</span>
             </a>
           </div>
 
