@@ -24,26 +24,36 @@ export default function HeritageLoader({ onComplete, onReveal, lang }) {
     };
     window.addEventListener('resize', handleResize);
 
-    const particleCount = 48;
+    const particleCount = 120;
     const particles = Array.from({ length: particleCount }, (_, idx) => {
-      const isCenter = idx < 22;
+      const isCenter = idx < 45;
       const x = isCenter
-        ? width / 2 + (Math.random() - 0.5) * (width * 0.55)
+        ? width / 2 + (Math.random() - 0.5) * (width * 0.65)
         : Math.random() * width;
       const y = isCenter
-        ? height / 2 + (Math.random() - 0.5) * (height * 0.55)
+        ? height / 2 + (Math.random() - 0.5) * (height * 0.65)
         : Math.random() * height;
+
+      const sizeCategory = Math.random();
+      const radius = (sizeCategory > 0.85 ? (Math.random() * 1.6 + 1.8) : (Math.random() * 1.2 + 0.4)) * dpr;
 
       return {
         x,
         y,
-        radius: (Math.random() * 1.8 + 0.5) * dpr,
-        vx: (Math.random() - 0.5) * 0.12 * dpr,
-        vy: ((Math.random() - 0.5) * 0.12 - 0.035) * dpr,
-        alpha: Math.random() * 0.45 + 0.14,
-        twinkleSpeed: Math.random() * 0.025 + 0.012,
-        color: Math.random() > 0.35 ? '#ffd885' : '#f5be58',
-        isStar: Math.random() > 0.55
+        originX: x,
+        radius,
+        // Smooth and slow floating velocities
+        vx: (Math.random() - 0.5) * 0.08 * dpr,
+        vy: (-Math.random() * 0.12 - 0.02) * dpr,
+        alpha: Math.random() * 0.5 + 0.2,
+        baseAlpha: Math.random() * 0.4 + 0.2,
+        twinkleSpeed: Math.random() * 0.018 + 0.008,
+        twinkleOffset: Math.random() * Math.PI * 2,
+        color: Math.random() > 0.4 ? '#ffe5a3' : (Math.random() > 0.5 ? '#f5be58' : '#ffd175'),
+        glowColor: Math.random() > 0.5 ? '#ffd885' : '#e6ab48',
+        isStar: sizeCategory > 0.75,
+        driftPhase: Math.random() * Math.PI * 2,
+        driftSpeed: Math.random() * 0.008 + 0.003
       };
     });
 
@@ -54,48 +64,67 @@ export default function HeritageLoader({ onComplete, onReveal, lang }) {
       const centerGlow = ctx.createRadialGradient(
         width / 2,
         height / 2,
-        20 * dpr,
+        30 * dpr,
         width / 2,
         height / 2,
-        Math.max(width, height) * 0.5
+        Math.max(width, height) * 0.55
       );
-      centerGlow.addColorStop(0, 'rgba(85, 42, 18, 0.25)');
-      centerGlow.addColorStop(0.5, 'rgba(28, 10, 14, 0.12)');
+      centerGlow.addColorStop(0, 'rgba(95, 48, 22, 0.28)');
+      centerGlow.addColorStop(0.45, 'rgba(32, 12, 16, 0.14)');
       centerGlow.addColorStop(1, 'rgba(0, 0, 0, 0)');
       ctx.fillStyle = centerGlow;
       ctx.fillRect(0, 0, width, height);
 
-      // Render sparkles and corner dust
-      particles.forEach((p) => {
-        p.x += p.vx;
-        p.y += p.vy;
-        p.alpha += Math.sin(Date.now() * p.twinkleSpeed) * 0.012;
-        const currentAlpha = Math.max(0.08, Math.min(0.9, p.alpha));
+      const now = Date.now();
 
-        if (p.x < 0) p.x = width;
-        if (p.x > width) p.x = 0;
-        if (p.y < 0) p.y = height;
-        if (p.y > height) p.y = 0;
+      // Render sparkles and corner dust with smooth, slow floating motion
+      particles.forEach((p) => {
+        // Slow floating upwards and gentle horizontal sine wave drift
+        p.y += p.vy;
+        p.x += p.vx + Math.sin(now * p.driftSpeed + p.driftPhase) * (0.09 * dpr);
+        
+        // Smooth sine-wave twinkle
+        const twinkle = Math.sin(now * p.twinkleSpeed + p.twinkleOffset);
+        const currentAlpha = Math.max(0.08, Math.min(0.95, p.baseAlpha + twinkle * 0.35));
+
+        // Screen wrap
+        if (p.x < -10) p.x = width + 10;
+        if (p.x > width + 10) p.x = -10;
+        if (p.y < -10) p.y = height + 10;
+        if (p.y > height + 10) p.y = -10;
 
         ctx.save();
         ctx.globalAlpha = currentAlpha;
         ctx.fillStyle = p.color;
-        ctx.shadowColor = '#ffd270';
-        ctx.shadowBlur = p.radius * 4;
+        ctx.shadowColor = p.glowColor;
+        ctx.shadowBlur = p.radius * (p.isStar ? 6 : 3.5);
 
         ctx.beginPath();
         ctx.arc(p.x, p.y, p.radius, 0, Math.PI * 2);
         ctx.fill();
 
+        // Elegant 4-point diamond star flare for larger glitters
         if (p.isStar && p.radius > 1.2 * dpr) {
-          ctx.strokeStyle = `rgba(255, 240, 195, ${currentAlpha * 0.75})`;
-          ctx.lineWidth = 0.5 * dpr;
-          const len = p.radius * 2.8;
+          ctx.strokeStyle = `rgba(255, 248, 225, ${currentAlpha * 0.85})`;
+          ctx.lineWidth = 0.6 * dpr;
+          const flareLen = p.radius * (2.6 + twinkle * 0.6);
+
           ctx.beginPath();
-          ctx.moveTo(p.x - len, p.y);
-          ctx.lineTo(p.x + len, p.y);
-          ctx.moveTo(p.x, p.y - len);
-          ctx.lineTo(p.x, p.y + len);
+          ctx.moveTo(p.x - flareLen, p.y);
+          ctx.lineTo(p.x + flareLen, p.y);
+          ctx.moveTo(p.x, p.y - flareLen);
+          ctx.lineTo(p.x, p.y + flareLen);
+          ctx.stroke();
+
+          // Subtle diagonal micro flare
+          ctx.strokeStyle = `rgba(255, 235, 180, ${currentAlpha * 0.45})`;
+          ctx.lineWidth = 0.4 * dpr;
+          const microFlare = flareLen * 0.55;
+          ctx.beginPath();
+          ctx.moveTo(p.x - microFlare, p.y - microFlare);
+          ctx.lineTo(p.x + microFlare, p.y + microFlare);
+          ctx.moveTo(p.x - microFlare, p.y + microFlare);
+          ctx.lineTo(p.x + microFlare, p.y - microFlare);
           ctx.stroke();
         }
         ctx.restore();
@@ -213,9 +242,9 @@ export default function HeritageLoader({ onComplete, onReveal, lang }) {
           {bn ? 'পাথুরিয়াঘাটা ঘোষ বাড়ি' : 'Pathuria Ghata Ghosh Bari'}
         </p>
 
-        <h1 className={`loader-wordmark ${bn ? 'loader-wordmark--bn' : ''} select-none font-serif font-light text-[clamp(46px,8vw,112px)] whitespace-nowrap`}>
-          <span className="loader-wordmark__line">{bn ? 'খেলাৎ' : 'Khelat'}</span>
-          <span className="loader-wordmark__line">{bn ? 'ভবন' : 'Bhawan'}</span>
+        <h1 className={`loader-wordmark ${bn ? 'loader-wordmark--bn' : ''} select-none font-serif font-light text-[clamp(44px,7.5vw,108px)] whitespace-nowrap uppercase tracking-[0.14em]`}>
+          <span className="loader-wordmark__line">{bn ? 'খেলাৎ' : 'KHELAT'}</span>
+          <span className="loader-wordmark__line">{bn ? 'ভবন' : 'BHAWAN'}</span>
         </h1>
 
         <span className="loader-caption-emerge font-serif italic text-xs sm:text-base text-[#ccbaa1] mt-5 sm:mt-8 px-4">
@@ -311,9 +340,10 @@ export default function HeritageLoader({ onComplete, onReveal, lang }) {
           flex-direction: column;
           align-items: center;
           justify-content: center;
-          gap: 0.02em;
-          line-height: 0.82;
+          gap: 0.04em;
+          line-height: 0.88;
           max-width: 100%;
+          text-transform: uppercase;
           color: #ead19a;
           background: linear-gradient(100deg, #b98639 0%, #f7dfaa 32%, #fff8e7 50%, #e5bd71 68%, #a46f29 100%);
           background-size: 260% 100%;
@@ -327,7 +357,7 @@ export default function HeritageLoader({ onComplete, onReveal, lang }) {
 
         .loader-wordmark__line {
           display: block;
-          padding-left: 0.2em;
+          padding-left: 0.14em;
         }
 
         .loader-kicker,
