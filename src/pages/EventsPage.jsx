@@ -222,7 +222,7 @@ const EventsPage = ({ lang = 'en', setActiveTab, onOpenBooking }) => {
 
                     {!isPast ? (
                       <a
-                        href={getWhatsAppLink(event.whatsappMessage || `Hello, I would like to enquire about attending ${titleText} at Khelat Bhawan.`, event.whatsappNumber)}
+                        href={getWhatsAppLink(event.whatsappNumber)}
                         target="_blank"
                         rel="noopener noreferrer"
                         className="inline-flex items-center gap-1.5 px-4 py-2 rounded-lg bg-emerald-700 hover:bg-emerald-600 text-white text-xs font-sans font-semibold tracking-wide transition-all shadow-sm"
@@ -388,10 +388,7 @@ const EventsPage = ({ lang = 'en', setActiveTab, onOpenBooking }) => {
                   </button>
                   {!isPastEvent(activeModalEvent) && (
                     <a
-                      href={getWhatsAppLink(
-                        activeModalEvent.whatsappMessage || `Hello, I would like to enquire about attending ${typeof activeModalEvent.title === 'object' ? (activeModalEvent.title[lang] || activeModalEvent.title.en) : activeModalEvent.title} at Khelat Bhawan.`,
-                        activeModalEvent.whatsappNumber
-                      )}
+                      href={getWhatsAppLink(activeModalEvent.whatsappNumber)}
                       target="_blank"
                       rel="noopener noreferrer"
                       className="inline-flex items-center justify-center gap-2 px-6 py-2.5 rounded-xl bg-emerald-700 hover:bg-emerald-600 text-white font-semibold text-xs tracking-wider uppercase transition-all shadow-md"

@@ -269,12 +269,11 @@ export const isFutureEvent = (dateStr) => {
   return !isPastEvent({ date: { en: dateStr } });
 };
 
-export const getWhatsAppLink = (message, customPhone) => {
+export const getWhatsAppLink = (customPhone) => {
   const raw = customPhone || '9831093021';
   const clean = raw.replace(/\D/g, '');
   const phone = clean.startsWith('91') && clean.length > 10 ? clean : `91${clean}`;
-  const encoded = encodeURIComponent(message || 'Hello, I would like to enquire about events at Khelat Bhawan.');
-  return `https://wa.me/${phone}?text=${encoded}`;
+  return `https://wa.me/${phone}`;
 };
 
 // Backwards compatibility
