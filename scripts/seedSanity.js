@@ -36,8 +36,8 @@ async function seed() {
     phoneSecondary: '+91 98300 67890',
     email: 'heritage@khelatbhawan.com',
     address: 'Khelat Bhawan, 46 Pathuria Ghata Street, Kolkata 700006, West Bengal, India',
-    visitingHoursEn: 'Daily: 11:00 AM – 7:00 PM (Prior appointment recommended for heritage tours & meetings)',
-    visitingHoursBn: 'প্রতিদিন: বেলা ১১:০০ – সন্ধ্যা ৭:০০ (হেরিটেজ ট্যুর ও সাক্ষাতের জন্য পূর্বানুমতি কাম্য)',
+    visitingHoursEn: 'Mon – Sat: 11:00 AM – 7:00 PM (Prior appointment recommended for heritage tours & meetings)',
+    visitingHoursBn: 'সোম – শনিবার: বেলা ১১:০০ – সন্ধ্যা ৭:০০ (হেরিটেজ ট্যুর ও সাক্ষাতের জন্য পূর্বানুমতি কাম্য)',
     googleMapsUrl: 'https://share.google/TFFurvjijjI8QM8eg'
   };
   await client.createOrReplace(settingsDoc);

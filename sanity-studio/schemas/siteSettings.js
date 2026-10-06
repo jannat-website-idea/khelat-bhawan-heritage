@@ -31,13 +31,13 @@ export default {
       name: 'visitingHoursEn',
       title: 'Visiting Hours (English)',
       type: 'string',
-      initialValue: 'Daily: 11:00 AM – 7:00 PM (Prior appointment recommended for heritage tours & meetings)'
+      initialValue: 'Mon – Sat: 11:00 AM – 7:00 PM (Prior appointment recommended for heritage tours & meetings)'
     },
     {
       name: 'visitingHoursBn',
       title: 'Visiting Hours (Bengali)',
       type: 'string',
-      initialValue: 'প্রতিদিন: সকাল ১১:০০ – সন্ধ্যা ৭:০০ (হেরিটেজ ট্যুর ও সাক্ষাতের জন্য পূর্বানুমতি আবশ্যক)'
+      initialValue: 'সোম – শনিবার: সকাল ১১:০০ – সন্ধ্যা ৭:০০ (হেরিটেজ ট্যুর ও সাক্ষাতের জন্য পূর্বানুমতি আবশ্যক)'
     }
   ]
 };

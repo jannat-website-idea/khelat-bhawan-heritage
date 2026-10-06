@@ -137,7 +137,7 @@ export default function Footer({ lang, setActiveTab, onOpenBooking, onOpenLegal,
               </div>
               <div className="flex items-start gap-2 pt-2 border-t border-white/10">
                 <Clock className="w-4 h-4 text-rose-gold mt-0.5 flex-shrink-0" />
-                <span>Daily: 11:00 AM – 7:00 PM</span>
+                <span>Mon – Sat: 11:00 AM – 7:00 PM</span>
               </div>
             </div>
           </div>
