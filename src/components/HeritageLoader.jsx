@@ -224,7 +224,10 @@ export default function HeritageLoader({ onComplete, onReveal, lang }) {
       </div>
 
       {/* Bottom Progress Bar & Percentage */}
-      <footer className="relative z-10 w-full max-w-[760px] mx-auto px-2">
+      <footer
+        className="relative z-10 w-full max-w-[760px] mx-auto px-2"
+        style={{ marginBottom: 'clamp(34px, 6vh, 84px)' }}
+      >
         <div className="w-full">
           <div className="flex items-end justify-between mb-2 sm:mb-3 text-xs tracking-[0.2em] font-sans uppercase">
             <span className="text-[9.5px] sm:text-[10.5px] font-medium text-[#c6b69a]">
