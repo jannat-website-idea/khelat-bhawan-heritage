@@ -24,6 +24,7 @@ export const structure: StructureResolver = (S) =>
           singleton(S, 'Home Page', 'homePage', 'homePage'),
           S.documentTypeListItem('pageContent').title('Other Page Content'),
           singleton(S, 'Website Settings', 'siteSettings', 'siteSettings'),
+          singleton(S, 'Terms & Policies', 'legalPolicies', 'legalPolicies'),
         ]),
       ),
       S.listItem().title('🏛️ Heritage Collections').child(
@@ -40,4 +41,3 @@ export const structure: StructureResolver = (S) =>
         ]),
       ),
     ])
-

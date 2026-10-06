@@ -50,6 +50,71 @@ export const siteSettings = defineType({
   preview: {prepare: () => ({title: 'Website Settings', subtitle: 'Contact, social links and SEO'})},
 })
 
+export const legalPolicies = defineType({
+  name: 'legalPolicies',
+  title: 'Terms & Policies',
+  type: 'document',
+  groups: [
+    {name: 'privacy', title: 'Privacy Policy', default: true},
+    {name: 'terms', title: 'Terms of Use'},
+    {name: 'publishing', title: 'Publishing'},
+  ],
+  fields: [
+    defineField({
+      name: 'privacyPolicyText',
+      title: 'Privacy Policy text',
+      type: 'localizedText',
+      group: 'privacy',
+      description: 'Paste the approved policy text that visitors should see on the website.',
+    }),
+    defineField({
+      name: 'privacyPolicyFile',
+      title: 'Privacy Policy PDF',
+      type: 'file',
+      group: 'privacy',
+      options: {accept: 'application/pdf'},
+      description: 'Private CMS upload for the approved Privacy Policy PDF.',
+    }),
+    defineField({
+      name: 'termsOfUseText',
+      title: 'Terms of Use text',
+      type: 'localizedText',
+      group: 'terms',
+      description: 'Paste the approved terms that visitors should see on the website.',
+    }),
+    defineField({
+      name: 'termsOfUseFile',
+      title: 'Terms of Use PDF',
+      type: 'file',
+      group: 'terms',
+      options: {accept: 'application/pdf'},
+      description: 'Private CMS upload for the approved Terms of Use PDF.',
+    }),
+    defineField({
+      name: 'lastUpdated',
+      title: 'Last updated date',
+      type: 'date',
+      group: 'publishing',
+      validation: required,
+    }),
+    defineField({
+      name: 'isPublished',
+      title: 'Publish on website',
+      type: 'boolean',
+      group: 'publishing',
+      initialValue: true,
+      description: 'Turn this off while the policies are being revised.',
+    }),
+  ],
+  preview: {
+    select: {lastUpdated: 'lastUpdated', isPublished: 'isPublished'},
+    prepare: ({lastUpdated, isPublished}) => ({
+      title: 'Terms & Policies',
+      subtitle: `${isPublished === false ? 'Draft' : 'Published'}${lastUpdated ? ` · Updated ${lastUpdated}` : ''}`,
+    }),
+  },
+})
+
 export const homePage = defineType({
   name: 'homePage',
   title: 'Home Page',
@@ -248,4 +313,3 @@ export const enquiry = defineType({
   orderings: [{title: 'Newest first', name: 'receivedDesc', by: [{field: 'receivedAt', direction: 'desc'}]}],
   preview: {select: {title: 'name', reference: 'reference', receivedAt: 'receivedAt', status: 'status'}, prepare: ({title, reference, receivedAt, status}) => ({title: `${status === 'new' ? '● ' : ''}${title || 'Website visitor'}`, subtitle: `${reference || 'No reference'} · ${receivedAt ? new Date(receivedAt).toLocaleString() : 'No date'}`} )},
 })
-

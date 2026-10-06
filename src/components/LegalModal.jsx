@@ -1,11 +1,9 @@
 import React, { useState, useEffect } from 'react';
 import { createPortal } from 'react-dom';
-import { X, Shield, FileText, Download, Upload, CheckCircle2 } from 'lucide-react';
+import { X, Shield, FileText } from 'lucide-react';
 
 export default function LegalModal({ isOpen, onClose, defaultType = 'privacy', lang = 'en' }) {
   const [activeType, setActiveType] = useState(defaultType);
-  const [customContent, setCustomContent] = useState(null);
-  const [uploadedFileName, setUploadedFileName] = useState('');
   const isBn = lang === 'bn';
 
   useEffect(() => {
@@ -27,22 +25,6 @@ export default function LegalModal({ isOpen, onClose, defaultType = 'privacy', l
   }, [isOpen, onClose]);
 
   if (!isOpen) return null;
-
-  const handleFileUpload = (e) => {
-    const file = e.target.files?.[0];
-    if (!file) return;
-    setUploadedFileName(file.name);
-    
-    // Read text from uploaded file (supports TXT/DOCX text extraction)
-    const reader = new FileReader();
-    reader.onload = (event) => {
-      const text = event.target?.result;
-      if (typeof text === 'string') {
-        setCustomContent(text);
-      }
-    };
-    reader.readAsText(file);
-  };
 
   const privacyTextEn = `
 # Privacy Policy — Khelat Bhawan Heritage Estate
@@ -128,9 +110,9 @@ These terms shall be governed by the laws of India and the jurisdiction of the c
 অনলাইন অনুসন্ধান প্রেরণের পর আমাদের কনসিয়ার্জ টিম পরবর্তী ৪৮ ঘণ্টার মধ্যে বিস্তারিত তথ্যের সাথে যোগাযোগ করবে।
   `;
 
-  const currentText = customContent 
-    ? customContent 
-    : (activeType === 'privacy' ? (isBn ? privacyTextBn : privacyTextEn) : (isBn ? termsTextBn : termsTextEn));
+  const currentText = activeType === 'privacy'
+    ? (isBn ? privacyTextBn : privacyTextEn)
+    : (isBn ? termsTextBn : termsTextEn);
 
   return createPortal(
     <div 
@@ -171,13 +153,13 @@ These terms shall be governed by the laws of India and the jurisdiction of the c
           </button>
         </div>
 
-        {/* Tab & Upload Bar */}
-        <div className="px-6 py-3 bg-background/50 border-b border-border/40 flex flex-wrap items-center justify-between gap-3 text-xs">
+        {/* Policy tabs. Documents are managed privately through the CMS. */}
+        <div className="px-6 py-3 bg-background/50 border-b border-border/40 flex items-center text-xs">
           <div className="flex items-center gap-2">
             <button
-              onClick={() => { setActiveType('privacy'); setCustomContent(null); }}
+              onClick={() => setActiveType('privacy')}
               className={`px-4 py-1.5 rounded-full font-semibold uppercase tracking-wider transition-all cursor-pointer ${
-                activeType === 'privacy' && !customContent
+                activeType === 'privacy'
                   ? 'bg-primary text-primary-foreground shadow-sm' 
                   : 'bg-card text-muted-foreground hover:text-foreground border border-border/60'
               }`}
@@ -185,35 +167,15 @@ These terms shall be governed by the laws of India and the jurisdiction of the c
               {isBn ? 'গোপনীয়তা নীতি' : 'Privacy Policy'}
             </button>
             <button
-              onClick={() => { setActiveType('terms'); setCustomContent(null); }}
+              onClick={() => setActiveType('terms')}
               className={`px-4 py-1.5 rounded-full font-semibold uppercase tracking-wider transition-all cursor-pointer ${
-                activeType === 'terms' && !customContent
+                activeType === 'terms'
                   ? 'bg-primary text-primary-foreground shadow-sm' 
                   : 'bg-card text-muted-foreground hover:text-foreground border border-border/60'
               }`}
             >
               {isBn ? 'শর্তাবলী' : 'Terms of Use'}
             </button>
-          </div>
-
-          {/* CMS Upload Hook */}
-          <div className="flex items-center gap-3">
-            <label className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-card hover:bg-muted/80 text-muted-foreground hover:text-foreground border border-border/60 cursor-pointer transition-colors text-[11px] font-medium">
-              <Upload className="w-3.5 h-3.5 text-primary" />
-              <span>{isBn ? 'ডকুমেন্ট আপলোড (CMS)' : 'Upload DOCX / PDF'}</span>
-              <input 
-                type="file" 
-                accept=".txt,.docx,.pdf,.md" 
-                className="hidden" 
-                onChange={handleFileUpload} 
-              />
-            </label>
-            {uploadedFileName && (
-              <span className="text-[11px] text-emerald-600 font-medium flex items-center gap-1">
-                <CheckCircle2 className="w-3.5 h-3.5" />
-                {uploadedFileName}
-              </span>
-            )}
           </div>
         </div>
 
