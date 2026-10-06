@@ -1,10 +1,23 @@
-import React, { useEffect, useRef } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { ArrowRight } from 'lucide-react';
 import { getAssetUrl } from '../utils/assetHelper';
+import { sanityClient } from '../sanity/client';
+import { SITE_SETTINGS_QUERY } from '../sanity/queries';
 
 export default function RoyalHero({ lang, setActiveTab, ready }) {
   const bn = lang === 'bn';
   const video = useRef(null);
+  const [sanitySettings, setSanitySettings] = useState(null);
+
+  useEffect(() => {
+    sanityClient.fetch(SITE_SETTINGS_QUERY)
+      .then((data) => {
+        if (data) setSanitySettings(data);
+      })
+      .catch((err) => {
+        console.warn('Sanity hero settings fallback:', err);
+      });
+  }, []);
 
   useEffect(() => {
     const el = video.current;
@@ -51,11 +64,16 @@ export default function RoyalHero({ lang, setActiveTab, ready }) {
     else target?.scrollIntoView({ behavior: 'smooth' });
   };
 
+  const posterUrl = sanitySettings?.heroPoster || getAssetUrl('/images/hero-staircase-poster.jpg');
+  const customDesktopVideo = sanitySettings?.heroVideoDesktop;
+  const customMobileVideo = sanitySettings?.heroVideoMobile || customDesktopVideo;
+
   return (
     <section className={`royal-hero ${ready ? 'is-entered' : 'is-entered'}`} aria-label={bn ? 'খেলাৎ ভবন' : 'Khelat Bhawan'}>
       <div className="royal-hero__media">
-        <img className="royal-hero__backdrop" src={getAssetUrl('/images/hero-staircase-poster.jpg')} alt="" fetchpriority="high" />
+        <img className="royal-hero__backdrop" src={posterUrl} alt="" fetchpriority="high" />
         <video
+          key={customDesktopVideo || 'default-hero-video'}
           ref={video}
           className="royal-hero__film"
           autoPlay
@@ -66,11 +84,18 @@ export default function RoyalHero({ lang, setActiveTab, ready }) {
           disablePictureInPicture
           controlsList="nodownload nofullscreen noremoteplayback"
           aria-hidden="true"
-          poster={getAssetUrl('/images/hero-staircase-poster.jpg')}
+          poster={posterUrl}
         >
-          <source src={getAssetUrl('/Videos/hero-palace-film-mobile.mp4')} type="video/mp4" media="(max-width: 768px)" />
-          <source src={getAssetUrl('/Videos/hero-palace-film-mobile.m4v')} type="video/mp4" media="(max-width: 768px)" />
-          <source src={getAssetUrl('/Videos/hero-palace-film.mp4')} type="video/mp4" />
+          {customMobileVideo && <source src={customMobileVideo} type="video/mp4" media="(max-width: 768px)" />}
+          {customDesktopVideo && <source src={customDesktopVideo} type="video/mp4" />}
+          
+          {!customDesktopVideo && (
+            <>
+              <source src={getAssetUrl('/Videos/hero-palace-film-mobile.mp4')} type="video/mp4" media="(max-width: 768px)" />
+              <source src={getAssetUrl('/Videos/hero-palace-film-mobile.m4v')} type="video/mp4" media="(max-width: 768px)" />
+              <source src={getAssetUrl('/Videos/hero-palace-film.mp4')} type="video/mp4" />
+            </>
+          )}
           Your browser does not support background video.
         </video>
       </div>

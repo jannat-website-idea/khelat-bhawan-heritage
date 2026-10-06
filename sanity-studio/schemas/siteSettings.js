@@ -4,6 +4,25 @@ export default {
   type: 'document',
   fields: [
     {
+      name: 'heroVideoDesktop',
+      title: 'Hero Background Video (Desktop)',
+      type: 'file',
+      description: 'Upload custom MP4 background film for the homepage hero banner'
+    },
+    {
+      name: 'heroVideoMobile',
+      title: 'Hero Background Video (Mobile)',
+      type: 'file',
+      description: 'Optional mobile-optimized MP4 film'
+    },
+    {
+      name: 'heroPoster',
+      title: 'Hero Video Poster / Fallback Image',
+      type: 'image',
+      options: { hotspot: true },
+      description: 'Cover image shown before the video starts playing'
+    },
+    {
       name: 'phonePrimary',
       title: 'Primary Phone Number',
       type: 'string',

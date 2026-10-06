@@ -88,6 +88,9 @@ export const FEEDBACK_QUERY = `*[_type == "feedback" && isApproved == true] | or
 }`;
 
 export const SITE_SETTINGS_QUERY = `*[_type == "siteSettings"][0] {
+  "heroVideoDesktop": heroVideoDesktop.asset->url,
+  "heroVideoMobile": heroVideoMobile.asset->url,
+  "heroPoster": heroPoster.asset->url,
   phonePrimary,
   phoneSecondary,
   email,
