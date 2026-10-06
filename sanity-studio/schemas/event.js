@@ -35,32 +35,44 @@ export default {
       title: 'Location / Venue Hall',
       type: 'object',
       fields: [
-        { name: 'en', title: 'English Location (e.g. Thakur Dalan, Khelat Bhawan)', type: 'string' },
-        { name: 'bn', title: 'Bengali Location', type: 'string' }
+        { name: 'en', title: 'English Venue (e.g. Thakur Dalan, Khelat Bhawan)', type: 'string' },
+        { name: 'bn', title: 'Bengali Venue', type: 'string' }
       ]
     },
     {
       name: 'image',
-      title: 'Event Banner / Photograph',
+      title: 'Main Event Cover Banner',
       type: 'image',
       options: { hotspot: true }
+    },
+    {
+      name: 'galleryImages',
+      title: 'Additional Event Photos (Up to 3–4 Images)',
+      type: 'array',
+      of: [
+        {
+          type: 'image',
+          options: { hotspot: true }
+        }
+      ],
+      validation: (Rule) => Rule.max(4).error('You can upload a maximum of 4 additional photographs.')
     },
     {
       name: 'badge',
       title: 'Category / Cultural Badge',
       type: 'object',
       fields: [
-        { name: 'en', title: 'English Badge (e.g. Flagship Festival, Musical Heritage)', type: 'string' },
+        { name: 'en', title: 'English Badge (e.g. Flagship Cultural Festival, Musical Heritage)', type: 'string' },
         { name: 'bn', title: 'Bengali Badge', type: 'string' }
       ]
     },
     {
       name: 'desc',
-      title: 'Event Overview & Description',
+      title: 'Event Overview & Full Description',
       type: 'object',
       fields: [
-        { name: 'en', title: 'English Description', type: 'text', rows: 4 },
-        { name: 'bn', title: 'Bengali Description', type: 'text', rows: 4 }
+        { name: 'en', title: 'English Description', type: 'text', rows: 5 },
+        { name: 'bn', title: 'Bengali Description', type: 'text', rows: 5 }
       ]
     },
     {
@@ -73,10 +85,22 @@ export default {
       ]
     },
     {
+      name: 'whatsappNumber',
+      title: 'WhatsApp Inquiry Number',
+      type: 'string',
+      description: 'Default is 9831093021. You can enter a custom 10-digit number if needed.',
+      initialValue: '9831093021'
+    },
+    {
       name: 'whatsappMessage',
       title: 'Pre-filled WhatsApp Enquiry Message',
       type: 'string',
-      description: 'Text pre-filled when visitors tap "Click to Enquire"'
+      description: 'Text pre-filled when visitors tap "Click to Enquire" (e.g. Hello, I would like to enquire about attending the Durga Puja celebration at Khelat Bhawan.)'
+    },
+    {
+      name: 'eventBrochure',
+      title: 'Downloadable Event Brochure / Program PDF',
+      type: 'file'
     }
   ],
   preview: {

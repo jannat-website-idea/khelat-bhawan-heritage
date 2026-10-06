@@ -222,7 +222,7 @@ const EventsPage = ({ lang = 'en', setActiveTab, onOpenBooking }) => {
 
                     {!isPast ? (
                       <a
-                        href={getWhatsAppLink(event.whatsappMessage)}
+                        href={getWhatsAppLink(event.whatsappMessage || `Hello, I would like to enquire about attending ${titleText} at Khelat Bhawan.`, event.whatsappNumber)}
                         target="_blank"
                         rel="noopener noreferrer"
                         className="inline-flex items-center gap-1.5 px-4 py-2 rounded-lg bg-emerald-700 hover:bg-emerald-600 text-white text-xs font-sans font-semibold tracking-wide transition-all shadow-sm"
@@ -357,11 +357,26 @@ const EventsPage = ({ lang = 'en', setActiveTab, onOpenBooking }) => {
                 </div>
               )}
 
+              {activeModalEvent.galleryImages && activeModalEvent.galleryImages.length > 0 && (
+                <div>
+                  <h3 className="text-xs uppercase tracking-wider font-sans font-semibold text-[#d8ae62] mb-3">
+                    {isBn ? 'অনুষ্ঠানের আলোকচিত্র ও মহাফেজখানা' : 'Event Photography & Venue Highlights'}
+                  </h3>
+                  <div className="grid grid-cols-2 sm:grid-cols-4 gap-2.5">
+                    {activeModalEvent.galleryImages.slice(0, 4).map((imgUrl, i) => (
+                      <div key={i} className="aspect-square rounded-xl overflow-hidden border border-white/20 bg-black/40">
+                        <img src={getAssetUrl(imgUrl)} alt="" className="w-full h-full object-cover hover:scale-105 transition-transform duration-300" />
+                      </div>
+                    ))}
+                  </div>
+                </div>
+              )}
+
               {/* Action */}
               <div className="flex flex-col sm:flex-row items-center justify-between gap-4 pt-4 border-t border-white/15">
                 <p className="text-xs text-[#f0e8d8]/70 text-center sm:text-left">
                   {!isPastEvent(activeModalEvent)
-                    ? (isBn ? 'আসন সংরক্ষণের জন্য আমাদের হোয়াটসঅ্যাপ হেল্পডেস্কে যোগাযোগ করুন।' : 'For invitations, reservations, or bespoke inquiries, please connect via WhatsApp.')
+                    ? (isBn ? 'আসন সংরক্ষণের জন্য আমাদের হোয়াটসঅ্যাপ হেল্পডেস্কে যোগাযোগ করুন (+91 98310 93021)।' : 'For invitations, reservations, or bespoke inquiries, connect via WhatsApp (+91 98310 93021).')
                     : (isBn ? 'এই অনুষ্ঠানটি সম্পন্ন হয়েছে। আর্কাইভ এবং স্মারক তথ্যের জন্য আমাদের সাথে যোগাযোগ করতে পারেন।' : 'This event has concluded. For archival inquiries, please contact estate management.')}
                 </p>
                 <div className="flex items-center gap-3 w-full sm:w-auto justify-end">
@@ -373,7 +388,10 @@ const EventsPage = ({ lang = 'en', setActiveTab, onOpenBooking }) => {
                   </button>
                   {!isPastEvent(activeModalEvent) && (
                     <a
-                      href={getWhatsAppLink(activeModalEvent.whatsappMessage)}
+                      href={getWhatsAppLink(
+                        activeModalEvent.whatsappMessage || `Hello, I would like to enquire about attending ${typeof activeModalEvent.title === 'object' ? (activeModalEvent.title[lang] || activeModalEvent.title.en) : activeModalEvent.title} at Khelat Bhawan.`,
+                        activeModalEvent.whatsappNumber
+                      )}
                       target="_blank"
                       rel="noopener noreferrer"
                       className="inline-flex items-center justify-center gap-2 px-6 py-2.5 rounded-xl bg-emerald-700 hover:bg-emerald-600 text-white font-semibold text-xs tracking-wider uppercase transition-all shadow-md"

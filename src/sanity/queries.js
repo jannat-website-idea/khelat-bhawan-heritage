@@ -9,9 +9,12 @@ export const EVENTS_QUERY = `*[_type == "event"] | order(orderRank asc, date.en 
   time,
   location,
   "image": image.asset->url,
+  "galleryImages": galleryImages[].asset->url,
+  "eventBrochure": eventBrochure.asset->url,
   badge,
   desc,
   highlights,
+  whatsappNumber,
   whatsappMessage
 }`;
 

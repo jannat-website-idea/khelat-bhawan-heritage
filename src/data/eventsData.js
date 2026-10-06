@@ -269,8 +269,10 @@ export const isFutureEvent = (dateStr) => {
   return !isPastEvent({ date: { en: dateStr } });
 };
 
-export const getWhatsAppLink = (message) => {
-  const phone = '919830000000'; // Official business WhatsApp
+export const getWhatsAppLink = (message, customPhone) => {
+  const raw = customPhone || '9831093021';
+  const clean = raw.replace(/\D/g, '');
+  const phone = clean.startsWith('91') && clean.length > 10 ? clean : `91${clean}`;
   const encoded = encodeURIComponent(message || 'Hello, I would like to enquire about events at Khelat Bhawan.');
   return `https://wa.me/${phone}?text=${encoded}`;
 };
