@@ -5,7 +5,7 @@
   "type": "module",
   "scripts": {
     "dev": "vite",
-    "build": "vite build && mkdir -p dist/studio && cp -r sanity-studio/dist/* dist/studio/ && mkdir -p dist/server && cp server/index.js dist/server/index.js",
+    "build": "vite build && mkdir -p dist/studio dist/static && cp -r sanity-studio/dist/* dist/studio/ && cp -r sanity-studio/dist/static/* dist/static/ && mkdir -p dist/server && cp server/index.js dist/server/index.js",
     "preview": "vite preview"
   },
   "dependencies": {
