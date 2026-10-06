@@ -36,6 +36,48 @@ export const GALLERY_QUERY = `*[_type == "galleryItem"] | order(orderRank asc) {
   year
 }`;
 
+export const ABOUT_QUERY = `*[_type == "aboutPage"][0] {
+  _id,
+  title,
+  subtitle,
+  historyOverview,
+  architectureHighlights[] {
+    featureTitleEn,
+    featureTitleBn,
+    featureDescEn,
+    featureDescBn,
+    "image": image.asset->url
+  }
+}`;
+
+export const FOUNDER_QUERY = `*[_type == "founder"][0] {
+  _id,
+  name,
+  years,
+  "portrait": portrait.asset->url,
+  biography,
+  patronageHighlights
+}`;
+
+export const TRUSTEES_QUERY = `*[_type == "trustee"] | order(orderRank asc) {
+  _id,
+  name,
+  role,
+  orderRank,
+  "photo": photo.asset->url,
+  bio
+}`;
+
+export const RENTAL_QUERY = `*[_type == "rentalPackage"] {
+  _id,
+  title,
+  category,
+  "coverImage": coverImage.asset->url,
+  guestCapacity,
+  desc,
+  features
+}`;
+
 export const FEEDBACK_QUERY = `*[_type == "feedback" && isApproved == true] | order(_createdAt desc) {
   _id,
   name,
@@ -54,3 +96,12 @@ export const SITE_SETTINGS_QUERY = `*[_type == "siteSettings"][0] {
   visitingHoursEn,
   visitingHoursBn
 }`;
+
+export const LEGAL_POLICY_QUERY = `*[_type == "legalPolicy"][0] {
+  privacyTitle,
+  privacyContent,
+  termsTitle,
+  termsContent,
+  lastUpdated
+}`;
+

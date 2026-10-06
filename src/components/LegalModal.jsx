@@ -1,10 +1,23 @@
 import React, { useState, useEffect } from 'react';
 import { createPortal } from 'react-dom';
 import { X, Shield, FileText } from 'lucide-react';
+import { sanityClient } from '../sanity/client';
+import { LEGAL_POLICY_QUERY } from '../sanity/queries';
 
 export default function LegalModal({ isOpen, onClose, defaultType = 'privacy', lang = 'en' }) {
   const [activeType, setActiveType] = useState(defaultType);
+  const [sanityPolicy, setSanityPolicy] = useState(null);
   const isBn = lang === 'bn';
+
+  useEffect(() => {
+    sanityClient.fetch(LEGAL_POLICY_QUERY)
+      .then((data) => {
+        if (data) setSanityPolicy(data);
+      })
+      .catch((err) => {
+        console.warn('Sanity legal policy fallback:', err);
+      });
+  }, []);
 
   useEffect(() => {
     setActiveType(defaultType);
@@ -110,9 +123,15 @@ These terms shall be governed by the laws of India and the jurisdiction of the c
 অনলাইন অনুসন্ধান প্রেরণের পর আমাদের কনসিয়ার্জ টিম পরবর্তী ৪৮ ঘণ্টার মধ্যে বিস্তারিত তথ্যের সাথে যোগাযোগ করবে।
   `;
 
-  const currentText = activeType === 'privacy'
-    ? (isBn ? privacyTextBn : privacyTextEn)
-    : (isBn ? termsTextBn : termsTextEn);
+  const livePrivacyText = isBn 
+    ? (sanityPolicy?.privacyContent?.bn || privacyTextBn)
+    : (sanityPolicy?.privacyContent?.en || privacyTextEn);
+
+  const liveTermsText = isBn 
+    ? (sanityPolicy?.termsContent?.bn || termsTextBn)
+    : (sanityPolicy?.termsContent?.en || termsTextEn);
+
+  const currentText = activeType === 'privacy' ? livePrivacyText : liveTermsText;
 
   return createPortal(
     <div 
