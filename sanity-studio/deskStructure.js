@@ -1,43 +1,75 @@
 export const deskStructure = (S) =>
   S.list()
-    .title('Khelat Bhawan Content Dashboard')
+    .title('Khelat Bhawan CMS')
     .items([
-      // 1. Heritage & About
+      // 1. Website content folder (like Mindrhythm)
       S.listItem()
-        .title('🏛️ Heritage & About')
-        .schemaType('aboutPage')
+        .title('📁 Website content')
         .child(
-          S.documentTypeList('aboutPage')
-            .title('Heritage & About Content')
+          S.list()
+            .title('Website content')
+            .items([
+              S.listItem()
+                .title('✨ Hero section')
+                .child(
+                  S.document()
+                    .schemaType('heroSection')
+                    .documentId('heroSection')
+                    .title('Hero section')
+                ),
+              S.listItem()
+                .title('🏛️ About & palace story')
+                .child(
+                  S.document()
+                    .schemaType('aboutPage')
+                    .documentId('aboutPage')
+                    .title('About & palace story')
+                ),
+              S.listItem()
+                .title('👑 Founder (Babu Khelat Ghosh)')
+                .child(
+                  S.document()
+                    .schemaType('founder')
+                    .documentId('founder')
+                    .title('Founder (Babu Khelat Ghosh)')
+                ),
+              S.listItem()
+                .title('📍 Contact information & visiting hours')
+                .child(
+                  S.document()
+                    .schemaType('siteSettings')
+                    .documentId('siteSettings')
+                    .title('Contact information & visiting hours')
+                ),
+            ])
         ),
 
-      // 2. History Timeline
+      // 2. Events & Celebrations
+      S.listItem()
+        .title('🎪 Events & Celebrations')
+        .schemaType('event')
+        .child(
+          S.documentTypeList('event')
+            .title('Events & Celebrations')
+        ),
+
+      // 3. Reservations & Heritage Rental
+      S.listItem()
+        .title('🏰 Reservations & Heritage Rental')
+        .schemaType('rentalPackage')
+        .child(
+          S.documentTypeList('rentalPackage')
+            .title('Reservations & Heritage Rental')
+        ),
+
+      // 4. History Timeline
       S.listItem()
         .title('⏳ History Timeline (1845 – Present)')
         .schemaType('timeline')
         .child(
           S.documentTypeList('timeline')
-            .title('Milestones & Eras')
+            .title('History Timeline (1845 – Present)')
             .defaultOrdering([{ field: 'year', direction: 'asc' }])
-        ),
-
-      // 3. Founder
-      S.listItem()
-        .title('👑 Founder (Babu Khelat Ghosh)')
-        .schemaType('founder')
-        .child(
-          S.documentTypeList('founder')
-            .title('Founder Biography & Archives')
-        ),
-
-      // 4. Trusts & Trustees
-      S.listItem()
-        .title('📜 Trusts & Trustees')
-        .schemaType('trustee')
-        .child(
-          S.documentTypeList('trustee')
-            .title('Board of Trustees & Custodians')
-            .defaultOrdering([{ field: 'orderRank', direction: 'asc' }])
         ),
 
       // 5. Visual Gallery & Films
@@ -46,57 +78,38 @@ export const deskStructure = (S) =>
         .schemaType('galleryItem')
         .child(
           S.documentTypeList('galleryItem')
-            .title('Photographs & Cinema Videos')
+            .title('Visual Gallery & Films')
         ),
 
-      // 6. Events & Celebrations
+      // 6. Trusts & Trustees
       S.listItem()
-        .title('🎪 Events & Celebrations')
-        .schemaType('event')
+        .title('👥 Trusts & Trustees')
+        .schemaType('trustee')
         .child(
-          S.documentTypeList('event')
-            .title('Upcoming & Past Events')
+          S.documentTypeList('trustee')
+            .title('Trusts & Trustees')
+            .defaultOrdering([{ field: 'orderRank', direction: 'asc' }])
         ),
 
-      // 7. Reservations & Heritage Rental
-      S.listItem()
-        .title('🏰 Reservations & Heritage Rental')
-        .schemaType('rentalPackage')
-        .child(
-          S.documentTypeList('rentalPackage')
-            .title('Rental Packages & Experiences')
-        ),
-
-      S.divider(),
-
-      // 8. Guest Feedback Moderation
+      // 7. Guest Reviews Moderation
       S.listItem()
         .title('⭐ Guest Reviews Moderation')
         .schemaType('feedback')
         .child(
           S.documentTypeList('feedback')
-            .title('Guest Reflections & Approval')
+            .title('Guest Reviews Moderation')
         ),
 
-      // 9. Terms of Use & Privacy Policy
+      S.divider(),
+
+      // 8. Privacy policy & Terms of conditions
       S.listItem()
-        .title('📜 Terms of Use & Privacy Policy')
+        .title('📜 Privacy policy & Terms of use')
         .schemaType('legalPolicy')
         .child(
           S.document()
             .schemaType('legalPolicy')
             .documentId('legalPolicy')
-            .title('Terms of Use & Privacy Policy Content')
-        ),
-
-      // 10. Site Settings & Contact Info
-      S.listItem()
-        .title('⚙️ Site Settings & Contact Info')
-        .schemaType('siteSettings')
-        .child(
-          S.document()
-            .schemaType('siteSettings')
-            .documentId('siteSettings')
-            .title('Visiting Hours, Phones & Email')
+            .title('Privacy policy & Terms of use')
         ),
     ]);
