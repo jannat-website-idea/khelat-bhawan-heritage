@@ -24,68 +24,56 @@ export default function HeritageLoader({ onComplete, onReveal, lang }) {
     };
     window.addEventListener('resize', handleResize);
 
-    const particleCount = 120;
-    const particles = Array.from({ length: particleCount }, (_, idx) => {
-      const isCenter = idx < 45;
-      const x = isCenter
-        ? width / 2 + (Math.random() - 0.5) * (width * 0.65)
-        : Math.random() * width;
-      const y = isCenter
-        ? height / 2 + (Math.random() - 0.5) * (height * 0.65)
-        : Math.random() * height;
-
-      const sizeCategory = Math.random();
-      const radius = (sizeCategory > 0.85 ? (Math.random() * 1.6 + 1.8) : (Math.random() * 1.2 + 0.4)) * dpr;
+    const particleCount = 60;
+    const particles = Array.from({ length: particleCount }, () => {
+      const x = Math.random() * width;
+      const y = Math.random() * height;
+      const radius = (Math.random() * 0.9 + 0.4) * dpr;
 
       return {
         x,
         y,
-        originX: x,
         radius,
-        // Smooth and slow floating velocities
-        vx: (Math.random() - 0.5) * 0.08 * dpr,
-        vy: (-Math.random() * 0.12 - 0.02) * dpr,
-        alpha: Math.random() * 0.5 + 0.2,
-        baseAlpha: Math.random() * 0.4 + 0.2,
-        twinkleSpeed: Math.random() * 0.018 + 0.008,
+        // Very slow, delicate floating drift
+        vx: (Math.random() - 0.5) * 0.05 * dpr,
+        vy: (-Math.random() * 0.07 - 0.015) * dpr,
+        baseAlpha: Math.random() * 0.22 + 0.12,
+        twinkleSpeed: Math.random() * 0.012 + 0.005,
         twinkleOffset: Math.random() * Math.PI * 2,
-        color: Math.random() > 0.4 ? '#ffe5a3' : (Math.random() > 0.5 ? '#f5be58' : '#ffd175'),
-        glowColor: Math.random() > 0.5 ? '#ffd885' : '#e6ab48',
-        isStar: sizeCategory > 0.75,
+        color: Math.random() > 0.4 ? '#e8cc96' : '#d8b678',
         driftPhase: Math.random() * Math.PI * 2,
-        driftSpeed: Math.random() * 0.008 + 0.003
+        driftSpeed: Math.random() * 0.005 + 0.002
       };
     });
 
     const render = () => {
       ctx.clearRect(0, 0, width, height);
 
-      // Warm ambient center glow
+      // Soft, subtle warm ambient center gradient
       const centerGlow = ctx.createRadialGradient(
         width / 2,
         height / 2,
-        30 * dpr,
+        20 * dpr,
         width / 2,
         height / 2,
-        Math.max(width, height) * 0.55
+        Math.max(width, height) * 0.5
       );
-      centerGlow.addColorStop(0, 'rgba(95, 48, 22, 0.28)');
-      centerGlow.addColorStop(0.45, 'rgba(32, 12, 16, 0.14)');
+      centerGlow.addColorStop(0, 'rgba(60, 28, 14, 0.18)');
+      centerGlow.addColorStop(0.5, 'rgba(20, 8, 10, 0.08)');
       centerGlow.addColorStop(1, 'rgba(0, 0, 0, 0)');
       ctx.fillStyle = centerGlow;
       ctx.fillRect(0, 0, width, height);
 
       const now = Date.now();
 
-      // Render sparkles and corner dust with smooth, slow floating motion
+      // Render subtle, soft gold dust particles
       particles.forEach((p) => {
-        // Slow floating upwards and gentle horizontal sine wave drift
         p.y += p.vy;
-        p.x += p.vx + Math.sin(now * p.driftSpeed + p.driftPhase) * (0.09 * dpr);
+        p.x += p.vx + Math.sin(now * p.driftSpeed + p.driftPhase) * (0.04 * dpr);
         
-        // Smooth sine-wave twinkle
+        // Gentle, soft breathing twinkle
         const twinkle = Math.sin(now * p.twinkleSpeed + p.twinkleOffset);
-        const currentAlpha = Math.max(0.08, Math.min(0.95, p.baseAlpha + twinkle * 0.35));
+        const currentAlpha = Math.max(0.06, Math.min(0.38, p.baseAlpha + twinkle * 0.1));
 
         // Screen wrap
         if (p.x < -10) p.x = width + 10;
@@ -96,37 +84,12 @@ export default function HeritageLoader({ onComplete, onReveal, lang }) {
         ctx.save();
         ctx.globalAlpha = currentAlpha;
         ctx.fillStyle = p.color;
-        ctx.shadowColor = p.glowColor;
-        ctx.shadowBlur = p.radius * (p.isStar ? 6 : 3.5);
+        ctx.shadowColor = '#e2bd78';
+        ctx.shadowBlur = p.radius * 2;
 
         ctx.beginPath();
         ctx.arc(p.x, p.y, p.radius, 0, Math.PI * 2);
         ctx.fill();
-
-        // Elegant 4-point diamond star flare for larger glitters
-        if (p.isStar && p.radius > 1.2 * dpr) {
-          ctx.strokeStyle = `rgba(255, 248, 225, ${currentAlpha * 0.85})`;
-          ctx.lineWidth = 0.6 * dpr;
-          const flareLen = p.radius * (2.6 + twinkle * 0.6);
-
-          ctx.beginPath();
-          ctx.moveTo(p.x - flareLen, p.y);
-          ctx.lineTo(p.x + flareLen, p.y);
-          ctx.moveTo(p.x, p.y - flareLen);
-          ctx.lineTo(p.x, p.y + flareLen);
-          ctx.stroke();
-
-          // Subtle diagonal micro flare
-          ctx.strokeStyle = `rgba(255, 235, 180, ${currentAlpha * 0.45})`;
-          ctx.lineWidth = 0.4 * dpr;
-          const microFlare = flareLen * 0.55;
-          ctx.beginPath();
-          ctx.moveTo(p.x - microFlare, p.y - microFlare);
-          ctx.lineTo(p.x + microFlare, p.y + microFlare);
-          ctx.moveTo(p.x - microFlare, p.y + microFlare);
-          ctx.lineTo(p.x + microFlare, p.y - microFlare);
-          ctx.stroke();
-        }
         ctx.restore();
       });
 
