@@ -3,7 +3,6 @@ import React, { useEffect, useRef, useState } from 'react';
 export default function HeritageLoader({ onComplete, onReveal, lang }) {
   const [progress, setProgress] = useState(0);
   const [leaving, setLeaving] = useState(false);
-  const [entered, setEntered] = useState(false);
   const canvasRef = useRef(null);
   const dialog = useRef(null);
   const bn = lang === 'bn';
@@ -25,9 +24,9 @@ export default function HeritageLoader({ onComplete, onReveal, lang }) {
     };
     window.addEventListener('resize', handleResize);
 
-    const particleCount = 75;
+    const particleCount = 48;
     const particles = Array.from({ length: particleCount }, (_, idx) => {
-      const isCenter = idx < 34;
+      const isCenter = idx < 22;
       const x = isCenter
         ? width / 2 + (Math.random() - 0.5) * (width * 0.55)
         : Math.random() * width;
@@ -39,9 +38,9 @@ export default function HeritageLoader({ onComplete, onReveal, lang }) {
         x,
         y,
         radius: (Math.random() * 1.8 + 0.5) * dpr,
-        vx: (Math.random() - 0.5) * 0.22 * dpr,
-        vy: ((Math.random() - 0.5) * 0.22 - 0.08) * dpr,
-        alpha: Math.random() * 0.65 + 0.2,
+        vx: (Math.random() - 0.5) * 0.12 * dpr,
+        vy: ((Math.random() - 0.5) * 0.12 - 0.035) * dpr,
+        alpha: Math.random() * 0.45 + 0.14,
         twinkleSpeed: Math.random() * 0.025 + 0.012,
         color: Math.random() > 0.35 ? '#ffd885' : '#f5be58',
         isStar: Math.random() > 0.55
@@ -113,14 +112,14 @@ export default function HeritageLoader({ onComplete, onReveal, lang }) {
     };
   }, []);
 
-  // 2. Smooth Cinematic Timer (~3.5 seconds)
+  // 2. Deliberate cinematic timer. The longer pace lets the wordmark breathe
+  // before the homepage is revealed.
   useEffect(() => {
     let disposed = false, finishing = false, frame, holdTimer, exitTimer;
     
-    const enterTimer = setTimeout(() => setEntered(true), 60);
     const start = performance.now();
     const reduced = matchMedia('(prefers-reduced-motion: reduce)').matches;
-    const duration = reduced ? 300 : 3500;
+    const duration = reduced ? 300 : 5200;
     const previousOverflow = document.body.style.overflow;
     document.body.style.overflow = 'hidden';
     window.scrollTo({ top: 0, left: 0, behavior: 'instant' });
@@ -149,8 +148,8 @@ export default function HeritageLoader({ onComplete, onReveal, lang }) {
           document.body.scrollTop = 0;
           onReveal?.(true);
           setLeaving(true);
-          exitTimer = setTimeout(() => onComplete(false), reduced ? 0 : 800);
-        }, reduced ? 0 : 300);
+          exitTimer = setTimeout(() => onComplete(false), reduced ? 0 : 1000);
+        }, reduced ? 0 : 550);
       } else {
         frame = requestAnimationFrame(tick);
       }
@@ -159,7 +158,6 @@ export default function HeritageLoader({ onComplete, onReveal, lang }) {
 
     return () => {
       disposed = true;
-      clearTimeout(enterTimer);
       cancelAnimationFrame(frame);
       clearTimeout(holdTimer);
       clearTimeout(exitTimer);
@@ -171,7 +169,7 @@ export default function HeritageLoader({ onComplete, onReveal, lang }) {
     <div
       ref={dialog}
       tabIndex={-1}
-      className={`palace-entrance ${entered ? 'is-entered' : ''} ${leaving ? 'is-leaving' : ''}`}
+      className={`palace-entrance ${leaving ? 'is-leaving' : ''}`}
       style={{
         position: 'fixed',
         inset: 0,
@@ -182,9 +180,9 @@ export default function HeritageLoader({ onComplete, onReveal, lang }) {
         padding: 'calc(env(safe-area-inset-top, 0px) + 24px) 5vw calc(env(safe-area-inset-bottom, 0px) + 28px)',
         backgroundColor: '#050203',
         color: '#f0e7d5',
-        opacity: leaving ? 0 : entered ? 1 : 0,
+        opacity: leaving ? 0 : 1,
         transform: leaving ? 'scale(1.02)' : 'scale(1)',
-        transition: 'opacity 0.9s cubic-bezier(0.22, 1, 0.36, 1), transform 0.9s cubic-bezier(0.22, 1, 0.36, 1)',
+        transition: 'opacity 1s cubic-bezier(0.22, 1, 0.36, 1), transform 1s cubic-bezier(0.22, 1, 0.36, 1)',
         pointerEvents: leaving ? 'none' : 'auto',
         overflow: 'hidden'
       }}
@@ -203,28 +201,24 @@ export default function HeritageLoader({ onComplete, onReveal, lang }) {
         <span>{bn ? 'কলকাতা · স্থাপিত ১৮৪৫' : 'Kolkata · Est. 1845'}</span>
       </header>
 
-      {/* Central Composition with Silky Smooth Continuous Letter Animation */}
+      {/* Central composition: a quiet wordmark that opens gradually as the palace loads. */}
       <div className="relative z-10 flex flex-col items-center justify-center text-center my-auto py-4 sm:py-6 max-w-4xl mx-auto w-full px-2">
-        {/* Top Label: Pathuria Ghata Ghosh Bari */}
-        <p className="text-[10px] sm:text-[11px] uppercase tracking-[0.25em] sm:tracking-[0.32em] text-[#dbc59d] mb-3 sm:mb-4 font-sans animate-fade-in opacity-85">
-          {bn ? 'পাথুরিয়াঘাটা ঘোষ বাড়ি' : 'Pathuria Ghata Ghosh Bari'}
-        </p>
-        
-        {/* Stacked Luxury Title with Smooth Fluid Letter Expansion & Liquid Gold Shimmer */}
-        <div className="flex flex-col items-center justify-center select-none py-1 sm:py-2 w-full">
-          {/* Line 1: Khelat */}
-          <span className="loader-title-khelat font-serif font-light text-[clamp(42px,9vw,115px)] leading-[1.0]">
-            {bn ? 'খেলাৎ' : 'Khelat'}
-          </span>
-
-          {/* Line 2: Bhawan */}
-          <span className="loader-title-bhawan font-serif italic font-normal text-[clamp(46px,10vw,125px)] leading-[0.95] mt-1 sm:mt-2">
-            {bn ? 'ভবন' : 'Bhawan'}
-          </span>
+        <div className="loader-crest" aria-hidden="true">
+          <span />
+          <i />
+          <span />
         </div>
 
-        {/* Bottom Caption: A living legacy of Bengal since 1845 */}
-        <span className="loader-caption-emerge font-serif italic text-xs sm:text-base text-[#ccbaa1] mt-4 sm:mt-6 px-4">
+        <p className="loader-kicker text-[9px] sm:text-[11px] uppercase tracking-[0.24em] sm:tracking-[0.34em] text-[#dbc59d] mt-4 mb-4 sm:mb-6 font-sans">
+          {bn ? 'পাথুরিয়াঘাটা ঘোষ বাড়ি' : 'Pathuria Ghata Ghosh Bari'}
+        </p>
+
+        <h1 className={`loader-wordmark ${bn ? 'loader-wordmark--bn' : ''} select-none font-serif font-light text-[clamp(46px,8vw,112px)] whitespace-nowrap`}>
+          <span className="loader-wordmark__line">{bn ? 'খেলাৎ' : 'Khelat'}</span>
+          <span className="loader-wordmark__line">{bn ? 'ভবন' : 'Bhawan'}</span>
+        </h1>
+
+        <span className="loader-caption-emerge font-serif italic text-xs sm:text-base text-[#ccbaa1] mt-5 sm:mt-8 px-4">
           {bn ? 'এক জীবন্ত ঐতিহ্য ও সাবেকি উত্তরাধিকার' : 'A living legacy of Bengal since 1845'}
         </span>
       </div>
@@ -254,158 +248,153 @@ export default function HeritageLoader({ onComplete, onReveal, lang }) {
         </div>
       </footer>
 
-      {/* High-Performance Fluid CSS Animation Styles with Responsive Media Queries */}
+      {/* Wordmark spacing starts close and expands throughout the loading sequence. */}
       <style>{`
-        @keyframes loaderKhelatFlow {
+        @keyframes loaderWordmarkReveal {
           0% {
             opacity: 0;
-            filter: blur(8px);
-            letter-spacing: 0.03em;
-            transform: scale(0.96) translateY(6px);
+            filter: blur(7px);
+            letter-spacing: 0.005em;
+            transform: translateY(7px) scale(0.985);
           }
-          20% {
+          14% {
             opacity: 1;
             filter: blur(0px);
-            letter-spacing: 0.04em;
-            transform: scale(0.98) translateY(0);
-          }
-          65% {
-            letter-spacing: 0.20em;
-            transform: scale(1.01);
-            text-shadow: 0 0 35px rgba(230, 185, 110, 0.6), 0 0 60px rgba(216, 174, 98, 0.3);
+            letter-spacing: 0.012em;
+            transform: translateY(0) scale(1);
           }
           100% {
-            letter-spacing: 0.16em;
-            transform: scale(1);
+            letter-spacing: 0.20em;
             opacity: 1;
             filter: blur(0px);
-            text-shadow: 0 0 40px rgba(230, 185, 110, 0.5);
+            transform: translateY(0) scale(1);
+            text-shadow: 0 0 28px rgba(226, 188, 116, 0.22);
           }
         }
 
-        @keyframes loaderBhawanFlow {
+        @keyframes loaderGoldPass {
           0% {
-            opacity: 0;
-            filter: blur(8px);
-            letter-spacing: 0.02em;
-            transform: scale(0.96) translateY(8px);
-          }
-          25% {
-            opacity: 1;
-            filter: blur(0px);
-            letter-spacing: 0.03em;
-            transform: scale(0.98) translateY(0);
-          }
-          68% {
-            letter-spacing: 0.15em;
-            transform: scale(1.01);
-            text-shadow: 0 0 35px rgba(216, 174, 98, 0.6), 0 0 60px rgba(184, 134, 40, 0.3);
+            background-position: 130% 50%;
           }
           100% {
-            letter-spacing: 0.12em;
-            transform: scale(1);
-            opacity: 1;
-            filter: blur(0px);
-            text-shadow: 0 0 40px rgba(216, 174, 98, 0.5);
+            background-position: -30% 50%;
           }
+        }
+
+        @keyframes loaderSupportingText {
+          0%, 18% {
+            opacity: 0;
+            transform: translateY(7px);
+          }
+          48%, 100% {
+            opacity: 0.88;
+            transform: translateY(0);
+          }
+        }
+
+        @keyframes loaderCrestReveal {
+          0%, 8% {
+            opacity: 0;
+            transform: scaleX(0.2);
+          }
+          38%, 100% {
+            opacity: 1;
+            transform: scaleX(1);
+          }
+        }
+
+        .loader-wordmark {
+          display: flex;
+          flex-direction: column;
+          align-items: center;
+          justify-content: center;
+          gap: 0.02em;
+          line-height: 0.82;
+          max-width: 100%;
+          color: #ead19a;
+          background: linear-gradient(100deg, #b98639 0%, #f7dfaa 32%, #fff8e7 50%, #e5bd71 68%, #a46f29 100%);
+          background-size: 260% 100%;
+          -webkit-background-clip: text;
+          -webkit-text-fill-color: transparent;
+          animation:
+            loaderWordmarkReveal 5.2s cubic-bezier(0.24, 0.66, 0.25, 1) forwards,
+            loaderGoldPass 5.2s cubic-bezier(0.37, 0, 0.2, 1) forwards;
+          will-change: letter-spacing, transform, opacity;
+        }
+
+        .loader-wordmark__line {
+          display: block;
+          padding-left: 0.2em;
+        }
+
+        .loader-kicker,
+        .loader-caption-emerge {
+          animation: loaderSupportingText 5.2s cubic-bezier(0.22, 1, 0.36, 1) forwards;
+        }
+
+        .loader-crest {
+          width: min(210px, 48vw);
+          display: grid;
+          grid-template-columns: 1fr auto 1fr;
+          align-items: center;
+          gap: 13px;
+          transform-origin: center;
+          animation: loaderCrestReveal 5.2s cubic-bezier(0.22, 1, 0.36, 1) forwards;
+        }
+
+        .loader-crest span {
+          height: 1px;
+          background: linear-gradient(90deg, transparent, rgba(216, 174, 98, 0.72));
+        }
+
+        .loader-crest span:last-child {
+          transform: rotate(180deg);
+        }
+
+        .loader-crest i {
+          width: 6px;
+          height: 6px;
+          border: 1px solid rgba(238, 205, 139, 0.9);
+          transform: rotate(45deg);
+          box-shadow: 0 0 16px rgba(216, 174, 98, 0.45);
         }
 
         @media (max-width: 640px) {
-          @keyframes loaderKhelatFlow {
+          @keyframes loaderWordmarkReveal {
             0% {
               opacity: 0;
               filter: blur(6px);
-              letter-spacing: 0.02em;
-              transform: scale(0.96);
+              letter-spacing: 0;
+              transform: translateY(6px) scale(0.985);
             }
-            20% {
+            14% {
               opacity: 1;
-              filter: blur(0px);
-              letter-spacing: 0.03em;
-              transform: scale(0.98);
-            }
-            65% {
-              letter-spacing: 0.13em;
-              transform: scale(1.01);
-              text-shadow: 0 0 25px rgba(230, 185, 110, 0.6);
+              filter: blur(0);
+              letter-spacing: 0.006em;
+              transform: translateY(0) scale(1);
             }
             100% {
-              letter-spacing: 0.10em;
-              transform: scale(1);
               opacity: 1;
-              text-shadow: 0 0 30px rgba(230, 185, 110, 0.5);
+              filter: blur(0);
+              letter-spacing: 0.075em;
+              transform: translateY(0) scale(1);
+              text-shadow: 0 0 22px rgba(226, 188, 116, 0.2);
             }
           }
 
-          @keyframes loaderBhawanFlow {
-            0% {
-              opacity: 0;
-              filter: blur(6px);
-              letter-spacing: 0.01em;
-              transform: scale(0.96);
-            }
-            25% {
-              opacity: 1;
-              filter: blur(0px);
-              letter-spacing: 0.02em;
-              transform: scale(0.98);
-            }
-            68% {
-              letter-spacing: 0.10em;
-              transform: scale(1.01);
-              text-shadow: 0 0 25px rgba(216, 174, 98, 0.6);
-            }
-            100% {
-              letter-spacing: 0.08em;
-              transform: scale(1);
-              opacity: 1;
-              text-shadow: 0 0 30px rgba(216, 174, 98, 0.5);
-            }
+          .loader-wordmark {
+            font-size: clamp(42px, 13.5vw, 58px);
+            line-height: 0.84;
           }
         }
 
-        @keyframes loaderCaptionFlow {
-          0% {
-            opacity: 0;
-            transform: translateY(10px);
+        @media (prefers-reduced-motion: reduce) {
+          .loader-wordmark,
+          .loader-kicker,
+          .loader-caption-emerge,
+          .loader-crest {
+            animation-duration: 0.25s;
           }
-          35% {
-            opacity: 0;
-            transform: translateY(6px);
-          }
-          60% {
-            opacity: 0.85;
-            transform: translateY(0);
-          }
-          100% {
-            opacity: 0.95;
-            transform: translateY(0);
-          }
-        }
-
-        .loader-title-khelat {
-          display: block;
-          background: linear-gradient(115deg, #fff2d4 0%, #ffd88a 35%, #ffffff 50%, #ffd88a 65%, #d8ae62 100%);
-          background-size: 200% auto;
-          -webkit-background-clip: text;
-          -webkit-text-fill-color: transparent;
-          animation: loaderKhelatFlow 3.4s cubic-bezier(0.22, 1, 0.36, 1) forwards;
-          will-change: letter-spacing, transform, opacity;
-        }
-
-        .loader-title-bhawan {
-          display: block;
-          background: linear-gradient(115deg, #ffeec7 0%, #e2c996 40%, #ffffff 55%, #e2c996 70%, #ba8a38 100%);
-          background-size: 200% auto;
-          -webkit-background-clip: text;
-          -webkit-text-fill-color: transparent;
-          animation: loaderBhawanFlow 3.4s cubic-bezier(0.22, 1, 0.36, 1) forwards;
-          will-change: letter-spacing, transform, opacity;
-        }
-
-        .loader-caption-emerge {
-          display: block;
-          animation: loaderCaptionFlow 3.4s cubic-bezier(0.22, 1, 0.36, 1) forwards;
         }
       `}</style>
     </div>
