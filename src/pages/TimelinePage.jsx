@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { getAssetUrl } from '../utils/assetHelper';
 import { familyTreeData } from '../data/familyTreeData';
 import HeritageFamilyTree from '../components/HeritageFamilyTree';
+import { getCMSData } from '../data/cmsStore';
 import { sanityClient } from '../sanity/client';
 import { TIMELINE_QUERY } from '../sanity/queries';
 import { Clock, Users, Calendar, ArrowRight, Sparkles, CheckCircle2, Landmark, Heart, Music, Shield, BookOpen, Film, Flame, Download } from 'lucide-react';
@@ -11,6 +12,10 @@ export default function TimelinePage({ lang = 'en', setActiveTab, onOpenLightbox
   const [expandedGen, setExpandedGen] = useState(1);
   const [activeHoverNode, setActiveHoverNode] = useState(null);
   const [sanityMilestones, setSanityMilestones] = useState(null);
+  const [localCMSMilestones, setLocalCMSMilestones] = useState(() => {
+    const cms = getCMSData();
+    return cms?.timeline && cms.timeline.length > 0 ? cms.timeline : null;
+  });
 
   const isBn = lang === 'bn';
 
@@ -24,6 +29,14 @@ export default function TimelinePage({ lang = 'en', setActiveTab, onOpenLightbox
       .catch((err) => {
         console.warn('Sanity query fallback to local timeline:', err);
       });
+
+    const handleCMSUpdate = (e) => {
+      if (e.detail?.timeline) {
+        setLocalCMSMilestones(e.detail.timeline);
+      }
+    };
+    window.addEventListener('khelat_cms_updated', handleCMSUpdate);
+    return () => window.removeEventListener('khelat_cms_updated', handleCMSUpdate);
   }, []);
 
   const milestones = [
@@ -184,7 +197,19 @@ export default function TimelinePage({ lang = 'en', setActiveTab, onOpenLightbox
         quote: isBn ? "“সময়ের পরিক্রমায় অক্ষুণ্ণ ঐতিহ্য।”" : "“A living tradition across generations.”",
         icon: Landmark
       }))
-    : milestones;
+    : (localCMSMilestones && localCMSMilestones.length > 0
+        ? localCMSMilestones.map((doc) => ({
+            year: doc.year,
+            badge: doc.era || 'ESTATE MILESTONE',
+            title: doc.title,
+            desc: doc.desc,
+            image: doc.image || '/images/SDP_0344.jpg',
+            caption: doc.title,
+            actionLabel: isBn ? "বিস্তারিত দেখুন" : "READ MORE",
+            quote: isBn ? "“সময়ের পরিক্রমায় অক্ষুণ্ণ ঐতিহ্য।”" : "“A living tradition across generations.”",
+            icon: Landmark
+          }))
+        : milestones);
 
   const handleCardClick = (item) => {
     onOpenLightbox({

@@ -4,6 +4,7 @@ import Footer from './components/Footer';
 import BookingModal from './components/BookingModal';
 import Lightbox from './components/Lightbox';
 import LegalModal from './components/LegalModal';
+import AdminCMSDashboard from './components/AdminCMSDashboard';
 import HeritageLoader from './components/HeritageLoader';
 import useHeritageMotion from './hooks/useHeritageMotion';
 
@@ -31,7 +32,31 @@ export default function App() {
   const [lightboxItem, setLightboxItem] = useState(null);
   const [isLegalOpen, setIsLegalOpen] = useState(false);
   const [legalType, setLegalType] = useState('privacy');
+  const [isCMSOpen, setIsCMSOpen] = useState(false);
   useHeritageMotion(activeTab, lang, loading);
+
+  useEffect(() => {
+    const handleHash = () => {
+      if (window.location.hash === '#cms' || window.location.hash === '#admin') {
+        setIsCMSOpen(true);
+      }
+    };
+    handleHash();
+    window.addEventListener('hashchange', handleHash);
+
+    const handleKeyDown = (e) => {
+      if ((e.ctrlKey || e.metaKey) && e.shiftKey && (e.key === 'A' || e.key === 'a')) {
+        e.preventDefault();
+        setIsCMSOpen((prev) => !prev);
+      }
+    };
+    window.addEventListener('keydown', handleKeyDown);
+
+    return () => {
+      window.removeEventListener('hashchange', handleHash);
+      window.removeEventListener('keydown', handleKeyDown);
+    };
+  }, []);
 
   const handleOpenBooking = (eventName = '') => {
     setBookingEvent(typeof eventName === 'string' ? eventName : '');
@@ -276,6 +301,7 @@ export default function App() {
         setActiveTab={handleTabChange}
         onOpenBooking={handleOpenBooking}
         onOpenLegal={handleOpenLegal}
+        onOpenCMS={() => setIsCMSOpen(true)}
         content={siteData}
       />
 
@@ -297,6 +323,12 @@ export default function App() {
         onClose={() => setIsLegalOpen(false)}
         defaultType={legalType}
         lang={lang}
+      />
+
+      {/* In-App Estate CMS Dashboard */}
+      <AdminCMSDashboard
+        isOpen={isCMSOpen}
+        onClose={() => setIsCMSOpen(false)}
       />
 
       {/* Full-Screen Lightbox */}

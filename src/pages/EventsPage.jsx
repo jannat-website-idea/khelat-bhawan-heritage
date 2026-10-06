@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { createPortal } from 'react-dom';
 import { defaultEventsData, isPastEvent, getWhatsAppLink } from '../data/eventsData';
+import { getCMSData } from '../data/cmsStore';
 import { sanityClient } from '../sanity/client';
 import { EVENTS_QUERY } from '../sanity/queries';
 import { Calendar, Clock, MapPin, Sparkles, MessageCircle, ArrowRight, X, CheckCircle2, Layers, History, CalendarCheck } from 'lucide-react';
@@ -10,9 +11,12 @@ const EventsPage = ({ lang = 'en', setActiveTab, onOpenBooking }) => {
   const isBn = lang === 'bn';
   const [selectedCategory, setSelectedCategory] = useState('all'); // 'all', 'upcoming', 'past'
   const [activeModalEvent, setActiveModalEvent] = useState(null);
-  const [eventsList, setEventsList] = useState(defaultEventsData);
+  const [eventsList, setEventsList] = useState(() => {
+    const cms = getCMSData();
+    return cms?.events && cms.events.length > 0 ? cms.events : defaultEventsData;
+  });
 
-  // Fetch live events from Sanity CMS (with instant fallback to default data)
+  // Fetch live events from Sanity CMS and sync with In-App CMS
   useEffect(() => {
     sanityClient.fetch(EVENTS_QUERY)
       .then((data) => {
@@ -23,6 +27,14 @@ const EventsPage = ({ lang = 'en', setActiveTab, onOpenBooking }) => {
       .catch((err) => {
         console.warn('Sanity query fallback to local events:', err);
       });
+
+    const handleCMSUpdate = (e) => {
+      if (e.detail?.events) {
+        setEventsList(e.detail.events);
+      }
+    };
+    window.addEventListener('khelat_cms_updated', handleCMSUpdate);
+    return () => window.removeEventListener('khelat_cms_updated', handleCMSUpdate);
   }, []);
 
   // Lock body scroll and listen for Escape key when modal is open

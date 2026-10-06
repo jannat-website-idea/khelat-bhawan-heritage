@@ -1,7 +1,7 @@
 import React from 'react';
 import { Phone, Mail, MapPin, Clock } from 'lucide-react';
 
-export default function Footer({ lang, setActiveTab, onOpenBooking, onOpenLegal, content }) {
+export default function Footer({ lang, setActiveTab, onOpenBooking, onOpenLegal, onOpenCMS, content }) {
   const t = content[lang];
 
   const handleNav = (tab) => {
@@ -159,6 +159,13 @@ export default function Footer({ lang, setActiveTab, onOpenBooking, onOpenLegal,
               className="hover:text-rose-gold transition-colors underline-offset-2 hover:underline cursor-pointer"
             >
               Terms of Use
+            </button>
+            <span className="text-primary-foreground/30">|</span>
+            <button 
+              onClick={() => onOpenCMS ? onOpenCMS() : null}
+              className="hover:text-rose-gold transition-colors underline-offset-2 hover:underline cursor-pointer font-semibold text-rose-gold/80 hover:text-rose-gold flex items-center gap-1"
+            >
+              <span>⚙️ Estate CMS</span>
             </button>
           </div>
           <p className="font-serif italic text-rose-gold">
