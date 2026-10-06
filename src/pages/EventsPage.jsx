@@ -1,6 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import { createPortal } from 'react-dom';
 import { defaultEventsData, isPastEvent, getWhatsAppLink } from '../data/eventsData';
+import { sanityClient } from '../sanity/client';
+import { EVENTS_QUERY } from '../sanity/queries';
 import { Calendar, Clock, MapPin, Sparkles, MessageCircle, ArrowRight, X, CheckCircle2, Layers, History, CalendarCheck } from 'lucide-react';
 import { getAssetUrl } from '../utils/assetHelper';
 
@@ -8,8 +10,20 @@ const EventsPage = ({ lang = 'en', setActiveTab, onOpenBooking }) => {
   const isBn = lang === 'bn';
   const [selectedCategory, setSelectedCategory] = useState('all'); // 'all', 'upcoming', 'past'
   const [activeModalEvent, setActiveModalEvent] = useState(null);
+  const [eventsList, setEventsList] = useState(defaultEventsData);
 
-  const eventsList = defaultEventsData;
+  // Fetch live events from Sanity CMS (with instant fallback to default data)
+  useEffect(() => {
+    sanityClient.fetch(EVENTS_QUERY)
+      .then((data) => {
+        if (Array.isArray(data) && data.length > 0) {
+          setEventsList(data);
+        }
+      })
+      .catch((err) => {
+        console.warn('Sanity query fallback to local events:', err);
+      });
+  }, []);
 
   // Lock body scroll and listen for Escape key when modal is open
   useEffect(() => {

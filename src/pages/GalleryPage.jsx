@@ -2,6 +2,8 @@ import React, { useState, useEffect, useCallback, useMemo } from 'react';
 import { createPortal } from 'react-dom';
 import { getAssetUrl } from '../utils/assetHelper';
 import { photographyGalleryData, filmsGalleryData } from '../data/galleryData';
+import { sanityClient } from '../sanity/client';
+import { GALLERY_QUERY } from '../sanity/queries';
 import { 
   X, 
   ChevronLeft, 
@@ -17,24 +19,58 @@ export default function GalleryPage({ lang = 'en' }) {
   const [activeIndex, setActiveIndex] = useState(null);
   const [isClosing, setIsClosing] = useState(false);
   const [activeFilter, setActiveFilter] = useState('all');
+  const [sanityGallery, setSanityGallery] = useState(null);
 
-  const galleryItems = useMemo(() => {
-    const photos = photographyGalleryData.map((item, index) => ({
+  useEffect(() => {
+    sanityClient.fetch(GALLERY_QUERY)
+      .then((data) => {
+        if (Array.isArray(data) && data.length > 0) {
+          setSanityGallery(data);
+        }
+      })
+      .catch((err) => {
+        console.warn('Sanity query fallback to local gallery:', err);
+      });
+  }, []);
+
+  const { allItems, photoCount, filmCount } = useMemo(() => {
+    if (sanityGallery && sanityGallery.length > 0) {
+      const formatted = sanityGallery.map((item, idx) => ({
+        ...item,
+        id: item._id || idx,
+        mediaType: item.mediaType || (item.src && item.src.endsWith('.mp4') ? 'video' : 'image'),
+        preview: item.preview || item.src,
+        src: item.src
+      }));
+      const pCount = formatted.filter(item => item.mediaType === 'image').length;
+      const fCount = formatted.filter(item => item.mediaType === 'video').length;
+      return { allItems: formatted, photoCount: pCount, filmCount: fCount };
+    }
+
+    const photos = photographyGalleryData.map((item) => ({
       ...item,
       mediaType: 'image',
       preview: item.src,
       src: item.src
     }));
-    const films = filmsGalleryData.map((item, index) => ({
+    const films = filmsGalleryData.map((item) => ({
       ...item,
       mediaType: 'video',
       preview: item.poster,
       src: item.src
     }));
-    if (activeFilter === 'photography') return photos;
-    if (activeFilter === 'films') return films;
-    return [...photos, ...films];
-  }, [activeFilter]);
+    return {
+      allItems: [...photos, ...films],
+      photoCount: photos.length,
+      filmCount: films.length
+    };
+  }, [sanityGallery]);
+
+  const galleryItems = useMemo(() => {
+    if (activeFilter === 'photography') return allItems.filter(i => i.mediaType === 'image');
+    if (activeFilter === 'films') return allItems.filter(i => i.mediaType === 'video');
+    return allItems;
+  }, [activeFilter, allItems]);
 
   const openGalleryItem = (index) => {
     setIsClosing(false);
@@ -117,7 +153,7 @@ export default function GalleryPage({ lang = 'en' }) {
                 aria-pressed={activeFilter === value}
               >
                 {label}
-                <span>{value === 'all' ? photographyGalleryData.length + filmsGalleryData.length : value === 'photography' ? photographyGalleryData.length : filmsGalleryData.length}</span>
+                <span>{value === 'all' ? photoCount + filmCount : value === 'photography' ? photoCount : filmCount}</span>
               </button>
             ))}
           </div>

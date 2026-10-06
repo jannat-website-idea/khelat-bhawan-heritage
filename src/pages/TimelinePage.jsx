@@ -1,15 +1,30 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { getAssetUrl } from '../utils/assetHelper';
 import { familyTreeData } from '../data/familyTreeData';
 import HeritageFamilyTree from '../components/HeritageFamilyTree';
+import { sanityClient } from '../sanity/client';
+import { TIMELINE_QUERY } from '../sanity/queries';
 import { Clock, Users, Calendar, ArrowRight, Sparkles, CheckCircle2, Landmark, Heart, Music, Shield, BookOpen, Film, Flame, Download } from 'lucide-react';
 
 export default function TimelinePage({ lang = 'en', setActiveTab, onOpenLightbox, content }) {
   const [activeView, setActiveView] = useState('family-tree'); // default to 'family-tree'
   const [expandedGen, setExpandedGen] = useState(1);
   const [activeHoverNode, setActiveHoverNode] = useState(null);
+  const [sanityMilestones, setSanityMilestones] = useState(null);
 
   const isBn = lang === 'bn';
+
+  useEffect(() => {
+    sanityClient.fetch(TIMELINE_QUERY)
+      .then((data) => {
+        if (Array.isArray(data) && data.length > 0) {
+          setSanityMilestones(data);
+        }
+      })
+      .catch((err) => {
+        console.warn('Sanity query fallback to local timeline:', err);
+      });
+  }, []);
 
   const milestones = [
     {
@@ -157,6 +172,20 @@ export default function TimelinePage({ lang = 'en', setActiveTab, onOpenLightbox
     }
   ];
 
+  const displayMilestones = sanityMilestones && sanityMilestones.length > 0
+    ? sanityMilestones.map((doc) => ({
+        year: doc.year,
+        badge: typeof doc.era === 'object' ? (doc.era[lang] || doc.era.en || 'ESTATE MILESTONE') : (doc.era || 'ESTATE MILESTONE'),
+        title: typeof doc.title === 'object' ? (doc.title[lang] || doc.title.en) : doc.title,
+        desc: typeof doc.desc === 'object' ? (doc.desc[lang] || doc.desc.en) : doc.desc,
+        image: doc.image || '/images/SDP_0344.jpg',
+        caption: typeof doc.title === 'object' ? (doc.title[lang] || doc.title.en) : doc.title,
+        actionLabel: isBn ? "বিস্তারিত দেখুন" : "READ MORE",
+        quote: isBn ? "“সময়ের পরিক্রমায় অক্ষুণ্ণ ঐতিহ্য।”" : "“A living tradition across generations.”",
+        icon: Landmark
+      }))
+    : milestones;
+
   const handleCardClick = (item) => {
     onOpenLightbox({
       type: 'image',
@@ -297,7 +326,7 @@ export default function TimelinePage({ lang = 'en', setActiveTab, onOpenLightbox
 
           {/* Alternating Wide Editorial Story Panels */}
           <div className="heritage-timeline-story-list">
-            {milestones.map((item, idx) => {
+            {displayMilestones.map((item, idx) => {
               const isLeft = idx % 2 === 0;
               const IconComponent = item.icon || Calendar;
 

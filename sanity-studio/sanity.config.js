@@ -7,8 +7,8 @@ export default defineConfig({
   name: 'default',
   title: 'Khelat Bhawan Estate Studio',
 
-  projectId: process.env.SANITY_STUDIO_PROJECT_ID || 'khelatbhawan',
-  dataset: process.env.SANITY_STUDIO_DATASET || 'production',
+  projectId: '4w2m42ab',
+  dataset: 'production',
 
   plugins: [deskTool(), visionTool()],
 

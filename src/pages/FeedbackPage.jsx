@@ -1,15 +1,40 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Star, MessageSquare, ExternalLink, CheckCircle, Send, Heart, Award, Sparkles } from 'lucide-react';
 import SectionHeader from '../components/SectionHeader';
 import AlpanaDivider from '../components/AlpanaDivider';
 import { GOOGLE_REVIEWS_URL, googleReviews, googleReviewSummary } from '../data/googleReviews';
+import { sanityClient } from '../sanity/client';
+import { FEEDBACK_QUERY } from '../sanity/queries';
 import { submitEnquiry } from '../lib/enquiries';
 import { countWords, validateEnquiry } from '../lib/enquiryValidation';
 
 export default function FeedbackPage({ lang, content }) {
   const t = content[lang];
-  const rev = { ...t.reviews, googleUrl: GOOGLE_REVIEWS_URL, items: googleReviews };
+  const [sanityReviews, setSanityReviews] = useState([]);
   const isBn = lang === 'bn';
+
+  useEffect(() => {
+    sanityClient.fetch(FEEDBACK_QUERY)
+      .then((data) => {
+        if (Array.isArray(data) && data.length > 0) {
+          const formatted = data.map((doc, idx) => ({
+            id: doc._id || `sanity-rev-${idx}`,
+            name: doc.name,
+            rating: doc.rating || 5,
+            review: doc.review,
+            time: doc.date ? new Date(doc.date).toLocaleDateString(isBn ? 'bn-BD' : 'en-US', { month: 'short', year: 'numeric' }) : 'Verified Guest',
+            reviewUrl: GOOGLE_REVIEWS_URL
+          }));
+          setSanityReviews(formatted);
+        }
+      })
+      .catch((err) => {
+        console.warn('Sanity feedback fetch fallback:', err);
+      });
+  }, [isBn]);
+
+  const allReviews = [...sanityReviews, ...googleReviews];
+  const rev = { ...t.reviews, googleUrl: GOOGLE_REVIEWS_URL, items: allReviews };
 
   const [rating, setRating] = useState(5);
   const [hoverRating, setHoverRating] = useState(0);
