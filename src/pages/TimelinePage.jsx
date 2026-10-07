@@ -185,31 +185,44 @@ export default function TimelinePage({ lang = 'en', setActiveTab, onOpenLightbox
     }
   ];
 
-  const displayMilestones = sanityMilestones && sanityMilestones.length > 0
-    ? sanityMilestones.map((doc) => ({
-        year: doc.year,
-        badge: typeof doc.era === 'object' ? (doc.era[lang] || doc.era.en || 'ESTATE MILESTONE') : (doc.era || 'ESTATE MILESTONE'),
-        title: typeof doc.title === 'object' ? (doc.title[lang] || doc.title.en) : doc.title,
-        desc: typeof doc.desc === 'object' ? (doc.desc[lang] || doc.desc.en) : doc.desc,
-        image: doc.image || '/images/SDP_0344.jpg',
-        caption: typeof doc.title === 'object' ? (doc.title[lang] || doc.title.en) : doc.title,
-        actionLabel: isBn ? "বিস্তারিত দেখুন" : "READ MORE",
-        quote: isBn ? "“সময়ের পরিক্রমায় অক্ষুণ্ণ ঐতিহ্য।”" : "“A living tradition across generations.”",
-        icon: Landmark
-      }))
-    : (localCMSMilestones && localCMSMilestones.length > 0
-        ? localCMSMilestones.map((doc) => ({
-            year: doc.year,
-            badge: doc.era || 'ESTATE MILESTONE',
-            title: doc.title,
-            desc: doc.desc,
-            image: doc.image || '/images/SDP_0344.jpg',
-            caption: doc.title,
-            actionLabel: isBn ? "বিস্তারিত দেখুন" : "READ MORE",
-            quote: isBn ? "“সময়ের পরিক্রমায় অক্ষুণ্ণ ঐতিহ্য।”" : "“A living tradition across generations.”",
-            icon: Landmark
-          }))
-        : milestones);
+  const getLocalized = (field, fallback = '') => {
+    if (!field) return fallback;
+    if (typeof field === 'string') return field;
+    if (typeof field === 'object') {
+      return field[lang] || field.en || field.bn || fallback;
+    }
+    return String(field);
+  };
+
+  const parseMilestoneItem = (doc, idx) => {
+    const rawBadge = doc.badge || doc.era;
+    const badgeStr = getLocalized(rawBadge, isBn ? 'ঐতিহাসিক মাইলফলক' : 'ESTATE MILESTONE');
+    const titleStr = getLocalized(doc.title, isBn ? 'ঐতিহাসিক অধ্যায়' : 'Historical Milestone');
+    const descStr = getLocalized(doc.desc || doc.description, '');
+    const quoteStr = getLocalized(doc.quote, isBn ? '“সময়ের পরিক্রমায় অক্ষুণ্ণ ঐতিহ্য।”' : '“A living tradition across generations.”');
+    const actionLabelStr = getLocalized(doc.actionLabel, isBn ? 'বিস্তারিত দেখুন' : 'READ MORE');
+    const imageSrc = typeof doc.image === 'string' 
+      ? doc.image 
+      : (doc.image?.asset?.url || '/images/SDP_0344.jpg');
+
+    return {
+      year: String(doc.year || ''),
+      badge: badgeStr,
+      title: titleStr,
+      desc: descStr,
+      image: imageSrc,
+      caption: getLocalized(doc.caption, titleStr),
+      actionLabel: actionLabelStr,
+      quote: quoteStr,
+      icon: doc.icon || Landmark
+    };
+  };
+
+  const rawMilestonesList = (sanityMilestones && sanityMilestones.length > 0)
+    ? sanityMilestones
+    : ((localCMSMilestones && localCMSMilestones.length > 0) ? localCMSMilestones : milestones);
+
+  const displayMilestones = rawMilestonesList.map(parseMilestoneItem);
 
   const handleCardClick = (item) => {
     onOpenLightbox({
