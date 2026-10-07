@@ -1608,7 +1608,7 @@
 .heritage-family-dialog__side-nav:hover,.heritage-family-dialog__side-nav:focus-visible { color: #2b0b07; background: #e0b764; border-color: #f6dfa9; box-shadow: 0 0 0 7px rgba(224, 183, 100, .1), 0 18px 50px rgba(0, 0, 0, .55); outline: none; transform: translateY(-50%) scale(1.08); }
 .heritage-family-dialog__side-nav.is-previous:hover svg,.heritage-family-dialog__side-nav.is-previous:focus-visible svg { transform: translateX(-4px); }
 .heritage-family-dialog__side-nav.is-next:hover svg,.heritage-family-dialog__side-nav.is-next:focus-visible svg { transform: translateX(4px); }
-.heritage-family-dialog__panel { position: relative; display: grid; grid-template-columns: minmax(210px, .72fr) 1.28fr; align-items: center; gap: clamp(1.5rem, 4vw, 3.5rem); width: min(1080px, calc(100vw - 2.5rem)); height: min(720px, calc(100dvh - 2.5rem)); overflow: hidden; padding: clamp(1.5rem, 4vw, 3.5rem); border: 1px solid rgba(224, 183, 100, .62); background: radial-gradient(circle at 0 0, rgba(212, 157, 64, .15), transparent 35%), linear-gradient(145deg, #5b1d16, #200906); color: #f8efe0; box-shadow: 0 40px 100px rgba(0, 0, 0, .68); }
+.heritage-family-dialog__panel { position: relative; display: grid; grid-template-columns: minmax(210px, .72fr) 1.28fr; align-items: center; gap: clamp(1.5rem, 4vw, 3.5rem); width: min(1080px, calc(100vw - 2.5rem)); height: min(720px, calc(100dvh - 2.5rem)); overflow: hidden; padding: clamp(1.5rem, 4vw, 3.5rem); border: 1.5px solid rgba(224, 183, 100, .75); border-radius: 28px; background: radial-gradient(circle at 0 0, rgba(212, 157, 64, .15), transparent 35%), linear-gradient(145deg, #5b1d16, #200906); color: #f8efe0; box-shadow: 0 40px 100px rgba(0, 0, 0, .68); }
 .heritage-family-dialog__close { position: absolute; top: 1.1rem; right: 1.1rem; z-index: 10032; min-height: 46px; display: inline-flex; align-items: center; justify-content: center; gap: .65rem; padding: 0 1rem 0 1.2rem; border: 1px solid rgba(224, 183, 100, .72); border-radius: 999px; color: #fff8eb; background: rgba(34, 9, 6, .96); box-shadow: 0 10px 30px rgba(0,0,0,.45); font: 700 .65rem/1 var(--font-body); letter-spacing: .13em; text-transform: uppercase; }
 .heritage-family-dialog__close:hover,.heritage-family-dialog__close:focus-visible { color: #210906; background: #e0b764; outline: none; }
 .heritage-family-dialog__close svg { width: 18px; }
@@ -1624,8 +1624,8 @@
 .heritage-family-dialog ul { margin: .75rem 0 0; display: grid; gap: .55rem; }
 .heritage-family-dialog li { display: flex; gap: .55rem; color: rgba(248, 239, 224, .76); font-size: .86rem; }
 .heritage-family-dialog__actions { display: flex; flex-wrap: wrap; gap: .55rem; margin-top: 1.5rem; }
-.heritage-family-dialog__actions button { display: inline-flex; align-items: center; gap: .35rem; padding: .6rem .85rem; border: 1px solid rgba(224, 183, 100, .42); color: #f8efe0; font-size: .68rem; letter-spacing: .08em; text-transform: uppercase; }
-.heritage-family-dialog__actions button:hover:not(:disabled) { background: #e0b764; color: #210906; }
+.heritage-family-dialog__actions button { display: inline-flex; align-items: center; gap: .35rem; padding: .6rem 1.1rem; border: 1px solid rgba(224, 183, 100, .42); border-radius: 999px; color: #f8efe0; font-size: .68rem; letter-spacing: .08em; text-transform: uppercase; transition: all .3s ease; }
+.heritage-family-dialog__actions button:hover:not(:disabled) { background: #e0b764; color: #210906; transform: translateY(-2px); }
 .heritage-family-dialog__actions button:disabled { opacity: .3; }
 .heritage-family-dialog__actions svg { width: 14px; }
 
@@ -2190,7 +2190,7 @@
 .heritage-pdf-link { display: inline-flex; align-items: center; gap: .55rem; padding: .65rem .9rem; border: 1px solid hsl(var(--accent)/.35); border-radius: 999px; color: hsl(var(--muted-foreground)); background: hsl(var(--card)/.6); font: 600 .62rem/1 var(--font-sans); letter-spacing: .16em; text-transform: uppercase; transition: color .65s ease, border-color .65s ease, background .65s ease, transform .7s cubic-bezier(.16,1,.3,1); }
 .heritage-pdf-link:hover { color: hsl(var(--primary)); border-color: hsl(var(--accent)); background: hsl(var(--card)); transform: translateY(-2px); }
 .generation-dialog { position: fixed; inset: 0; z-index: 10020; display: grid; place-items: center; padding: 1.25rem; background: rgba(28,7,6,.78); backdrop-filter: blur(9px); animation: generationFade .45s ease both; }
-.generation-dialog__panel { position: relative; width: min(680px, 94vw); padding: clamp(2rem, 5vw, 4.5rem); border: 1px solid rgba(216,174,98,.62); background: radial-gradient(circle at 50% 0, rgba(216,174,98,.15), transparent 42%), linear-gradient(145deg,#561914,#260907); color: #f8f0e4; text-align: center; box-shadow: 0 36px 100px rgba(17,3,2,.58), inset 0 0 0 8px rgba(13,3,2,.28); animation: generationRise .7s cubic-bezier(.16,1,.3,1) both; }
+.generation-dialog__panel { position: relative; width: min(680px, 94vw); padding: clamp(2rem, 5vw, 4.5rem); border: 1.5px solid rgba(216,174,98,.75); border-radius: 28px; background: radial-gradient(circle at 50% 0, rgba(216,174,98,.15), transparent 42%), linear-gradient(145deg,#561914,#260907); color: #f8f0e4; text-align: center; box-shadow: 0 36px 100px rgba(17,3,2,.58); animation: generationRise .7s cubic-bezier(.16,1,.3,1) both; }
 .generation-dialog__close { position: absolute; top: 1rem; right: 1rem; width: 42px; height: 42px; display: grid; place-items: center; border: 1px solid rgba(216,174,98,.38); border-radius: 50%; color: #ead8b7; transition: background .55s ease, transform .55s ease; }
 .generation-dialog__close:hover { background: rgba(216,174,98,.15); transform: rotate(90deg); }
 .generation-dialog__close svg { width: 18px; }

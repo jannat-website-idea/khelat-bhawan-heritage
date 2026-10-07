@@ -358,10 +358,9 @@ export default function TimelinePage({ lang = 'en', setActiveTab, onOpenLightbox
               return (
                 <div
                   key={item.year}
-                  data-reveal
                   onMouseEnter={() => setActiveHoverNode(idx)}
                   onMouseLeave={() => setActiveHoverNode(null)}
-                  className={`heritage-timeline-row-grid ${isLeft ? 'heritage-timeline-row-grid--left' : 'heritage-timeline-row-grid--right'}`}
+                  className={`heritage-timeline-row-grid ${isLeft ? 'heritage-timeline-row-grid--left' : 'heritage-timeline-row-grid--right'} transition-opacity duration-300 opacity-100`}
                 >
                   {/* Left Column */}
                   <div className="heritage-timeline-col heritage-timeline-col--left">

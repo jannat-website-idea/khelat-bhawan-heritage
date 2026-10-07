@@ -43,36 +43,25 @@ export default function CurvedGalleryCarousel({
   }, []);
 
   const scrollToIndex = useCallback((index) => {
-    const track = scrollTrackRef.current;
-    if (!scrollDriven || !track || viewportWidth < 1100) return false;
-    const startIndex = Math.min(initialIndex, Math.max(total - 1, 0));
-    if (index < startIndex) return false;
-    const steps = Math.max(total - 1 - startIndex, 1);
-    const trackTop = track.getBoundingClientRect().top + window.scrollY;
-    const travel = Math.max(track.offsetHeight - window.innerHeight, 1);
-    const progress = Math.max(0, Math.min(1, (index - startIndex) / steps));
-    window.scrollTo({ top: trackTop + (travel * progress), behavior: 'smooth' });
+    setActiveIndex(index);
+    setDisplayIndex(index);
     return true;
-  }, [initialIndex, scrollDriven, total, viewportWidth]);
+  }, []);
 
   // Navigation handlers with smooth cycling
   const handlePrev = useCallback(() => {
     if (total === 0) return;
     const nextIndex = (activeIndex - 1 + total) % total;
-    if (!scrollToIndex(nextIndex)) {
-      setActiveIndex(nextIndex);
-      setDisplayIndex(nextIndex);
-    }
-  }, [activeIndex, scrollToIndex, total]);
+    setActiveIndex(nextIndex);
+    setDisplayIndex(nextIndex);
+  }, [activeIndex, total]);
 
   const handleNext = useCallback(() => {
     if (total === 0) return;
     const nextIndex = (activeIndex + 1) % total;
-    if (!scrollToIndex(nextIndex)) {
-      setActiveIndex(nextIndex);
-      setDisplayIndex(nextIndex);
-    }
-  }, [activeIndex, scrollToIndex, total]);
+    setActiveIndex(nextIndex);
+    setDisplayIndex(nextIndex);
+  }, [activeIndex, total]);
 
   // Desktop vertical scrolling rotates the photographic wall while it remains pinned.
   useEffect(() => {
@@ -122,18 +111,16 @@ export default function CurvedGalleryCarousel({
     return () => window.removeEventListener('keydown', handleKeyDown);
   }, [handlePrev, handleNext]);
 
-  // Horizontal wheel navigation remains available when the gallery is not pinned.
+  // Horizontal wheel navigation only when explicit horizontal delta is detected
   useEffect(() => {
     const el = containerRef.current;
     if (!el || (scrollDriven && viewportWidth >= 1100)) return undefined;
 
     const onWheelScroll = (e) => {
       if (wheelLockRef.current) return;
-      const delta = Math.abs(e.deltaX) > Math.abs(e.deltaY) ? e.deltaX : (e.shiftKey ? e.deltaY : (Math.abs(e.deltaY) > 35 ? e.deltaY : 0));
-      
-      if (Math.abs(delta) > 15) {
+      if (Math.abs(e.deltaX) > Math.abs(e.deltaY) && Math.abs(e.deltaX) > 20) {
         wheelLockRef.current = true;
-        if (delta > 0) {
+        if (e.deltaX > 0) {
           handleNext();
         } else {
           handlePrev();

@@ -75,18 +75,6 @@ export default function App() {
     window.scrollTo({ top: 0, left: 0, behavior: 'instant' });
     document.documentElement.scrollTop = 0;
     document.body.scrollTop = 0;
-    requestAnimationFrame(() => {
-      window.__lenis?.scrollTo(0, { immediate: true, force: true });
-      window.scrollTo(0, 0);
-      document.documentElement.scrollTop = 0;
-      document.body.scrollTop = 0;
-      setTimeout(() => {
-        window.__lenis?.scrollTo(0, { immediate: true, force: true });
-        window.scrollTo(0, 0);
-        document.documentElement.scrollTop = 0;
-        document.body.scrollTop = 0;
-      }, 60);
-    });
   };
 
   const clearRouteHash = () => {
@@ -154,10 +142,6 @@ export default function App() {
     setLoading(false);
     setHomeReady(true);
     scrollToTop();
-    requestAnimationFrame(() => {
-      scrollToTop();
-      setTimeout(scrollToTop, 120);
-    });
   };
 
   // Scroll to top whenever activeTab changes
