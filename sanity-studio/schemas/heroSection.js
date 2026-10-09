@@ -1,6 +1,6 @@
 export default {
   name: 'heroSection',
-  title: 'Hero Section',
+  title: 'Hero Section & Banners',
   type: 'document',
   fields: [
     {
@@ -36,16 +36,64 @@ export default {
       initialValue: 'ঊনবিংশ শতাব্দীর এক রাজকীয় ঐতিহ্যবাহী প্রাসাদ—যেখানে করিন্থিয়ান স্থাপত্য, সুরের মূর্ছনা এবং ১৭১ বছরের ঐতিহ্যবাহী দুর্গাপূজা আজও বহমান।'
     },
     {
-      name: 'heroVideoUrl',
-      title: 'Hero Background Video URL',
-      type: 'url',
-      description: 'URL to high-definition estate background video or cinematic reel.'
+      name: 'heroImage',
+      title: 'Hero Background / Main Banner Image (Upload, Change, or Delete)',
+      description: 'Upload high-resolution landscape photograph for the main website hero section.',
+      type: 'image',
+      options: {
+        hotspot: true,
+        metadata: ['blurhash', 'lqip', 'palette', 'dimensions']
+      }
     },
     {
-      name: 'heroPosterImage',
-      title: 'Hero Poster / Fallback Photograph',
-      type: 'image',
-      options: { hotspot: true }
+      name: 'heroVideoFile',
+      title: 'Hero Background Video File (Upload MP4)',
+      description: 'Upload high-definition cinematic background video loop.',
+      type: 'file',
+      options: {
+        accept: 'video/*'
+      }
+    },
+    {
+      name: 'heroVideoUrl',
+      title: 'Hero Video Stream URL (Alternative or CDN Link)',
+      type: 'url'
+    },
+    {
+      name: 'heroBanners',
+      title: 'Additional Hero Slider Banners / Rotating Images',
+      description: 'Add multiple hero background images for rotating slider or seasonal events.',
+      type: 'array',
+      of: [
+        {
+          type: 'object',
+          fields: [
+            {
+              name: 'bannerImage',
+              title: 'Banner Image',
+              type: 'image',
+              options: { hotspot: true }
+            },
+            {
+              name: 'caption',
+              title: 'Caption / Overlay Title',
+              type: 'string'
+            }
+          ],
+          preview: {
+            select: {
+              title: 'caption',
+              media: 'bannerImage'
+            },
+            prepare({ title, media }) {
+              return {
+                title: title || 'Hero Banner Image',
+                media
+              };
+            }
+          }
+        }
+      ]
     },
     {
       name: 'primaryCtaText',
@@ -63,7 +111,8 @@ export default {
   preview: {
     select: {
       title: 'headlineFirstLine',
-      subtitle: 'headlineSecondLine'
+      subtitle: 'headlineSecondLine',
+      media: 'heroImage'
     }
   }
 };

@@ -54,7 +54,18 @@ export const deskStructure = (S) =>
             .title('Visual Gallery & Films')
         ),
 
-      // 5. Contact Information & Visiting Hours
+      // 5. Hero Section & Banners
+      S.listItem()
+        .title('🏛️ Hero Section & Banners')
+        .schemaType('heroSection')
+        .child(
+          S.document()
+            .schemaType('heroSection')
+            .documentId('heroSection')
+            .title('Hero Section & Banners')
+        ),
+
+      // 6. Contact Information & Visiting Hours
       S.listItem()
         .title('📍 Contact Information & Visiting Hours')
         .schemaType('siteSettings')
@@ -65,7 +76,7 @@ export const deskStructure = (S) =>
             .title('Contact Information & Visiting Hours')
         ),
 
-      // 6. Terms & Privacy Policy
+      // 7. Terms & Privacy Policy
       S.listItem()
         .title('📜 Terms & Privacy Policy')
         .schemaType('legalPolicy')
@@ -76,4 +87,3 @@ export const deskStructure = (S) =>
             .title('Terms & Privacy Policy')
         ),
     ]);
-

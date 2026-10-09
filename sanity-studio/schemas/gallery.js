@@ -41,19 +41,37 @@ export default {
       validation: (Rule) => Rule.required()
     },
     {
-      name: 'mediaFile',
-      title: 'Photograph or Video File',
-      type: 'file'
+      name: 'image',
+      title: 'Photograph / Image File (Upload, Change, or Delete)',
+      description: 'Upload high-resolution photograph. Click browse to upload new image or change/delete existing.',
+      type: 'image',
+      options: {
+        hotspot: true,
+        metadata: ['blurhash', 'lqip', 'palette', 'dimensions']
+      }
+    },
+    {
+      name: 'videoFile',
+      title: 'Heritage Film / Video File (Upload MP4 / MOV)',
+      type: 'file',
+      options: {
+        accept: 'video/*'
+      }
+    },
+    {
+      name: 'videoUrl',
+      title: 'Video Stream URL (Optional fallback or embed)',
+      type: 'url'
     },
     {
       name: 'previewImage',
-      title: 'Cover / Thumbnail Poster Image',
+      title: 'Video Poster / Thumbnail Image',
       type: 'image',
       options: { hotspot: true }
     },
     {
       name: 'desc',
-      title: 'Caption / Story',
+      title: 'Caption / Historical Story',
       type: 'object',
       fields: [
         { name: 'en', title: 'English Caption', type: 'text', rows: 2 },
@@ -67,7 +85,7 @@ export default {
     },
     {
       name: 'year',
-      title: 'Year (e.g. 2026)',
+      title: 'Year (e.g. 1845 or 2026)',
       type: 'string'
     }
   ],
@@ -75,7 +93,15 @@ export default {
     select: {
       title: 'title.en',
       subtitle: 'category',
-      media: 'previewImage'
+      media: 'image'
+    },
+    prepare(selection) {
+      const { title, subtitle, media } = selection;
+      return {
+        title: title || 'Untitled Media',
+        subtitle: subtitle ? `Category: ${subtitle}` : '',
+        media: media
+      };
     }
   }
 };
