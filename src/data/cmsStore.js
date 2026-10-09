@@ -21,104 +21,10 @@ export const initialCMSData = {
     googleMapsUrl: 'https://share.google/TFFurvjijjI8QM8eg'
   },
 
-  // 2. Events & Celebrations (Pre-loaded with all 5 curated events)
+  // 2. Events & Celebrations (Pre-loaded with all curated events)
   events: defaultEventsData,
 
-  // 3. History Timeline (Pre-loaded with all milestones)
-  timeline: [
-    {
-      year: "1845",
-      badge: { en: "ESTATE FOUNDATION", bn: "স্থাপত্য ও প্রাসাদ প্রতিষ্ঠা" },
-      title: { en: "Founding of Khelat Bhawan Palace", bn: "খেলাৎ ভবনের প্রতিষ্ঠা ও রাজপ্রাসাদ নির্মাণ" },
-      desc: {
-        en: "Babu Khelat Chandra Ghosh constructed this grand classical mansion at Pathuria Ghata, North Kolkata with Corinthian colonnades, marble courtyards, and Belgian crystal chandeliers.",
-        bn: "বাবু খেলাৎ চন্দ্র ঘোষ উত্তর কলকাতার পাথুরিয়াঘাটায় গ্র্যান্ড করিন্থিয়ান স্তম্ভ, মার্বেল চত্বর এবং বেলজিয়ান ঝাড়বাতি শোভিত এই ঐতিহাসিক প্রাসাদ নির্মাণ করেন।"
-      },
-      image: "/images/SDP_0344.jpg"
-    },
-    {
-      year: "1855",
-      badge: { en: "DURGA PUJA INAUGURATION", bn: "দুর্গাপূজার সূচনা" },
-      title: { en: "Inauguration of Historic Durga Puja", bn: "প্রথম দুর্গাপূজা ও নিত্য দেবসেবার সূচনা" },
-      desc: {
-        en: "The first formal Durga Puja celebration at Khelat Bhawan established an unbroken 171-year sacred tradition with traditional Ekchala Daker Saaj idol and Sandhi Puja.",
-        bn: "খেলাৎ ভবনে প্রথম আনুষ্ঠানিক একচালা ডাকের সাজের দেবী দুর্গাপূজার সূচনা হয়—যে পবিত্র ঐতিহ্য ১৭১ বছর ধরে আজ পর্যন্ত অব্যাহত।"
-      },
-      image: "/images/unnamed_6.webp"
-    },
-    {
-      year: "1881",
-      badge: { en: "SPIRITUAL VISITATION", bn: "আধ্যাত্মিক আশীর্বাদ" },
-      title: { en: "Historic Visit of Sri Ramakrishna", bn: "শ্রীরামকৃষ্ণ পরমহংসদেবের ঐতিহাসিক আগমন" },
-      desc: {
-        en: "Sri Ramakrishna Paramhansa sanctified Khelat Bhawan with his presence in 1881, as chronicled in the Ramakrishna Kathamrita, blessing the household's devotion and cultural patronage.",
-        bn: "শ্রীরামকৃষ্ণ পরমহংসদেব খেলাৎ ভবনে শুভাগমন করেন, সঙ্গীত ও ভক্তিমূলক আলোচনায় অংশ নেন এবং প্রাঙ্গণকে চিরতরে পবিত্র করেন।"
-      },
-      image: "/images/rk01.png"
-    },
-    {
-      year: "1920",
-      badge: { en: "LEGAL TRUST FORMALIZATION", bn: "বিধিবদ্ধ ট্রাস্ট প্রশাসন" },
-      title: { en: "Formalization of First Heritage Trusts", bn: "প্রথম আনুষ্ঠানিক হেরিটেজ ট্রাস্ট প্রতিষ্ঠা" },
-      desc: {
-        en: "The family establishes formal legal trusts to permanently safeguard the estate properties, ritual endowments, and ongoing philanthropic commitments.",
-        bn: "পারিবারিক দেবসেবা, শিক্ষাবৃত্তি এবং দানশীল সমাজকল্যাণ স্থায়ী করতে প্রথম বিধিবদ্ধ ট্রাস্ট দলিল সম্পাদিত হয়।"
-      },
-      image: "/images/SDP_0299.jpg"
-    },
-    {
-      year: "1985",
-      badge: { en: "PERFORMING ARTS COUNCIL", bn: "সাংস্কৃতিক পরিষদ" },
-      title: { en: "Foundation of Artist Nectar Council", bn: "আর্টিস্ট নেকটার কাউন্সিল অফ কালচার প্রতিষ্ঠা" },
-      desc: {
-        en: "Formation of Artist Nectar Council of Culture to mentor emerging classical musicians, host cultural workshops, and organize heritage theatrical productions.",
-        bn: "বাংলা নাটক, মার্গ সঙ্গীত ও যুব শিল্পীদের উৎসাহ দিতে আর্টিস্ট নেকটার কাউন্সিল প্রতিষ্ঠিত হয়।"
-      },
-      image: "/images/unnamed_12.webp"
-    },
-    {
-      year: "2026",
-      badge: { en: "LIVING MONUMENT TODAY", bn: "বর্তমান ও ভবিষ্যৎ" },
-      title: { en: "A Living Monument of Bengal Heritage", bn: "বাংলার জীবন্ত ঐতিহ্য ও সাংস্কৃতিক আলয়" },
-      desc: {
-        en: "Khelat Bhawan continues as an active cultural sanctuary celebrating music, heritage walks, period cinema, and sacred festivals for global admirers.",
-        bn: "খেলাৎ ভবন আজ এক জীবন্ত সাংস্কৃতিক মহাতীর্থ হিসেবে দেড় শতাব্দীরও বেশি সময় ধরে প্রবহমান।"
-      },
-      image: "/images/SDP_0368.jpg"
-    }
-  ],
-
-  // 4. Heritage & About
-  about: {
-    title: {
-      en: "The Imperial Legacy of Khelat Bhawan",
-      bn: "খেলাৎ ভবন ও রাজবাড়ির ঐতিহাসিক উত্তরাধিকার"
-    },
-    subtitle: {
-      en: "A 175-year journey of preserving Bengali aristocratic heritage, sacred traditions, and classical arts",
-      bn: "১৮৪৫ সাল থেকে উত্তর কলকাতায় বাঙালি সংস্কৃতি, শাস্ত্রীয় সঙ্গীত ও আধ্যাত্মিক ভক্তি সংরক্ষণের দেড় শতাব্দীরও প্রাচীন গৌরব"
-    },
-    historyOverview: {
-      en: "Khelat Bhawan stands as an immortal monument of 19th-century Bengal renaissance architecture, established in 1845 by Babu Khelat Chandra Ghosh at Pathuria Ghata, North Kolkata.",
-      bn: "খেলাৎ ভবন উত্তর কলকাতার পাথুরিয়াঘাটায় ১৮৪৫ সালে বাবু খেলাৎ চন্দ্র ঘোষ কর্তৃক প্রতিষ্ঠিত ঊনবিংশ শতাব্দীর এক অনুপম ঐতিহাসিক রাজপ্রাসাদ।"
-    }
-  },
-
-  // 5. Founder
-  founder: {
-    name: {
-      en: "Babu Khelat Chandra Ghosh",
-      bn: "বাবু খেলাৎ চন্দ্র ঘোষ"
-    },
-    years: "1775 – 1845",
-    image: "/images/khelat-ghosh-portrait-clean.png",
-    biography: {
-      en: "Babu Khelat Chandra Ghosh was a visionary aristocrat, legendary philanthropist, and esteemed cultural patriarch of 19th-century Calcutta who established Khelat Bhawan in 1845.",
-      bn: "বাবু খেলাৎ চন্দ্র ঘোষ ছিলেন ঊনবিংশ শতাব্দীর কলকাতার এক প্রাতঃস্মরণীয় দূরদর্শী ব্যক্তিত্ব, বিশিষ্ট দানশীল সমাজসেবক ও মার্গ সঙ্গীতের পৃষ্ঠপোষক।"
-    }
-  },
-
-  // 6. Rental Packages
+  // 3. Reservations & Heritage Rental Packages
   rentals: [
     {
       id: "wedding",
@@ -129,7 +35,13 @@ export const initialCMSData = {
       desc: {
         en: "Host timeless wedding ceremonies in the illuminated Thakur Dalan courtyard and grand ballroom suites.",
         bn: "ঐতিহাসিক ঠাকুর দালান প্রাঙ্গণ ও রাজকীয় মহলে স্মরণীয় বিবাহ ও অনুষ্ঠান আয়োজন।"
-      }
+      },
+      features: [
+        "Exclusive Access to Thakur Dalan Courtyard",
+        "Bridal Suite & Royal Dressing Chambers",
+        "Heritage Chandelier & Courtyard Lighting",
+        "Dedicated Estate Hospitality Liaison"
+      ]
     },
     {
       id: "cinema",
@@ -140,7 +52,13 @@ export const initialCMSData = {
       desc: {
         en: "Authentic 19th-century architectural backdrops for national and international period cinema, documentaries, and editorial fashion shoots.",
         bn: "চলচ্চিত্র ও তথ্যচিত্রের জন্য উনিশ শতকের দুর্লভ ঐতিহ্যবাহী প্রাসাদের দৃশ্যপট।"
-      }
+      },
+      features: [
+        "1845 Corinthian Colonnade Architecture",
+        "Uninterrupted Daylight Courtyard Access",
+        "3-Phase Power & Production Green Rooms",
+        "Historic Marble Halls & Period Furniture"
+      ]
     },
     {
       id: "concert",
@@ -151,11 +69,102 @@ export const initialCMSData = {
       desc: {
         en: "Acoustically rich classical Indian concerts, baithaks, poetry recitals, and intellectual literary conclaves.",
         bn: "শাস্ত্রীয় উচ্চাঙ্গ সঙ্গীত ও সাহিত্য সন্ধ্যার জন্য অনুপম মার্বেল প্রাঙ্গণ।"
-      }
+      },
+      features: [
+        "Acoustically Reverberant Historic Courtyard",
+        "Platform Stage for Classical Virtuosos",
+        "Traditional Carpet & Gaddi Seating Layouts",
+        "Archival Audio & Ambient Illumination"
+      ]
     }
   ],
 
-  // 7. Terms & Privacy Policy
+  // 4. Guest Reviews & Feedback Moderation
+  feedback: [
+    {
+      id: "fb-1",
+      name: "Dr. Ananya Mukherjee",
+      rating: 5,
+      visitType: "Heritage Walk & Durga Puja",
+      review: "Stepping into Khelat Bhawan during Durga Puja felt like time travel to 19th century Kolkata. The Corinthian columns, Belgian glass chandeliers, and the warmth of the Ghosh family are unmatched.",
+      isApproved: true,
+      date: "October 2026"
+    },
+    {
+      id: "fb-2",
+      name: "Sourav Ganguly",
+      rating: 5,
+      visitType: "Classical Music Baithak",
+      review: "A magnificent treasure of Bengal's cultural renaissance. The acoustics of the Nat Mandir courtyard during the classical soiree were transcendent.",
+      isApproved: true,
+      date: "September 2026"
+    },
+    {
+      id: "fb-3",
+      name: "Elena Rostova",
+      rating: 5,
+      visitType: "Documentary Film Shoot",
+      review: "We filmed an international heritage documentary here. The architectural authenticity, preservation of heirlooms, and cooperative management made the shoot unforgettable.",
+      isApproved: true,
+      date: "August 2026"
+    }
+  ],
+
+  // 5. Visual Gallery & Films
+  gallery: [
+    {
+      id: "gal-1",
+      title: { en: "Classical Corinthian Capital Details", bn: "করিন্থিয়ান স্তম্ভ ও কারুকার্য" },
+      mediaType: "image",
+      category: "architecture",
+      src: "/images/SDP_0282.jpg",
+      photographer: "Heritage Architecture Survey",
+      year: "1845",
+      desc: { en: "Intricate architectural plaster reliefs and Corinthian fluted capitals.", bn: "ঊনবিংশ শতকের সূক্ষ্ম প্লাস্টার কারুকাজ ও করিন্থিয়ান শৈলীর স্তম্ভ।" }
+    },
+    {
+      id: "gal-2",
+      title: { en: "Durga Puja Thakur Dalan Illumination", bn: "শারদোৎসব ও ঠাকুর দালান" },
+      mediaType: "image",
+      category: "festivals",
+      src: "/images/unnamed_6.webp",
+      photographer: "Estate Cultural Archives",
+      year: "2026",
+      desc: { en: "Sacred courtyard illuminated during the 171-year-old family Durga Puja.", bn: "ঐতিহাসিক ঠাকুর দালানে ১৭১ বছরের প্রাচীন শারদোৎসব।" }
+    },
+    {
+      id: "gal-3",
+      title: { en: "Sanctified Chamber of Sri Ramakrishna", bn: "শ্রীরামকৃষ্ণ স্মারক কক্ষ" },
+      mediaType: "image",
+      category: "cultural",
+      src: "/images/rk01.png",
+      photographer: "Devotional Archives",
+      year: "1881",
+      desc: { en: "Room blessed by Bhagavan Sri Ramakrishna Paramhansa in 1881.", bn: "১৮৮১ সালে শ্রীরামকৃষ্ণদেবের পদধূলিতে পবিত্র স্থান।" }
+    },
+    {
+      id: "gal-4",
+      title: { en: "Grand Colonnade Corridor", bn: "প্রাসাদের অলিন্দ" },
+      mediaType: "image",
+      category: "architecture",
+      src: "/images/khelat-bhawan-colonnade-corridor.jpg",
+      photographer: "Architectural Archives",
+      year: "1845",
+      desc: { en: "Long perspective view through marble-floored colonnade corridors.", bn: "মার্বেল চত্বর এবং গ্র্যান্ড অলিন্দ।" }
+    },
+    {
+      id: "gal-5",
+      title: { en: "Palace Cinematography Film", bn: "হেরিটেজ চলচ্চিত্র" },
+      mediaType: "video",
+      category: "cinema",
+      src: "/Videos/hero-palace-film.mp4",
+      photographer: "Cinematography Unit",
+      year: "2026",
+      desc: { en: "Cinematic tour capturing the architectural soul of Khelat Bhawan.", bn: "খেলাৎ ভবনের জীবন্ত রাজকীয় ঐতিহ্যের চিত্রায়ন।" }
+    }
+  ],
+
+  // 6. Terms & Privacy Policy
   legal: {
     privacyTextEn: `# Privacy Policy — Khelat Bhawan Heritage Estate\n**Last Updated:** October 2026\n\n### 1. Overview & Heritage Custodianship\nKhelat Bhawan (Pathuria Ghata Ghosh Bari), established in 1845 and administered under the perpetual trusts (*Lakshmi Narayan Gopal Radha Krishna Jew Trust, Khelat Ghosh Memorial Trust, and Artist Nectar Council of Culture*), is committed to safeguarding the digital privacy and personal data of our visitors, patrons, scholars, and event guests.\n\n### 2. Information We Collect\nWe collect only essential details necessary to facilitate official communications, heritage visits, and estate reservations:\n- **Contact Inquiries:** Name, email address, phone number, and event specifications.\n- **Automated Logging:** Anonymous analytics to optimize heritage exhibition rendering.\n\n### 3. Purpose of Processing\nYour data is used strictly for responding to reservations within our 48-hour Concierge SLA. Commercial sale or third-party brokering is strictly prohibited.`,
     privacyTextBn: `# গোপনীয়তা নীতি — খেলাৎ ভবন হেরিটেজ এস্টেট\n**সর্বশেষ আপডেট:** অক্টোবর ২০২৬\n\n### ১. পরিচিতি ও ঐতিহ্য সংরক্ষণ\n১৮৪৫ সালে প্রতিষ্ঠিত খেলাৎ ভবন তার সম্মানিত অতিথি, গবেষক ও দর্শনার্থীদের ব্যক্তিগত তথ্যের গোপনীয়তা রক্ষায় সম্পূর্ণ অঙ্গীকারবদ্ধ।\n\n### ২. তথ্যের ব্যবহার\nহেরিটেজ বুকিং এবং যোগাযোগের উদ্দেশ্যে সংগৃহীত তথ্যাদি সম্পূর্ণ সুরক্ষিত রাখা হয় এবং কোনো অবস্থাতেই তৃতীয় পক্ষের কাছে হস্তান্তর করা হয় না।`,

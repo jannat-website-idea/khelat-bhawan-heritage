@@ -2,49 +2,7 @@ export const deskStructure = (S) =>
   S.list()
     .title('Khelat Bhawan CMS')
     .items([
-      // 1. Website content folder (like Mindrhythm)
-      S.listItem()
-        .title('📁 Website content')
-        .child(
-          S.list()
-            .title('Website content')
-            .items([
-              S.listItem()
-                .title('✨ Hero section')
-                .child(
-                  S.document()
-                    .schemaType('heroSection')
-                    .documentId('heroSection')
-                    .title('Hero section')
-                ),
-              S.listItem()
-                .title('🏛️ About & palace story')
-                .child(
-                  S.document()
-                    .schemaType('aboutPage')
-                    .documentId('aboutPage')
-                    .title('About & palace story')
-                ),
-              S.listItem()
-                .title('👑 Founder (Babu Khelat Ghosh)')
-                .child(
-                  S.document()
-                    .schemaType('founder')
-                    .documentId('founder')
-                    .title('Founder (Babu Khelat Ghosh)')
-                ),
-              S.listItem()
-                .title('📍 Contact information & visiting hours')
-                .child(
-                  S.document()
-                    .schemaType('siteSettings')
-                    .documentId('siteSettings')
-                    .title('Contact information & visiting hours')
-                ),
-            ])
-        ),
-
-      // 2. Events & Celebrations
+      // 1. Events & Celebrations
       S.listItem()
         .title('🎪 Events & Celebrations')
         .schemaType('event')
@@ -53,7 +11,7 @@ export const deskStructure = (S) =>
             .title('Events & Celebrations')
         ),
 
-      // 3. Reservations & Heritage Rental
+      // 2. Reservations & Heritage Rental
       S.listItem()
         .title('🏰 Reservations & Heritage Rental')
         .schemaType('rentalPackage')
@@ -62,17 +20,16 @@ export const deskStructure = (S) =>
             .title('Reservations & Heritage Rental')
         ),
 
-      // 4. History Timeline
+      // 3. Guest Reviews & Feedback
       S.listItem()
-        .title('⏳ History Timeline (1845 – Present)')
-        .schemaType('timeline')
+        .title('⭐ Guest Reviews & Feedback')
+        .schemaType('feedback')
         .child(
-          S.documentTypeList('timeline')
-            .title('History Timeline (1845 – Present)')
-            .defaultOrdering([{ field: 'year', direction: 'asc' }])
+          S.documentTypeList('feedback')
+            .title('Guest Reviews & Feedback')
         ),
 
-      // 5. Visual Gallery & Films
+      // 4. Visual Gallery & Films
       S.listItem()
         .title('🖼️ Visual Gallery & Films')
         .schemaType('galleryItem')
@@ -81,35 +38,26 @@ export const deskStructure = (S) =>
             .title('Visual Gallery & Films')
         ),
 
-      // 6. Trusts & Trustees
+      // 5. Contact Information & Visiting Hours
       S.listItem()
-        .title('👥 Trusts & Trustees')
-        .schemaType('trustee')
+        .title('📍 Contact Information & Visiting Hours')
+        .schemaType('siteSettings')
         .child(
-          S.documentTypeList('trustee')
-            .title('Trusts & Trustees')
-            .defaultOrdering([{ field: 'orderRank', direction: 'asc' }])
+          S.document()
+            .schemaType('siteSettings')
+            .documentId('siteSettings')
+            .title('Contact Information & Visiting Hours')
         ),
 
-      // 7. Guest Reviews Moderation
+      // 6. Terms & Privacy Policy
       S.listItem()
-        .title('⭐ Guest Reviews Moderation')
-        .schemaType('feedback')
-        .child(
-          S.documentTypeList('feedback')
-            .title('Guest Reviews Moderation')
-        ),
-
-      S.divider(),
-
-      // 8. Privacy policy & Terms of conditions
-      S.listItem()
-        .title('📜 Privacy policy & Terms of use')
+        .title('📜 Terms & Privacy Policy')
         .schemaType('legalPolicy')
         .child(
           S.document()
             .schemaType('legalPolicy')
             .documentId('legalPolicy')
-            .title('Privacy policy & Terms of use')
+            .title('Terms & Privacy Policy')
         ),
     ]);
+
