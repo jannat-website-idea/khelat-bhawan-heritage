@@ -108,6 +108,20 @@ export const LEGAL_POLICY_QUERY = `*[_type == "legalPolicy"][0] {
   privacyContent,
   termsTitle,
   termsContent,
-  lastUpdated
+  lastUpdated,
+  "termsPdfUrl": termsPdf.asset->url,
+  "termsPdfFilename": termsPdf.asset->originalFilename,
+  "termsPdfSize": termsPdf.asset->size,
+  "privacyPdfUrl": privacyPdf.asset->url,
+  "privacyPdfFilename": privacyPdf.asset->originalFilename,
+  "privacyPdfSize": privacyPdf.asset->size,
+  "additionalDocuments": additionalDocuments[] {
+    title,
+    desc,
+    "fileUrl": file.asset->url,
+    "filename": file.asset->originalFilename,
+    "size": file.asset->size
+  }
 }`;
+
 

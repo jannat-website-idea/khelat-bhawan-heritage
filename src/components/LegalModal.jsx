@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { createPortal } from 'react-dom';
-import { X, Shield, FileText } from 'lucide-react';
+import { X, Shield, FileText, Download, ExternalLink, FileCheck, Paperclip } from 'lucide-react';
 import { sanityClient } from '../sanity/client';
 import { LEGAL_POLICY_QUERY } from '../sanity/queries';
 
@@ -17,7 +17,7 @@ export default function LegalModal({ isOpen, onClose, defaultType = 'privacy', l
       .catch((err) => {
         console.warn('Sanity legal policy fallback:', err);
       });
-  }, []);
+  }, [isOpen]);
 
   useEffect(() => {
     setActiveType(defaultType);
@@ -39,9 +39,9 @@ export default function LegalModal({ isOpen, onClose, defaultType = 'privacy', l
 
   if (!isOpen) return null;
 
-  const privacyTextEn = `
+  const fallbackPrivacyTextEn = `
 # Privacy Policy — Khelat Bhawan Heritage Estate
-**Last Updated:** October 2026
+**Last Updated:** ${sanityPolicy?.lastUpdated || 'October 2026'}
 
 ### 1. Overview & Heritage Custodianship
 Khelat Bhawan (Pathuria Ghata Ghosh Bari), established in 1845 and administered under the perpetual trusts (*Lakshmi Narayan Gopal Radha Krishna Jew Trust, Khelat Ghosh Memorial Trust, and Artist Nectar Council of Culture*), is committed to safeguarding the digital privacy and personal data of our visitors, patrons, scholars, and event guests.
@@ -53,23 +53,19 @@ We collect only the essential personal details necessary to facilitate official 
 - **Media Inquiries:** Credentials of researchers, journalists, and classical musicians requesting archival access.
 
 ### 3. Purpose of Processing
-Your data is used strictly for:
-- Responding to heritage reservation requests and issuing official booking references within our 48-hour Concierge SLA.
-- Coordinating spiritual festival access (such as Durga Puja Sandhi Puja invitations and Jagadhatri Puja VIP visits).
-- Disagreeing with and strictly prohibiting any third-party commercial sale or data brokering.
+Your data is used strictly for responding to heritage reservation requests, issuing booking confirmations within 48 hours, and coordinating cultural access. We strictly prohibit any third-party commercial sale or data brokering.
 
-### 4. Data Security & Storage
-All personal data is encrypted in transit and stored in protected databases with dual automated administrative verification. Access is restricted exclusively to authorized trust stewards and estate management.
+### 4. Data Security & Stewardship
+All personal data is encrypted in transit and stored in protected databases with dual administrative verification.
 
-### 5. Contact & Data Rights
-For inquiries regarding your personal information, or to request deletion of your records, contact our estate office at:
+### 5. Contact & Trust Office
 - **Email:** councilofculture.ghoshbari47@gmail.com
 - **Address:** 47, Pathuria Ghata Street, Kolkata – 700006, West Bengal, India
   `;
 
-  const termsTextEn = `
+  const fallbackTermsTextEn = `
 # Terms of Use & Heritage Estate Protocol
-**Last Updated:** October 2026
+**Last Updated:** ${sanityPolicy?.lastUpdated || 'October 2026'}
 
 ### 1. Acceptance of Terms
 By accessing the Khelat Bhawan digital archive and estate services, you agree to comply with all architectural conservation protocols, intellectual property guidelines, and reservation terms outlined herein.
@@ -81,7 +77,7 @@ By accessing the Khelat Bhawan digital archive and estate services, you agree to
 
 ### 3. Visual Archive & Copyright
 - All photographic prints, architectural drawings, 3D panoramic displays, and audio/video recordings hosted on this website are protected under Indian and international copyright law.
-- Personal and academic use is permitted with appropriate citation. Commercial reproduction or unauthorized filming requires prior written consent from the Khelat Ghosh Memorial Trust.
+- Commercial reproduction or filming requires prior written consent from the Khelat Ghosh Memorial Trust.
 
 ### 4. Code of Architectural Preservation
 For guests attending private weddings, concerts, or shoots on premise:
@@ -92,46 +88,53 @@ For guests attending private weddings, concerts, or shoots on premise:
 These terms shall be governed by the laws of India and the jurisdiction of the courts of Kolkata, West Bengal.
   `;
 
-  const privacyTextBn = `
+  const fallbackPrivacyTextBn = `
 # গোপনীয়তা নীতি — খেলাৎ ভবন রাজবাড়ি এস্টেট
-**সর্বশেষ সংস্করণ:** অক্টোবর ২০২৬
+**সর্বশেষ সংস্করণ:** ${sanityPolicy?.lastUpdated || 'অক্টোবর ২০২৬'}
 
 ### ১. ভূমিকা ও ঐতিহ্য সংরক্ষণ
-১৮৪৫ সালে প্রতিষ্ঠিত পাথুরিয়াঘাটা ঘোষ বাড়ি (খেলাৎ ভবন) এবং এর অধীনে পরিচালিত তিনটি ট্রাস্ট আমাদের ওয়েবসাইটের দর্শক, অনুরাগী ও অতিথিদের ব্যক্তিগত তথ্যের সর্বোচ্চ সুরক্ষা ও গোপনীয়তা বজায় রাখতে প্রতিশ্রুতিবদ্ধ।
+১৮৪৫ সালে প্রতিষ্ঠিত পাথুরিয়াঘাটা ঘোষ বাড়ি (খেলাৎ ভবন) এবং এর অধীনে পরিচালিত ট্রাস্ট আমাদের ওয়েবসাইটের দর্শক ও অতিথিদের তথ্যের সর্বোচ্চ গোপনীয়তা বজায় রাখতে প্রতিশ্রুতিবদ্ধ।
 
 ### ২. সংগৃহীত তথ্যের বিবরণ
-- **অনুসন্ধান ও বুকিং:** নাম, ইমেল, ফোন নম্বর এবং অনুষ্ঠানের ধরণ।
-- **স্বয়ংক্রিয় তথ্য:** ব্রাউজার ও ডিভাইসের প্রযুক্তিগত বিবরণ যাতে প্রদর্শনী সঠিকভাবে দৃশ্যমান হয়।
+- অনুসন্ধান ও বুকিং: নাম, ইমেল, ফোন নম্বর এবং অনুষ্ঠানের বিবরণ।
 - কোনো অবস্থাতেই আপনার তথ্য কোনো তৃতীয় পক্ষের কাছে বাণিজ্যিক উদ্দেশ্যে বিক্রি বা হস্তান্তর করা হয় না।
 
 ### ৩. যোগাযোগের ঠিকানা
-- **ইমেল:** councilofculture.ghoshbari47@gmail.com
-- **ঠিকানা:** ৪৭, পাথুরিয়াঘাটা স্ট্রিট, কলকাতা – ৭০০০১৬
+- ইমেল: councilofculture.ghoshbari47@gmail.com
+- ঠিকানা: ৪৭, পাথুরিয়াঘাটা স্ট্রিট, কলকাতা – ৭০০০১৬
   `;
 
-  const termsTextBn = `
+  const fallbackTermsTextBn = `
 # ব্যবহারের শর্তাবলী ও ঐতিহ্য বিধিমালা
-**সর্বশেষ সংস্করণ:** অক্টোবর ২০২৬
+**সর্বশেষ সংস্করণ:** ${sanityPolicy?.lastUpdated || 'অক্টোবর ২০২৬'}
 
 ### ১. রাজবাড়ি ব্যবহারের নিয়মাবলী
 খেলাৎ ভবন একটি জীবন্ত ঐতিহ্য ও পবিত্র দেবস্থান। এখানে আয়োজিত যেকোনো সামাজিক, শাস্ত্রীয় ও সাংস্কৃতিক অনুষ্ঠানে রাজবাড়ির ঐতিহাসিক মর্যাদা ও স্থাপত্যের সুরক্ষা রক্ষা করা বাধ্যতামূলক।
 
 ### ২. কপিরাইট ও বৌদ্ধিক সম্পত্তি
-ওয়েবসাইটের সমস্ত ছবি, ভিডিও ও ঐতিহাসিক তথ্য খেলাৎ ভবন ট্রাস্টের নিজস্ব সম্পত্তি। বাণিজ্যিক ব্যবহারের পূর্বে লিখিত অনুমতি গ্রহণ আবশ্যক।
+ওয়েবসাইটের সমস্ত ছবি, ভিডিও ও ঐতিহাসিক তথ্য খেলাৎ ভবন ট্রাস্টের নিজস্ব সম্পত্তি।
 
 ### ৩. বুকিং ও নিশ্চয়তা
 অনলাইন অনুসন্ধান প্রেরণের পর আমাদের কনসিয়ার্জ টিম পরবর্তী ৪৮ ঘণ্টার মধ্যে বিস্তারিত তথ্যের সাথে যোগাযোগ করবে।
   `;
 
   const livePrivacyText = isBn 
-    ? (sanityPolicy?.privacyContent?.bn || privacyTextBn)
-    : (sanityPolicy?.privacyContent?.en || privacyTextEn);
+    ? (sanityPolicy?.privacyContent?.bn || fallbackPrivacyTextBn)
+    : (sanityPolicy?.privacyContent?.en || fallbackPrivacyTextEn);
 
   const liveTermsText = isBn 
-    ? (sanityPolicy?.termsContent?.bn || termsTextBn)
-    : (sanityPolicy?.termsContent?.en || termsTextEn);
+    ? (sanityPolicy?.termsContent?.bn || fallbackTermsTextBn)
+    : (sanityPolicy?.termsContent?.en || fallbackTermsTextEn);
 
   const currentText = activeType === 'privacy' ? livePrivacyText : liveTermsText;
+  
+  // Active PDF file uploaded via Sanity CMS
+  const activePdfUrl = activeType === 'terms' ? sanityPolicy?.termsPdfUrl : sanityPolicy?.privacyPdfUrl;
+  const activePdfFilename = activeType === 'terms' 
+    ? (sanityPolicy?.termsPdfFilename || 'Khelat_Bhawan_Terms_of_Use.pdf') 
+    : (sanityPolicy?.privacyPdfFilename || 'Khelat_Bhawan_Privacy_Policy.pdf');
+
+  const additionalDocs = sanityPolicy?.additionalDocuments || [];
 
   return createPortal(
     <div 
@@ -157,8 +160,8 @@ These terms shall be governed by the laws of India and the jurisdiction of the c
               </span>
               <h3 id="legal-dialog-title" className="font-serif text-xl sm:text-2xl font-bold text-foreground">
                 {activeType === 'privacy' 
-                  ? (isBn ? 'গোপনীয়তা নীতি (Privacy Policy)' : 'Privacy Policy') 
-                  : (isBn ? 'ব্যবহারের শর্তাবলী (Terms of Use)' : 'Terms of Use')}
+                  ? (isBn ? 'গোপনীয়তা নীতি (Privacy Policy)' : (sanityPolicy?.privacyTitle?.en || 'Privacy Policy')) 
+                  : (isBn ? 'ব্যবহারের শর্তাবলী (Terms of Use)' : (sanityPolicy?.termsTitle?.en || 'Terms of Use'))}
               </h3>
             </div>
           </div>
@@ -172,8 +175,8 @@ These terms shall be governed by the laws of India and the jurisdiction of the c
           </button>
         </div>
 
-        {/* Policy tabs. Documents are managed privately through the CMS. */}
-        <div className="px-6 py-3 bg-background/50 border-b border-border/40 flex items-center text-xs">
+        {/* Policy tabs */}
+        <div className="px-6 py-3 bg-background/50 border-b border-border/40 flex flex-wrap items-center justify-between gap-3 text-xs">
           <div className="flex items-center gap-2">
             <button
               onClick={() => setActiveType('privacy')}
@@ -196,11 +199,97 @@ These terms shall be governed by the laws of India and the jurisdiction of the c
               {isBn ? 'শর্তাবলী' : 'Terms of Use'}
             </button>
           </div>
+
+          {/* CMS-Uploaded Official PDF Download Button */}
+          {activePdfUrl && (
+            <a
+              href={activePdfUrl}
+              target="_blank"
+              rel="noopener noreferrer"
+              download={activePdfFilename}
+              className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-amber-500/10 hover:bg-amber-500/20 text-amber-900 dark:text-amber-300 border border-amber-500/30 transition-all font-medium text-xs shadow-sm cursor-pointer"
+            >
+              <Download className="w-3.5 h-3.5" />
+              <span>{isBn ? 'অফিশিয়াল পিডিএফ ডাউনলোড করুন' : 'Download Official PDF'}</span>
+            </a>
+          )}
         </div>
 
         {/* Content Body */}
-        <div className="p-6 sm:p-8 font-sans overflow-y-auto space-y-4 text-xs sm:text-sm leading-relaxed text-foreground/90 whitespace-pre-line">
-          {currentText}
+        <div className="p-6 sm:p-8 font-sans overflow-y-auto space-y-6 text-xs sm:text-sm leading-relaxed text-foreground/90">
+          
+          {/* Highlight banner if PDF is attached from CMS */}
+          {activePdfUrl && (
+            <div className="p-4 rounded-xl bg-amber-500/5 border border-amber-500/20 flex items-center justify-between gap-4 flex-wrap">
+              <div className="flex items-center gap-3">
+                <FileCheck className="w-6 h-6 text-amber-600 dark:text-amber-400 shrink-0" />
+                <div>
+                  <h4 className="font-semibold text-foreground text-xs sm:text-sm">
+                    {isBn ? 'অনুমোদিত আইনি নথি সংযুক্ত' : 'Official Legal Document Attached'}
+                  </h4>
+                  <p className="text-[11px] text-muted-foreground">
+                    {activePdfFilename} • {isBn ? 'খেলাৎ ভবন ট্রাস্টের স্বাক্ষরিত নথি' : 'Approved by Khelat Bhawan Trust Office'}
+                  </p>
+                </div>
+              </div>
+              <div className="flex items-center gap-2">
+                <a
+                  href={activePdfUrl}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="px-3.5 py-1.5 rounded-lg bg-card hover:bg-background border border-border text-foreground text-xs font-semibold flex items-center gap-1.5 transition-colors"
+                >
+                  <ExternalLink className="w-3.5 h-3.5" />
+                  <span>{isBn ? 'দেখুন' : 'View PDF'}</span>
+                </a>
+                <a
+                  href={activePdfUrl}
+                  download={activePdfFilename}
+                  className="px-3.5 py-1.5 rounded-lg bg-primary text-primary-foreground hover:bg-primary/90 text-xs font-semibold flex items-center gap-1.5 transition-colors shadow-sm"
+                >
+                  <Download className="w-3.5 h-3.5" />
+                  <span>{isBn ? 'ডাউনলোড' : 'Download'}</span>
+                </a>
+              </div>
+            </div>
+          )}
+
+          {/* Body Text */}
+          <div className="whitespace-pre-line space-y-3">
+            {currentText}
+          </div>
+
+          {/* Additional CMS Documents Section if uploaded */}
+          {additionalDocs && additionalDocs.length > 0 && (
+            <div className="pt-6 border-t border-border/50">
+              <h4 className="text-xs uppercase tracking-wider font-semibold text-primary mb-3 flex items-center gap-2">
+                <Paperclip className="w-4 h-4" />
+                {isBn ? 'অন্যান্য সম্পর্কিত আইনি নথি ও ফর্ম' : 'Additional Legal Forms & Guidelines'}
+              </h4>
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                {additionalDocs.map((doc, idx) => (
+                  <div key={idx} className="p-3 rounded-xl bg-muted/40 border border-border/60 flex items-center justify-between gap-2">
+                    <div className="min-w-0">
+                      <p className="text-xs font-semibold truncate text-foreground">{doc.title}</p>
+                      {doc.desc && <p className="text-[10px] text-muted-foreground truncate">{doc.desc}</p>}
+                    </div>
+                    {doc.fileUrl && (
+                      <a
+                        href={doc.fileUrl}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        download={doc.filename || 'Document.pdf'}
+                        className="p-2 rounded-lg bg-card hover:bg-background border border-border text-primary shrink-0 transition-colors"
+                        aria-label="Download Document"
+                      >
+                        <Download className="w-3.5 h-3.5" />
+                      </a>
+                    )}
+                  </div>
+                ))}
+              </div>
+            </div>
+          )}
         </div>
 
         {/* Footer Actions */}
