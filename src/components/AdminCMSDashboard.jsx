@@ -4,9 +4,15 @@ import {
   X, Save, RotateCcw, Plus, Trash2, Edit3, Image, Video, 
   Calendar, Clock, MapPin, Sparkles, Shield, CheckCircle2, 
   Star, Eye, EyeOff, UploadCloud, MessageSquare, Phone, Mail, 
-  FileText, Check, AlertCircle
+  FileText, Check, AlertCircle, XCircle, RefreshCw, Inbox, User, Layers
 } from 'lucide-react';
 import { getCMSData, saveCMSData, resetCMSData } from '../data/cmsStore';
+import { 
+  getEnquiries, 
+  approveReservation, 
+  rejectReservation, 
+  cancelAndReallocateReservation 
+} from '../data/enquiriesStore';
 
 const PRESET_IMAGES = [
   { label: 'Durga Puja Thakur Dalan', path: '/images/unnamed_6.webp' },
@@ -22,18 +28,28 @@ const PRESET_IMAGES = [
 ];
 
 export default function AdminCMSDashboard({ isOpen, onClose }) {
-  // 6 Specified Sections: events, rentals, feedback, gallery, settings, legal
+  // 6 Sections: events, rentals, feedback, gallery, settings, legal
   const [activeSection, setActiveSection] = useState('events');
   const [cmsData, setCmsData] = useState(getCMSData);
+  const [enquiriesList, setEnquiriesList] = useState(getEnquiries);
+  const [rentalSubTab, setRentalSubTab] = useState('enquiries'); // 'enquiries' or 'packages'
+  
   const [activeEventIndex, setActiveEventIndex] = useState(0);
   const [activeRentalIndex, setActiveRentalIndex] = useState(0);
+  const [activeEnquiryIndex, setActiveEnquiryIndex] = useState(0);
   const [activeFeedbackIndex, setActiveFeedbackIndex] = useState(0);
   const [activeGalleryIndex, setActiveGalleryIndex] = useState(0);
   const [notification, setNotification] = useState('');
 
+  // Rejection reason prompt state
+  const [rejectionModalOpen, setRejectionModalOpen] = useState(false);
+  const [rejectionTargetId, setRejectionTargetId] = useState(null);
+  const [rejectionReason, setRejectionReason] = useState('');
+
   useEffect(() => {
     if (isOpen) {
       setCmsData(getCMSData());
+      setEnquiriesList(getEnquiries());
       const prev = document.body.style.overflow;
       document.body.style.overflow = 'hidden';
       const handleKey = (e) => {
@@ -47,11 +63,19 @@ export default function AdminCMSDashboard({ isOpen, onClose }) {
     }
   }, [isOpen, onClose]);
 
+  useEffect(() => {
+    const handleEnqUpdate = (e) => {
+      setEnquiriesList(e.detail || getEnquiries());
+    };
+    window.addEventListener('khelat_enquiries_updated', handleEnqUpdate);
+    return () => window.removeEventListener('khelat_enquiries_updated', handleEnqUpdate);
+  }, []);
+
   if (!isOpen) return null;
 
   const notify = (msg) => {
     setNotification(msg);
-    setTimeout(() => setNotification(''), 3500);
+    setTimeout(() => setNotification(''), 4000);
   };
 
   const handleSaveAll = () => {
@@ -111,7 +135,38 @@ export default function AdminCMSDashboard({ isOpen, onClose }) {
   };
 
   // ==========================================
-  // 2. RESERVATION / RENTAL HANDLERS
+  // 2. RESERVATION ENQUIRIES ACTIONS
+  // ==========================================
+  const handleApproveEnquiry = async (enquiryId) => {
+    await approveReservation(enquiryId);
+    setEnquiriesList(getEnquiries());
+    notify('✅ Reservation APPROVED! Date is now BLOCKED on the website calendar & confirmation email dispatched.');
+  };
+
+  const openRejectModal = (enquiryId) => {
+    setRejectionTargetId(enquiryId);
+    setRejectionReason('Date conflict with scheduled temple ceremonies / private conservation.');
+    setRejectionModalOpen(true);
+  };
+
+  const handleConfirmReject = async () => {
+    if (!rejectionTargetId) return;
+    await rejectReservation(rejectionTargetId, rejectionReason);
+    setEnquiriesList(getEnquiries());
+    setRejectionModalOpen(false);
+    notify('❌ Reservation REJECTED. Polite notification email sent to the guest.');
+  };
+
+  const handleCancelAndReallocate = async (enquiryId) => {
+    if (window.confirm('Cancel this booking and REALLOCATE the date slot on the live calendar for other guests?')) {
+      await cancelAndReallocateReservation(enquiryId);
+      setEnquiriesList(getEnquiries());
+      notify('🔄 Booking CANCELLED & REALLOCATED! The date is now available on the live website calendar.');
+    }
+  };
+
+  // ==========================================
+  // 2B. RENTAL PACKAGES HANDLERS
   // ==========================================
   const updateRentalField = (idx, field, val, subKey = null) => {
     const updated = [...(cmsData.rentals || [])];
@@ -224,6 +279,8 @@ export default function AdminCMSDashboard({ isOpen, onClose }) {
     }
   };
 
+  const pendingEnquiriesCount = enquiriesList.filter(e => e.status === 'pending').length;
+
   return createPortal(
     <div className="fixed inset-0 z-[100000] bg-black/90 backdrop-blur-md flex items-center justify-center p-2 sm:p-6 animate-in fade-in duration-200">
       <div className="relative w-full max-w-7xl h-[94vh] bg-[#120b08] text-[#f5efe6] border border-[#d8ae62]/50 rounded-2xl shadow-2xl flex flex-col overflow-hidden">
@@ -240,11 +297,11 @@ export default function AdminCMSDashboard({ isOpen, onClose }) {
                   Khelat Bhawan CMS Control Panel
                 </h2>
                 <span className="px-2 py-0.5 rounded text-[10px] font-mono uppercase tracking-wider bg-emerald-950 text-emerald-300 border border-emerald-700/50">
-                  Full CRUD & Upload Enabled
+                  Full CRUD & Booking Moderation Active
                 </span>
               </div>
               <p className="text-[11px] text-[#f0e8d8]/60 font-sans">
-                Edit, add, delete, and upload items for Events, Reservations, Feedback, Gallery, Contact, and Terms & Policy.
+                Approve/reject bookings, auto-sync website calendar, edit events, packages, gallery, and contact information.
               </p>
             </div>
           </div>
@@ -282,7 +339,7 @@ export default function AdminCMSDashboard({ isOpen, onClose }) {
         {/* MAIN BODY: SIDEBAR + EDITOR PANE */}
         <div className="flex-1 flex overflow-hidden">
           
-          {/* NAVIGATION SIDEBAR: EXACTLY 6 STREAMLINED SECTIONS */}
+          {/* NAVIGATION SIDEBAR: 6 STREAMLINED SECTIONS */}
           <aside className="w-64 sm:w-72 bg-black/50 border-r border-white/10 p-3 space-y-1.5 overflow-y-auto shrink-0">
             <div className="text-[10px] uppercase font-mono tracking-widest text-[#d8ae62] px-3 py-2 font-bold">
               CMS Sections (6 Active)
@@ -290,7 +347,11 @@ export default function AdminCMSDashboard({ isOpen, onClose }) {
 
             {[
               { id: 'events', label: '🎪 Events & Celebrations', count: (cmsData.events || []).length },
-              { id: 'rentals', label: '🏰 Reservations & Heritage Rental', count: (cmsData.rentals || []).length },
+              { 
+                id: 'rentals', 
+                label: '🏰 Reservations & Bookings', 
+                badge: pendingEnquiriesCount > 0 ? `${pendingEnquiriesCount} New` : `${enquiriesList.length}` 
+              },
               { id: 'feedback', label: '⭐ Guest Reviews & Feedback', count: (cmsData.feedback || []).length },
               { id: 'gallery', label: '🖼️ Visual Gallery & Films', count: (cmsData.gallery || []).length },
               { id: 'settings', label: '📍 Contact & Visiting Hours' },
@@ -306,7 +367,13 @@ export default function AdminCMSDashboard({ isOpen, onClose }) {
                 }`}
               >
                 <span>{tab.label}</span>
-                {tab.count !== undefined && (
+                {tab.badge ? (
+                  <span className={`px-2 py-0.5 rounded-full text-[10px] font-mono font-bold ${
+                    pendingEnquiriesCount > 0 ? 'bg-amber-500 text-black animate-pulse' : 'bg-white/10 text-[#d8ae62]'
+                  }`}>
+                    {tab.badge}
+                  </span>
+                ) : tab.count !== undefined && (
                   <span className="px-2 py-0.5 rounded-full text-[10px] bg-white/10 text-[#d8ae62] font-mono">
                     {tab.count}
                   </span>
@@ -315,11 +382,10 @@ export default function AdminCMSDashboard({ isOpen, onClose }) {
             ))}
 
             <div className="pt-6 px-3 text-[11px] text-[#f0e8d8]/50 space-y-2 border-t border-white/10 mt-6">
-              <p className="font-semibold text-[#d8ae62]">💡 CMS Controls:</p>
-              <p>• <strong>Add / Upload:</strong> Use top buttons to create items or select photos/videos.</p>
-              <p>• <strong>Edit:</strong> Modify any text, number, timing, or photo URL in-place.</p>
-              <p>• <strong>Delete:</strong> Remove unwanted events, packages, or gallery entries.</p>
-              <p>• <strong>Save & Publish:</strong> Instantly updates the live website.</p>
+              <p className="font-semibold text-[#d8ae62]">💡 Reservation System:</p>
+              <p>• <strong>Approve:</strong> Automatically marks date as Booked on the website calendar & sends confirmation email.</p>
+              <p>• <strong>Reject:</strong> Sends polite notification email.</p>
+              <p>• <strong>Cancel / Reallocate:</strong> Frees the date slot on the live calendar for new guests.</p>
             </div>
           </aside>
 
@@ -495,120 +561,363 @@ export default function AdminCMSDashboard({ isOpen, onClose }) {
             )}
 
             {/* =========================================================================
-                2. RESERVATIONS & HERITAGE RENTAL
+                2. RESERVATIONS & BOOKINGS (INQUIRIES INBOX + PACKAGES)
                ========================================================================= */}
             {activeSection === 'rentals' && (
               <div className="space-y-6">
+                
+                {/* SUB-NAVIGATION: INBOX vs PACKAGES */}
                 <div className="flex items-center justify-between border-b border-white/10 pb-4">
                   <div>
-                    <h3 className="font-serif text-xl font-bold text-[#d8ae62]">🏰 Reservations & Heritage Rental</h3>
-                    <p className="text-xs text-[#f0e8d8]/60">Manage rental packages for royal weddings, cinema shoots, and classical cultural soirees.</p>
+                    <h3 className="font-serif text-xl font-bold text-[#d8ae62]">🏰 Reservations & Booking Control</h3>
+                    <p className="text-xs text-[#f0e8d8]/60">Review booking enquiries in read-only mode, approve/reject, auto-block dates, or cancel & reallocate slots.</p>
                   </div>
-                  <button
-                    onClick={addRentalPackage}
-                    className="px-4 py-2 rounded-xl bg-emerald-800 hover:bg-emerald-700 text-white text-xs font-semibold flex items-center gap-1.5 cursor-pointer shadow transition-all hover:scale-105"
-                  >
-                    <Plus className="w-4 h-4" />
-                    <span>Upload / Add Package</span>
-                  </button>
-                </div>
-
-                {/* Package Tabs */}
-                <div className="flex gap-2 overflow-x-auto pb-2">
-                  {(cmsData.rentals || []).map((r, i) => (
+                  
+                  <div className="flex items-center bg-black/60 p-1 rounded-xl border border-white/15">
                     <button
-                      key={r.id || i}
-                      onClick={() => setActiveRentalIndex(i)}
-                      className={`px-4 py-2.5 rounded-xl text-xs font-semibold flex items-center gap-2 whitespace-nowrap transition-all cursor-pointer ${
-                        activeRentalIndex === i
-                          ? 'bg-[#d8ae62] text-[#2c1208] font-bold shadow-md'
-                          : 'bg-white/10 text-white/80 hover:bg-white/15'
+                      onClick={() => setRentalSubTab('enquiries')}
+                      className={`px-4 py-2 rounded-lg text-xs font-semibold flex items-center gap-2 transition-all cursor-pointer ${
+                        rentalSubTab === 'enquiries'
+                          ? 'bg-[#d8ae62] text-[#2c1208] font-bold shadow'
+                          : 'text-white/70 hover:text-white'
                       }`}
                     >
-                      <span>{r.title?.en || `Package ${i + 1}`}</span>
+                      <Inbox className="w-3.5 h-3.5" />
+                      <span>Booking Enquiries Inbox</span>
+                      {pendingEnquiriesCount > 0 && (
+                        <span className="px-1.5 py-0.2 rounded-full text-[10px] bg-red-600 text-white font-bold">
+                          {pendingEnquiriesCount}
+                        </span>
+                      )}
                     </button>
-                  ))}
+                    
+                    <button
+                      onClick={() => setRentalSubTab('packages')}
+                      className={`px-4 py-2 rounded-lg text-xs font-semibold flex items-center gap-2 transition-all cursor-pointer ${
+                        rentalSubTab === 'packages'
+                          ? 'bg-[#d8ae62] text-[#2c1208] font-bold shadow'
+                          : 'text-white/70 hover:text-white'
+                      }`}
+                    >
+                      <Layers className="w-3.5 h-3.5" />
+                      <span>Rental Packages ({cmsData.rentals?.length || 0})</span>
+                    </button>
+                  </div>
                 </div>
 
-                {cmsData.rentals && cmsData.rentals[activeRentalIndex] && (() => {
-                  const r = cmsData.rentals[activeRentalIndex];
-                  return (
-                    <div className="bg-white/5 border border-white/15 rounded-2xl p-6 space-y-5">
-                      <div className="flex items-center justify-between">
-                        <span className="text-xs uppercase font-mono tracking-wider text-[#d8ae62] font-bold">
-                          Editing Package #{activeRentalIndex + 1}: {r.title?.en}
-                        </span>
-                        <button
-                          onClick={() => deleteRentalPackage(activeRentalIndex)}
-                          className="px-3.5 py-1.5 rounded-lg bg-red-900/70 hover:bg-red-800 text-red-200 text-xs font-semibold flex items-center gap-1.5 cursor-pointer transition-colors"
-                        >
-                          <Trash2 className="w-3.5 h-3.5" />
-                          <span>Delete Package</span>
-                        </button>
-                      </div>
+                {/* VIEW 1: LIVE BOOKING ENQUIRIES INBOX */}
+                {rentalSubTab === 'enquiries' && (
+                  <div className="space-y-5">
+                    
+                    {/* Enquiry List Bar */}
+                    <div className="flex gap-2 overflow-x-auto pb-2">
+                      {enquiriesList.map((enq, i) => {
+                        const isPending = enq.status === 'pending';
+                        const isApproved = enq.status === 'approved';
+                        const isRejected = enq.status === 'rejected';
+                        const isCancelled = enq.status === 'cancelled';
 
-                      <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                        <div>
-                          <label className="block text-xs font-semibold mb-1 text-[#d8ae62]">Package Title (EN) *</label>
-                          <input
-                            type="text"
-                            value={r.title?.en || ''}
-                            onChange={(e) => updateRentalField(activeRentalIndex, 'title', e.target.value, 'en')}
-                            className="w-full px-3.5 py-2.5 rounded-xl bg-black/60 border border-white/20 text-xs text-white outline-none focus:border-[#d8ae62]"
-                          />
-                        </div>
-                        <div>
-                          <label className="block text-xs font-semibold mb-1 text-[#d8ae62]">Guest Capacity</label>
-                          <input
-                            type="text"
-                            value={r.capacity || ''}
-                            onChange={(e) => updateRentalField(activeRentalIndex, 'capacity', e.target.value)}
-                            placeholder="e.g. 100 – 600 Guests"
-                            className="w-full px-3.5 py-2.5 rounded-xl bg-black/60 border border-white/20 text-xs text-white outline-none focus:border-[#d8ae62]"
-                          />
-                        </div>
-                      </div>
+                        let badge = '⏳ Pending';
+                        let badgeBg = 'bg-amber-500/20 text-amber-300 border-amber-500/40';
+                        if (isApproved) {
+                          badge = '✅ Booked';
+                          badgeBg = 'bg-emerald-500/20 text-emerald-300 border-emerald-500/40';
+                        } else if (isRejected) {
+                          badge = '❌ Rejected';
+                          badgeBg = 'bg-red-500/20 text-red-300 border-red-500/40';
+                        } else if (isCancelled) {
+                          badge = '🔄 Reallocated';
+                          badgeBg = 'bg-blue-500/20 text-blue-300 border-blue-500/40';
+                        }
 
-                      {/* Image Picker */}
-                      <div>
-                        <label className="block text-xs font-semibold mb-1.5 text-[#d8ae62]">Cover Photograph</label>
-                        <div className="flex flex-wrap gap-2 mb-2">
-                          {PRESET_IMAGES.map((img) => (
-                            <button
-                              key={img.path}
-                              type="button"
-                              onClick={() => updateRentalField(activeRentalIndex, 'image', img.path)}
-                              className={`px-2.5 py-1.5 rounded-lg text-[11px] font-semibold border flex items-center gap-1.5 cursor-pointer ${
-                                r.image === img.path
-                                  ? 'bg-[#d8ae62] text-[#2c1208] border-[#d8ae62]'
-                                  : 'bg-black/40 text-white/70 border-white/10 hover:border-white/30'
-                              }`}
-                            >
-                              <span>{img.label}</span>
-                            </button>
-                          ))}
-                        </div>
-                        <input
-                          type="text"
-                          value={r.image || ''}
-                          onChange={(e) => updateRentalField(activeRentalIndex, 'image', e.target.value)}
-                          placeholder="Image URL or file path (e.g. /images/SDP_0282.jpg)"
-                          className="w-full px-3.5 py-2.5 rounded-xl bg-black/60 border border-white/20 text-xs text-white font-mono outline-none focus:border-[#d8ae62]"
-                        />
-                      </div>
-
-                      <div>
-                        <label className="block text-xs font-semibold mb-1 text-[#d8ae62]">Description & Inclusions (EN)</label>
-                        <textarea
-                          rows={4}
-                          value={typeof r.desc === 'object' ? r.desc.en : r.desc || ''}
-                          onChange={(e) => updateRentalField(activeRentalIndex, 'desc', e.target.value, 'en')}
-                          className="w-full px-3.5 py-2.5 rounded-xl bg-black/60 border border-white/20 text-xs text-white outline-none focus:border-[#d8ae62]"
-                        />
-                      </div>
+                        return (
+                          <button
+                            key={enq.id || i}
+                            onClick={() => setActiveEnquiryIndex(i)}
+                            className={`px-3.5 py-2.5 rounded-xl text-xs font-semibold flex flex-col items-start gap-1 shrink-0 transition-all cursor-pointer border ${
+                              activeEnquiryIndex === i
+                                ? 'bg-white/15 border-[#d8ae62] text-white shadow-lg'
+                                : 'bg-black/40 border-white/10 text-white/70 hover:bg-white/5'
+                            }`}
+                          >
+                            <div className="flex items-center gap-2">
+                              <span className="font-bold text-white text-xs">{enq.name}</span>
+                              <span className={`px-1.5 py-0.5 rounded text-[9px] font-mono border ${badgeBg}`}>
+                                {badge}
+                              </span>
+                            </div>
+                            <div className="text-[10px] text-white/50 flex items-center gap-1">
+                              <Calendar className="w-3 h-3 text-[#d8ae62]" />
+                              <span>{enq.preferredDate || 'Date not set'}</span>
+                              <span>•</span>
+                              <span>{enq.reference}</span>
+                            </div>
+                          </button>
+                        );
+                      })}
                     </div>
-                  );
-                })()}
+
+                    {/* Active Enquiry Detailed Read-Only View */}
+                    {enquiriesList[activeEnquiryIndex] && (() => {
+                      const enq = enquiriesList[activeEnquiryIndex];
+                      const isPending = enq.status === 'pending';
+                      const isApproved = enq.status === 'approved';
+                      const isRejected = enq.status === 'rejected';
+                      const isCancelled = enq.status === 'cancelled';
+
+                      return (
+                        <div className="bg-white/5 border border-white/15 rounded-2xl p-6 space-y-6">
+                          
+                          {/* Header with Reference & Status */}
+                          <div className="flex flex-wrap items-center justify-between gap-3 border-b border-white/10 pb-4">
+                            <div>
+                              <div className="flex items-center gap-2">
+                                <span className="text-xs font-mono font-bold text-[#d8ae62] px-2.5 py-1 bg-black/60 rounded border border-[#d8ae62]/40">
+                                  REF #{enq.reference}
+                                </span>
+                                <h4 className="text-base font-bold text-white">{enq.name}</h4>
+                              </div>
+                              <div className="text-[11px] text-white/50 mt-1">
+                                Submitted on: {new Date(enq.receivedAt || Date.now()).toLocaleString()}
+                              </div>
+                            </div>
+
+                            {/* Current Status Badge */}
+                            <div>
+                              {isPending && (
+                                <span className="px-3 py-1.5 rounded-xl bg-amber-500/20 text-amber-200 border border-amber-500/50 text-xs font-bold flex items-center gap-1.5">
+                                  <Clock className="w-4 h-4" />
+                                  <span>Pending Review</span>
+                                </span>
+                              )}
+                              {isApproved && (
+                                <span className="px-3 py-1.5 rounded-xl bg-emerald-500/20 text-emerald-200 border border-emerald-500/50 text-xs font-bold flex items-center gap-1.5">
+                                  <CheckCircle2 className="w-4 h-4 text-emerald-400" />
+                                  <span>Approved & Booked (Date Blocked on Live Calendar)</span>
+                                </span>
+                              )}
+                              {isRejected && (
+                                <span className="px-3 py-1.5 rounded-xl bg-red-500/20 text-red-200 border border-red-500/50 text-xs font-bold flex items-center gap-1.5">
+                                  <XCircle className="w-4 h-4 text-red-400" />
+                                  <span>Rejected (Notification Sent)</span>
+                                </span>
+                              )}
+                              {isCancelled && (
+                                <span className="px-3 py-1.5 rounded-xl bg-blue-500/20 text-blue-200 border border-blue-500/50 text-xs font-bold flex items-center gap-1.5">
+                                  <RefreshCw className="w-4 h-4 text-blue-400" />
+                                  <span>Cancelled (Date Slot Freed & Reallocated)</span>
+                                </span>
+                              )}
+                            </div>
+                          </div>
+
+                          {/* Read-Only Guest & Event Information Grid */}
+                          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 p-4 rounded-xl bg-black/40 border border-white/10 text-xs">
+                            <div>
+                              <div className="text-[10px] uppercase font-mono tracking-wider text-[#d8ae62] font-semibold">Guest Name</div>
+                              <div className="text-white font-medium mt-0.5">{enq.name}</div>
+                            </div>
+                            <div>
+                              <div className="text-[10px] uppercase font-mono tracking-wider text-[#d8ae62] font-semibold">Email Address</div>
+                              <div className="text-white font-medium mt-0.5">{enq.email}</div>
+                            </div>
+                            <div>
+                              <div className="text-[10px] uppercase font-mono tracking-wider text-[#d8ae62] font-semibold">Phone Number</div>
+                              <div className="text-white font-medium mt-0.5">{enq.phone}</div>
+                            </div>
+                            <div>
+                              <div className="text-[10px] uppercase font-mono tracking-wider text-[#d8ae62] font-semibold">Requested Date</div>
+                              <div className="text-[#d8ae62] font-bold mt-0.5 text-sm">{enq.preferredDate || 'Not specified'}</div>
+                            </div>
+                            <div>
+                              <div className="text-[10px] uppercase font-mono tracking-wider text-white/60 font-semibold">Event / Experience Type</div>
+                              <div className="text-white font-medium mt-0.5">{enq.eventType}</div>
+                            </div>
+                            <div>
+                              <div className="text-[10px] uppercase font-mono tracking-wider text-white/60 font-semibold">Estimated Guests</div>
+                              <div className="text-white font-medium mt-0.5">{enq.guests || '100 – 300'}</div>
+                            </div>
+                            <div className="sm:col-span-2">
+                              <div className="text-[10px] uppercase font-mono tracking-wider text-white/60 font-semibold">Concierge Notes</div>
+                              <div className="text-white/80 italic mt-0.5">{enq.notes || 'None'}</div>
+                            </div>
+                          </div>
+
+                          {/* Read-Only Guest Message */}
+                          <div>
+                            <label className="block text-xs font-semibold mb-1 text-[#d8ae62]">Special Inquiries & Event Requirements (Read-Only)</label>
+                            <div className="w-full p-3.5 rounded-xl bg-black/60 border border-white/20 text-xs text-white/90 leading-relaxed font-sans">
+                              {enq.message || 'No special requirements supplied.'}
+                            </div>
+                          </div>
+
+                          {/* ACTION BUTTONS & AUTOMATED EMAIL STATUS */}
+                          <div className="pt-3 border-t border-white/10 flex flex-wrap items-center justify-between gap-3">
+                            <div className="text-xs text-white/60">
+                              Automated email notifications trigger immediately upon status change.
+                            </div>
+
+                            <div className="flex items-center gap-3">
+                              
+                              {/* Approve Button */}
+                              {enq.status !== 'approved' && (
+                                <button
+                                  type="button"
+                                  onClick={() => handleApproveEnquiry(enq.id)}
+                                  className="px-4 py-2.5 rounded-xl bg-emerald-700 hover:bg-emerald-600 text-white text-xs font-bold flex items-center gap-2 cursor-pointer shadow-lg transition-transform hover:scale-105"
+                                >
+                                  <Check className="w-4 h-4" />
+                                  <span>Approve & Block Date on Calendar</span>
+                                </button>
+                              )}
+
+                              {/* Reject Button */}
+                              {enq.status !== 'rejected' && (
+                                <button
+                                  type="button"
+                                  onClick={() => openRejectModal(enq.id)}
+                                  className="px-4 py-2.5 rounded-xl bg-red-900/80 hover:bg-red-800 text-red-200 text-xs font-bold flex items-center gap-2 cursor-pointer transition-colors"
+                                >
+                                  <X className="w-4 h-4" />
+                                  <span>Reject Enquiry</span>
+                                </button>
+                              )}
+
+                              {/* Cancel & Reallocate Button (If already approved or active) */}
+                              {enq.status === 'approved' && (
+                                <button
+                                  type="button"
+                                  onClick={() => handleCancelAndReallocate(enq.id)}
+                                  className="px-4 py-2.5 rounded-xl bg-blue-900 hover:bg-blue-800 text-blue-200 text-xs font-bold flex items-center gap-2 cursor-pointer shadow-lg transition-transform hover:scale-105"
+                                  title="Frees up the date on the live calendar so other guests can book it"
+                                >
+                                  <RefreshCw className="w-4 h-4" />
+                                  <span>Cancel Booking & Reallocate Slot</span>
+                                </button>
+                              )}
+                            </div>
+                          </div>
+                        </div>
+                      );
+                    })()}
+                  </div>
+                )}
+
+                {/* VIEW 2: RENTAL PACKAGES MANAGEMENT */}
+                {rentalSubTab === 'packages' && (
+                  <div className="space-y-6">
+                    <div className="flex items-center justify-between border-b border-white/10 pb-4">
+                      <div>
+                        <h4 className="text-base font-bold text-white">Experience Packages & Inclusions</h4>
+                        <p className="text-xs text-[#f0e8d8]/60">Edit titles, guest capacity, photos, descriptions, and inclusions for wedding, cinema, and concert packages.</p>
+                      </div>
+                      <button
+                        onClick={addRentalPackage}
+                        className="px-4 py-2 rounded-xl bg-emerald-800 hover:bg-emerald-700 text-white text-xs font-semibold flex items-center gap-1.5 cursor-pointer shadow transition-all hover:scale-105"
+                      >
+                        <Plus className="w-4 h-4" />
+                        <span>Upload / Add Package</span>
+                      </button>
+                    </div>
+
+                    {/* Package Tabs */}
+                    <div className="flex gap-2 overflow-x-auto pb-2">
+                      {(cmsData.rentals || []).map((r, i) => (
+                        <button
+                          key={r.id || i}
+                          onClick={() => setActiveRentalIndex(i)}
+                          className={`px-4 py-2.5 rounded-xl text-xs font-semibold flex items-center gap-2 whitespace-nowrap transition-all cursor-pointer ${
+                            activeRentalIndex === i
+                              ? 'bg-[#d8ae62] text-[#2c1208] font-bold shadow-md'
+                              : 'bg-white/10 text-white/80 hover:bg-white/15'
+                          }`}
+                        >
+                          <span>{r.title?.en || `Package ${i + 1}`}</span>
+                        </button>
+                      ))}
+                    </div>
+
+                    {cmsData.rentals && cmsData.rentals[activeRentalIndex] && (() => {
+                      const r = cmsData.rentals[activeRentalIndex];
+                      return (
+                        <div className="bg-white/5 border border-white/15 rounded-2xl p-6 space-y-5">
+                          <div className="flex items-center justify-between">
+                            <span className="text-xs uppercase font-mono tracking-wider text-[#d8ae62] font-bold">
+                              Editing Package #{activeRentalIndex + 1}: {r.title?.en}
+                            </span>
+                            <button
+                              onClick={() => deleteRentalPackage(activeRentalIndex)}
+                              className="px-3.5 py-1.5 rounded-lg bg-red-900/70 hover:bg-red-800 text-red-200 text-xs font-semibold flex items-center gap-1.5 cursor-pointer transition-colors"
+                            >
+                              <Trash2 className="w-3.5 h-3.5" />
+                              <span>Delete Package</span>
+                            </button>
+                          </div>
+
+                          <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                            <div>
+                              <label className="block text-xs font-semibold mb-1 text-[#d8ae62]">Package Title (EN) *</label>
+                              <input
+                                type="text"
+                                value={r.title?.en || ''}
+                                onChange={(e) => updateRentalField(activeRentalIndex, 'title', e.target.value, 'en')}
+                                className="w-full px-3.5 py-2.5 rounded-xl bg-black/60 border border-white/20 text-xs text-white outline-none focus:border-[#d8ae62]"
+                              />
+                            </div>
+                            <div>
+                              <label className="block text-xs font-semibold mb-1 text-[#d8ae62]">Guest Capacity</label>
+                              <input
+                                type="text"
+                                value={r.capacity || ''}
+                                onChange={(e) => updateRentalField(activeRentalIndex, 'capacity', e.target.value)}
+                                placeholder="e.g. 100 – 600 Guests"
+                                className="w-full px-3.5 py-2.5 rounded-xl bg-black/60 border border-white/20 text-xs text-white outline-none focus:border-[#d8ae62]"
+                              />
+                            </div>
+                          </div>
+
+                          {/* Image Picker */}
+                          <div>
+                            <label className="block text-xs font-semibold mb-1.5 text-[#d8ae62]">Cover Photograph</label>
+                            <div className="flex flex-wrap gap-2 mb-2">
+                              {PRESET_IMAGES.map((img) => (
+                                <button
+                                  key={img.path}
+                                  type="button"
+                                  onClick={() => updateRentalField(activeRentalIndex, 'image', img.path)}
+                                  className={`px-2.5 py-1.5 rounded-lg text-[11px] font-semibold border flex items-center gap-1.5 cursor-pointer ${
+                                    r.image === img.path
+                                      ? 'bg-[#d8ae62] text-[#2c1208] border-[#d8ae62]'
+                                      : 'bg-black/40 text-white/70 border-white/10 hover:border-white/30'
+                                  }`}
+                                >
+                                  <span>{img.label}</span>
+                                </button>
+                              ))}
+                            </div>
+                            <input
+                              type="text"
+                              value={r.image || ''}
+                              onChange={(e) => updateRentalField(activeRentalIndex, 'image', e.target.value)}
+                              placeholder="Image URL or file path (e.g. /images/SDP_0282.jpg)"
+                              className="w-full px-3.5 py-2.5 rounded-xl bg-black/60 border border-white/20 text-xs text-white font-mono outline-none focus:border-[#d8ae62]"
+                            />
+                          </div>
+
+                          <div>
+                            <label className="block text-xs font-semibold mb-1 text-[#d8ae62]">Description & Inclusions (EN)</label>
+                            <textarea
+                              rows={4}
+                              value={typeof r.desc === 'object' ? r.desc.en : r.desc || ''}
+                              onChange={(e) => updateRentalField(activeRentalIndex, 'desc', e.target.value, 'en')}
+                              className="w-full px-3.5 py-2.5 rounded-xl bg-black/60 border border-white/20 text-xs text-white outline-none focus:border-[#d8ae62]"
+                            />
+                          </div>
+                        </div>
+                      );
+                    })()}
+                  </div>
+                )}
               </div>
             )}
 
@@ -1020,6 +1329,46 @@ export default function AdminCMSDashboard({ isOpen, onClose }) {
             )}
           </main>
         </div>
+
+        {/* MODAL: REJECTION REASON PROMPT */}
+        {rejectionModalOpen && (
+          <div className="fixed inset-0 z-[100001] bg-black/80 flex items-center justify-center p-4">
+            <div className="w-full max-w-md bg-[#1c120c] border border-red-800/60 rounded-2xl p-6 space-y-4 shadow-2xl animate-in zoom-in-95">
+              <div className="flex items-center gap-2 text-red-400 font-bold text-sm">
+                <XCircle className="w-5 h-5" />
+                <span>Decline Reservation Enquiry</span>
+              </div>
+              <p className="text-xs text-[#f0e8d8]/70">
+                Please provide the reason for declining. A polite, formal email will be sent automatically to the guest explaining the status.
+              </p>
+              <div>
+                <label className="block text-xs font-semibold text-[#d8ae62] mb-1">Reason for Decline</label>
+                <textarea
+                  rows={3}
+                  value={rejectionReason}
+                  onChange={(e) => setRejectionReason(e.target.value)}
+                  className="w-full px-3 py-2 rounded-xl bg-black/60 border border-white/20 text-xs text-white outline-none focus:border-red-500"
+                />
+              </div>
+              <div className="flex items-center justify-end gap-2 pt-2">
+                <button
+                  type="button"
+                  onClick={() => setRejectionModalOpen(false)}
+                  className="px-3.5 py-2 rounded-xl bg-white/10 hover:bg-white/15 text-xs text-white font-semibold cursor-pointer"
+                >
+                  Cancel
+                </button>
+                <button
+                  type="button"
+                  onClick={handleConfirmReject}
+                  className="px-4 py-2 rounded-xl bg-red-700 hover:bg-red-600 text-xs text-white font-bold cursor-pointer"
+                >
+                  Send Polite Rejection
+                </button>
+              </div>
+            </div>
+          </div>
+        )}
       </div>
     </div>,
     document.body

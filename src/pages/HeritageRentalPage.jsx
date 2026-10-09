@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Check, Calendar as CalendarIcon, Clock, Mail, ShieldCheck, Sparkles, MapPin, ArrowRight } from 'lucide-react';
 import SectionHeader from '../components/SectionHeader';
 import { getAssetUrl } from '../utils/assetHelper';
@@ -7,7 +7,15 @@ import { getBlockedDates, isDateBlocked, isPastDate } from '../data/bookingData'
 export default function HeritageRentalPage({ lang = 'en', onOpenBooking, onOpenLightbox, content }) {
   const t = content[lang];
   const [currentMonthOffset, setCurrentMonthOffset] = useState(0);
-  const blockedDates = getBlockedDates();
+  const [blockedDates, setBlockedDates] = useState(getBlockedDates);
+
+  useEffect(() => {
+    const handleUpdate = (e) => {
+      setBlockedDates(e.detail || getBlockedDates());
+    };
+    window.addEventListener('khelat_blocked_dates_updated', handleUpdate);
+    return () => window.removeEventListener('khelat_blocked_dates_updated', handleUpdate);
+  }, []);
 
   const today = new Date();
   const targetDate = new Date(today.getFullYear(), today.getMonth() + currentMonthOffset, 1);

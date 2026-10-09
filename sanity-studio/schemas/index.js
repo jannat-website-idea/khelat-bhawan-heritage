@@ -7,6 +7,7 @@ import about from './about';
 import founder from './founder';
 import trustees from './trustees';
 import rental from './rental';
+import reservationEnquiry from './reservationEnquiry';
 import legalPolicy from './legalPolicy';
 import heroSection from './heroSection';
 
@@ -19,7 +20,9 @@ export const schemaTypes = [
   gallery,
   event,
   rental,
+  reservationEnquiry,
   feedback,
   legalPolicy,
   siteSettings
 ];
+

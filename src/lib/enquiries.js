@@ -1,4 +1,5 @@
 import {validateEnquiry} from './enquiryValidation';
+import { recordNewEnquiry } from '../data/enquiriesStore';
 
 export async function submitEnquiry(payload) {
   const validationErrors = validateEnquiry(payload);
@@ -16,6 +17,16 @@ export async function submitEnquiry(payload) {
 
   const result = await response.json().catch(() => ({}));
   if (!response.ok) throw new Error(result.error || 'Unable to send your enquiry. Please try again.');
+
+  // Automatically record enquiry into CMS enquiries store
+  try {
+    recordNewEnquiry({
+      ...payload,
+      reference: result.reference || `KB-${Date.now().toString().slice(-8)}`
+    });
+  } catch (err) {
+    console.warn('Could not record to local enquiries store:', err);
+  }
 
   const details = [
     `Reference: ${result.reference}`,
