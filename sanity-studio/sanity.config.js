@@ -9,7 +9,7 @@ export default defineConfig({
   title: 'Khelat Bhawan Palace Dashboard',
   basePath: '/studio',
 
-  projectId: '4w2m42ab',
+  projectId: 'ncesiy4k',
   dataset: 'production',
 
   plugins: [

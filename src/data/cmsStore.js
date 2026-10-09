@@ -4,11 +4,35 @@
  */
 
 import { defaultEventsData } from './eventsData';
+import { photographyGalleryData, filmsGalleryData } from './galleryData';
 
-const CMS_STORAGE_KEY = 'khelat_estate_cms_data_v1';
+const CMS_STORAGE_KEY = 'khelat_estate_cms_data_v2';
+
+const initialGalleryData = [
+  ...photographyGalleryData.map((p) => ({
+    id: p.id,
+    title: p.title,
+    mediaType: 'image',
+    category: (p.category?.en || 'architecture').toLowerCase().includes('durga') ? 'festivals' : (p.category?.en || '').toLowerCase().includes('interior') ? 'cultural' : 'architecture',
+    src: p.src,
+    photographer: p.photographer || 'Estate Archives',
+    year: p.year || '1845',
+    desc: p.desc
+  })),
+  ...filmsGalleryData.map((f) => ({
+    id: f.id,
+    title: f.title,
+    mediaType: 'video',
+    category: 'cinema',
+    src: f.src,
+    photographer: f.photographer || 'Cinematography Unit',
+    year: f.year || '2026',
+    desc: f.desc
+  }))
+];
 
 export const initialCMSData = {
-  // 1. Site Settings & Hero
+  // 1. Site Settings & Hero Video
   settings: {
     heroVideoUrl: '',
     heroPosterUrl: '/images/hero-staircase-poster.jpg',
@@ -21,7 +45,7 @@ export const initialCMSData = {
     googleMapsUrl: 'https://share.google/TFFurvjijjI8QM8eg'
   },
 
-  // 2. Events & Celebrations (Pre-loaded with all curated events)
+  // 2. Events & Celebrations (All 5 Curated Events)
   events: defaultEventsData,
 
   // 3. Reservations & Heritage Rental Packages
@@ -29,7 +53,7 @@ export const initialCMSData = {
     {
       id: "wedding",
       title: { en: "Royal Weddings & Banquets", bn: "রাজকীয় বিবাহ ও উৎসব" },
-      category: "Weddings & Celebrations",
+      category: "wedding",
       capacity: "100 – 600 Guests",
       image: "/images/SDP_0282.jpg",
       desc: {
@@ -46,7 +70,7 @@ export const initialCMSData = {
     {
       id: "cinema",
       title: { en: "Period Cinema & Production Shoots", bn: "চলচ্চিত্র ও ফটোশুট" },
-      category: "Cinematography",
+      category: "cinema",
       capacity: "Cast & Crew Setup",
       image: "/images/SDP_0344.jpg",
       desc: {
@@ -63,7 +87,7 @@ export const initialCMSData = {
     {
       id: "concert",
       title: { en: "Classical Soirees & Cultural Evenings", bn: "মার্গ সঙ্গীত ও সান্ধ্য জলসা" },
-      category: "Cultural Soiree",
+      category: "concert",
       capacity: "50 – 250 Guests",
       image: "/images/SDP_0365.jpg",
       desc: {
@@ -107,62 +131,29 @@ export const initialCMSData = {
       review: "We filmed an international heritage documentary here. The architectural authenticity, preservation of heirlooms, and cooperative management made the shoot unforgettable.",
       isApproved: true,
       date: "August 2026"
+    },
+    {
+      id: "fb-4",
+      name: "Prof. Debashis Sen",
+      rating: 5,
+      visitType: "Architectural Research Study",
+      review: "An exceptional example of 19th-century Bengal renaissance neoclassical architecture. The library archives and marble courtyards are impeccably preserved.",
+      isApproved: true,
+      date: "July 2026"
+    },
+    {
+      id: "fb-5",
+      name: "Shreya Roychowdhury",
+      rating: 5,
+      visitType: "Family Heritage Tour",
+      review: "The evening atmosphere with the courtyard illuminated is breathtaking. A proud symbol of Kolkata's aristocratic history and living traditions.",
+      isApproved: true,
+      date: "June 2026"
     }
   ],
 
-  // 5. Visual Gallery & Films
-  gallery: [
-    {
-      id: "gal-1",
-      title: { en: "Classical Corinthian Capital Details", bn: "করিন্থিয়ান স্তম্ভ ও কারুকার্য" },
-      mediaType: "image",
-      category: "architecture",
-      src: "/images/SDP_0282.jpg",
-      photographer: "Heritage Architecture Survey",
-      year: "1845",
-      desc: { en: "Intricate architectural plaster reliefs and Corinthian fluted capitals.", bn: "ঊনবিংশ শতকের সূক্ষ্ম প্লাস্টার কারুকাজ ও করিন্থিয়ান শৈলীর স্তম্ভ।" }
-    },
-    {
-      id: "gal-2",
-      title: { en: "Durga Puja Thakur Dalan Illumination", bn: "শারদোৎসব ও ঠাকুর দালান" },
-      mediaType: "image",
-      category: "festivals",
-      src: "/images/unnamed_6.webp",
-      photographer: "Estate Cultural Archives",
-      year: "2026",
-      desc: { en: "Sacred courtyard illuminated during the 171-year-old family Durga Puja.", bn: "ঐতিহাসিক ঠাকুর দালানে ১৭১ বছরের প্রাচীন শারদোৎসব।" }
-    },
-    {
-      id: "gal-3",
-      title: { en: "Sanctified Chamber of Sri Ramakrishna", bn: "শ্রীরামকৃষ্ণ স্মারক কক্ষ" },
-      mediaType: "image",
-      category: "cultural",
-      src: "/images/rk01.png",
-      photographer: "Devotional Archives",
-      year: "1881",
-      desc: { en: "Room blessed by Bhagavan Sri Ramakrishna Paramhansa in 1881.", bn: "১৮৮১ সালে শ্রীরামকৃষ্ণদেবের পদধূলিতে পবিত্র স্থান।" }
-    },
-    {
-      id: "gal-4",
-      title: { en: "Grand Colonnade Corridor", bn: "প্রাসাদের অলিন্দ" },
-      mediaType: "image",
-      category: "architecture",
-      src: "/images/khelat-bhawan-colonnade-corridor.jpg",
-      photographer: "Architectural Archives",
-      year: "1845",
-      desc: { en: "Long perspective view through marble-floored colonnade corridors.", bn: "মার্বেল চত্বর এবং গ্র্যান্ড অলিন্দ।" }
-    },
-    {
-      id: "gal-5",
-      title: { en: "Palace Cinematography Film", bn: "হেরিটেজ চলচ্চিত্র" },
-      mediaType: "video",
-      category: "cinema",
-      src: "/Videos/hero-palace-film.mp4",
-      photographer: "Cinematography Unit",
-      year: "2026",
-      desc: { en: "Cinematic tour capturing the architectural soul of Khelat Bhawan.", bn: "খেলাৎ ভবনের জীবন্ত রাজকীয় ঐতিহ্যের চিত্রায়ন।" }
-    }
-  ],
+  // 5. Visual Gallery & Films (All 21+ Curated Photographs & Films)
+  gallery: initialGalleryData,
 
   // 6. Terms & Privacy Policy
   legal: {
