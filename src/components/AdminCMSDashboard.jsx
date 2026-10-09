@@ -4,7 +4,8 @@ import {
   X, Save, RotateCcw, Plus, Trash2, Edit3, Image, Video, 
   Calendar, Clock, MapPin, Sparkles, Shield, CheckCircle2, 
   Star, Eye, EyeOff, UploadCloud, MessageSquare, Phone, Mail, 
-  FileText, Check, AlertCircle, XCircle, RefreshCw, Inbox, User, Layers
+  FileText, Check, AlertCircle, XCircle, RefreshCw, Inbox, User, Layers,
+  ListPlus, ChevronLeft, ChevronRight
 } from 'lucide-react';
 import { getCMSData, saveCMSData, resetCMSData } from '../data/cmsStore';
 import { 
@@ -27,6 +28,13 @@ const PRESET_IMAGES = [
   { label: 'Founder Marble Bust', path: '/images/khelat-ghosh-portrait-clean.png' }
 ];
 
+const BENGALI_MONTHS = [
+  'জানুয়ারি', 'ফেব্রুয়ারি', 'মার্চ', 'এপ্রিল', 'মে', 'জুন', 
+  'জুলাই', 'আগস্ট', 'সেপ্টেম্বর', 'অক্টোবর', 'নভেম্বর', 'ডিসেম্বর'
+];
+const BENGALI_DIGITS = ['০', '১', '২', '৩', '৪', '৫', '৬', '৭', '৮', '৯'];
+const toBengaliNumber = (num) => String(num).replace(/[0-9]/g, (d) => BENGALI_DIGITS[d]);
+
 export default function AdminCMSDashboard({ isOpen, onClose }) {
   // 6 Sections: events, rentals, feedback, gallery, settings, legal
   const [activeSection, setActiveSection] = useState('events');
@@ -40,6 +48,15 @@ export default function AdminCMSDashboard({ isOpen, onClose }) {
   const [activeFeedbackIndex, setActiveFeedbackIndex] = useState(0);
   const [activeGalleryIndex, setActiveGalleryIndex] = useState(0);
   const [notification, setNotification] = useState('');
+
+  // Event Calendar Picker state
+  const [showEventDatePicker, setShowEventDatePicker] = useState(false);
+  const [pickerYear, setPickerYear] = useState(new Date().getFullYear());
+  const [pickerMonth, setPickerMonth] = useState(new Date().getMonth());
+  const [rangeStartDate, setRangeStartDate] = useState(null);
+
+  // New highlight input state
+  const [newHighlightText, setNewHighlightText] = useState('');
 
   // Rejection reason prompt state
   const [rejectionModalOpen, setRejectionModalOpen] = useState(false);
@@ -114,15 +131,19 @@ export default function AdminCMSDashboard({ isOpen, onClose }) {
       time: { en: '6:00 PM – 9:00 PM', bn: 'সন্ধ্যা ৬:০০ – রাত ৯:০০' },
       location: { en: 'Thakur Dalan, Khelat Bhawan', bn: 'ঠাকুর দালান, খেলাৎ ভবন' },
       image: '/images/unnamed_6.webp',
+      galleryImages: ['/images/SDP_0282.jpg'],
       badge: { en: 'Special Event', bn: 'বিশেষ অনুষ্ঠান' },
       desc: { en: 'Share details of the celebration here.', bn: 'অনুষ্ঠানের বিস্তারিত বিবরণ এখানে লিখুন।' },
-      highlights: { en: ['Classical Music', 'Heritage Walk'], bn: ['শাস্ত্রীয় সঙ্গীত', 'ঐতিহ্য পরিক্রমা'] },
+      highlights: { 
+        en: ['Classical Music Baithak', 'Heritage Architecture Walk', 'Illuminated Courtyard'], 
+        bn: ['শাস্ত্রীয় সঙ্গীত সন্ধ্যা', 'ঐতিহ্য পরিক্রমা', 'আলোকোজ্জ্বল প্রাঙ্গণ'] 
+      },
       whatsappNumber: '9831093021'
     };
     const updated = [newEv, ...(cmsData.events || [])];
     setCmsData({ ...cmsData, events: updated });
     setActiveEventIndex(0);
-    notify('➕ New event added! You can now edit its details.');
+    notify('➕ New event added! You can now edit its details, dates, and highlights.');
   };
 
   const deleteEvent = (idx) => {
@@ -132,6 +153,96 @@ export default function AdminCMSDashboard({ isOpen, onClose }) {
       setActiveEventIndex(0);
       notify('🗑️ Event deleted!');
     }
+  };
+
+  // Event Calendar Picker Actions
+  const handleSelectEventCalendarDay = (day) => {
+    const selectedDate = new Date(pickerYear, pickerMonth, day);
+    const monthNamesEn = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
+    
+    if (!rangeStartDate) {
+      // Single date select or first date of range
+      const enDateStr = `${monthNamesEn[pickerMonth]} ${day}, ${pickerYear}`;
+      const bnDateStr = `${toBengaliNumber(day)} ${BENGALI_MONTHS[pickerMonth]}, ${toBengaliNumber(pickerYear)}`;
+      
+      updateEventField(activeEventIndex, 'date', enDateStr, 'en');
+      updateEventField(activeEventIndex, 'date', bnDateStr, 'bn');
+      setRangeStartDate(selectedDate);
+      notify(`📅 Date set to ${enDateStr}! Click another day if selecting a date range.`);
+    } else {
+      // Complete range
+      const startDay = rangeStartDate.getDate();
+      const startMonth = rangeStartDate.getMonth();
+      const startYear = rangeStartDate.getFullYear();
+      
+      let enRange = '';
+      let bnRange = '';
+      
+      if (startMonth === pickerMonth && startYear === pickerYear) {
+        const minDay = Math.min(startDay, day);
+        const maxDay = Math.max(startDay, day);
+        enRange = `${monthNamesEn[pickerMonth]} ${minDay} – ${maxDay}, ${pickerYear}`;
+        bnRange = `${toBengaliNumber(minDay)} – ${toBengaliNumber(maxDay)} ${BENGALI_MONTHS[pickerMonth]}, ${toBengaliNumber(pickerYear)}`;
+      } else {
+        enRange = `${monthNamesEn[startMonth]} ${startDay}, ${startYear} – ${monthNamesEn[pickerMonth]} ${day}, ${pickerYear}`;
+        bnRange = `${toBengaliNumber(startDay)} ${BENGALI_MONTHS[startMonth]}, ${toBengaliNumber(startYear)} – ${toBengaliNumber(day)} ${BENGALI_MONTHS[pickerMonth]}, ${toBengaliNumber(pickerYear)}`;
+      }
+
+      updateEventField(activeEventIndex, 'date', enRange, 'en');
+      updateEventField(activeEventIndex, 'date', bnRange, 'bn');
+      setRangeStartDate(null);
+      setShowEventDatePicker(false);
+      notify(`📅 Date range set to: ${enRange}`);
+    }
+  };
+
+  // Highlights handlers
+  const addEventHighlight = (idx) => {
+    if (!newHighlightText.trim()) return;
+    const ev = cmsData.events[idx];
+    const currentHighlightsEn = Array.isArray(ev?.highlights?.en) 
+      ? ev.highlights.en 
+      : Array.isArray(ev?.highlights) 
+      ? ev.highlights 
+      : [];
+    
+    const updatedHighlightsEn = [...currentHighlightsEn, newHighlightText.trim()];
+    
+    const updatedEvents = [...cmsData.events];
+    updatedEvents[idx] = {
+      ...ev,
+      highlights: {
+        ...(ev.highlights || {}),
+        en: updatedHighlightsEn
+      }
+    };
+    
+    setCmsData({ ...cmsData, events: updatedEvents });
+    setNewHighlightText('');
+    notify('✨ New highlight bullet added!');
+  };
+
+  const deleteEventHighlight = (eventIdx, highlightIdx) => {
+    const ev = cmsData.events[eventIdx];
+    const currentHighlightsEn = Array.isArray(ev?.highlights?.en) 
+      ? ev.highlights.en 
+      : Array.isArray(ev?.highlights) 
+      ? ev.highlights 
+      : [];
+    
+    const updatedHighlightsEn = currentHighlightsEn.filter((_, i) => i !== highlightIdx);
+    
+    const updatedEvents = [...cmsData.events];
+    updatedEvents[eventIdx] = {
+      ...ev,
+      highlights: {
+        ...(ev.highlights || {}),
+        en: updatedHighlightsEn
+      }
+    };
+    
+    setCmsData({ ...cmsData, events: updatedEvents });
+    notify('🗑️ Highlight removed!');
   };
 
   // ==========================================
@@ -301,7 +412,7 @@ export default function AdminCMSDashboard({ isOpen, onClose }) {
                 </span>
               </div>
               <p className="text-[11px] text-[#f0e8d8]/60 font-sans">
-                Approve/reject bookings, auto-sync website calendar, edit events, packages, gallery, and contact information.
+                Interactive event calendar date picker, multiple key highlights manager, booking approval & email dispatch.
               </p>
             </div>
           </div>
@@ -382,10 +493,10 @@ export default function AdminCMSDashboard({ isOpen, onClose }) {
             ))}
 
             <div className="pt-6 px-3 text-[11px] text-[#f0e8d8]/50 space-y-2 border-t border-white/10 mt-6">
-              <p className="font-semibold text-[#d8ae62]">💡 Reservation System:</p>
-              <p>• <strong>Approve:</strong> Automatically marks date as Booked on the website calendar & sends confirmation email.</p>
-              <p>• <strong>Reject:</strong> Sends polite notification email.</p>
-              <p>• <strong>Cancel / Reallocate:</strong> Frees the date slot on the live calendar for new guests.</p>
+              <p className="font-semibold text-[#d8ae62]">💡 Events & Highlights:</p>
+              <p>• <strong>Calendar Picker:</strong> Select Month, Year, and Date to auto-format event dates.</p>
+              <p>• <strong>Highlights Manager:</strong> Add multiple key bullet points with individual delete options.</p>
+              <p>• <strong>Photo Upload:</strong> Upload main cover banner and additional event photos.</p>
             </div>
           </aside>
 
@@ -393,14 +504,14 @@ export default function AdminCMSDashboard({ isOpen, onClose }) {
           <main className="flex-1 p-6 overflow-y-auto bg-black/20">
             
             {/* =========================================================================
-                1. EVENTS & CELEBRATIONS
+                1. EVENTS & CELEBRATIONS (WITH CALENDAR PICKER & MULTI-HIGHLIGHTS)
                ========================================================================= */}
             {activeSection === 'events' && (
               <div className="space-y-6">
                 <div className="flex items-center justify-between border-b border-white/10 pb-4">
                   <div>
                     <h3 className="font-serif text-xl font-bold text-[#d8ae62]">🎪 Events & Celebrations</h3>
-                    <p className="text-xs text-[#f0e8d8]/60">Manage cultural celebrations, dates, timings, venue hall, and WhatsApp enquiry button.</p>
+                    <p className="text-xs text-[#f0e8d8]/60">Select or add an event. Use the interactive calendar date picker and add multiple key highlights.</p>
                   </div>
                   <button
                     onClick={addEvent}
@@ -416,7 +527,10 @@ export default function AdminCMSDashboard({ isOpen, onClose }) {
                   {(cmsData.events || []).map((ev, i) => (
                     <button
                       key={ev.id || i}
-                      onClick={() => setActiveEventIndex(i)}
+                      onClick={() => {
+                        setActiveEventIndex(i);
+                        setShowEventDatePicker(false);
+                      }}
                       className={`px-4 py-2.5 rounded-xl text-xs font-semibold flex items-center gap-2 whitespace-nowrap transition-all cursor-pointer ${
                         activeEventIndex === i
                           ? 'bg-[#d8ae62] text-[#2c1208] font-bold shadow-md'
@@ -431,8 +545,17 @@ export default function AdminCMSDashboard({ isOpen, onClose }) {
                 {/* Active Event Edit Form */}
                 {cmsData.events && cmsData.events[activeEventIndex] && (() => {
                   const ev = cmsData.events[activeEventIndex];
+                  const highlightsList = Array.isArray(ev?.highlights?.en) 
+                    ? ev.highlights.en 
+                    : Array.isArray(ev?.highlights) 
+                    ? ev.highlights 
+                    : [];
+
+                  const daysInPickerMonth = new Date(pickerYear, pickerMonth + 1, 0).getDate();
+                  const firstDayInPickerMonth = new Date(pickerYear, pickerMonth, 1).getDay();
+
                   return (
-                    <div className="bg-white/5 border border-white/15 rounded-2xl p-6 space-y-5">
+                    <div className="bg-white/5 border border-white/15 rounded-2xl p-6 space-y-6">
                       <div className="flex items-center justify-between">
                         <span className="text-xs uppercase font-mono tracking-wider text-[#d8ae62] font-bold">
                           Editing Event #{activeEventIndex + 1}: {ev.title?.en}
@@ -468,18 +591,122 @@ export default function AdminCMSDashboard({ isOpen, onClose }) {
                         </div>
                       </div>
 
-                      {/* Dates & Timings */}
-                      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
-                        <div>
-                          <label className="block text-xs font-semibold mb-1 text-white/80">Event Date (English)</label>
-                          <input
-                            type="text"
-                            value={ev.date?.en || ''}
-                            onChange={(e) => updateEventField(activeEventIndex, 'date', e.target.value, 'en')}
-                            placeholder="e.g. October 18 – 22, 2026"
-                            className="w-full px-3.5 py-2.5 rounded-xl bg-black/60 border border-white/20 text-xs text-white outline-none focus:border-[#d8ae62]"
-                          />
+                      {/* ============================================================
+                          CALENDAR DATE PICKER SEGMENT FOR EVENTS
+                         ============================================================ */}
+                      <div className="p-4 rounded-xl bg-black/50 border border-[#d8ae62]/30 space-y-3">
+                        <div className="flex items-center justify-between">
+                          <div className="flex items-center gap-2">
+                            <Calendar className="w-4 h-4 text-[#d8ae62]" />
+                            <span className="text-xs font-bold text-white uppercase tracking-wider font-mono">
+                              Event Date & Calendar Selector
+                            </span>
+                          </div>
+                          <button
+                            type="button"
+                            onClick={() => setShowEventDatePicker(!showEventDatePicker)}
+                            className="px-3 py-1 rounded-lg bg-[#5a1722] hover:bg-[#721d2b] border border-[#d8ae62]/40 text-[11px] text-[#f5efe6] font-semibold flex items-center gap-1.5 cursor-pointer"
+                          >
+                            <Calendar className="w-3.5 h-3.5" />
+                            <span>{showEventDatePicker ? 'Hide Calendar' : 'Open Interactive Calendar'}</span>
+                          </button>
                         </div>
+
+                        {/* Dropdown / Interactive Calendar Drawer */}
+                        {showEventDatePicker && (
+                          <div className="p-4 rounded-xl bg-[#1a0f0a] border border-[#d8ae62]/40 space-y-3 animate-in fade-in duration-200">
+                            <div className="flex flex-wrap items-center justify-between gap-2 pb-2 border-b border-white/10">
+                              <span className="text-[11px] text-[#d8ae62] font-semibold">
+                                Select Month & Year to Pick Single Date or Range:
+                              </span>
+                              
+                              <div className="flex items-center gap-2">
+                                <select
+                                  value={pickerMonth}
+                                  onChange={(e) => setPickerMonth(Number(e.target.value))}
+                                  className="px-2.5 py-1 rounded bg-black/70 border border-white/20 text-xs text-white outline-none focus:border-[#d8ae62]"
+                                >
+                                  {['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'].map((m, idx) => (
+                                    <option key={m} value={idx}>{m}</option>
+                                  ))}
+                                </select>
+
+                                <select
+                                  value={pickerYear}
+                                  onChange={(e) => setPickerYear(Number(e.target.value))}
+                                  className="px-2.5 py-1 rounded bg-black/70 border border-white/20 text-xs text-white outline-none focus:border-[#d8ae62]"
+                                >
+                                  {[2026, 2027, 2028, 2029, 2030].map(y => (
+                                    <option key={y} value={y}>{y}</option>
+                                  ))}
+                                </select>
+                              </div>
+                            </div>
+
+                            {/* Calendar Days Grid */}
+                            <div>
+                              <div className="grid grid-cols-7 gap-1 text-center text-[10px] font-semibold text-[#d8ae62]/80 uppercase mb-1">
+                                {['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'].map(d => (
+                                  <div key={d}>{d}</div>
+                                ))}
+                              </div>
+
+                              <div className="grid grid-cols-7 gap-1">
+                                {Array.from({ length: firstDayInPickerMonth }).map((_, i) => (
+                                  <div key={`cal-pad-${i}`} className="h-7" />
+                                ))}
+                                {Array.from({ length: daysInPickerMonth }).map((_, i) => {
+                                  const day = i + 1;
+                                  return (
+                                    <button
+                                      key={`day-${day}`}
+                                      type="button"
+                                      onClick={() => handleSelectEventCalendarDay(day)}
+                                      className="h-7 rounded text-xs font-mono font-semibold bg-white/5 hover:bg-[#d8ae62] hover:text-[#2c1208] text-white border border-white/10 transition-colors flex items-center justify-center cursor-pointer"
+                                    >
+                                      {day}
+                                    </button>
+                                  );
+                                })}
+                              </div>
+                              <p className="text-[10px] text-white/50 mt-2">
+                                💡 Tip: Click once to set a single date. Click a second day to create a multi-day date range.
+                              </p>
+                            </div>
+                          </div>
+                        )}
+
+                        {/* Direct Editable Text Inputs for Date */}
+                        <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 pt-1">
+                          <div>
+                            <label className="block text-[11px] font-semibold text-white/80 mb-1">
+                              Event Date Display (English)
+                            </label>
+                            <input
+                              type="text"
+                              value={ev.date?.en || ''}
+                              onChange={(e) => updateEventField(activeEventIndex, 'date', e.target.value, 'en')}
+                              placeholder="e.g. October 18 – 22, 2026"
+                              className="w-full px-3 py-2 rounded-xl bg-black/70 border border-white/20 text-xs text-white outline-none focus:border-[#d8ae62] font-mono"
+                            />
+                          </div>
+                          <div>
+                            <label className="block text-[11px] font-semibold text-white/80 mb-1">
+                              Event Date Display (Bengali)
+                            </label>
+                            <input
+                              type="text"
+                              value={ev.date?.bn || ''}
+                              onChange={(e) => updateEventField(activeEventIndex, 'date', e.target.value, 'bn')}
+                              placeholder="e.g. ১৮ – ২২ অক্টোবর, ২০২৬"
+                              className="w-full px-3 py-2 rounded-xl bg-black/70 border border-white/20 text-xs text-white outline-none focus:border-[#d8ae62]"
+                            />
+                          </div>
+                        </div>
+                      </div>
+
+                      {/* Timings, Location & Category Badge */}
+                      <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
                         <div>
                           <label className="block text-xs font-semibold mb-1 text-white/80">Daily Timing</label>
                           <input
@@ -499,6 +726,79 @@ export default function AdminCMSDashboard({ isOpen, onClose }) {
                             placeholder="e.g. Thakur Dalan, Khelat Bhawan"
                             className="w-full px-3.5 py-2.5 rounded-xl bg-black/60 border border-white/20 text-xs text-white outline-none focus:border-[#d8ae62]"
                           />
+                        </div>
+                        <div>
+                          <label className="block text-xs font-semibold mb-1 text-white/80">Event Cultural Badge</label>
+                          <input
+                            type="text"
+                            value={ev.badge?.en || ''}
+                            onChange={(e) => updateEventField(activeEventIndex, 'badge', e.target.value, 'en')}
+                            placeholder="e.g. Flagship Cultural Festival"
+                            className="w-full px-3.5 py-2.5 rounded-xl bg-black/60 border border-white/20 text-xs text-white outline-none focus:border-[#d8ae62]"
+                          />
+                        </div>
+                      </div>
+
+                      {/* ============================================================
+                          MULTIPLE KEY HIGHLIGHTS SEGMENT (ADD, EDIT, DELETE)
+                         ============================================================ */}
+                      <div className="p-4 rounded-xl bg-black/40 border border-white/15 space-y-3">
+                        <div className="flex items-center justify-between">
+                          <div className="flex items-center gap-2">
+                            <ListPlus className="w-4 h-4 text-[#d8ae62]" />
+                            <span className="text-xs font-bold text-[#d8ae62] uppercase tracking-wider font-mono">
+                              Key Highlights Segment ({highlightsList.length} Highlights)
+                            </span>
+                          </div>
+                          <span className="text-[10px] text-white/50">Add multiple bullet points</span>
+                        </div>
+
+                        {/* Existing Highlights List with Delete options */}
+                        <div className="space-y-2">
+                          {highlightsList.map((hl, hIdx) => (
+                            <div 
+                              key={`hl-${hIdx}`}
+                              className="flex items-center justify-between gap-3 px-3.5 py-2.5 rounded-xl bg-white/5 border border-white/10 text-xs"
+                            >
+                              <div className="flex items-center gap-2 flex-1">
+                                <span className="w-2 h-2 rounded-full bg-[#d8ae62] shrink-0" />
+                                <span className="text-white font-medium">{hl}</span>
+                              </div>
+                              <button
+                                type="button"
+                                onClick={() => deleteEventHighlight(activeEventIndex, hIdx)}
+                                className="w-7 h-7 rounded-lg bg-red-900/40 hover:bg-red-800 text-red-300 flex items-center justify-center cursor-pointer transition-colors shrink-0"
+                                title="Delete this highlight"
+                              >
+                                <Trash2 className="w-3.5 h-3.5" />
+                              </button>
+                            </div>
+                          ))}
+                        </div>
+
+                        {/* Add New Highlight Row */}
+                        <div className="flex items-center gap-2 pt-2">
+                          <input
+                            type="text"
+                            value={newHighlightText}
+                            onChange={(e) => setNewHighlightText(e.target.value)}
+                            onKeyDown={(e) => {
+                              if (e.key === 'Enter') {
+                                e.preventDefault();
+                                addEventHighlight(activeEventIndex);
+                              }
+                            }}
+                            placeholder="Enter a new key highlight (e.g. 171-year Ekchala Idol, Classical Sarod recital)..."
+                            className="flex-1 px-3.5 py-2 rounded-xl bg-black/70 border border-white/20 text-xs text-white outline-none focus:border-[#d8ae62]"
+                          />
+                          <button
+                            type="button"
+                            onClick={() => addEventHighlight(activeEventIndex)}
+                            className="px-4 py-2 rounded-xl bg-[#5a1722] hover:bg-[#721d2b] border border-[#d8ae62]/50 text-white text-xs font-bold flex items-center gap-1.5 cursor-pointer shrink-0"
+                          >
+                            <Plus className="w-3.5 h-3.5" />
+                            <span>Add Highlight</span>
+                          </button>
                         </div>
                       </div>
 
