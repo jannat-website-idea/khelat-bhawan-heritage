@@ -2,6 +2,7 @@ export default {
   name: 'galleryItem',
   title: 'Visual Gallery & Films',
   type: 'document',
+  description: 'Add, edit, upload, replace, or delete photographs and films. All media metadata remains editable.',
   fields: [
     {
       name: 'title',

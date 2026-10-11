@@ -1,3 +1,5 @@
+import ReviewApprovalInput from '../components/ReviewApprovalInput';
+
 export default {
   name: 'feedback',
   title: 'Guest Reflections & Reviews Moderation',
@@ -32,6 +34,7 @@ export default {
       title: 'Approved for Website Display',
       type: 'boolean',
       description: 'Turn ON to publish this review on the public website testimonials section',
+      components: { input: ReviewApprovalInput },
       initialValue: false
     }
   ],

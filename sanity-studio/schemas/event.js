@@ -1,3 +1,5 @@
+import EventDateRangeInput from '../components/EventDateRangeInput';
+
 export default {
   name: 'event',
   title: 'Palace Events & Cultural Calendar',
@@ -14,11 +16,15 @@ export default {
     },
     {
       name: 'date',
-      title: 'Event Date',
+      title: 'Event Date & Calendar Picker',
       type: 'object',
+      description: 'Choose one date or a date range. English and Bengali website labels are generated automatically.',
+      components: { input: EventDateRangeInput },
       fields: [
-        { name: 'en', title: 'English Date (e.g. October 18 – 22, 2026)', type: 'string', validation: (Rule) => Rule.required() },
-        { name: 'bn', title: 'Bengali Date (e.g. ১৮ – ২২ অক্টোবর, ২০২৬)', type: 'string' }
+        { name: 'start', title: 'Start Date', type: 'date' },
+        { name: 'end', title: 'End Date', type: 'date' },
+        { name: 'en', title: 'English Date', type: 'string' },
+        { name: 'bn', title: 'Bengali Date', type: 'string' }
       ]
     },
     {

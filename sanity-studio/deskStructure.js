@@ -4,7 +4,7 @@ export const deskStructure = (S) =>
     .items([
       // 1. Events & Celebrations
       S.listItem()
-        .title('🎪 Events & Celebrations')
+        .title('🎪 Events & Celebrations — Calendar')
         .schemaType('event')
         .child(
           S.documentTypeList('event')
@@ -38,7 +38,7 @@ export const deskStructure = (S) =>
 
       // 3. Guest Reviews & Feedback
       S.listItem()
-        .title('⭐ Guest Reviews & Feedback')
+        .title('⭐ Guest Reviews — Live / Hidden')
         .schemaType('feedback')
         .child(
           S.documentTypeList('feedback')
@@ -47,7 +47,7 @@ export const deskStructure = (S) =>
 
       // 4. Visual Gallery & Films
       S.listItem()
-        .title('🖼️ Visual Gallery & Films')
+        .title('🖼️ Visual Gallery & Films — Upload / Edit / Delete')
         .schemaType('galleryItem')
         .child(
           S.documentTypeList('galleryItem')

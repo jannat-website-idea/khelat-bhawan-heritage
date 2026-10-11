@@ -1,3 +1,5 @@
+import ReservationStatusInput from '../components/ReservationStatusInput';
+
 export default {
   name: 'reservationEnquiry',
   title: 'Reservation Enquiries & Bookings',
@@ -56,6 +58,8 @@ export default {
       name: 'status',
       title: 'Reservation Status & Calendar Allocation',
       type: 'string',
+      description: 'Use the action buttons to approve, reject, cancel, or return the request to pending.',
+      components: { input: ReservationStatusInput },
       options: {
         list: [
           { title: '⏳ Pending Review', value: 'pending' },
