@@ -8,14 +8,15 @@ const __dirname = path.dirname(__filename);
 const rootDir = path.resolve(__dirname, '..');
 
 const client = createClient({
-  projectId: 'ncesiy4k',
+  projectId: process.env.SANITY_PROJECT_ID || '4w2m42ab',
   dataset: 'production',
   apiVersion: '2024-03-01',
-  token: 'skerYXQ5piYLH0KgBgzaQLS5jflTdxfzDmDxzp3vobEo78cEgDGQMD3ubgfrfiXVgxjSyfQPxToOsQmBm',
+  token: process.env.SANITY_AUTH_TOKEN,
   useCdn: false,
 });
 
 async function run() {
+  if (!process.env.SANITY_AUTH_TOKEN) throw new Error('SANITY_AUTH_TOKEN is required');
   console.log('📜 Seeding Terms & Privacy Policy in Sanity with PDF document uploads...');
 
   const termsPdfPath = path.join(rootDir, 'public', 'Khelat_Bhawan_Heritage_eBook.pdf');

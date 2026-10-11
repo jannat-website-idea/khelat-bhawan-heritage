@@ -3,15 +3,16 @@ import { defaultEventsData } from '../src/data/eventsData.js';
 import { photographyGalleryData, filmsGalleryData } from '../src/data/galleryData.js';
 
 const client = createClient({
-  projectId: 'ncesiy4k',
+  projectId: process.env.SANITY_PROJECT_ID || '4w2m42ab',
   dataset: 'production',
-  token: 'skerYXQ5piYLH0KgBgzaQLS5jflTdxfzDmDxzp3vobEo78cEgDGQMD3ubgfrfiXVgxjSyfQPxToOsQmBm',
+  token: process.env.SANITY_AUTH_TOKEN,
   apiVersion: '2024-01-01',
   useCdn: false
 });
 
 async function seedData() {
-  console.log('🚀 Starting complete data seed for Khelat Bhawan CMS (ncesiy4k)...');
+  if (!process.env.SANITY_AUTH_TOKEN) throw new Error('SANITY_AUTH_TOKEN is required');
+  console.log('🚀 Starting complete data seed for Khelat Bhawan CMS...');
 
   // 1. SITE SETTINGS & VISITING HOURS
   console.log('📍 Seeding Contact & Site Settings...');
@@ -227,7 +228,7 @@ async function seedData() {
     console.log(`  ✓ Seeded Film: ${f.title.en}`);
   }
 
-  console.log('🎉 ALL DATA SEEDED SUCCESSFULLY TO SANITY (ncesiy4k)!');
+  console.log('🎉 ALL DATA SEEDED SUCCESSFULLY TO SANITY!');
 }
 
 seedData().catch(err => {

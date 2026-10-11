@@ -13,23 +13,8 @@ async function capture() {
   // Go to studio
   await page.goto('https://khelatbhawan.com/studio', { waitUntil: 'domcontentloaded' });
 
-  // Inject Sanity Auth Token into localStorage
-  const token = 'skerYXQ5piYLH0KgBgzaQLS5jflTdxfzDmDxzp3vobEo78cEgDGQMD3ubgfrfiXVgxjSyfQPxToOsQmBm';
-  await page.evaluate((tok) => {
-    localStorage.setItem('__sanity_auth_token', tok);
-    localStorage.setItem('@sanity/auth/token', tok);
-    localStorage.setItem('sanitySession', JSON.stringify({ token: tok }));
-  }, token);
-
-  // Set cookies
-  await page.setCookie({
-    name: 'sanitySession',
-    value: token,
-    domain: '.sanity.io',
-    path: '/'
-  });
-
-  // Reload studio
+  // Studio access uses the signed-in Sanity/Google session. Never inject API tokens
+  // into browser storage or cookies.
   console.log('Navigating to studio structure...');
   await page.goto('https://khelatbhawan.com/studio/desk', { waitUntil: 'networkidle2', timeout: 35000 });
   await new Promise(r => setTimeout(r, 6000));

@@ -8,10 +8,10 @@ const __dirname = path.dirname(__filename);
 const rootDir = path.resolve(__dirname, '..');
 
 const client = createClient({
-  projectId: 'ncesiy4k',
+  projectId: process.env.SANITY_PROJECT_ID || '4w2m42ab',
   dataset: 'production',
   apiVersion: '2024-03-01',
-  token: 'skerYXQ5piYLH0KgBgzaQLS5jflTdxfzDmDxzp3vobEo78cEgDGQMD3ubgfrfiXVgxjSyfQPxToOsQmBm',
+  token: process.env.SANITY_AUTH_TOKEN,
   useCdn: false,
 });
 
@@ -42,7 +42,8 @@ async function uploadImageToSanity(relPath) {
 }
 
 async function run() {
-  console.log('🚀 Uploading & Seeding Visual Assets into Sanity Project (ncesiy4k)...');
+  if (!process.env.SANITY_AUTH_TOKEN) throw new Error('SANITY_AUTH_TOKEN is required');
+  console.log('🚀 Uploading & Seeding Visual Assets into the configured Sanity project...');
 
   // 1. HERO SECTION
   console.log('\n🏛️ Seeding Hero Section with uploaded images & banners...');

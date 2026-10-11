@@ -8,7 +8,7 @@ export default defineConfig({
   name: 'default',
   title: 'Khelat Bhawan CMS',
 
-  projectId: 'ncesiy4k',
+  projectId: '4w2m42ab',
   dataset: 'production',
 
   plugins: [structureTool({structure}), visionTool()],
