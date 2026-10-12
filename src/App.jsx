@@ -6,6 +6,7 @@ import Lightbox from './components/Lightbox';
 import LegalModal from './components/LegalModal';
 import AdminCMSDashboard from './components/AdminCMSDashboard';
 import HeritageLoader from './components/HeritageLoader';
+import PageErrorBoundary from './components/PageErrorBoundary';
 import useHeritageMotion from './hooks/useHeritageMotion';
 
 import HomePage from './pages/HomePage';
@@ -184,6 +185,7 @@ export default function App() {
 
       {/* Main Routed Page Content */}
       <div className="flex-grow" data-page-content>
+        <PageErrorBoundary route={activeTab}>
         {activeTab === 'home' && (
           <HomePage
             ready={homeReady}
@@ -270,6 +272,7 @@ export default function App() {
             content={siteData}
           />
         )}
+        </PageErrorBoundary>
       </div>
 
       {/* Luxury Heritage Footer */}

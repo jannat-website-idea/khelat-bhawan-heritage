@@ -7,7 +7,25 @@ import { useSanityLiveQuery } from '../sanity/useSanityLiveQuery';
 import { Calendar, Clock, MapPin, Sparkles, MessageCircle, ArrowRight, X, CheckCircle2, Layers, History, CalendarCheck } from 'lucide-react';
 import { getAssetUrl } from '../utils/assetHelper';
 
-const EventsPage = ({ lang = 'en', setActiveTab, onOpenBooking }) => {
+const localizedText = (value, lang, fallback = '') => {
+  if (value == null) return fallback;
+  if (typeof value === 'object' && !Array.isArray(value)) {
+    return value[lang] ?? value.en ?? Object.values(value).find((entry) => typeof entry === 'string') ?? fallback;
+  }
+  return String(value);
+};
+
+const localizedList = (value, lang) => {
+  if (!value) return [];
+  if (Array.isArray(value)) return value.filter(Boolean);
+  if (typeof value === 'object') {
+    const list = value[lang] ?? value.en ?? Object.values(value).find(Array.isArray);
+    return Array.isArray(list) ? list.filter(Boolean) : [];
+  }
+  return [];
+};
+
+const EventsPage = ({ lang = 'en' }) => {
   const isBn = lang === 'bn';
   const [selectedCategory, setSelectedCategory] = useState('all'); // 'all', 'upcoming', 'past'
   const [activeModalEvent, setActiveModalEvent] = useState(null);
@@ -128,12 +146,12 @@ const EventsPage = ({ lang = 'en', setActiveTab, onOpenBooking }) => {
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
             {filteredEvents.map((event) => {
               const isPast = isPastEvent(event);
-              const titleText = typeof event.title === 'object' ? (event.title[lang] || event.title.en) : event.title;
-              const dateText = typeof event.date === 'object' ? (event.date[lang] || event.date.en) : event.date;
-              const timeText = typeof event.time === 'object' ? (event.time[lang] || event.time.en) : event.time;
-              const locationText = typeof event.location === 'object' ? (event.location[lang] || event.location.en) : event.location;
-              const badgeText = typeof event.badge === 'object' ? (event.badge[lang] || event.badge.en) : event.badge;
-              const descText = typeof event.desc === 'object' ? (event.desc[lang] || event.desc.en) : event.desc;
+              const titleText = localizedText(event.title, lang, isBn ? 'শিরোনাম শীঘ্রই আসছে' : 'Event details coming soon');
+              const dateText = localizedText(event.date, lang, isBn ? 'তারিখ শীঘ্রই ঘোষণা করা হবে' : 'Date to be announced');
+              const timeText = localizedText(event.time, lang, isBn ? 'সময় শীঘ্রই ঘোষণা করা হবে' : 'Time to be announced');
+              const locationText = localizedText(event.location, lang, isBn ? 'খেলাৎ ভবন' : 'Khelat Bhawan');
+              const badgeText = localizedText(event.badge, lang, isBn ? 'রাজবাড়ির অনুষ্ঠান' : 'Palace Event');
+              const descText = localizedText(event.desc, lang, isBn ? 'বিস্তারিত শীঘ্রই যোগ করা হবে।' : 'More information will be added soon.');
 
               return (
                 <div
@@ -147,12 +165,16 @@ const EventsPage = ({ lang = 'en', setActiveTab, onOpenBooking }) => {
                   <div>
                     {/* Image & Badges */}
                     <div className="relative aspect-[16/10] overflow-hidden bg-muted">
-                      <img
-                        src={getAssetUrl(event.image)}
-                        alt={titleText}
-                        className="w-full h-full object-cover object-center group-hover:scale-105 transition-transform duration-700"
-                        loading="lazy"
-                      />
+                      {event.image ? (
+                        <img
+                          src={getAssetUrl(event.image)}
+                          alt={titleText}
+                          className="w-full h-full object-cover object-center group-hover:scale-105 transition-transform duration-700"
+                          loading="lazy"
+                        />
+                      ) : (
+                        <div className="w-full h-full bg-gradient-to-br from-[#4a171b] via-[#2a100e] to-[#100807]" aria-hidden="true" />
+                      )}
                       <div className="absolute inset-0 bg-gradient-to-t from-black/85 via-black/30 to-transparent" />
                       
                       {/* Left Badge: Cultural Category */}
@@ -260,16 +282,20 @@ const EventsPage = ({ lang = 'en', setActiveTab, onOpenBooking }) => {
 
             {/* Modal Image */}
             <div className="relative aspect-[16/9] w-full bg-black overflow-hidden">
-              <img
-                src={getAssetUrl(activeModalEvent.image)}
-                alt={typeof activeModalEvent.title === 'object' ? (activeModalEvent.title[lang] || activeModalEvent.title.en) : activeModalEvent.title}
-                className="w-full h-full object-cover"
-              />
+              {activeModalEvent.image ? (
+                <img
+                  src={getAssetUrl(activeModalEvent.image)}
+                  alt={localizedText(activeModalEvent.title, lang, 'Event')}
+                  className="w-full h-full object-cover"
+                />
+              ) : (
+                <div className="w-full h-full bg-gradient-to-br from-[#4a171b] via-[#2a100e] to-[#100807]" aria-hidden="true" />
+              )}
               <div className="absolute inset-0 bg-gradient-to-t from-[#140b08] via-transparent to-black/50" />
               
               <div className="absolute bottom-4 left-4 flex items-center gap-2">
                 <span className="px-3 py-1 text-xs uppercase tracking-wider font-semibold rounded-full bg-[#8a2034] text-white border border-[#d8ae62]/40 shadow-md">
-                  {typeof activeModalEvent.badge === 'object' ? (activeModalEvent.badge[lang] || activeModalEvent.badge.en) : activeModalEvent.badge}
+                  {localizedText(activeModalEvent.badge, lang, isBn ? 'রাজবাড়ির অনুষ্ঠান' : 'Palace Event')}
                 </span>
                 {isPastEvent(activeModalEvent) ? (
                   <span className="px-3 py-1 text-xs uppercase tracking-wider font-bold rounded-full bg-stone-800 text-stone-200 border border-stone-500/50 shadow-md">
@@ -286,7 +312,7 @@ const EventsPage = ({ lang = 'en', setActiveTab, onOpenBooking }) => {
             {/* Modal Body */}
             <div className="p-6 sm:p-8 space-y-6">
               <h2 className="font-serif text-2xl sm:text-3xl text-white font-bold tracking-wide">
-                {typeof activeModalEvent.title === 'object' ? (activeModalEvent.title[lang] || activeModalEvent.title.en) : activeModalEvent.title}
+                {localizedText(activeModalEvent.title, lang, isBn ? 'অনুষ্ঠান' : 'Event')}
               </h2>
 
               <div className="grid grid-cols-1 sm:grid-cols-3 gap-3 p-4 rounded-xl bg-white/5 border border-[#d8ae62]/30 text-xs text-[#d8ae62]">
@@ -297,7 +323,7 @@ const EventsPage = ({ lang = 'en', setActiveTab, onOpenBooking }) => {
                       {isBn ? 'তারিখ' : 'Date'}
                     </div>
                     <div className="text-white font-semibold">
-                      {typeof activeModalEvent.date === 'object' ? (activeModalEvent.date[lang] || activeModalEvent.date.en) : activeModalEvent.date}
+                      {localizedText(activeModalEvent.date, lang, isBn ? 'ঘোষণা করা হবে' : 'To be announced')}
                     </div>
                   </div>
                 </div>
@@ -308,7 +334,7 @@ const EventsPage = ({ lang = 'en', setActiveTab, onOpenBooking }) => {
                       {isBn ? 'সময়' : 'Time'}
                     </div>
                     <div className="text-white font-semibold">
-                      {typeof activeModalEvent.time === 'object' ? (activeModalEvent.time[lang] || activeModalEvent.time.en) : activeModalEvent.time}
+                      {localizedText(activeModalEvent.time, lang, isBn ? 'ঘোষণা করা হবে' : 'To be announced')}
                     </div>
                   </div>
                 </div>
@@ -319,7 +345,7 @@ const EventsPage = ({ lang = 'en', setActiveTab, onOpenBooking }) => {
                       {isBn ? 'স্থান' : 'Location'}
                     </div>
                     <div className="text-white font-semibold">
-                      {typeof activeModalEvent.location === 'object' ? (activeModalEvent.location[lang] || activeModalEvent.location.en) : activeModalEvent.location}
+                      {localizedText(activeModalEvent.location, lang, isBn ? 'খেলাৎ ভবন' : 'Khelat Bhawan')}
                     </div>
                   </div>
                 </div>
@@ -330,17 +356,17 @@ const EventsPage = ({ lang = 'en', setActiveTab, onOpenBooking }) => {
                   {isBn ? 'অনুষ্ঠানের বিবরণ' : 'Event Overview'}
                 </h3>
                 <p className="text-[#e2d5c3] text-sm sm:text-base leading-relaxed font-sans">
-                  {typeof activeModalEvent.desc === 'object' ? (activeModalEvent.desc[lang] || activeModalEvent.desc.en) : activeModalEvent.desc}
+                  {localizedText(activeModalEvent.desc, lang, isBn ? 'বিস্তারিত শীঘ্রই যোগ করা হবে।' : 'More information will be added soon.')}
                 </p>
               </div>
 
-              {activeModalEvent.highlights && (
+              {localizedList(activeModalEvent.highlights, lang).length > 0 && (
                 <div>
                   <h3 className="text-xs uppercase tracking-wider font-sans font-semibold text-[#d8ae62] mb-3">
                     {isBn ? 'মূল আকর্ষণসমূহ' : 'Key Highlights'}
                   </h3>
                   <div className="grid grid-cols-1 sm:grid-cols-2 gap-2.5">
-                    {(activeModalEvent.highlights[lang] || activeModalEvent.highlights.en || activeModalEvent.highlights).map((h, i) => (
+                    {localizedList(activeModalEvent.highlights, lang).map((h, i) => (
                       <div key={i} className="flex items-center gap-2 text-xs sm:text-sm text-[#f5efe6]">
                         <CheckCircle2 className="w-4 h-4 text-emerald-400 shrink-0" />
                         <span>{h}</span>

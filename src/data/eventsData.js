@@ -218,8 +218,8 @@ export const isPastEvent = (event) => {
   // If explicitly categorized as past
   if (event.category === 'past') return true;
 
-  const dateStr = typeof event.date === 'object' ? (event.date.en || '') : String(event.date || '');
-  const timeStr = typeof event.time === 'object' ? (event.time.en || '') : String(event.time || '');
+  const dateStr = event.date && typeof event.date === 'object' ? (event.date.en || '') : String(event.date || '');
+  const timeStr = event.time && typeof event.time === 'object' ? (event.time.en || '') : String(event.time || '');
 
   // If marked as concluded
   if (/concluded|completed|past/i.test(dateStr) || /concluded|completed|past/i.test(timeStr)) {
