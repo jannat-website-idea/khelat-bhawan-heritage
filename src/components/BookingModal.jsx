@@ -56,18 +56,28 @@ export default function BookingModal({ isOpen, onClose, lang = 'en', content, in
     const previousOverflow = document.body.style.overflow;
     document.body.style.overflow = 'hidden';
     const onKeyDown = (event) => {
+      const isInput = event.target?.tagName === 'INPUT' || event.target?.tagName === 'TEXTAREA' || event.target?.isContentEditable;
       if (event.key === 'ArrowLeft' || event.key === 'ArrowRight') {
+        if (!isInput) {
+          event.preventDefault();
+        }
+        event.stopPropagation();
         event.stopImmediatePropagation();
         return;
       }
-      if (event.key === 'Escape') onClose();
+      if (event.key === 'Backspace' && !isInput) {
+        event.preventDefault();
+        event.stopPropagation();
+        event.stopImmediatePropagation();
+        return;
+      }
     };
     window.addEventListener('keydown', onKeyDown, true);
     return () => {
       document.body.style.overflow = previousOverflow;
       window.removeEventListener('keydown', onKeyDown, true);
     };
-  }, [isOpen, onClose]);
+  }, [isOpen]);
 
   if (!isOpen) return null;
 
@@ -164,7 +174,7 @@ export default function BookingModal({ isOpen, onClose, lang = 'en', content, in
   };
 
   return createPortal(
-    <div className="fixed inset-0 z-[10000] overflow-y-auto flex items-center justify-center p-3 sm:p-6 bg-black/80 backdrop-blur-md animate-in fade-in duration-200" onMouseDown={onClose}>
+    <div className="fixed inset-0 z-[10000] overflow-y-auto flex items-center justify-center p-3 sm:p-6 bg-black/80 backdrop-blur-md animate-in fade-in duration-200">
       <div 
         className="relative w-full max-w-3xl bg-card rounded-2xl shadow-2xl border border-border/80 overflow-hidden text-foreground max-h-[92vh] flex flex-col"
         onMouseDown={(e) => e.stopPropagation()}

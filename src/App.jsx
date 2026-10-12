@@ -100,6 +100,13 @@ export default function App() {
     if (loading) return undefined;
 
     const handleRoute = () => {
+      if (isBookingOpen) {
+        const nextUrl = `${window.location.pathname}#rental`;
+        if (window.location.hash !== '#rental') {
+          history.pushState(null, document.title, nextUrl);
+        }
+        return;
+      }
       const rawHash = window.location.hash.replace(/^#\/?/, '').trim().toLowerCase();
       if (PUBLIC_TABS.includes(rawHash)) {
         setActiveTab(rawHash);
@@ -117,7 +124,7 @@ export default function App() {
       window.removeEventListener('hashchange', handleRoute);
       window.removeEventListener('popstate', handleRoute);
     };
-  }, [loading]);
+  }, [loading, isBookingOpen]);
 
   // Update hash and reset scroll when activeTab changes
   const handleTabChange = (tab) => {

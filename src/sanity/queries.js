@@ -95,7 +95,7 @@ export const CALENDAR_BLOCKS_QUERY = `{
   "eventRanges": *[_type == "event" && defined(date)] {
     "start": date.start,
     "end": coalesce(date.end, date.start),
-    "label": date.en
+    "label": coalesce(date.en, date.bn, string(date))
   }
 }`;
 

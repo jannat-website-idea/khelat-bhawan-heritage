@@ -2,38 +2,85 @@ import React, {useEffect, useMemo, useState} from 'react';
 import {Box, Card, Flex, Stack, Text} from '@sanity/ui';
 import {PatchEvent, set, unset, useClient} from 'sanity';
 
+const MONTH_MAP = {
+  january: 0, jan: 0, february: 1, feb: 1, march: 2, mar: 2, april: 3, apr: 3,
+  may: 4, june: 5, jun: 5, july: 6, jul: 6, august: 7, aug: 7, september: 8, sep: 8, sept: 8,
+  october: 9, oct: 9, november: 10, nov: 10, december: 11, dec: 11,
+};
+
 const calendarQuery = `{
   "reservationDates": *[_type == "reservationEnquiry" && status == "approved" && defined(preferredDate)].preferredDate,
-  "eventRanges": *[_type == "event" && defined(date)]{"start": date.start, "end": coalesce(date.end, date.start), "label": date.en}
+  "eventRanges": *[_type == "event" && defined(date)]{"start": date.start, "end": coalesce(date.end, date.start), "label": coalesce(date.en, date.bn, string(date))}
 }`;
 
 const expandRange = (start, end = start) => {
   if (!start) return [];
-  const first = new Date(`${start}T00:00:00`);
-  const last = new Date(`${end || start}T00:00:00`);
-  const result = [];
-  const cursor = new Date(first);
-  while (cursor <= last && result.length < 370) {
-    const y = cursor.getFullYear();
-    const m = String(cursor.getMonth() + 1).padStart(2, '0');
-    const d = String(cursor.getDate()).padStart(2, '0');
-    result.push(`${y}-${m}-${d}`);
-    cursor.setDate(cursor.getDate() + 1);
+  const startStr = String(start).trim();
+  const endStr = String(end || start).trim();
+  if (/^\d{4}-\d{2}-\d{2}$/.test(startStr)) {
+    const first = new Date(`${startStr}T00:00:00`);
+    const last = /^\d{4}-\d{2}-\d{2}$/.test(endStr) ? new Date(`${endStr}T00:00:00`) : first;
+    if (Number.isNaN(first.getTime()) || Number.isNaN(last.getTime()) || last < first) return [startStr];
+    const result = [];
+    const cursor = new Date(first);
+    while (cursor <= last && result.length < 370) {
+      const y = cursor.getFullYear();
+      const m = String(cursor.getMonth() + 1).padStart(2, '0');
+      const d = String(cursor.getDate()).padStart(2, '0');
+      result.push(`${y}-${m}-${d}`);
+      cursor.setDate(cursor.getDate() + 1);
+    }
+    return result;
   }
-  return result;
+  return parseLegacyLabel(`${startStr} - ${endStr}`);
 };
 
 const parseLegacyLabel = (label = '') => {
-  const text = String(label).trim().replace(/–|—/g, '-');
-  const range = text.match(/^([A-Za-z]+)\s+(\d{1,2})\s*-\s*(\d{1,2}),?\s+(\d{4})$/);
-  if (range) {
-    const [, month, startDay, endDay, year] = range;
-    const first = new Date(`${month} ${startDay}, ${year}`);
-    const last = new Date(`${month} ${endDay}, ${year}`);
-    const iso = (date) => `${date.getFullYear()}-${String(date.getMonth() + 1).padStart(2, '0')}-${String(date.getDate()).padStart(2, '0')}`;
-    return Number.isNaN(first.getTime()) || Number.isNaN(last.getTime()) ? [] : expandRange(iso(first), iso(last));
+  const text = String(label).trim().replace(/[–—]/g, '-').replace(/,/g, ' ');
+  if (!text) return [];
+
+  const isoSingle = text.match(/^(\d{4})-(\d{2})-(\d{2})$/);
+  if (isoSingle) return [text];
+
+  const mMonthFirst = text.match(/^([A-Za-z]+)\s+(\d{1,2})\s*-\s*(\d{1,2})\s+(\d{4})$/);
+  if (mMonthFirst) {
+    const m = MONTH_MAP[mMonthFirst[1].toLowerCase()];
+    if (m !== undefined) {
+      const year = Number(mMonthFirst[4]);
+      const s = `${year}-${String(m + 1).padStart(2, '0')}-${String(Number(mMonthFirst[2])).padStart(2, '0')}`;
+      const e = `${year}-${String(m + 1).padStart(2, '0')}-${String(Number(mMonthFirst[3])).padStart(2, '0')}`;
+      return expandRange(s, e);
+    }
   }
-  const parsed = new Date(text);
+
+  const mDayFirst = text.match(/^(\d{1,2})\s*-\s*(\d{1,2})\s+([A-Za-z]+)\s+(\d{4})$/);
+  if (mDayFirst) {
+    const m = MONTH_MAP[mDayFirst[3].toLowerCase()];
+    if (m !== undefined) {
+      const year = Number(mDayFirst[4]);
+      const s = `${year}-${String(m + 1).padStart(2, '0')}-${String(Number(mDayFirst[1])).padStart(2, '0')}`;
+      const e = `${year}-${String(m + 1).padStart(2, '0')}-${String(Number(mDayFirst[2])).padStart(2, '0')}`;
+      return expandRange(s, e);
+    }
+  }
+
+  const mSingleDay = text.match(/^(\d{1,2})\s+([A-Za-z]+)\s+(\d{4})$/);
+  if (mSingleDay) {
+    const m = MONTH_MAP[mSingleDay[2].toLowerCase()];
+    if (m !== undefined) {
+      return [`${mSingleDay[3]}-${String(m + 1).padStart(2, '0')}-${String(Number(mSingleDay[1])).padStart(2, '0')}`];
+    }
+  }
+
+  const mSingleMonth = text.match(/^([A-Za-z]+)\s+(\d{1,2})\s+(\d{4})$/);
+  if (mSingleMonth) {
+    const m = MONTH_MAP[mSingleMonth[1].toLowerCase()];
+    if (m !== undefined) {
+      return [`${mSingleMonth[3]}-${String(m + 1).padStart(2, '0')}-${String(Number(mSingleMonth[2])).padStart(2, '0')}`];
+    }
+  }
+
+  const parsed = new Date(label);
   if (Number.isNaN(parsed.getTime())) return [];
   return [`${parsed.getFullYear()}-${String(parsed.getMonth() + 1).padStart(2, '0')}-${String(parsed.getDate()).padStart(2, '0')}`];
 };

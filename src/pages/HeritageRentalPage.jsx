@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Check, Calendar as CalendarIcon, Clock, Mail, ShieldCheck, Sparkles, MapPin, ArrowRight } from 'lucide-react';
+import { Check, Calendar as CalendarIcon, Clock, ShieldCheck, Sparkles, MapPin, ArrowRight } from 'lucide-react';
 import SectionHeader from '../components/SectionHeader';
 import { getAssetUrl } from '../utils/assetHelper';
 import { getBlockedDates, isDateBlocked, isPastDate } from '../data/bookingData';
@@ -75,10 +75,6 @@ export default function HeritageRentalPage({ lang = 'en', onOpenBooking, onOpenL
                 <div className="flex items-center gap-2">
                   <ShieldCheck className="w-4 h-4 text-emerald-500" />
                   <span>{lang === 'bn' ? '৪৮ ঘণ্টার মধ্যে নিশ্চিতকরণ প্রতিক্রিয়া' : 'Guaranteed 48-hour response SLA'}</span>
-                </div>
-                <div className="flex items-center gap-2">
-                  <Mail className="w-4 h-4 text-primary" />
-                  <span>{lang === 'bn' ? 'দ্বৈত ইমেল নোটিফিকেশন সিস্টেম' : 'Dual automated email dispatch system'}</span>
                 </div>
               </div>
 

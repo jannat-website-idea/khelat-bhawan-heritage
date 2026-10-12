@@ -6,8 +6,14 @@ export default function Lightbox({ item, onClose, onNext, onPrev, hasNext, hasPr
   useEffect(() => {
     const handleKeyDown = (e) => {
       if (e.key === 'Escape') onClose();
-      if (e.key === 'ArrowRight' && hasNext) onNext();
-      if (e.key === 'ArrowLeft' && hasPrev) onPrev();
+      if (e.key === 'ArrowRight') {
+        e.preventDefault();
+        if (hasNext) onNext();
+      }
+      if (e.key === 'ArrowLeft') {
+        e.preventDefault();
+        if (hasPrev) onPrev();
+      }
     };
     window.addEventListener('keydown', handleKeyDown);
     return () => window.removeEventListener('keydown', handleKeyDown);
