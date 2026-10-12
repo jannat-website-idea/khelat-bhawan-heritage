@@ -31,9 +31,9 @@ export default {
     },
     {
       name: 'isApproved',
-      title: 'Approved for Website Display',
+      title: 'Review Approval / Rejection',
       type: 'boolean',
-      description: 'Turn ON to publish this review on the public website testimonials section',
+      description: 'Approve to show this review on the website. Reject to keep it hidden.',
       components: { input: ReviewApprovalInput },
       initialValue: false
     }
@@ -47,7 +47,7 @@ export default {
     prepare(selection) {
       const { title, subtitle, isApproved } = selection;
       return {
-        title: `${title} ${isApproved ? '✅ (Live)' : '⏳ (Pending Approval)'}`,
+        title: `${title} ${isApproved ? '✅ (Live)' : '⏳ (Pending / Hidden)'}`,
         subtitle: subtitle
       };
     }

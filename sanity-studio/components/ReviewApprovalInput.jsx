@@ -28,8 +28,8 @@ export default function ReviewApprovalInput({value = false, onChange}) {
   return (
     <Card padding={4} radius={3} border tone={value ? 'positive' : 'caution'}>
       <Stack space={3}>
-        <Text size={2} weight="semibold">Website visibility</Text>
-        <Text size={1}>{value ? 'Approved — this review is live on the website.' : 'Hidden — this review remains a draft.'}</Text>
+        <Text size={2} weight="semibold">Review moderation</Text>
+        <Text size={1}>{value ? 'Approved — this review is live on the website.' : 'Pending or rejected — this review is hidden from the website.'}</Text>
         <Flex gap={2} wrap="wrap">
           <Button
             text={value ? 'Approved — Currently Live' : 'Approve — Make Live'}
@@ -40,8 +40,8 @@ export default function ReviewApprovalInput({value = false, onChange}) {
             onClick={() => updateVisibility(true)}
           />
           <Button
-            text={!value ? 'Hidden — Currently Draft' : 'Hide — Keep as Draft'}
-            tone="caution"
+            text={!value ? 'Rejected — Currently Hidden' : 'Reject — Remove from Website'}
+            tone="critical"
             mode={!value ? 'default' : 'ghost'}
             disabled={updating}
             onClick={() => updateVisibility(false)}

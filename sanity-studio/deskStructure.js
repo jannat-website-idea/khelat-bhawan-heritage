@@ -23,7 +23,7 @@ export const deskStructure = (S) =>
 
       // 3. Guest Reviews & Feedback
       S.listItem()
-        .title('⭐ Guest Reviews — Live / Hidden')
+        .title('⭐ Guest Reviews — Approve / Reject')
         .schemaType('feedback')
         .child(
           S.documentTypeList('feedback')
