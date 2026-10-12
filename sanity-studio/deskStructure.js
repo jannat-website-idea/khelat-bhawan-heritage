@@ -11,29 +11,14 @@ export const deskStructure = (S) =>
             .title('Events & Celebrations')
         ),
 
-      // 2. Reservations & Heritage Rental
+      // 2. Booking enquiries and approval
       S.listItem()
-        .title('🏰 Reservations & Heritage Rental')
+        .title('📋 Booking & Enquiries')
+        .schemaType('reservationEnquiry')
         .child(
-          S.list()
-            .title('Reservations & Heritage Rental')
-            .items([
-              S.listItem()
-                .title('📋 Booking Enquiries & Approval (Read-Only + Status)')
-                .schemaType('reservationEnquiry')
-                .child(
-                  S.documentTypeList('reservationEnquiry')
-                    .title('Booking Enquiries & Approvals')
-                    .defaultOrdering([{ field: 'receivedAt', direction: 'desc' }])
-                ),
-              S.listItem()
-                .title('🏰 Experience Packages & Inclusions')
-                .schemaType('rentalPackage')
-                .child(
-                  S.documentTypeList('rentalPackage')
-                    .title('Experience Packages')
-                )
-            ])
+          S.documentTypeList('reservationEnquiry')
+            .title('Booking Enquiries & Approvals')
+            .defaultOrdering([{ field: 'receivedAt', direction: 'desc' }])
         ),
 
       // 3. Guest Reviews & Feedback
