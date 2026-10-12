@@ -2,8 +2,6 @@ import React, {useMemo} from 'react';
 import {Box, Card, Flex, Stack, Text} from '@sanity/ui';
 import {PatchEvent, set, unset} from 'sanity';
 
-const bengaliDigits = (value) => String(value).replace(/\d/g, (digit) => '০১২৩৪৫৬৭৮৯'[Number(digit)]);
-
 const formatEnglish = (start, end) => {
   if (!start) return '';
   const options = {day: 'numeric', month: 'long', year: 'numeric'};
@@ -13,26 +11,16 @@ const formatEnglish = (start, end) => {
   return `${first} – ${last}`;
 };
 
-const formatBengali = (start, end) => {
-  if (!start) return '';
-  const options = {day: 'numeric', month: 'long', year: 'numeric'};
-  const first = new Date(`${start}T00:00:00`).toLocaleDateString('bn-IN', options);
-  if (!end || end === start) return bengaliDigits(first);
-  const last = new Date(`${end}T00:00:00`).toLocaleDateString('bn-IN', options);
-  return `${bengaliDigits(first)} – ${bengaliDigits(last)}`;
-};
-
 export default function EventDateRangeInput({value = {}, onChange}) {
-  const preview = useMemo(() => ({
-    en: formatEnglish(value.start, value.end),
-    bn: formatBengali(value.start, value.end),
-  }), [value.start, value.end]);
+  const preview = useMemo(
+    () => formatEnglish(value.start, value.end),
+    [value.start, value.end],
+  );
 
   const update = (key, nextValue) => {
-    const next = {...value, [key]: nextValue};
+    const next = {start: value.start, end: value.end, [key]: nextValue};
     if (key === 'start' && next.end && next.end < nextValue) next.end = nextValue;
     next.en = formatEnglish(next.start, next.end);
-    next.bn = formatBengali(next.start, next.end);
     onChange(PatchEvent.from(next.start ? set(next) : unset()));
   };
 
@@ -71,8 +59,7 @@ export default function EventDateRangeInput({value = {}, onChange}) {
         <Card padding={3} radius={2} tone="positive">
           <Stack space={3}>
             <Text size={1} weight="semibold">AUTOMATIC WEBSITE DATE</Text>
-            <Text size={2}>{preview.en || 'Choose a start date'}</Text>
-            <Text size={2}>{preview.bn || 'শুরুর তারিখ নির্বাচন করুন'}</Text>
+            <Text size={2}>{preview || 'Choose a start date'}</Text>
           </Stack>
         </Card>
       </Stack>

@@ -10,21 +10,19 @@ export default {
       title: 'Event Title',
       type: 'object',
       fields: [
-        { name: 'en', title: 'English Title', type: 'string', validation: (Rule) => Rule.required() },
-        { name: 'bn', title: 'Bengali Title', type: 'string' }
+        { name: 'en', title: 'Event Title', type: 'string', validation: (Rule) => Rule.required() }
       ]
     },
     {
       name: 'date',
       title: 'Event Date & Calendar Picker',
       type: 'object',
-      description: 'Choose one date or a date range. English and Bengali website labels are generated automatically.',
+      description: 'Choose one date or a date range. The website date label is generated automatically.',
       components: { input: EventDateRangeInput },
       fields: [
         { name: 'start', title: 'Start Date', type: 'date' },
         { name: 'end', title: 'End Date', type: 'date' },
-        { name: 'en', title: 'English Date', type: 'string' },
-        { name: 'bn', title: 'Bengali Date', type: 'string' }
+        { name: 'en', title: 'Website Date', type: 'string' }
       ]
     },
     {
@@ -32,8 +30,7 @@ export default {
       title: 'Event Time',
       type: 'object',
       fields: [
-        { name: 'en', title: 'English Time (e.g. 5:30 PM – 9:30 PM or All Day)', type: 'string' },
-        { name: 'bn', title: 'Bengali Time', type: 'string' }
+        { name: 'en', title: 'Time (e.g. 5:30 PM – 9:30 PM or All Day)', type: 'string' }
       ]
     },
     {
@@ -41,8 +38,7 @@ export default {
       title: 'Location / Venue Hall',
       type: 'object',
       fields: [
-        { name: 'en', title: 'English Venue (e.g. Thakur Dalan, Khelat Bhawan)', type: 'string' },
-        { name: 'bn', title: 'Bengali Venue', type: 'string' }
+        { name: 'en', title: 'Venue (e.g. Thakur Dalan, Khelat Bhawan)', type: 'string' }
       ]
     },
     {
@@ -68,8 +64,7 @@ export default {
       title: 'Category / Cultural Badge',
       type: 'object',
       fields: [
-        { name: 'en', title: 'English Badge (e.g. Flagship Cultural Festival, Musical Heritage)', type: 'string' },
-        { name: 'bn', title: 'Bengali Badge', type: 'string' }
+        { name: 'en', title: 'Badge (e.g. Flagship Cultural Festival, Musical Heritage)', type: 'string' }
       ]
     },
     {
@@ -77,8 +72,7 @@ export default {
       title: 'Event Overview & Full Description',
       type: 'object',
       fields: [
-        { name: 'en', title: 'English Description', type: 'text', rows: 5 },
-        { name: 'bn', title: 'Bengali Description', type: 'text', rows: 5 }
+        { name: 'en', title: 'Event Description', type: 'text', rows: 5 }
       ]
     },
     {
@@ -86,8 +80,7 @@ export default {
       title: 'Key Highlights (Bullet Points)',
       type: 'object',
       fields: [
-        { name: 'en', title: 'English Highlights', type: 'array', of: [{ type: 'string' }] },
-        { name: 'bn', title: 'Bengali Highlights', type: 'array', of: [{ type: 'string' }] }
+        { name: 'en', title: 'Highlights', type: 'array', of: [{ type: 'string' }] }
       ]
     },
     {
@@ -102,11 +95,6 @@ export default {
       title: 'Pre-filled WhatsApp Enquiry Message',
       type: 'string',
       description: 'Text pre-filled when visitors tap "Click to Enquire" (e.g. Hello, I would like to enquire about attending the Durga Puja celebration at Khelat Bhawan.)'
-    },
-    {
-      name: 'eventBrochure',
-      title: 'Downloadable Event Brochure / Program PDF',
-      type: 'file'
     }
   ],
   preview: {

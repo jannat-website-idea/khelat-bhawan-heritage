@@ -137,7 +137,7 @@ const EventsPage = ({ lang = 'en', setActiveTab, onOpenBooking }) => {
 
               return (
                 <div
-                  key={event.id}
+                  key={event._id || event.id}
                   className={`group bg-card/60 rounded-2xl border overflow-hidden shadow-lg hover:shadow-2xl transition-all duration-500 flex flex-col justify-between backdrop-blur-sm ${
                     isPast 
                       ? 'border-border/60 opacity-90 hover:opacity-100 hover:border-stone-500/60' 
