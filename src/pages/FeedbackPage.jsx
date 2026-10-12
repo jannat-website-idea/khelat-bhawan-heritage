@@ -3,7 +3,7 @@ import { Star, MessageSquare, ExternalLink, CheckCircle, Send, Heart, Award, Spa
 import SectionHeader from '../components/SectionHeader';
 import AlpanaDivider from '../components/AlpanaDivider';
 import { GOOGLE_REVIEWS_URL, googleReviews, googleReviewSummary } from '../data/googleReviews';
-import { FEEDBACK_QUERY } from '../sanity/queries';
+import { FEEDBACK_LISTEN_QUERY, FEEDBACK_QUERY } from '../sanity/queries';
 import { useSanityLiveQuery } from '../sanity/useSanityLiveQuery';
 import { submitEnquiry } from '../lib/enquiries';
 import { countWords, emailValidationMessage, isValidEmail, isValidPhone, phoneValidationMessage, sanitizePhoneInput, validateEnquiry } from '../lib/enquiryValidation';
@@ -11,7 +11,7 @@ import { countWords, emailValidationMessage, isValidEmail, isValidPhone, phoneVa
 export default function FeedbackPage({ lang, content }) {
   const t = content[lang];
   const isBn = lang === 'bn';
-  const {data: liveReviews, loaded: reviewsLoaded} = useSanityLiveQuery(FEEDBACK_QUERY, []);
+  const {data: liveReviews, loaded: reviewsLoaded} = useSanityLiveQuery(FEEDBACK_QUERY, [], true, FEEDBACK_LISTEN_QUERY);
   const sanityReviews = reviewsLoaded && Array.isArray(liveReviews)
     ? liveReviews.map((doc, idx) => ({
         id: doc._id || `sanity-rev-${idx}`,
@@ -43,7 +43,7 @@ export default function FeedbackPage({ lang, content }) {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    const validationErrors = validateEnquiry(formData);
+    const validationErrors = validateEnquiry(formData, { minWords: 30 });
     setFieldErrors(validationErrors);
     if (Object.keys(validationErrors).length) return;
     setIsSubmitting(true);
@@ -284,10 +284,10 @@ export default function FeedbackPage({ lang, content }) {
                     aria-invalid={!!fieldErrors.message}
                     value={formData.message}
                     onChange={(e) => { setFormData({ ...formData, message: e.target.value }); setFieldErrors({...fieldErrors, message: ''}); }}
-                    placeholder={isBn ? 'খেলাৎ ভবন পরিদর্শন সম্পর্কিত আপনার অভিজ্ঞতা লিখুন...' : 'Share your impressions, memorable moments, or feedback regarding Khelat Bhawan...'}
+                    placeholder={isBn ? 'খেলাৎ ভবন পরিদর্শন সম্পর্কিত আপনার অভিজ্ঞতা লিখুন (কমপক্ষে ৩০ শব্দ)...' : 'Share your impressions, memorable moments, or feedback regarding Khelat Bhawan (minimum 30 words)...'}
                     className="w-full px-4 py-2.5 rounded-sm bg-background border border-border focus:border-accent outline-none text-xs text-foreground leading-relaxed resize-none"
                   />
-                  <p className={`text-[11px] mt-1 ${countWords(formData.message) >= 20 ? 'text-emerald-700' : 'text-muted-foreground'}`}>{countWords(formData.message)} / 20 words minimum</p>
+                  <p className={`text-[11px] mt-1 ${countWords(formData.message) >= 30 ? 'text-emerald-700' : 'text-muted-foreground'}`}>{countWords(formData.message)} / 30 words minimum</p>
                   {fieldErrors.message && <p className="text-[11px] text-red-700 mt-1">{fieldErrors.message}</p>}
                 </div>
 

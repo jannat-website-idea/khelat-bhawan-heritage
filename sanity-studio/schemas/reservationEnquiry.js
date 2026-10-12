@@ -58,7 +58,7 @@ export default {
       name: 'status',
       title: 'Reservation Status & Calendar Allocation',
       type: 'string',
-      description: 'Use the action buttons to approve, reject, cancel, or return the request to pending.',
+      description: 'Use the action buttons to approve, reject, or cancel the reservation.',
       components: { input: ReservationStatusInput },
       options: {
         list: [

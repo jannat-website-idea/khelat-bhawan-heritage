@@ -45,8 +45,11 @@ export const validateEnquiry = ({phone, email, message}, options = {}) => {
     if (countCharacters(message) < options.minMessageCharacters) {
       errors.message = `Please write at least ${options.minMessageCharacters} characters so our team can understand your enquiry.`;
     }
-  } else if (countWords(message) < 20) {
-    errors.message = 'Please write at least 20 words so our team can understand your enquiry.';
+  } else {
+    const minWords = options.minWords || 30;
+    if (countWords(message) < minWords) {
+      errors.message = `Please write at least ${minWords} words so our team can understand your enquiry.`;
+    }
   }
   return errors;
 };

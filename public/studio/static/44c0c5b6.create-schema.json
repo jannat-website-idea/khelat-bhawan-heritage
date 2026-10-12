@@ -1,0 +1,1381 @@
+[
+  {
+    "fields": [
+      {
+        "initialValue": "Khelat Bhawan",
+        "name": "headlineFirstLine",
+        "type": "string",
+        "title": "Headline — First Line"
+      },
+      {
+        "initialValue": "Living Heritage of Pathuria Ghata Ghosh Bari",
+        "name": "headlineSecondLine",
+        "type": "string",
+        "title": "Headline — Second Line / Tagline"
+      },
+      {
+        "initialValue": "পাথুরিয়াঘাটা ঘোষ বাড়ির জীবন্ত ঐতিহ্য",
+        "name": "headlineBn",
+        "type": "string",
+        "title": "Bengali Headline"
+      },
+      {
+        "rows": 3,
+        "initialValue": "An imperial 19th-century palace where timeless Bengali aristocracy, grand Corinthian colonnades, and 171 years of continuous Durga Puja live on.",
+        "name": "subheadlineEn",
+        "type": "text",
+        "title": "Sub-headline / Narrative (English)"
+      },
+      {
+        "rows": 3,
+        "initialValue": "ঊনবিংশ শতাব্দীর এক রাজকীয় ঐতিহ্যবাহী প্রাসাদ—যেখানে করিন্থিয়ান স্থাপত্য, সুরের মূর্ছনা এবং ১৭১ বছরের ঐতিহ্যবাহী দুর্গাপূজা আজও বহমান।",
+        "name": "subheadlineBn",
+        "type": "text",
+        "title": "Sub-headline / Narrative (Bengali)"
+      },
+      {
+        "options": {
+          "hotspot": true,
+          "metadata": [
+            "blurhash",
+            "lqip",
+            "palette",
+            "dimensions"
+          ]
+        },
+        "description": "Upload high-resolution landscape photograph for the main website hero section.",
+        "name": "heroImage",
+        "type": "image",
+        "title": "Hero Background / Main Banner Image (Upload, Change, or Delete)"
+      },
+      {
+        "options": {
+          "accept": "video/*"
+        },
+        "description": "Upload high-definition cinematic background video loop.",
+        "name": "heroVideoFile",
+        "type": "file",
+        "title": "Hero Background Video File (Upload MP4)"
+      },
+      {
+        "validation": [
+          {
+            "rules": [
+              {
+                "flag": "uri",
+                "constraint": {
+                  "options": {
+                    "scheme": [
+                      "/^http$/",
+                      "/^https$/"
+                    ],
+                    "allowRelative": false,
+                    "relativeOnly": false,
+                    "allowCredentials": false
+                  }
+                }
+              }
+            ],
+            "level": "error"
+          }
+        ],
+        "name": "heroVideoUrl",
+        "type": "url",
+        "title": "Hero Video Stream URL (Alternative or CDN Link)"
+      },
+      {
+        "description": "Add multiple hero background images for rotating slider or seasonal events.",
+        "of": [
+          {
+            "fields": [
+              {
+                "options": {
+                  "hotspot": true
+                },
+                "name": "bannerImage",
+                "type": "image"
+              },
+              {
+                "name": "caption",
+                "type": "string",
+                "title": "Caption / Overlay Title"
+              }
+            ],
+            "type": "object"
+          }
+        ],
+        "name": "heroBanners",
+        "type": "array",
+        "title": "Additional Hero Slider Banners / Rotating Images"
+      },
+      {
+        "initialValue": "Explore Heritage",
+        "name": "primaryCtaText",
+        "type": "string",
+        "title": "Primary CTA Button Text"
+      },
+      {
+        "initialValue": "Book Heritage Rental",
+        "name": "secondaryCtaText",
+        "type": "string",
+        "title": "Secondary CTA Button Text"
+      }
+    ],
+    "name": "heroSection",
+    "type": "document",
+    "title": "Hero Section & Banners"
+  },
+  {
+    "fields": [
+      {
+        "fields": [
+          {
+            "initialValue": "The Imperial Legacy of Khelat Bhawan",
+            "name": "en",
+            "type": "string",
+            "title": "English Title"
+          },
+          {
+            "initialValue": "খেলাৎ ভবন ও রাজবাড়ির ঐতিহাসিক উত্তরাধিকার",
+            "name": "bn",
+            "type": "string",
+            "title": "Bengali Title"
+          }
+        ],
+        "name": "title",
+        "type": "object",
+        "title": "Page Title"
+      },
+      {
+        "fields": [
+          {
+            "rows": 2,
+            "initialValue": "175 Years of Sacred Tradition, Architectural Brilliance & Cultural Patronage",
+            "name": "en",
+            "type": "text",
+            "title": "English Subtitle"
+          },
+          {
+            "rows": 2,
+            "initialValue": "১৭৫ বছরের পবিত্র ঐতিহ্য, স্থাপত্যকলার উৎকর্ষ ও সাংস্কৃতিক উত্তরাধিকার",
+            "name": "bn",
+            "type": "text",
+            "title": "Bengali Subtitle"
+          }
+        ],
+        "name": "subtitle",
+        "type": "object",
+        "title": "Page Subtitle / Tagline"
+      },
+      {
+        "fields": [
+          {
+            "rows": 5,
+            "initialValue": "Built in 1845 by Babu Khelat Ghosh, Khelat Bhawan stands as one of the most magnificent neoclassical heritage estates of Pathuria Ghata in North Kolkata. Adorned with monumental Corinthian pillars, antique Belgian chandeliers, and a sanctified Thakur Dalan hosting 171 continuous years of Durga Puja.",
+            "name": "en",
+            "type": "text",
+            "title": "English History Narrative"
+          },
+          {
+            "rows": 5,
+            "initialValue": "১৮৪৫ সালে বাবু খেলাৎ চন্দ্র ঘোষ কর্তৃক প্রতিষ্ঠিত উত্তর কলকাতার পাথুরিয়াঘাটার এই ঐতিহাসিক রাজবাড়ি এক অনন্য স্থাপত্যকীর্তি। বিশাল করিন্থিয়ান থাম, বেলজিয়ান ঝাড়বাতি এবং ১৭১ বছরের ধারাবাহিক দুর্গাপূজার পবিত্র ঠাকুর দালান নিয়ে এটি আজও বাঙালির জীবন্ত গৌরব।",
+            "name": "bn",
+            "type": "text",
+            "title": "Bengali History Narrative"
+          }
+        ],
+        "name": "historyOverview",
+        "type": "object",
+        "title": "Estate History Overview"
+      },
+      {
+        "of": [
+          {
+            "fields": [
+              {
+                "name": "featureTitleEn",
+                "type": "string",
+                "title": "Feature Title (EN)"
+              },
+              {
+                "name": "featureTitleBn",
+                "type": "string",
+                "title": "Feature Title (BN)"
+              },
+              {
+                "rows": 3,
+                "name": "featureDescEn",
+                "type": "text",
+                "title": "Description (EN)"
+              },
+              {
+                "rows": 3,
+                "name": "featureDescBn",
+                "type": "text",
+                "title": "Description (BN)"
+              },
+              {
+                "options": {
+                  "hotspot": true
+                },
+                "name": "image",
+                "type": "image",
+                "title": "Photograph"
+              }
+            ],
+            "type": "object"
+          }
+        ],
+        "name": "architectureHighlights",
+        "type": "array",
+        "title": "Architectural Heritage Highlights"
+      }
+    ],
+    "name": "aboutPage",
+    "type": "document",
+    "title": "Heritage & About Estate"
+  },
+  {
+    "fields": [
+      {
+        "validation": [
+          {
+            "rules": [
+              {
+                "flag": "presence",
+                "constraint": "required"
+              }
+            ],
+            "level": "error"
+          }
+        ],
+        "name": "year",
+        "type": "string",
+        "title": "Year / Period (e.g. 1845, 1855, 1881)"
+      },
+      {
+        "fields": [
+          {
+            "name": "en",
+            "type": "string",
+            "title": "English Era (e.g. Foundation Era, Spiritual Milestone)"
+          },
+          {
+            "name": "bn",
+            "type": "string",
+            "title": "Bengali Era"
+          }
+        ],
+        "name": "era",
+        "type": "object",
+        "title": "Era Label"
+      },
+      {
+        "fields": [
+          {
+            "validation": [
+              {
+                "rules": [
+                  {
+                    "flag": "presence",
+                    "constraint": "required"
+                  }
+                ],
+                "level": "error"
+              }
+            ],
+            "name": "en",
+            "type": "string",
+            "title": "English Title"
+          },
+          {
+            "name": "bn",
+            "type": "string",
+            "title": "Bengali Title"
+          }
+        ],
+        "name": "title",
+        "type": "object",
+        "title": "Milestone Title"
+      },
+      {
+        "fields": [
+          {
+            "rows": 4,
+            "name": "en",
+            "type": "text",
+            "title": "English Narrative"
+          },
+          {
+            "rows": 4,
+            "name": "bn",
+            "type": "text",
+            "title": "Bengali Narrative"
+          }
+        ],
+        "name": "desc",
+        "type": "object",
+        "title": "Historical Description"
+      },
+      {
+        "options": {
+          "hotspot": true
+        },
+        "name": "image",
+        "type": "image",
+        "title": "Archival Photograph / Portrait"
+      }
+    ],
+    "name": "timeline",
+    "type": "document",
+    "title": "History & Timeline Milestones"
+  },
+  {
+    "fields": [
+      {
+        "fields": [
+          {
+            "initialValue": "Babu Khelat Chandra Ghosh",
+            "name": "en",
+            "type": "string",
+            "title": "English Name"
+          },
+          {
+            "initialValue": "বাবু খেলাৎ চন্দ্র ঘোষ",
+            "name": "bn",
+            "type": "string",
+            "title": "Bengali Name"
+          }
+        ],
+        "name": "name",
+        "type": "object",
+        "title": "Founder Name"
+      },
+      {
+        "initialValue": "1775 – 1845",
+        "name": "years",
+        "type": "string",
+        "title": "Lifespan Era (e.g. 1775 – 1845)"
+      },
+      {
+        "options": {
+          "hotspot": true
+        },
+        "name": "portrait",
+        "type": "image",
+        "title": "Archival Portrait / Marble Bust Photograph"
+      },
+      {
+        "fields": [
+          {
+            "rows": 6,
+            "initialValue": "Babu Khelat Chandra Ghosh was an illustrious 19th-century philanthropist, cultural guardian, and prominent scion of North Calcutta. He founded Khelat Bhawan in 1845 and initiated the historic Durga Puja in 1855. A revered patron of Indian classical music, he fostered generations of eminent vocalists and instrument masters in his palace darbar.",
+            "name": "en",
+            "type": "text",
+            "title": "English Biography"
+          },
+          {
+            "rows": 6,
+            "initialValue": "বাবু খেলাৎ চন্দ্র ঘোষ ঊনবিংশ শতাব্দীর এক প্রাতঃস্মরণীয় দানবীর, সমাজসেবক ও সংস্কৃতিপ্রেমী ব্যক্তিত্ব। ১৮৪৫ সালে তিনি পাথুরিয়াঘাটার এই রাজপ্রাসাদ প্রতিষ্ঠা করেন এবং ১৮৫৫ সালে ঐতিহ্যবাহী পারিবারিক দুর্গাপূজার সূচনা করেন। ভারতীয় মার্গসঙ্গীত ও শিক্ষার একনিষ্ঠ পৃষ্ঠপোষক হিসেবে তাঁর অবদান অবিস্মরণীয়।",
+            "name": "bn",
+            "type": "text",
+            "title": "Bengali Biography"
+          }
+        ],
+        "name": "biography",
+        "type": "object",
+        "title": "Biography & Historical Contribution"
+      },
+      {
+        "of": [
+          {
+            "fields": [
+              {
+                "name": "titleEn",
+                "type": "string",
+                "title": "Milestone Title (EN)"
+              },
+              {
+                "name": "titleBn",
+                "type": "string",
+                "title": "Milestone Title (BN)"
+              },
+              {
+                "rows": 3,
+                "name": "descEn",
+                "type": "text",
+                "title": "Description (EN)"
+              },
+              {
+                "rows": 3,
+                "name": "descBn",
+                "type": "text",
+                "title": "Description (BN)"
+              }
+            ],
+            "type": "object"
+          }
+        ],
+        "name": "patronageHighlights",
+        "type": "array",
+        "title": "Cultural, Classical Music & Spiritual Patronage"
+      }
+    ],
+    "name": "founder",
+    "type": "document",
+    "title": "Founder (Babu Khelat Ghosh)"
+  },
+  {
+    "fields": [
+      {
+        "fields": [
+          {
+            "validation": [
+              {
+                "rules": [
+                  {
+                    "flag": "presence",
+                    "constraint": "required"
+                  }
+                ],
+                "level": "error"
+              }
+            ],
+            "name": "en",
+            "type": "string",
+            "title": "English Name"
+          },
+          {
+            "name": "bn",
+            "type": "string",
+            "title": "Bengali Name"
+          }
+        ],
+        "name": "name",
+        "type": "object",
+        "title": "Trustee / Custodian Name"
+      },
+      {
+        "fields": [
+          {
+            "name": "en",
+            "type": "string",
+            "title": "English Designation (e.g. Managing Trustee, Custodian)"
+          },
+          {
+            "name": "bn",
+            "type": "string",
+            "title": "Bengali Designation"
+          }
+        ],
+        "name": "role",
+        "type": "object",
+        "title": "Designation / Trust Role"
+      },
+      {
+        "initialValue": 10,
+        "name": "orderRank",
+        "type": "number",
+        "title": "Display Priority Order (e.g. 1, 2, 3)"
+      },
+      {
+        "options": {
+          "hotspot": true
+        },
+        "name": "photo",
+        "type": "image",
+        "title": "Photograph"
+      },
+      {
+        "fields": [
+          {
+            "rows": 4,
+            "name": "en",
+            "type": "text",
+            "title": "English Biography"
+          },
+          {
+            "rows": 4,
+            "name": "bn",
+            "type": "text",
+            "title": "Bengali Biography"
+          }
+        ],
+        "name": "bio",
+        "type": "object",
+        "title": "Trustee Profile / Bio"
+      }
+    ],
+    "name": "trustee",
+    "type": "document",
+    "title": "Trusts & Trustees"
+  },
+  {
+    "description": "Add, edit, upload, replace, or delete photographs and films. All media metadata remains editable.",
+    "fields": [
+      {
+        "fields": [
+          {
+            "validation": [
+              {
+                "rules": [
+                  {
+                    "flag": "presence",
+                    "constraint": "required"
+                  }
+                ],
+                "level": "error"
+              }
+            ],
+            "name": "en",
+            "type": "string",
+            "title": "English Title"
+          },
+          {
+            "name": "bn",
+            "type": "string",
+            "title": "Bengali Title"
+          }
+        ],
+        "name": "title",
+        "type": "object"
+      },
+      {
+        "options": {
+          "list": [
+            {
+              "title": "Photograph (Image)",
+              "value": "image"
+            },
+            {
+              "title": "Heritage Film (Video)",
+              "value": "video"
+            }
+          ],
+          "layout": "radio"
+        },
+        "initialValue": "image",
+        "validation": [
+          {
+            "rules": [
+              {
+                "flag": "valid",
+                "constraint": [
+                  "image",
+                  "video"
+                ]
+              },
+              {
+                "flag": "presence",
+                "constraint": "required"
+              }
+            ],
+            "level": "error"
+          }
+        ],
+        "name": "mediaType",
+        "type": "string"
+      },
+      {
+        "options": {
+          "list": [
+            {
+              "title": "Architecture & Courtyards",
+              "value": "architecture"
+            },
+            {
+              "title": "Rituals & Durga Puja",
+              "value": "festivals"
+            },
+            {
+              "title": "Classical Soirees & Cultural",
+              "value": "cultural"
+            },
+            {
+              "title": "Royal Film Shoots & Cinema",
+              "value": "cinema"
+            }
+          ]
+        },
+        "validation": [
+          {
+            "rules": [
+              {
+                "flag": "valid",
+                "constraint": [
+                  "architecture",
+                  "festivals",
+                  "cultural",
+                  "cinema"
+                ]
+              },
+              {
+                "flag": "presence",
+                "constraint": "required"
+              }
+            ],
+            "level": "error"
+          }
+        ],
+        "name": "category",
+        "type": "string",
+        "title": "Category Filter"
+      },
+      {
+        "options": {
+          "hotspot": true,
+          "metadata": [
+            "blurhash",
+            "lqip",
+            "palette",
+            "dimensions"
+          ]
+        },
+        "description": "Upload high-resolution photograph. Click browse to upload new image or change/delete existing.",
+        "name": "image",
+        "type": "image",
+        "title": "Photograph / Image File (Upload, Change, or Delete)"
+      },
+      {
+        "options": {
+          "accept": "video/*"
+        },
+        "name": "videoFile",
+        "type": "file",
+        "title": "Heritage Film / Video File (Upload MP4 / MOV)"
+      },
+      {
+        "validation": [
+          {
+            "rules": [
+              {
+                "flag": "uri",
+                "constraint": {
+                  "options": {
+                    "scheme": [
+                      "/^http$/",
+                      "/^https$/"
+                    ],
+                    "allowRelative": false,
+                    "relativeOnly": false,
+                    "allowCredentials": false
+                  }
+                }
+              }
+            ],
+            "level": "error"
+          }
+        ],
+        "name": "videoUrl",
+        "type": "url",
+        "title": "Video Stream URL (Optional fallback or embed)"
+      },
+      {
+        "options": {
+          "hotspot": true
+        },
+        "name": "previewImage",
+        "type": "image",
+        "title": "Video Poster / Thumbnail Image"
+      },
+      {
+        "fields": [
+          {
+            "rows": 2,
+            "name": "en",
+            "type": "text",
+            "title": "English Caption"
+          },
+          {
+            "rows": 2,
+            "name": "bn",
+            "type": "text",
+            "title": "Bengali Caption"
+          }
+        ],
+        "name": "desc",
+        "type": "object",
+        "title": "Caption / Historical Story"
+      },
+      {
+        "name": "photographer",
+        "type": "string",
+        "title": "Photographer / Archivist Credit"
+      },
+      {
+        "name": "year",
+        "type": "string",
+        "title": "Year (e.g. 1845 or 2026)"
+      }
+    ],
+    "name": "galleryItem",
+    "type": "document",
+    "title": "Visual Gallery & Films"
+  },
+  {
+    "fields": [
+      {
+        "fields": [
+          {
+            "validation": [
+              {
+                "rules": [
+                  {
+                    "flag": "presence",
+                    "constraint": "required"
+                  }
+                ],
+                "level": "error"
+              }
+            ],
+            "name": "en",
+            "type": "string",
+            "title": "Event Title"
+          }
+        ],
+        "name": "title",
+        "type": "object",
+        "title": "Event Title"
+      },
+      {
+        "description": "Choose one date or a date range. The website date label is generated automatically.",
+        "fields": [
+          {
+            "name": "start",
+            "type": "date",
+            "title": "Start Date"
+          },
+          {
+            "name": "end",
+            "type": "date",
+            "title": "End Date"
+          },
+          {
+            "name": "en",
+            "type": "string",
+            "title": "Website Date"
+          }
+        ],
+        "name": "date",
+        "type": "object",
+        "title": "Event Date & Calendar Picker"
+      },
+      {
+        "fields": [
+          {
+            "name": "en",
+            "type": "string",
+            "title": "Time (e.g. 5:30 PM – 9:30 PM or All Day)"
+          }
+        ],
+        "name": "time",
+        "type": "object",
+        "title": "Event Time"
+      },
+      {
+        "fields": [
+          {
+            "name": "en",
+            "type": "string",
+            "title": "Venue (e.g. Thakur Dalan, Khelat Bhawan)"
+          }
+        ],
+        "name": "location",
+        "type": "object",
+        "title": "Location / Venue Hall"
+      },
+      {
+        "options": {
+          "hotspot": true
+        },
+        "name": "image",
+        "type": "image",
+        "title": "Main Event Cover Banner"
+      },
+      {
+        "validation": [
+          {
+            "rules": [
+              {
+                "flag": "max",
+                "constraint": 4
+              }
+            ],
+            "level": "error",
+            "message": "You can upload a maximum of 4 additional photographs."
+          }
+        ],
+        "of": [
+          {
+            "options": {
+              "hotspot": true
+            },
+            "type": "image"
+          }
+        ],
+        "name": "galleryImages",
+        "type": "array",
+        "title": "Additional Event Photos (Up to 3–4 Images)"
+      },
+      {
+        "fields": [
+          {
+            "name": "en",
+            "type": "string",
+            "title": "Badge (e.g. Flagship Cultural Festival, Musical Heritage)"
+          }
+        ],
+        "name": "badge",
+        "type": "object",
+        "title": "Category / Cultural Badge"
+      },
+      {
+        "fields": [
+          {
+            "rows": 5,
+            "name": "en",
+            "type": "text",
+            "title": "Event Description"
+          }
+        ],
+        "name": "desc",
+        "type": "object",
+        "title": "Event Overview & Full Description"
+      },
+      {
+        "fields": [
+          {
+            "of": [
+              {
+                "type": "string"
+              }
+            ],
+            "name": "en",
+            "type": "array",
+            "title": "Highlights"
+          }
+        ],
+        "name": "highlights",
+        "type": "object",
+        "title": "Key Highlights (Bullet Points)"
+      },
+      {
+        "initialValue": "9831093021",
+        "description": "Default is 9831093021. You can enter a custom 10-digit number if needed.",
+        "name": "whatsappNumber",
+        "type": "string",
+        "title": "WhatsApp Inquiry Number"
+      },
+      {
+        "description": "Text pre-filled when visitors tap \"Click to Enquire\" (e.g. Hello, I would like to enquire about attending the Durga Puja celebration at Khelat Bhawan.)",
+        "name": "whatsappMessage",
+        "type": "string",
+        "title": "Pre-filled WhatsApp Enquiry Message"
+      }
+    ],
+    "name": "event",
+    "type": "document",
+    "title": "Palace Events & Cultural Calendar"
+  },
+  {
+    "fields": [
+      {
+        "fields": [
+          {
+            "validation": [
+              {
+                "rules": [
+                  {
+                    "flag": "presence",
+                    "constraint": "required"
+                  }
+                ],
+                "level": "error"
+              }
+            ],
+            "name": "en",
+            "type": "string",
+            "title": "English Title (e.g. Royal Wedding, Period Cinema Shoot)"
+          },
+          {
+            "name": "bn",
+            "type": "string",
+            "title": "Bengali Title"
+          }
+        ],
+        "name": "title",
+        "type": "object",
+        "title": "Experience / Rental Name"
+      },
+      {
+        "options": {
+          "list": [
+            {
+              "title": "Weddings & Royal Banquets",
+              "value": "wedding"
+            },
+            {
+              "title": "Cinematography & Period Shoots",
+              "value": "cinema"
+            },
+            {
+              "title": "Cultural Soirees & Classical Concerts",
+              "value": "concert"
+            },
+            {
+              "title": "Corporate Conclaves & Heritage Dinners",
+              "value": "corporate"
+            }
+          ]
+        },
+        "name": "category",
+        "type": "string",
+        "title": "Rental Category"
+      },
+      {
+        "options": {
+          "hotspot": true
+        },
+        "name": "coverImage",
+        "type": "image",
+        "title": "Cover Photograph"
+      },
+      {
+        "name": "guestCapacity",
+        "type": "string",
+        "title": "Guest Capacity (e.g. 50 – 500 Guests)"
+      },
+      {
+        "fields": [
+          {
+            "rows": 4,
+            "name": "en",
+            "type": "text",
+            "title": "English Description"
+          },
+          {
+            "rows": 4,
+            "name": "bn",
+            "type": "text",
+            "title": "Bengali Description"
+          }
+        ],
+        "name": "desc",
+        "type": "object",
+        "title": "Description & Inclusions"
+      },
+      {
+        "of": [
+          {
+            "type": "string"
+          }
+        ],
+        "name": "features",
+        "type": "array",
+        "title": "Key Features / Highlights"
+      }
+    ],
+    "name": "rentalPackage",
+    "type": "document",
+    "title": "Reservations & Heritage Rental Packages"
+  },
+  {
+    "fields": [
+      {
+        "readOnly": true,
+        "name": "reference",
+        "type": "string",
+        "title": "Reference Number (e.g. KB-88349102)"
+      },
+      {
+        "readOnly": true,
+        "name": "name",
+        "type": "string",
+        "title": "Guest / Patron Name"
+      },
+      {
+        "readOnly": true,
+        "name": "email",
+        "type": "string",
+        "title": "Guest Email Address"
+      },
+      {
+        "readOnly": true,
+        "name": "phone",
+        "type": "string",
+        "title": "Phone Number"
+      },
+      {
+        "readOnly": true,
+        "name": "preferredDate",
+        "type": "date",
+        "title": "Requested Reservation Date"
+      },
+      {
+        "readOnly": true,
+        "name": "eventType",
+        "type": "string",
+        "title": "Event / Package Type"
+      },
+      {
+        "readOnly": true,
+        "name": "guests",
+        "type": "string",
+        "title": "Estimated Guests"
+      },
+      {
+        "rows": 4,
+        "readOnly": true,
+        "name": "message",
+        "type": "text",
+        "title": "Guest Message & Specific Requirements"
+      },
+      {
+        "options": {
+          "list": [
+            {
+              "title": "⏳ Pending Review",
+              "value": "pending"
+            },
+            {
+              "title": "✅ Approved & Booked (Date Blocked on Live Calendar)",
+              "value": "approved"
+            },
+            {
+              "title": "❌ Rejected (Polite notification sent)",
+              "value": "rejected"
+            },
+            {
+              "title": "🔄 Cancelled & Reallocated (Date Freed on Calendar)",
+              "value": "cancelled"
+            }
+          ],
+          "layout": "radio"
+        },
+        "initialValue": "pending",
+        "description": "Use the action buttons to approve, reject, or cancel the reservation.",
+        "name": "status",
+        "type": "string",
+        "title": "Reservation Status & Calendar Allocation"
+      },
+      {
+        "rows": 2,
+        "name": "notes",
+        "type": "text",
+        "title": "Admin Concierge Notes"
+      },
+      {
+        "readOnly": true,
+        "name": "receivedAt",
+        "type": "datetime",
+        "title": "Submission Timestamp"
+      }
+    ],
+    "name": "reservationEnquiry",
+    "type": "document",
+    "title": "Reservation Enquiries & Bookings"
+  },
+  {
+    "fields": [
+      {
+        "validation": [
+          {
+            "rules": [
+              {
+                "flag": "presence",
+                "constraint": "required"
+              }
+            ],
+            "level": "error"
+          }
+        ],
+        "name": "name",
+        "type": "string",
+        "title": "Guest Name"
+      },
+      {
+        "validation": [
+          {
+            "rules": [
+              {
+                "flag": "min",
+                "constraint": 1
+              },
+              {
+                "flag": "max",
+                "constraint": 5
+              },
+              {
+                "flag": "presence",
+                "constraint": "required"
+              }
+            ],
+            "level": "error"
+          }
+        ],
+        "name": "rating",
+        "type": "number",
+        "title": "Star Rating (1 - 5)"
+      },
+      {
+        "name": "visitType",
+        "type": "string",
+        "title": "Visit / Occasion Type"
+      },
+      {
+        "rows": 4,
+        "validation": [
+          {
+            "rules": [
+              {
+                "flag": "presence",
+                "constraint": "required"
+              }
+            ],
+            "level": "error"
+          }
+        ],
+        "name": "review",
+        "type": "text",
+        "title": "Review / Reflections Text"
+      },
+      {
+        "initialValue": false,
+        "description": "Approve to show this review on the website. Reject to keep it hidden.",
+        "name": "isApproved",
+        "type": "boolean",
+        "title": "Review Approval / Rejection"
+      }
+    ],
+    "name": "feedback",
+    "type": "document",
+    "title": "Guest Reflections & Reviews Moderation"
+  },
+  {
+    "fields": [
+      {
+        "initialValue": "October 2026",
+        "name": "lastUpdated",
+        "type": "string",
+        "title": "Last Updated Label (e.g. October 2026)"
+      },
+      {
+        "fields": [
+          {
+            "initialValue": "Terms of Use & Heritage Estate Protocol",
+            "name": "en",
+            "type": "string",
+            "title": "English Title"
+          },
+          {
+            "initialValue": "ব্যবহারের শর্তাবলী ও এস্টেট নীতিমালা",
+            "name": "bn",
+            "type": "string",
+            "title": "Bengali Title"
+          }
+        ],
+        "name": "termsTitle",
+        "type": "object",
+        "title": "Terms of Use Title"
+      },
+      {
+        "options": {
+          "accept": ".pdf,.doc,.docx"
+        },
+        "description": "Upload official Terms & Conditions document (PDF, DOCX, etc.). Visitors will be able to view and download this directly from the website. You can upload, replace, or remove this document at any time.",
+        "name": "termsPdf",
+        "type": "file",
+        "title": "Upload Terms of Use PDF / Document (Official Printable Document)"
+      },
+      {
+        "description": "Edit the text visible directly in the website terms popup.",
+        "fields": [
+          {
+            "rows": 14,
+            "name": "en",
+            "type": "text",
+            "title": "English Content"
+          },
+          {
+            "rows": 14,
+            "name": "bn",
+            "type": "text",
+            "title": "Bengali Content"
+          }
+        ],
+        "name": "termsContent",
+        "type": "object",
+        "title": "Terms of Use Body Text (Full Policy Content)"
+      },
+      {
+        "fields": [
+          {
+            "initialValue": "Privacy Policy — Khelat Bhawan Heritage Estate",
+            "name": "en",
+            "type": "string",
+            "title": "English Title"
+          },
+          {
+            "initialValue": "গোপনীয়তা নীতি — খেলাৎ ভবন হেরিটেজ এস্টেট",
+            "name": "bn",
+            "type": "string",
+            "title": "Bengali Title"
+          }
+        ],
+        "name": "privacyTitle",
+        "type": "object",
+        "title": "Privacy Policy Title"
+      },
+      {
+        "options": {
+          "accept": ".pdf,.doc,.docx"
+        },
+        "description": "Upload official Privacy Policy PDF. You can upload, replace, or remove this file at any time.",
+        "name": "privacyPdf",
+        "type": "file",
+        "title": "Upload Privacy Policy PDF / Document"
+      },
+      {
+        "description": "Edit the privacy policy text displayed on the website.",
+        "fields": [
+          {
+            "rows": 14,
+            "name": "en",
+            "type": "text",
+            "title": "English Content"
+          },
+          {
+            "rows": 14,
+            "name": "bn",
+            "type": "text",
+            "title": "Bengali Content"
+          }
+        ],
+        "name": "privacyContent",
+        "type": "object",
+        "title": "Privacy Policy Body Text"
+      },
+      {
+        "description": "Upload additional forms (e.g. Booking Agreement, Filming Consent Form, Heritage Code of Conduct).",
+        "of": [
+          {
+            "fields": [
+              {
+                "validation": [
+                  {
+                    "rules": [
+                      {
+                        "flag": "presence",
+                        "constraint": "required"
+                      }
+                    ],
+                    "level": "error"
+                  }
+                ],
+                "name": "title",
+                "type": "string",
+                "title": "Document Title (e.g. Heritage Rental Agreement Form)"
+              },
+              {
+                "options": {
+                  "accept": ".pdf,.doc,.docx"
+                },
+                "validation": [
+                  {
+                    "rules": [
+                      {
+                        "flag": "presence",
+                        "constraint": "required"
+                      }
+                    ],
+                    "level": "error"
+                  }
+                ],
+                "name": "file",
+                "type": "file",
+                "title": "Upload File (PDF / DOCX)"
+              },
+              {
+                "name": "desc",
+                "type": "string",
+                "title": "Short Description"
+              }
+            ],
+            "type": "object",
+            "title": "Document"
+          }
+        ],
+        "name": "additionalDocuments",
+        "type": "array",
+        "title": "Additional Legal & Booking Documents (PDFs / Forms / Guidelines)"
+      }
+    ],
+    "name": "legalPolicy",
+    "type": "document",
+    "title": "Terms & Privacy Policy"
+  },
+  {
+    "fields": [
+      {
+        "description": "Upload custom MP4 background film for the homepage hero banner",
+        "name": "heroVideoDesktop",
+        "type": "file",
+        "title": "Hero Background Video (Desktop)"
+      },
+      {
+        "description": "Optional mobile-optimized MP4 film",
+        "name": "heroVideoMobile",
+        "type": "file",
+        "title": "Hero Background Video (Mobile)"
+      },
+      {
+        "options": {
+          "hotspot": true
+        },
+        "description": "Cover image shown before the video starts playing",
+        "name": "heroPoster",
+        "type": "image",
+        "title": "Hero Video Poster / Fallback Image"
+      },
+      {
+        "initialValue": "+91 98310 93021",
+        "name": "phonePrimary",
+        "type": "string",
+        "title": "Primary Phone Number"
+      },
+      {
+        "initialValue": "+91 99031 34231",
+        "name": "phoneSecondary",
+        "type": "string",
+        "title": "Secondary Phone Number"
+      },
+      {
+        "initialValue": "councilofculture.ghoshbari47@gmail.com",
+        "name": "email",
+        "type": "string",
+        "title": "Official Estate Email"
+      },
+      {
+        "initialValue": "47, Pathuria Ghata Street, Kolkata – 700006, West Bengal, India",
+        "name": "address",
+        "type": "string",
+        "title": "Physical Address"
+      },
+      {
+        "initialValue": "Mon – Sat: 11:00 AM – 7:00 PM (Prior appointment recommended for heritage tours & meetings)",
+        "name": "visitingHoursEn",
+        "type": "string",
+        "title": "Visiting Hours (English)"
+      },
+      {
+        "initialValue": "সোম – শনিবার: সকাল ১১:০০ – সন্ধ্যা ৭:০০ (হেরিটেজ ট্যুর ও সাক্ষাতের জন্য পূর্বানুমতি আবশ্যক)",
+        "name": "visitingHoursBn",
+        "type": "string",
+        "title": "Visiting Hours (Bengali)"
+      }
+    ],
+    "name": "siteSettings",
+    "type": "document",
+    "title": "Contact, Hours & Estate Information"
+  }
+]

@@ -18,9 +18,27 @@ export default {
       validation: (Rule) => Rule.min(1).max(5).required()
     },
     {
+      name: 'email',
+      title: 'Guest Email',
+      type: 'string',
+      readOnly: true
+    },
+    {
+      name: 'phone',
+      title: 'Guest Phone',
+      type: 'string',
+      readOnly: true
+    },
+    {
       name: 'visitType',
       title: 'Visit / Occasion Type',
       type: 'string'
+    },
+    {
+      name: 'date',
+      title: 'Submission Date',
+      type: 'datetime',
+      readOnly: true
     },
     {
       name: 'review',

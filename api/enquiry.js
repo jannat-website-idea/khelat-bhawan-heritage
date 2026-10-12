@@ -34,7 +34,7 @@ export default async function handler(request, response) {
   const guestCount = /^\d+$/.test(guestText) ? Number(guestText) : undefined;
   const isReservation = source.toLowerCase().includes('reservation');
   const isFeedback = source.toLowerCase().includes('feedback');
-  const messageIsValid = isReservation ? countCharacters(message) >= 30 : countWords(message) >= 20;
+  const messageIsValid = isReservation ? countCharacters(message) >= 30 : countWords(message) >= 30;
 
   const guestCountIsValid = !isReservation || (Number.isInteger(guestCount) && guestCount >= 1 && guestCount <= 150);
 
@@ -62,9 +62,12 @@ export default async function handler(request, response) {
           _id: documentId,
           _type: 'feedback',
           name,
+          email,
+          phone,
           rating: Math.min(5, Math.max(1, Number.parseInt(payload.rating, 10) || 5)),
           visitType: eventType || 'Website visitor',
           review: message,
+          date: receivedAt,
           isApproved: false,
         }
       : {
