@@ -3,35 +3,25 @@ import { Star, MessageSquare, ExternalLink, CheckCircle, Send, Heart, Award, Spa
 import SectionHeader from '../components/SectionHeader';
 import AlpanaDivider from '../components/AlpanaDivider';
 import { GOOGLE_REVIEWS_URL, googleReviews, googleReviewSummary } from '../data/googleReviews';
-import { sanityClient } from '../sanity/client';
 import { FEEDBACK_QUERY } from '../sanity/queries';
+import { useSanityLiveQuery } from '../sanity/useSanityLiveQuery';
 import { submitEnquiry } from '../lib/enquiries';
 import { countWords, validateEnquiry } from '../lib/enquiryValidation';
 
 export default function FeedbackPage({ lang, content }) {
   const t = content[lang];
-  const [sanityReviews, setSanityReviews] = useState([]);
   const isBn = lang === 'bn';
-
-  useEffect(() => {
-    sanityClient.fetch(FEEDBACK_QUERY)
-      .then((data) => {
-        if (Array.isArray(data) && data.length > 0) {
-          const formatted = data.map((doc, idx) => ({
-            id: doc._id || `sanity-rev-${idx}`,
-            name: doc.name,
-            rating: doc.rating || 5,
-            review: doc.review,
-            time: doc.date ? new Date(doc.date).toLocaleDateString(isBn ? 'bn-BD' : 'en-US', { month: 'short', year: 'numeric' }) : 'Verified Guest',
-            reviewUrl: GOOGLE_REVIEWS_URL
-          }));
-          setSanityReviews(formatted);
-        }
-      })
-      .catch((err) => {
-        console.warn('Sanity feedback fetch fallback:', err);
-      });
-  }, [isBn]);
+  const {data: liveReviews, loaded: reviewsLoaded} = useSanityLiveQuery(FEEDBACK_QUERY, []);
+  const sanityReviews = reviewsLoaded && Array.isArray(liveReviews)
+    ? liveReviews.map((doc, idx) => ({
+        id: doc._id || `sanity-rev-${idx}`,
+        name: doc.name,
+        rating: doc.rating || 5,
+        review: doc.review,
+        time: doc.date ? new Date(doc.date).toLocaleDateString(isBn ? 'bn-BD' : 'en-US', { month: 'short', year: 'numeric' }) : 'Verified Guest',
+        reviewUrl: GOOGLE_REVIEWS_URL
+      }))
+    : [];
 
   const allReviews = [...sanityReviews, ...googleReviews];
   const rev = { ...t.reviews, googleUrl: GOOGLE_REVIEWS_URL, items: allReviews };
@@ -59,7 +49,7 @@ export default function FeedbackPage({ lang, content }) {
     setIsSubmitting(true);
     setSubmitError('');
     try {
-      const result = await submitEnquiry({...formData, eventType: formData.visitType, source: `Visitor feedback (${rating} stars)`});
+      const result = await submitEnquiry({...formData, rating, eventType: formData.visitType, source: `Visitor feedback (${rating} stars)`});
       setReference(result.reference);
       setSubmitted(true);
     } catch (error) {

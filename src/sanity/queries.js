@@ -81,6 +81,12 @@ export const RENTAL_QUERY = `*[_type == "rentalPackage"] {
   features
 }`;
 
+export const APPROVED_RESERVATION_DATES_QUERY = `*[
+  _type == "reservationEnquiry" &&
+  status == "approved" &&
+  defined(preferredDate)
+].preferredDate`;
+
 export const FEEDBACK_QUERY = `*[_type == "feedback" && isApproved == true] | order(_createdAt desc) {
   _id,
   name,
@@ -101,6 +107,19 @@ export const SITE_SETTINGS_QUERY = `*[_type == "siteSettings"][0] {
   googleMapsUrl,
   visitingHoursEn,
   visitingHoursBn
+}`;
+
+export const HERO_SECTION_QUERY = `*[_type == "heroSection"][0] {
+  headlineFirstLine,
+  headlineSecondLine,
+  headlineBn,
+  subheadlineEn,
+  subheadlineBn,
+  "heroImage": heroImage.asset->url,
+  "heroVideoFile": heroVideoFile.asset->url,
+  heroVideoUrl,
+  primaryCtaText,
+  secondaryCtaText
 }`;
 
 export const LEGAL_POLICY_QUERY = `*[_type == "legalPolicy"][0] {

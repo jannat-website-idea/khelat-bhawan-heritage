@@ -1,23 +1,13 @@
 import React, { useState, useEffect } from 'react';
 import { createPortal } from 'react-dom';
 import { X, Shield, FileText, Download, ExternalLink, FileCheck, Paperclip } from 'lucide-react';
-import { sanityClient } from '../sanity/client';
 import { LEGAL_POLICY_QUERY } from '../sanity/queries';
+import { useSanityLiveQuery } from '../sanity/useSanityLiveQuery';
 
 export default function LegalModal({ isOpen, onClose, defaultType = 'privacy', lang = 'en' }) {
   const [activeType, setActiveType] = useState(defaultType);
-  const [sanityPolicy, setSanityPolicy] = useState(null);
+  const {data: sanityPolicy} = useSanityLiveQuery(LEGAL_POLICY_QUERY, null, isOpen);
   const isBn = lang === 'bn';
-
-  useEffect(() => {
-    sanityClient.fetch(LEGAL_POLICY_QUERY)
-      .then((data) => {
-        if (data) setSanityPolicy(data);
-      })
-      .catch((err) => {
-        console.warn('Sanity legal policy fallback:', err);
-      });
-  }, [isOpen]);
 
   useEffect(() => {
     setActiveType(defaultType);

@@ -1,23 +1,14 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { ArrowRight } from 'lucide-react';
 import { getAssetUrl } from '../utils/assetHelper';
-import { sanityClient } from '../sanity/client';
-import { SITE_SETTINGS_QUERY } from '../sanity/queries';
+import { SITE_SETTINGS_QUERY, HERO_SECTION_QUERY } from '../sanity/queries';
+import { useSanityLiveQuery } from '../sanity/useSanityLiveQuery';
 
 export default function RoyalHero({ lang, setActiveTab, ready }) {
   const bn = lang === 'bn';
   const video = useRef(null);
-  const [sanitySettings, setSanitySettings] = useState(null);
-
-  useEffect(() => {
-    sanityClient.fetch(SITE_SETTINGS_QUERY)
-      .then((data) => {
-        if (data) setSanitySettings(data);
-      })
-      .catch((err) => {
-        console.warn('Sanity hero settings fallback:', err);
-      });
-  }, []);
+  const {data: sanitySettings} = useSanityLiveQuery(SITE_SETTINGS_QUERY, null);
+  const {data: heroContent} = useSanityLiveQuery(HERO_SECTION_QUERY, null);
 
   useEffect(() => {
     const el = video.current;
@@ -64,9 +55,14 @@ export default function RoyalHero({ lang, setActiveTab, ready }) {
     else target?.scrollIntoView({ behavior: 'smooth' });
   };
 
-  const posterUrl = sanitySettings?.heroPoster || getAssetUrl('/images/hero-staircase-poster.jpg');
-  const customDesktopVideo = sanitySettings?.heroVideoDesktop;
+  const posterUrl = sanitySettings?.heroPoster || heroContent?.heroImage || getAssetUrl('/images/hero-staircase-poster.jpg');
+  const customDesktopVideo = sanitySettings?.heroVideoDesktop || heroContent?.heroVideoFile || heroContent?.heroVideoUrl;
   const customMobileVideo = sanitySettings?.heroVideoMobile || customDesktopVideo;
+  const firstLine = bn ? 'খেলাৎ' : (heroContent?.headlineFirstLine?.split(/\s+/)[0] || 'Khelat');
+  const secondLine = bn ? 'ভবন' : (heroContent?.headlineFirstLine?.split(/\s+/).slice(1).join(' ') || 'Bhawan');
+  const subtitle = bn
+    ? (heroContent?.subheadlineBn || '১৮৪৫ সাল থেকে এক জীবন্ত উত্তরাধিকার')
+    : (heroContent?.subheadlineEn || 'A living legacy since 1845');
 
   return (
     <section className={`royal-hero ${ready ? 'is-entered' : 'is-entered'}`} aria-label={bn ? 'খেলাৎ ভবন' : 'Khelat Bhawan'}>
@@ -103,14 +99,14 @@ export default function RoyalHero({ lang, setActiveTab, ready }) {
 
       <div className="royal-hero__content">
         <h1 aria-label={bn ? 'খেলাৎ ভবন' : 'Khelat Bhawan'}>
-          <span className="reveal-line"><span>{bn ? 'খেলাৎ' : 'Khelat'}</span></span>{' '}
-          <span className="reveal-line"><em>{bn ? 'ভবন' : 'Bhawan'}</em></span>
+          <span className="reveal-line"><span>{firstLine}</span></span>{' '}
+          <span className="reveal-line"><em>{secondLine}</em></span>
         </h1>
         <p className="royal-hero__subtitle">
-          <span>{bn ? '১৮৪৫ সাল থেকে এক জীবন্ত উত্তরাধিকার' : 'A living legacy since 1845'}</span>
+          <span>{subtitle}</span>
         </p>
         <button className="royal-outline-button mt-8" onClick={() => setActiveTab('heritage')}>
-          <span>{bn ? 'ঐতিহ্য আবিষ্কার করুন' : 'Explore heritage'}</span>
+          <span>{bn ? 'ঐতিহ্য আবিষ্কার করুন' : (heroContent?.primaryCtaText || 'Explore heritage')}</span>
           <ArrowRight className="royal-btn-arrow" size={19} aria-hidden="true" />
         </button>
       </div>

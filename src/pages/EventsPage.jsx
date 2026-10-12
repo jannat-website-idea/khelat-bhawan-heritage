@@ -2,8 +2,8 @@ import React, { useState, useEffect } from 'react';
 import { createPortal } from 'react-dom';
 import { defaultEventsData, isPastEvent, getWhatsAppLink } from '../data/eventsData';
 import { getCMSData } from '../data/cmsStore';
-import { sanityClient } from '../sanity/client';
 import { EVENTS_QUERY } from '../sanity/queries';
+import { useSanityLiveQuery } from '../sanity/useSanityLiveQuery';
 import { Calendar, Clock, MapPin, Sparkles, MessageCircle, ArrowRight, X, CheckCircle2, Layers, History, CalendarCheck } from 'lucide-react';
 import { getAssetUrl } from '../utils/assetHelper';
 
@@ -11,31 +11,12 @@ const EventsPage = ({ lang = 'en', setActiveTab, onOpenBooking }) => {
   const isBn = lang === 'bn';
   const [selectedCategory, setSelectedCategory] = useState('all'); // 'all', 'upcoming', 'past'
   const [activeModalEvent, setActiveModalEvent] = useState(null);
-  const [eventsList, setEventsList] = useState(() => {
+  const localEvents = (() => {
     const cms = getCMSData();
     return cms?.events && cms.events.length > 0 ? cms.events : defaultEventsData;
-  });
-
-  // Fetch live events from Sanity CMS and sync with In-App CMS
-  useEffect(() => {
-    sanityClient.fetch(EVENTS_QUERY)
-      .then((data) => {
-        if (Array.isArray(data) && data.length > 0) {
-          setEventsList(data);
-        }
-      })
-      .catch((err) => {
-        console.warn('Sanity query fallback to local events:', err);
-      });
-
-    const handleCMSUpdate = (e) => {
-      if (e.detail?.events) {
-        setEventsList(e.detail.events);
-      }
-    };
-    window.addEventListener('khelat_cms_updated', handleCMSUpdate);
-    return () => window.removeEventListener('khelat_cms_updated', handleCMSUpdate);
-  }, []);
+  })();
+  const {data: sanityEvents, loaded: eventsLoaded} = useSanityLiveQuery(EVENTS_QUERY, []);
+  const eventsList = eventsLoaded && Array.isArray(sanityEvents) ? sanityEvents : localEvents;
 
   // Lock body scroll and listen for Escape key when modal is open
   useEffect(() => {

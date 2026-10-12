@@ -3,6 +3,7 @@ import { deskTool } from 'sanity/desk';
 import { visionTool } from '@sanity/vision';
 import { schemaTypes } from './schemas';
 import { deskStructure } from './deskStructure';
+import StudioLayout from './components/StudioLayout';
 
 export default defineConfig({
   name: 'default',
@@ -21,5 +22,11 @@ export default defineConfig({
 
   schema: {
     types: schemaTypes,
+  },
+
+  studio: {
+    components: {
+      layout: StudioLayout,
+    },
   },
 });

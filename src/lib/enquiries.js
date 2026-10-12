@@ -2,7 +2,10 @@ import {validateEnquiry} from './enquiryValidation';
 import { recordNewEnquiry } from '../data/enquiriesStore';
 
 export async function submitEnquiry(payload) {
-  const validationErrors = validateEnquiry(payload);
+  const validationErrors = validateEnquiry(
+    payload,
+    payload.source === 'Reservation enquiry' ? {minMessageCharacters: 30} : {},
+  );
   if (Object.keys(validationErrors).length) {
     const error = new Error(Object.values(validationErrors)[0]);
     error.validationErrors = validationErrors;

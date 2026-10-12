@@ -22,11 +22,18 @@ import ContactPage from './pages/ContactPage';
 import { siteData } from './data/content';
 import { galleryData } from './data/galleryData';
 
+const PUBLIC_TABS = ['home', 'heritage', 'timeline', 'founder', 'trustees', 'gallery', 'events', 'rental', 'feedback', 'contact'];
+
+const getTabFromHash = () => {
+  const route = window.location.hash.replace(/^#\/?/, '').trim().toLowerCase();
+  return PUBLIC_TABS.includes(route) ? route : 'home';
+};
+
 export default function App() {
   const [loading, setLoading] = useState(true);
   const [homeReady, setHomeReady] = useState(false);
   const [lang, setLang] = useState('en');
-  const [activeTab, setActiveTab] = useState('home');
+  const [activeTab, setActiveTab] = useState(getTabFromHash);
   const [isBookingOpen, setIsBookingOpen] = useState(false);
   const [bookingEvent, setBookingEvent] = useState('');
   const [lightboxItem, setLightboxItem] = useState(null);
@@ -77,20 +84,10 @@ export default function App() {
     document.body.scrollTop = 0;
   };
 
-  const clearRouteHash = () => {
-    try {
-      history.replaceState('', document.title, window.location.pathname);
-    } catch {
-      window.location.hash = '';
-    }
-  };
-
-  // Every fresh load / reload begins and finishes at the homepage hero section.
+  // Keep the browser route stable across reloads and normal page scrolling.
   useEffect(() => {
     const previousRestoration = history.scrollRestoration;
     history.scrollRestoration = 'manual';
-    setActiveTab('home');
-    clearRouteHash();
     scrollToTop();
     return () => {
       history.scrollRestoration = previousRestoration;
@@ -103,10 +100,9 @@ export default function App() {
 
     const handleRoute = () => {
       const rawHash = window.location.hash.replace(/^#\/?/, '').trim().toLowerCase();
-      const validTabs = ['home', 'heritage', 'timeline', 'founder', 'trustees', 'gallery', 'events', 'rental', 'feedback', 'contact'];
-      if (validTabs.includes(rawHash)) {
+      if (PUBLIC_TABS.includes(rawHash)) {
         setActiveTab(rawHash);
-      } else {
+      } else if (!rawHash) {
         setActiveTab('home');
       }
       scrollToTop();
@@ -122,8 +118,7 @@ export default function App() {
 
   // Update hash and reset scroll when activeTab changes
   const handleTabChange = (tab) => {
-    const validTabs = ['home', 'heritage', 'timeline', 'founder', 'trustees', 'gallery', 'events', 'rental', 'feedback', 'contact'];
-    const nextTab = validTabs.includes(tab) ? tab : 'home';
+    const nextTab = PUBLIC_TABS.includes(tab) ? tab : 'home';
     setActiveTab(nextTab);
     const nextUrl = nextTab === 'home'
       ? window.location.pathname
@@ -137,8 +132,6 @@ export default function App() {
   };
 
   const handleLoaderComplete = () => {
-    setActiveTab('home');
-    clearRouteHash();
     setLoading(false);
     setHomeReady(true);
     scrollToTop();

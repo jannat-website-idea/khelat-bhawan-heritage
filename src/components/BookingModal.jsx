@@ -3,7 +3,9 @@ import { createPortal } from 'react-dom';
 import { X, CheckCircle2, Send, Calendar as CalendarIcon, Clock, ShieldCheck, Lock, Unlock, Mail, AlertCircle } from 'lucide-react';
 import { getBlockedDates, saveBlockedDates, isDateBlocked, isPastDate } from '../data/bookingData';
 import { submitEnquiry } from '../lib/enquiries';
-import { countWords, validateEnquiry } from '../lib/enquiryValidation';
+import { countCharacters, validateEnquiry } from '../lib/enquiryValidation';
+import { useSanityLiveQuery } from '../sanity/useSanityLiveQuery';
+import { APPROVED_RESERVATION_DATES_QUERY } from '../sanity/queries';
 
 export default function BookingModal({ isOpen, onClose, lang = 'en', content, initialEvent = '' }) {
   const t = content[lang]?.bookingModal || {
@@ -27,6 +29,7 @@ export default function BookingModal({ isOpen, onClose, lang = 'en', content, in
   });
 
   const [blockedDates, setBlockedDates] = useState(getBlockedDates());
+  const {data: approvedReservationDates} = useSanityLiveQuery(APPROVED_RESERVATION_DATES_QUERY, []);
   const [adminMode, setAdminMode] = useState(false);
   const now = new Date();
   const [calendarMonth, setCalendarMonth] = useState(now.getMonth());
@@ -44,8 +47,11 @@ export default function BookingModal({ isOpen, onClose, lang = 'en', content, in
   }, [initialEvent, isOpen]);
 
   useEffect(() => {
-    setBlockedDates(getBlockedDates());
-  }, [isOpen]);
+    setBlockedDates(Array.from(new Set([
+      ...getBlockedDates(),
+      ...(Array.isArray(approvedReservationDates) ? approvedReservationDates.filter(Boolean) : []),
+    ])));
+  }, [isOpen, approvedReservationDates]);
 
   useEffect(() => {
     if (!isOpen) return undefined;
@@ -100,7 +106,7 @@ export default function BookingModal({ isOpen, onClose, lang = 'en', content, in
       return;
     }
 
-    const validationErrors = validateEnquiry(formData);
+    const validationErrors = validateEnquiry(formData, {minMessageCharacters: 30});
     setFieldErrors(validationErrors);
     if (Object.keys(validationErrors).length) return;
 
@@ -116,7 +122,7 @@ export default function BookingModal({ isOpen, onClose, lang = 'en', content, in
       setSubmitted(true);
       setDispatchDetails({
         bookingRef: result.reference,
-        adminEmail: 'councilofculture.ghoshbari47@gmail.com',
+        adminEmail: 'domainname.03@gmail.com',
         guestEmail: formData.email,
         date: formData.preferredDate,
         sla: '48 Hours Guaranteed Response'
@@ -426,13 +432,14 @@ export default function BookingModal({ isOpen, onClose, lang = 'en', content, in
                 <textarea
                   rows="6"
                   required
+                  minLength={30}
                   aria-invalid={!!fieldErrors.message}
                   value={formData.message}
                   onChange={(e) => { setFormData({ ...formData, message: e.target.value }); setFieldErrors({...fieldErrors, message: ''}); }}
-                  placeholder={lang === 'bn' ? 'কমপক্ষে ২০ শব্দে বিস্তারিত লিখুন' : 'Describe your enquiry in at least 20 words.'}
+                  placeholder={lang === 'bn' ? 'কমপক্ষে ৩০ অক্ষরে বিস্তারিত লিখুন' : 'Describe your enquiry in at least 30 characters.'}
                   className="w-full px-3.5 py-2.5 text-xs sm:text-sm bg-background border border-border/80 rounded-xl focus:outline-none focus:border-primary text-foreground"
                 />
-                <p className={`text-[11px] mt-1 ${countWords(formData.message) >= 20 ? 'text-emerald-700' : 'text-muted-foreground'}`}>{countWords(formData.message)} / 20 words minimum</p>
+                <p className={`text-[11px] mt-1 ${countCharacters(formData.message) >= 30 ? 'text-emerald-700' : 'text-muted-foreground'}`}>{countCharacters(formData.message)} / 30 characters minimum</p>
                 {fieldErrors.message && <p className="text-[11px] text-red-700 mt-1">{fieldErrors.message}</p>}
               </div>
 

@@ -9,7 +9,9 @@ export const sanityClient = createClient({
   projectId: SANITY_PROJECT_ID,
   dataset: SANITY_DATASET,
   apiVersion: SANITY_API_VERSION,
-  useCdn: true, // fast cached edge responses
+  // Editorial updates should appear immediately after publishing in Studio.
+  useCdn: false,
+  perspective: 'published',
 });
 
 const builder = imageUrlBuilder(sanityClient);

@@ -2,8 +2,8 @@ import React, { useState, useEffect, useCallback, useMemo } from 'react';
 import { createPortal } from 'react-dom';
 import { getAssetUrl } from '../utils/assetHelper';
 import { photographyGalleryData, filmsGalleryData } from '../data/galleryData';
-import { sanityClient } from '../sanity/client';
 import { GALLERY_QUERY } from '../sanity/queries';
+import { useSanityLiveQuery } from '../sanity/useSanityLiveQuery';
 import { 
   X, 
   ChevronLeft, 
@@ -19,22 +19,10 @@ export default function GalleryPage({ lang = 'en' }) {
   const [activeIndex, setActiveIndex] = useState(null);
   const [isClosing, setIsClosing] = useState(false);
   const [activeFilter, setActiveFilter] = useState('all');
-  const [sanityGallery, setSanityGallery] = useState(null);
-
-  useEffect(() => {
-    sanityClient.fetch(GALLERY_QUERY)
-      .then((data) => {
-        if (Array.isArray(data) && data.length > 0) {
-          setSanityGallery(data);
-        }
-      })
-      .catch((err) => {
-        console.warn('Sanity query fallback to local gallery:', err);
-      });
-  }, []);
+  const {data: sanityGallery, loaded: galleryLoaded} = useSanityLiveQuery(GALLERY_QUERY, []);
 
   const { allItems, photoCount, filmCount } = useMemo(() => {
-    if (sanityGallery && sanityGallery.length > 0) {
+    if (galleryLoaded && Array.isArray(sanityGallery)) {
       const formatted = sanityGallery.map((item, idx) => ({
         ...item,
         id: item._id || idx,
@@ -64,7 +52,7 @@ export default function GalleryPage({ lang = 'en' }) {
       photoCount: photos.length,
       filmCount: films.length
     };
-  }, [sanityGallery]);
+  }, [sanityGallery, galleryLoaded]);
 
   const galleryItems = useMemo(() => {
     if (activeFilter === 'photography') return allItems.filter(i => i.mediaType === 'image');

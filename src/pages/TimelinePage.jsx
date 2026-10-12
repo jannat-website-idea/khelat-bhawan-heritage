@@ -3,33 +3,38 @@ import { getAssetUrl } from '../utils/assetHelper';
 import { familyTreeData } from '../data/familyTreeData';
 import HeritageFamilyTree from '../components/HeritageFamilyTree';
 import { getCMSData } from '../data/cmsStore';
-import { sanityClient } from '../sanity/client';
 import { TIMELINE_QUERY } from '../sanity/queries';
+import { useSanityLiveQuery } from '../sanity/useSanityLiveQuery';
 import { Clock, Users, Calendar, ArrowRight, Sparkles, CheckCircle2, Landmark, Heart, Music, Shield, BookOpen, Film, Flame, Download } from 'lucide-react';
 
 export default function TimelinePage({ lang = 'en', setActiveTab, onOpenLightbox, content }) {
-  const [activeView, setActiveView] = useState('family-tree'); // default to 'family-tree'
+  const [activeView, setActiveView] = useState(() => {
+    try {
+      return sessionStorage.getItem('khelat_timeline_view') === 'timeline' ? 'timeline' : 'family-tree';
+    } catch {
+      return 'family-tree';
+    }
+  });
   const [expandedGen, setExpandedGen] = useState(1);
   const [activeHoverNode, setActiveHoverNode] = useState(null);
-  const [sanityMilestones, setSanityMilestones] = useState(null);
   const [localCMSMilestones, setLocalCMSMilestones] = useState(() => {
     const cms = getCMSData();
     return cms?.timeline && cms.timeline.length > 0 ? cms.timeline : null;
   });
+  const {data: sanityMilestones, loaded: milestonesLoaded} = useSanityLiveQuery(TIMELINE_QUERY, []);
 
   const isBn = lang === 'bn';
 
-  useEffect(() => {
-    sanityClient.fetch(TIMELINE_QUERY)
-      .then((data) => {
-        if (Array.isArray(data) && data.length > 0) {
-          setSanityMilestones(data);
-        }
-      })
-      .catch((err) => {
-        console.warn('Sanity query fallback to local timeline:', err);
-      });
+  const changeView = (view) => {
+    setActiveView(view);
+    try {
+      sessionStorage.setItem('khelat_timeline_view', view);
+    } catch {
+      // Browsing still works when storage is unavailable.
+    }
+  };
 
+  useEffect(() => {
     const handleCMSUpdate = (e) => {
       if (e.detail?.timeline) {
         setLocalCMSMilestones(e.detail.timeline);
@@ -218,7 +223,7 @@ export default function TimelinePage({ lang = 'en', setActiveTab, onOpenLightbox
     };
   };
 
-  const rawMilestonesList = (sanityMilestones && sanityMilestones.length > 0)
+  const rawMilestonesList = (milestonesLoaded && sanityMilestones && sanityMilestones.length > 0)
     ? sanityMilestones
     : ((localCMSMilestones && localCMSMilestones.length > 0) ? localCMSMilestones : milestones);
 
@@ -322,7 +327,7 @@ export default function TimelinePage({ lang = 'en', setActiveTab, onOpenLightbox
             {/* View Switcher Controls */}
             <div className="flex flex-wrap sm:flex-nowrap items-center gap-3 pt-3">
               <button
-                onClick={() => setActiveView('timeline')}
+                onClick={() => changeView('timeline')}
                 className={`heritage-timeline-toggle-btn ${activeView === 'timeline' ? 'is-active' : ''}`}
               >
                 <Clock className="w-4 h-4" />
@@ -330,7 +335,7 @@ export default function TimelinePage({ lang = 'en', setActiveTab, onOpenLightbox
               </button>
 
               <button
-                onClick={() => setActiveView('family-tree')}
+                onClick={() => changeView('family-tree')}
                 className={`heritage-timeline-toggle-btn ${activeView === 'family-tree' ? 'is-active' : ''}`}
               >
                 <Users className="w-4 h-4" />

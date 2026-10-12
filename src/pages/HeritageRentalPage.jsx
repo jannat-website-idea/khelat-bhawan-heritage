@@ -3,11 +3,22 @@ import { Check, Calendar as CalendarIcon, Clock, Mail, ShieldCheck, Sparkles, Ma
 import SectionHeader from '../components/SectionHeader';
 import { getAssetUrl } from '../utils/assetHelper';
 import { getBlockedDates, isDateBlocked, isPastDate } from '../data/bookingData';
+import { APPROVED_RESERVATION_DATES_QUERY, RENTAL_QUERY } from '../sanity/queries';
+import { useSanityLiveQuery } from '../sanity/useSanityLiveQuery';
 
 export default function HeritageRentalPage({ lang = 'en', onOpenBooking, onOpenLightbox, content }) {
   const t = content[lang];
   const [currentMonthOffset, setCurrentMonthOffset] = useState(0);
   const [blockedDates, setBlockedDates] = useState(getBlockedDates);
+  const {data: rentalPackages, loaded: rentalsLoaded} = useSanityLiveQuery(RENTAL_QUERY, []);
+  const {data: approvedReservationDates} = useSanityLiveQuery(APPROVED_RESERVATION_DATES_QUERY, []);
+
+  useEffect(() => {
+    setBlockedDates(Array.from(new Set([
+      ...getBlockedDates(),
+      ...(Array.isArray(approvedReservationDates) ? approvedReservationDates.filter(Boolean) : []),
+    ])));
+  }, [approvedReservationDates]);
 
   useEffect(() => {
     const handleUpdate = (e) => {
@@ -25,6 +36,15 @@ export default function HeritageRentalPage({ lang = 'en', onOpenBooking, onOpenL
   
   const daysInMonth = new Date(year, month + 1, 0).getDate();
   const firstDayIndex = new Date(year, month, 1).getDay();
+  const services = rentalsLoaded && Array.isArray(rentalPackages)
+    ? rentalPackages.map((item) => ({
+        id: item._id,
+        title: item.title?.[lang] || item.title?.en || '',
+        desc: item.desc?.[lang] || item.desc?.en || '',
+        image: item.coverImage,
+        features: item.features || [],
+      }))
+    : t.rental.services;
 
   return (
     <main className="pt-32 pb-24 bg-background min-h-screen text-foreground">
@@ -181,7 +201,7 @@ export default function HeritageRentalPage({ lang = 'en', onOpenBooking, onOpenL
 
         {/* Venues Grid */}
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 my-12">
-          {t.rental.services.map((srv) => (
+          {services.map((srv) => (
             <div
               key={srv.id}
               className="bg-card/70 rounded-3xl border border-border/60 hover:border-primary/40 transition-all duration-300 shadow-lg hover:shadow-2xl flex flex-col justify-between overflow-hidden backdrop-blur-sm"
