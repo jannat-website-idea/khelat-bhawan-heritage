@@ -86,6 +86,21 @@ export const APPROVED_RESERVATION_DATES_QUERY = `*[
   defined(preferredDate)
 ].preferredDate`;
 
+export const CALENDAR_BLOCKS_QUERY = `{
+  "reservationDates": *[
+    _type == "reservationEnquiry" &&
+    status == "approved" &&
+    defined(preferredDate)
+  ].preferredDate,
+  "eventRanges": *[_type == "event" && defined(date)] {
+    "start": date.start,
+    "end": coalesce(date.end, date.start),
+    "label": date.en
+  }
+}`;
+
+export const CALENDAR_BLOCKS_LISTEN_QUERY = `*[_type in ["event", "reservationEnquiry"]]`;
+
 export const FEEDBACK_QUERY = `*[_type == "feedback" && isApproved == true] | order(_createdAt desc) {
   _id,
   name,

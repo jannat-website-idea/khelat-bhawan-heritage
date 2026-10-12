@@ -6,7 +6,6 @@ const actions = [
   {value: 'approved', label: 'Approve & Block Date', tone: 'positive'},
   {value: 'rejected', label: 'Reject Enquiry', tone: 'critical'},
   {value: 'cancelled', label: 'Cancel Booking & Reallocate Slot', tone: 'caution'},
-  {value: 'pending', label: 'Return to Pending', tone: 'default'},
 ];
 
 export default function ReservationStatusInput({value = 'pending', onChange}) {
@@ -50,7 +49,7 @@ export default function ReservationStatusInput({value = 'pending', onChange}) {
               tone={action.tone}
               mode={value === action.value ? 'default' : 'ghost'}
               loading={updating === action.value}
-              disabled={Boolean(updating)}
+              disabled={Boolean(updating) || value === action.value || (value === 'approved' && action.value === 'rejected')}
               onClick={() => updateStatus(action.value)}
             />
           ))}

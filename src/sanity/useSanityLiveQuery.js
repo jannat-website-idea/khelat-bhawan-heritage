@@ -2,7 +2,7 @@ import {useEffect, useState} from 'react';
 import {sanityClient} from './client';
 
 /** Fetch published CMS content and refresh it whenever the matching query changes. */
-export function useSanityLiveQuery(query, initialValue = null, enabled = true) {
+export function useSanityLiveQuery(query, initialValue = null, enabled = true, listenQuery = query) {
   const [data, setData] = useState(initialValue);
   const [loaded, setLoaded] = useState(false);
 
@@ -28,7 +28,7 @@ export function useSanityLiveQuery(query, initialValue = null, enabled = true) {
 
     refresh();
     const subscription = sanityClient
-      .listen(query, {}, {visibility: 'query', events: ['mutation']})
+      .listen(listenQuery, {}, {visibility: 'query', events: ['mutation']})
       .subscribe({
         next: () => {
           window.clearTimeout(refreshTimer);
@@ -42,7 +42,7 @@ export function useSanityLiveQuery(query, initialValue = null, enabled = true) {
       window.clearTimeout(refreshTimer);
       subscription.unsubscribe();
     };
-  }, [query, enabled]);
+  }, [query, enabled, listenQuery]);
 
   return {data, loaded};
 }

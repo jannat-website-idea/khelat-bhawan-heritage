@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { Phone, Mail, MapPin, Clock, Send, CheckCircle, ExternalLink, Navigation } from 'lucide-react';
 import SectionHeader from '../components/SectionHeader';
 import { submitEnquiry } from '../lib/enquiries';
-import { countWords, validateEnquiry } from '../lib/enquiryValidation';
+import { countWords, emailValidationMessage, isValidEmail, isValidPhone, phoneValidationMessage, sanitizePhoneInput, validateEnquiry } from '../lib/enquiryValidation';
 
 export default function ContactPage({ lang, content }) {
   const t = content[lang];
@@ -119,12 +119,19 @@ export default function ContactPage({ lang, content }) {
                       <input 
                         type="tel" 
                         required 
-                        inputMode="tel" 
+                        inputMode="numeric"
+                        autoComplete="tel"
+                        maxLength={13}
                         placeholder="+91 98310 93021"
                         aria-invalid={!!fieldErrors.phone} 
-                        className="w-full px-4 py-3.5 rounded-xl border border-primary/20 bg-background/80 focus:border-primary focus:ring-2 focus:ring-primary/20 outline-none text-foreground text-sm transition-all"
+                        className={`w-full px-4 py-3.5 rounded-xl border bg-background/80 outline-none text-foreground text-sm transition-all ${fieldErrors.phone ? 'border-red-500 ring-2 ring-red-200 focus:border-red-500' : 'border-primary/20 focus:border-primary focus:ring-2 focus:ring-primary/20'}`}
                         value={formData.phone} 
-                        onChange={(e) => { setFormData({ ...formData, phone: e.target.value }); setFieldErrors({...fieldErrors, phone: ''}); }} 
+                        onChange={(e) => {
+                          const phone = sanitizePhoneInput(e.target.value);
+                          setFormData({ ...formData, phone });
+                          setFieldErrors({...fieldErrors, phone: phone && !isValidPhone(phone) ? phoneValidationMessage : ''});
+                        }}
+                        onBlur={() => setFieldErrors({...fieldErrors, phone: isValidPhone(formData.phone) ? '' : phoneValidationMessage})}
                       />
                       {fieldErrors.phone && <small className="text-red-500 block text-xs mt-1">{fieldErrors.phone}</small>}
                     </label>
@@ -135,11 +142,17 @@ export default function ContactPage({ lang, content }) {
                     <input 
                       type="email" 
                       required 
+                      autoComplete="email"
                       placeholder="your.email@example.com"
                       aria-invalid={!!fieldErrors.email} 
-                      className="w-full px-4 py-3.5 rounded-xl border border-primary/20 bg-background/80 focus:border-primary focus:ring-2 focus:ring-primary/20 outline-none text-foreground text-sm transition-all"
+                      className={`w-full px-4 py-3.5 rounded-xl border bg-background/80 outline-none text-foreground text-sm transition-all ${fieldErrors.email ? 'border-red-500 ring-2 ring-red-200 focus:border-red-500' : 'border-primary/20 focus:border-primary focus:ring-2 focus:ring-primary/20'}`}
                       value={formData.email} 
-                      onChange={(e) => { setFormData({ ...formData, email: e.target.value }); setFieldErrors({...fieldErrors, email: ''}); }} 
+                      onChange={(e) => {
+                        const email = e.target.value;
+                        setFormData({ ...formData, email });
+                        setFieldErrors({...fieldErrors, email: email && !isValidEmail(email) ? emailValidationMessage : ''});
+                      }}
+                      onBlur={() => setFieldErrors({...fieldErrors, email: isValidEmail(formData.email) ? '' : emailValidationMessage})}
                     />
                     {fieldErrors.email && <small className="text-red-500 block text-xs mt-1">{fieldErrors.email}</small>}
                   </label>

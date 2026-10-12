@@ -30,12 +30,15 @@ export default async function handler(request, response) {
   const source = clean(payload.source, 80) || 'Website enquiry';
   const eventType = clean(payload.eventType, 180);
   const preferredDate = clean(payload.preferredDate, 20);
-  const guestCount = Number.parseInt(payload.guests, 10) || undefined;
+  const guestText = clean(payload.guests, 8);
+  const guestCount = /^\d+$/.test(guestText) ? Number(guestText) : undefined;
   const isReservation = source.toLowerCase().includes('reservation');
   const isFeedback = source.toLowerCase().includes('feedback');
   const messageIsValid = isReservation ? countCharacters(message) >= 30 : countWords(message) >= 20;
 
-  if (!name || !validEmail(email) || !validPhone(phone) || !messageIsValid) {
+  const guestCountIsValid = !isReservation || (Number.isInteger(guestCount) && guestCount >= 1 && guestCount <= 150);
+
+  if (!name || !validEmail(email) || !validPhone(phone) || !messageIsValid || !guestCountIsValid) {
     return json(response, 400, {error: 'Please complete all required fields.'});
   }
 
@@ -73,7 +76,7 @@ export default async function handler(request, response) {
           phone,
           ...(preferredDate ? {preferredDate} : {}),
           eventType: eventType || source,
-          ...(payload.guests ? {guests: clean(payload.guests, 80)} : {}),
+          ...(guestCount ? {guests: String(guestCount)} : {}),
           message,
           status: 'pending',
           receivedAt,

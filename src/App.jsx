@@ -106,6 +106,8 @@ export default function App() {
       } else if (!rawHash) {
         setActiveTab('home');
       }
+      setLightboxItem(null);
+      setIsBookingOpen(false);
       scrollToTop();
     };
 
@@ -120,6 +122,8 @@ export default function App() {
   // Update hash and reset scroll when activeTab changes
   const handleTabChange = (tab) => {
     const nextTab = PUBLIC_TABS.includes(tab) ? tab : 'home';
+    setLightboxItem(null);
+    setIsBookingOpen(false);
     setActiveTab(nextTab);
     const nextUrl = nextTab === 'home'
       ? window.location.pathname

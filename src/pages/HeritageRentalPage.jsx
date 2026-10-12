@@ -3,30 +3,28 @@ import { Check, Calendar as CalendarIcon, Clock, Mail, ShieldCheck, Sparkles, Ma
 import SectionHeader from '../components/SectionHeader';
 import { getAssetUrl } from '../utils/assetHelper';
 import { getBlockedDates, isDateBlocked, isPastDate } from '../data/bookingData';
-import { APPROVED_RESERVATION_DATES_QUERY, RENTAL_QUERY } from '../sanity/queries';
+import { CALENDAR_BLOCKS_LISTEN_QUERY, CALENDAR_BLOCKS_QUERY, RENTAL_QUERY } from '../sanity/queries';
 import { useSanityLiveQuery } from '../sanity/useSanityLiveQuery';
+import { collectBlockedDates } from '../utils/calendarBlocks';
 
 export default function HeritageRentalPage({ lang = 'en', onOpenBooking, onOpenLightbox, content }) {
   const t = content[lang];
   const [currentMonthOffset, setCurrentMonthOffset] = useState(0);
   const [blockedDates, setBlockedDates] = useState(getBlockedDates);
   const {data: rentalPackages, loaded: rentalsLoaded} = useSanityLiveQuery(RENTAL_QUERY, []);
-  const {data: approvedReservationDates} = useSanityLiveQuery(APPROVED_RESERVATION_DATES_QUERY, []);
+  const {data: calendarBlocks} = useSanityLiveQuery(CALENDAR_BLOCKS_QUERY, {reservationDates: [], eventRanges: []}, true, CALENDAR_BLOCKS_LISTEN_QUERY);
 
   useEffect(() => {
-    setBlockedDates(Array.from(new Set([
-      ...getBlockedDates(),
-      ...(Array.isArray(approvedReservationDates) ? approvedReservationDates.filter(Boolean) : []),
-    ])));
-  }, [approvedReservationDates]);
+    setBlockedDates(collectBlockedDates(calendarBlocks, getBlockedDates()));
+  }, [calendarBlocks]);
 
   useEffect(() => {
     const handleUpdate = (e) => {
-      setBlockedDates(e.detail || getBlockedDates());
+      setBlockedDates(collectBlockedDates(calendarBlocks, e.detail || getBlockedDates()));
     };
     window.addEventListener('khelat_blocked_dates_updated', handleUpdate);
     return () => window.removeEventListener('khelat_blocked_dates_updated', handleUpdate);
-  }, []);
+  }, [calendarBlocks]);
 
   const today = new Date();
   const targetDate = new Date(today.getFullYear(), today.getMonth() + currentMonthOffset, 1);

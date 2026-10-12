@@ -6,7 +6,7 @@ import { GOOGLE_REVIEWS_URL, googleReviews, googleReviewSummary } from '../data/
 import { FEEDBACK_QUERY } from '../sanity/queries';
 import { useSanityLiveQuery } from '../sanity/useSanityLiveQuery';
 import { submitEnquiry } from '../lib/enquiries';
-import { countWords, validateEnquiry } from '../lib/enquiryValidation';
+import { countWords, emailValidationMessage, isValidEmail, isValidPhone, phoneValidationMessage, sanitizePhoneInput, validateEnquiry } from '../lib/enquiryValidation';
 
 export default function FeedbackPage({ lang, content }) {
   const t = content[lang];
@@ -185,11 +185,17 @@ export default function FeedbackPage({ lang, content }) {
                     <input
                       type="email"
                       required
+                      autoComplete="email"
                       aria-invalid={!!fieldErrors.email}
                       value={formData.email}
-                      onChange={(e) => { setFormData({ ...formData, email: e.target.value }); setFieldErrors({...fieldErrors, email: ''}); }}
+                      onChange={(e) => {
+                        const email = e.target.value;
+                        setFormData({ ...formData, email });
+                        setFieldErrors({...fieldErrors, email: email && !isValidEmail(email) ? emailValidationMessage : ''});
+                      }}
+                      onBlur={() => setFieldErrors({...fieldErrors, email: isValidEmail(formData.email) ? '' : emailValidationMessage})}
                       placeholder="name@example.com"
-                      className="w-full px-4 py-2.5 rounded-sm bg-background border border-border focus:border-accent outline-none text-xs text-foreground"
+                      className={`w-full px-4 py-2.5 rounded-sm bg-background border outline-none text-xs text-foreground ${fieldErrors.email ? 'border-red-500 ring-1 ring-red-200 focus:border-red-500' : 'border-border focus:border-accent'}`}
                     />
                     {fieldErrors.email && <p className="text-[11px] text-red-700 mt-1">{fieldErrors.email}</p>}
                   </div>
@@ -202,12 +208,19 @@ export default function FeedbackPage({ lang, content }) {
                   <input
                     type="tel"
                     required
-                    inputMode="tel"
+                    inputMode="numeric"
+                    autoComplete="tel"
+                    maxLength={13}
                     aria-invalid={!!fieldErrors.phone}
                     value={formData.phone}
-                    onChange={(e) => { setFormData({ ...formData, phone: e.target.value }); setFieldErrors({...fieldErrors, phone: ''}); }}
+                    onChange={(e) => {
+                      const phone = sanitizePhoneInput(e.target.value);
+                      setFormData({ ...formData, phone });
+                      setFieldErrors({...fieldErrors, phone: phone && !isValidPhone(phone) ? phoneValidationMessage : ''});
+                    }}
+                    onBlur={() => setFieldErrors({...fieldErrors, phone: isValidPhone(formData.phone) ? '' : phoneValidationMessage})}
                     placeholder="e.g. +91 98310 00000"
-                    className="w-full px-4 py-2.5 rounded-sm bg-background border border-border focus:border-accent outline-none text-xs text-foreground"
+                    className={`w-full px-4 py-2.5 rounded-sm bg-background border outline-none text-xs text-foreground ${fieldErrors.phone ? 'border-red-500 ring-1 ring-red-200 focus:border-red-500' : 'border-border focus:border-accent'}`}
                   />
                   {fieldErrors.phone && <p className="text-[11px] text-red-700 mt-1">{fieldErrors.phone}</p>}
                 </div>

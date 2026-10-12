@@ -3,9 +3,10 @@ import { createPortal } from 'react-dom';
 import { X, CheckCircle2, Send, Calendar as CalendarIcon, Clock, ShieldCheck, Lock, Unlock, Mail, AlertCircle } from 'lucide-react';
 import { getBlockedDates, saveBlockedDates, isDateBlocked, isPastDate } from '../data/bookingData';
 import { submitEnquiry } from '../lib/enquiries';
-import { countCharacters, validateEnquiry } from '../lib/enquiryValidation';
+import { countCharacters, emailValidationMessage, isValidEmail, isValidPhone, phoneValidationMessage, sanitizePhoneInput, validateEnquiry, validateGuestCount } from '../lib/enquiryValidation';
 import { useSanityLiveQuery } from '../sanity/useSanityLiveQuery';
-import { APPROVED_RESERVATION_DATES_QUERY } from '../sanity/queries';
+import { CALENDAR_BLOCKS_LISTEN_QUERY, CALENDAR_BLOCKS_QUERY } from '../sanity/queries';
+import { collectBlockedDates } from '../utils/calendarBlocks';
 
 export default function BookingModal({ isOpen, onClose, lang = 'en', content, initialEvent = '' }) {
   const t = content[lang]?.bookingModal || {
@@ -29,7 +30,7 @@ export default function BookingModal({ isOpen, onClose, lang = 'en', content, in
   });
 
   const [blockedDates, setBlockedDates] = useState(getBlockedDates());
-  const {data: approvedReservationDates} = useSanityLiveQuery(APPROVED_RESERVATION_DATES_QUERY, []);
+  const {data: calendarBlocks} = useSanityLiveQuery(CALENDAR_BLOCKS_QUERY, {reservationDates: [], eventRanges: []}, true, CALENDAR_BLOCKS_LISTEN_QUERY);
   const [adminMode, setAdminMode] = useState(false);
   const now = new Date();
   const [calendarMonth, setCalendarMonth] = useState(now.getMonth());
@@ -47,23 +48,24 @@ export default function BookingModal({ isOpen, onClose, lang = 'en', content, in
   }, [initialEvent, isOpen]);
 
   useEffect(() => {
-    setBlockedDates(Array.from(new Set([
-      ...getBlockedDates(),
-      ...(Array.isArray(approvedReservationDates) ? approvedReservationDates.filter(Boolean) : []),
-    ])));
-  }, [isOpen, approvedReservationDates]);
+    setBlockedDates(collectBlockedDates(calendarBlocks, getBlockedDates()));
+  }, [isOpen, calendarBlocks]);
 
   useEffect(() => {
     if (!isOpen) return undefined;
     const previousOverflow = document.body.style.overflow;
     document.body.style.overflow = 'hidden';
     const onKeyDown = (event) => {
+      if (event.key === 'ArrowLeft' || event.key === 'ArrowRight') {
+        event.stopImmediatePropagation();
+        return;
+      }
       if (event.key === 'Escape') onClose();
     };
-    window.addEventListener('keydown', onKeyDown);
+    window.addEventListener('keydown', onKeyDown, true);
     return () => {
       document.body.style.overflow = previousOverflow;
-      window.removeEventListener('keydown', onKeyDown);
+      window.removeEventListener('keydown', onKeyDown, true);
     };
   }, [isOpen, onClose]);
 
@@ -106,7 +108,7 @@ export default function BookingModal({ isOpen, onClose, lang = 'en', content, in
       return;
     }
 
-    const validationErrors = validateEnquiry(formData, {minMessageCharacters: 30});
+    const validationErrors = validateEnquiry(formData, {minMessageCharacters: 30, validateGuests: true, guests: formData.guests});
     setFieldErrors(validationErrors);
     if (Object.keys(validationErrors).length) return;
 
@@ -254,12 +256,19 @@ export default function BookingModal({ isOpen, onClose, lang = 'en', content, in
                   <input
                     type="tel"
                     required
-                    inputMode="tel"
+                    inputMode="numeric"
+                    autoComplete="tel"
+                    maxLength={13}
                     aria-invalid={!!fieldErrors.phone}
                     value={formData.phone}
-                    onChange={(e) => { setFormData({ ...formData, phone: e.target.value }); setFieldErrors({...fieldErrors, phone: ''}); }}
+                    onChange={(e) => {
+                      const phone = sanitizePhoneInput(e.target.value);
+                      setFormData({ ...formData, phone });
+                      setFieldErrors({...fieldErrors, phone: phone && !isValidPhone(phone) ? phoneValidationMessage : ''});
+                    }}
+                    onBlur={() => setFieldErrors({...fieldErrors, phone: isValidPhone(formData.phone) ? '' : phoneValidationMessage})}
                     placeholder="+91 98310 00000"
-                    className="w-full px-3.5 py-2.5 text-xs sm:text-sm bg-background border border-border/80 rounded-xl focus:outline-none focus:border-primary text-foreground"
+                    className={`w-full px-3.5 py-2.5 text-xs sm:text-sm bg-background border rounded-xl focus:outline-none text-foreground ${fieldErrors.phone ? 'border-red-500 ring-1 ring-red-200 focus:border-red-500' : 'border-border/80 focus:border-primary'}`}
                   />
                   {fieldErrors.phone && <p className="text-[11px] text-red-700 mt-1">{fieldErrors.phone}</p>}
                 </div>
@@ -271,11 +280,17 @@ export default function BookingModal({ isOpen, onClose, lang = 'en', content, in
                   <input
                     type="email"
                     required
+                    autoComplete="email"
                     aria-invalid={!!fieldErrors.email}
                     value={formData.email}
-                    onChange={(e) => { setFormData({ ...formData, email: e.target.value }); setFieldErrors({...fieldErrors, email: ''}); }}
+                    onChange={(e) => {
+                      const email = e.target.value;
+                      setFormData({ ...formData, email });
+                      setFieldErrors({...fieldErrors, email: email && !isValidEmail(email) ? emailValidationMessage : ''});
+                    }}
+                    onBlur={() => setFieldErrors({...fieldErrors, email: isValidEmail(formData.email) ? '' : emailValidationMessage})}
                     placeholder="name@domain.com"
-                    className="w-full px-3.5 py-2.5 text-xs sm:text-sm bg-background border border-border/80 rounded-xl focus:outline-none focus:border-primary text-foreground"
+                    className={`w-full px-3.5 py-2.5 text-xs sm:text-sm bg-background border rounded-xl focus:outline-none text-foreground ${fieldErrors.email ? 'border-red-500 ring-1 ring-red-200 focus:border-red-500' : 'border-border/80 focus:border-primary'}`}
                   />
                   {fieldErrors.email && <p className="text-[11px] text-red-700 mt-1">{fieldErrors.email}</p>}
                 </div>
@@ -416,12 +431,24 @@ export default function BookingModal({ isOpen, onClose, lang = 'en', content, in
                     {lang === 'bn' ? 'অতিথির সম্ভাব্য সংখ্যা' : 'Estimated Guest Count'}
                   </label>
                   <input
-                    type="text"
+                    type="number"
+                    required
+                    min="1"
+                    max="150"
+                    step="1"
+                    inputMode="numeric"
+                    aria-invalid={!!fieldErrors.guests}
                     value={formData.guests}
-                    onChange={(e) => setFormData({ ...formData, guests: e.target.value })}
-                    placeholder="e.g. 150 – 300 Guests"
-                    className="w-full px-3.5 py-2.5 text-xs sm:text-sm bg-background border border-border/80 rounded-xl focus:outline-none focus:border-primary text-foreground"
+                    onChange={(e) => {
+                      const guests = e.target.value.replace(/\D/g, '').slice(0, 3);
+                      setFormData({ ...formData, guests });
+                      setFieldErrors({...fieldErrors, guests: guests ? validateGuestCount(guests) : ''});
+                    }}
+                    onBlur={() => setFieldErrors({...fieldErrors, guests: validateGuestCount(formData.guests)})}
+                    placeholder="1–150 guests"
+                    className={`w-full px-3.5 py-2.5 text-xs sm:text-sm bg-background border rounded-xl focus:outline-none text-foreground ${fieldErrors.guests ? 'border-red-500 ring-1 ring-red-200 focus:border-red-500' : 'border-border/80 focus:border-primary'}`}
                   />
+                  {fieldErrors.guests && <p className="text-[11px] text-red-700 mt-1">{fieldErrors.guests}</p>}
                 </div>
               </div>
 
