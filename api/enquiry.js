@@ -34,7 +34,7 @@ export default async function handler(request, response) {
   const guestCount = /^\d+$/.test(guestText) ? Number(guestText) : undefined;
   const isReservation = source.toLowerCase().includes('reservation');
   const isFeedback = source.toLowerCase().includes('feedback');
-  const messageIsValid = isReservation ? countCharacters(message) >= 30 : countWords(message) >= 30;
+  const messageIsValid = countCharacters(message) >= 30;
 
   const guestCountIsValid = !isReservation || (Number.isInteger(guestCount) && guestCount >= 1 && guestCount <= 150);
 

@@ -29,13 +29,14 @@ export const TIMELINE_QUERY = `*[_type == "timeline"] | order(year asc) {
 export const GALLERY_QUERY = `*[_type == "galleryItem"] | order(orderRank asc) {
   _id,
   mediaType,
-  "src": mediaFile.asset->url,
-  "preview": previewImage.asset->url,
+  "src": coalesce(image.asset->url, videoFile.asset->url, videoUrl, mediaFile.asset->url),
+  "preview": coalesce(previewImage.asset->url, image.asset->url),
   category,
   title,
   desc,
   photographer,
-  year
+  year,
+  orderRank
 }`;
 
 export const ABOUT_QUERY = `*[_type == "aboutPage"][0] {

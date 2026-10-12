@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useCallback, useMemo } from 'react';
+import React, { useState, useEffect, useRef, useCallback, useMemo } from 'react';
 import { createPortal } from 'react-dom';
 import { getAssetUrl } from '../utils/assetHelper';
 import { photographyGalleryData, filmsGalleryData } from '../data/galleryData';
@@ -12,6 +12,64 @@ import {
   Maximize2
 } from 'lucide-react';
 
+function GalleryTileVideo({ src, poster, title }) {
+  const videoRef = useRef(null);
+  const [loadError, setLoadError] = useState(false);
+
+  useEffect(() => {
+    const video = videoRef.current;
+    if (!video) return;
+    video.muted = true;
+    video.defaultMuted = true;
+
+    const playVideo = () => {
+      const p = video.play();
+      if (p !== undefined && typeof p.catch === 'function') {
+        p.catch(() => {
+          // Autoplay was suppressed by browser policy; safe catch
+        });
+      }
+    };
+
+    if (video.readyState >= 2) {
+      playVideo();
+    } else {
+      video.addEventListener('loadeddata', playVideo, { once: true });
+    }
+
+    return () => {
+      video.removeEventListener('loadeddata', playVideo);
+    };
+  }, [src]);
+
+  if (loadError || !src) {
+    return (
+      <img
+        src={poster}
+        alt={title}
+        loading="lazy"
+        decoding="async"
+        className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700"
+      />
+    );
+  }
+
+  return (
+    <video
+      ref={videoRef}
+      src={src}
+      poster={poster}
+      autoPlay
+      muted
+      loop
+      playsInline
+      preload="auto"
+      onError={() => setLoadError(true)}
+      className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700"
+    />
+  );
+}
+
 export default function GalleryPage({ lang = 'en' }) {
   const isBn = lang === 'bn';
 
@@ -22,17 +80,59 @@ export default function GalleryPage({ lang = 'en' }) {
   const {data: sanityGallery, loaded: galleryLoaded} = useSanityLiveQuery(GALLERY_QUERY, []);
 
   const { allItems, photoCount, filmCount } = useMemo(() => {
-    if (galleryLoaded && Array.isArray(sanityGallery)) {
-      const formatted = sanityGallery.map((item, idx) => ({
-        ...item,
-        id: item._id || idx,
-        mediaType: item.mediaType || (item.src && item.src.endsWith('.mp4') ? 'video' : 'image'),
-        preview: item.preview || item.src,
-        src: item.src
-      }));
-      const pCount = formatted.filter(item => item.mediaType === 'image').length;
-      const fCount = formatted.filter(item => item.mediaType === 'video').length;
-      return { allItems: formatted, photoCount: pCount, filmCount: fCount };
+    const localFilmsMap = new Map();
+    filmsGalleryData.forEach((f, idx) => {
+      localFilmsMap.set(f.id, f);
+      localFilmsMap.set(`gallery-film-${f.id}`, f);
+      localFilmsMap.set(idx, f);
+    });
+
+    const localPhotosMap = new Map();
+    photographyGalleryData.forEach((p, idx) => {
+      localPhotosMap.set(p.id, p);
+      localPhotosMap.set(`gallery-photo-${p.id}`, p);
+      localPhotosMap.set(idx, p);
+    });
+
+    if (galleryLoaded && Array.isArray(sanityGallery) && sanityGallery.length > 0) {
+      // 1. Separate Sanity images and videos so photos ALWAYS come first
+      const rawPhotos = sanityGallery.filter(item => item.mediaType === 'image');
+      const rawFilms = sanityGallery.filter(item => item.mediaType === 'video');
+
+      const photos = (rawPhotos.length > 0 ? rawPhotos : photographyGalleryData).map((item, idx) => {
+        const fallback = localPhotosMap.get(item._id) || localPhotosMap.get(item.id) || localPhotosMap.get(idx) || photographyGalleryData[idx % photographyGalleryData.length];
+        const src = item.src || item.preview || fallback?.src;
+        const preview = item.preview || item.src || fallback?.src;
+        return {
+          ...fallback,
+          ...item,
+          id: item._id || item.id || `photo-${idx}`,
+          mediaType: 'image',
+          preview,
+          src
+        };
+      });
+
+      const films = (rawFilms.length > 0 ? rawFilms : filmsGalleryData).map((item, idx) => {
+        const fallback = localFilmsMap.get(item._id) || localFilmsMap.get(item.id) || localFilmsMap.get(idx) || filmsGalleryData[idx % filmsGalleryData.length];
+        const src = item.src || fallback?.src;
+        const preview = item.preview || fallback?.poster || fallback?.preview;
+        return {
+          ...fallback,
+          ...item,
+          id: item._id || item.id || `film-${idx}`,
+          mediaType: 'video',
+          preview,
+          src
+        };
+      });
+
+      // User requirement: 1st show images, then the videos!
+      return {
+        allItems: [...photos, ...films],
+        photoCount: photos.length,
+        filmCount: films.length
+      };
     }
 
     const photos = photographyGalleryData.map((item) => ({
@@ -162,14 +262,10 @@ export default function GalleryPage({ lang = 'en' }) {
                   style={{ '--tile-index': displayIndex }}
                 >
                   {item.mediaType === 'video' ? (
-                    <video
+                    <GalleryTileVideo
                       src={getAssetUrl(item.src)}
                       poster={getAssetUrl(item.preview)}
-                      muted
-                      autoPlay
-                      loop
-                      playsInline
-                      className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700"
+                      title={title}
                     />
                   ) : (
                     <img

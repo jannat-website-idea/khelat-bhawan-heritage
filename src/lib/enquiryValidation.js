@@ -41,15 +41,9 @@ export const validateEnquiry = ({phone, email, message}, options = {}) => {
     const guestError = validateGuestCount(options.guests);
     if (guestError) errors.guests = guestError;
   }
-  if (options.minMessageCharacters) {
-    if (countCharacters(message) < options.minMessageCharacters) {
-      errors.message = `Please write at least ${options.minMessageCharacters} characters so our team can understand your enquiry.`;
-    }
-  } else {
-    const minWords = options.minWords || 30;
-    if (countWords(message) < minWords) {
-      errors.message = `Please write at least ${minWords} words so our team can understand your enquiry.`;
-    }
+  const minChars = options.minCharacters || options.minMessageCharacters || 30;
+  if (countCharacters(message) < minChars) {
+    errors.message = `Please write at least ${minChars} characters so our team can understand your enquiry.`;
   }
   return errors;
 };

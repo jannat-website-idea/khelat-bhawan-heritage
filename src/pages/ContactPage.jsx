@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { Phone, Mail, MapPin, Clock, Send, CheckCircle, ExternalLink, Navigation } from 'lucide-react';
 import SectionHeader from '../components/SectionHeader';
 import { submitEnquiry } from '../lib/enquiries';
-import { countWords, emailValidationMessage, isValidEmail, isValidPhone, phoneValidationMessage, sanitizePhoneInput, validateEnquiry } from '../lib/enquiryValidation';
+import { countCharacters, emailValidationMessage, isValidEmail, isValidPhone, phoneValidationMessage, sanitizePhoneInput, validateEnquiry } from '../lib/enquiryValidation';
 
 export default function ContactPage({ lang, content }) {
   const t = content[lang];
@@ -17,7 +17,7 @@ export default function ContactPage({ lang, content }) {
 
   const handleSubmit = async (event) => {
     event.preventDefault();
-    const validationErrors = validateEnquiry(formData, { minWords: 30 });
+    const validationErrors = validateEnquiry(formData, { minCharacters: 30 });
     setFieldErrors(validationErrors);
     if (Object.keys(validationErrors).length) return;
     setIsSubmitting(true);
@@ -162,15 +162,15 @@ export default function ContactPage({ lang, content }) {
                     <textarea 
                       rows={6} 
                       required 
-                      placeholder={isBn ? 'আপনার বার্তা লিখুন (ন্যূনতম ৩০ শব্দ)...' : 'Describe your event, heritage inquiry, or appointment requirements (minimum 30 words)...'}
+                      placeholder={isBn ? 'আপনার বার্তা লিখুন (ন্যূনতম ৩০ অক্ষর)...' : 'Describe your event, heritage inquiry, or appointment requirements (minimum 30 characters)...'}
                       aria-invalid={!!fieldErrors.message} 
                       className="w-full px-4 py-3.5 rounded-xl border border-primary/20 bg-background/80 focus:border-primary focus:ring-2 focus:ring-primary/20 outline-none text-foreground text-sm leading-relaxed transition-all"
                       value={formData.message} 
                       onChange={(e) => { setFormData({ ...formData, message: e.target.value }); setFieldErrors({...fieldErrors, message: ''}); }} 
                     />
                     <div className="flex justify-between items-center text-xs pt-1">
-                      <small className={countWords(formData.message) >= 30 ? 'text-emerald-500 font-medium' : 'text-muted-foreground'}>
-                        {countWords(formData.message)} / 30 words minimum
+                      <small className={countCharacters(formData.message) >= 30 ? 'text-emerald-500 font-medium' : 'text-muted-foreground'}>
+                        {countCharacters(formData.message)} / {isBn ? '৩০ অক্ষর ন্যূনতম' : '30 characters minimum'}
                       </small>
                       {fieldErrors.message && <small className="text-red-500 font-medium">{fieldErrors.message}</small>}
                     </div>
