@@ -11,6 +11,7 @@ This document records the production hosting setup without storing passwords, OT
 - GoDaddy product visible in the client account: **Web Hosting Deluxe**
 - Source repository: <https://github.com/jannat-website-idea/khelat-bhawan-heritage>
 - Current application deployment: Vercel
+- GoDaddy Web Hosting mirror: `/home/mahgj4rszhic/public_html`
 - Framework: React + Vite
 - Build command: `npm run build`
 - Output directory: `dist`
@@ -54,5 +55,15 @@ Never commit passwords, OTPs, recovery codes, authentication cookies, API tokens
 - FormSubmit has been activated for the production domain.
 
 ## GoDaddy recovery notes
+
+On 13 October 2026, the tested production build was also copied into the existing
+GoDaddy Web Hosting document root at `/home/mahgj4rszhic/public_html`. The separate
+`trishoolinssc.com` directory was left unchanged. The uploaded package contains the
+compiled website, images, videos, PDFs, and the embedded Sanity Studio build. No
+passwords, API tokens, `.env` files, or other secrets were included.
+
+This GoDaddy copy does not change the active DNS connection described above. The
+public domain continues to use Vercel until the DNS records are intentionally
+changed. Keep the GoDaddy copy synchronized when a hosting migration is planned.
 
 If the domain stops opening but the Vercel deployment still works, first check the two DNS records above in GoDaddy. Do not purchase another hosting product or domain during troubleshooting. The existing domain and Web Hosting Deluxe subscription remain client-owned.
