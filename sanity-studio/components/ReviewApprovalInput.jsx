@@ -16,7 +16,7 @@ export default function ReviewApprovalInput({value = false, onChange}) {
     try {
       const publishedId = String(documentId || '').replace(/^drafts\./, '');
       if (!publishedId) throw new Error('Document ID is unavailable');
-      await client.patch(publishedId).set({isApproved}).commit();
+      await client.patch(publishedId).set({isApproved}).commit({visibility: 'sync'});
     } catch (updateError) {
       setError('Could not update the live website. Please retry.');
       console.error('Review visibility update failed:', updateError);

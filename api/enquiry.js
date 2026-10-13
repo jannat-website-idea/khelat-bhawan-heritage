@@ -17,6 +17,26 @@ const validPhone = (value) => {
   return /^\d{10,11}$/.test(digits) && !/^(\d)\1+$/.test(digits);
 };
 
+const sendEnquiryEmails = async (payload) => {
+  const webhookUrl = process.env.ENQUIRY_MAIL_WEBHOOK_URL;
+  const webhookSecret = process.env.ENQUIRY_MAIL_WEBHOOK_SECRET;
+  if (!webhookUrl || !webhookSecret) {
+    console.warn('Visitor acknowledgement is not configured. Set ENQUIRY_MAIL_WEBHOOK_URL and ENQUIRY_MAIL_WEBHOOK_SECRET.');
+    return false;
+  }
+
+  const mailResponse = await fetch(webhookUrl, {
+    method: 'POST',
+    headers: {'Content-Type': 'text/plain;charset=utf-8'},
+    body: JSON.stringify({...payload, secret: webhookSecret}),
+  });
+  const mailResult = await mailResponse.json().catch(() => ({}));
+  if (!mailResponse.ok || mailResult.ok !== true) {
+    throw new Error(mailResult.error || `Mail service returned ${mailResponse.status}`);
+  }
+  return true;
+};
+
 export default async function handler(request, response) {
   if (request.method !== 'POST') return json(response, 405, {error: 'Method not allowed'});
 
@@ -87,6 +107,25 @@ export default async function handler(request, response) {
 
     await sanity.createIfNotExists(document);
 
+    let emailDelivered = false;
+    try {
+      emailDelivered = await sendEnquiryEmails({
+        reference,
+        name,
+        email,
+        phone,
+        message,
+        source,
+        eventType,
+        preferredDate,
+        guestCount,
+      });
+    } catch (emailError) {
+      // The CMS record is the source of truth. A temporary email-provider issue
+      // must not lose the enquiry or encourage duplicate submissions.
+      console.error('Enquiry email delivery failed:', emailError);
+    }
+
     return json(response, 200, {
       ok: true,
       reference,
@@ -96,6 +135,7 @@ export default async function handler(request, response) {
       preferredDate,
       guestCount,
       cmsDocumentId: documentId,
+      emailDelivered,
     });
   } catch (error) {
     console.error('Enquiry submission failed:', error);
