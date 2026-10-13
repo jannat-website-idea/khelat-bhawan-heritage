@@ -17,12 +17,14 @@ export default function ReservationStatusInput({value = 'pending', onChange}) {
   const updateStatus = async (nextStatus) => {
     setUpdating(nextStatus);
     setError('');
-    onChange(PatchEvent.from(set(nextStatus)));
 
     try {
       const publishedId = String(documentId || '').replace(/^drafts\./, '');
       if (!publishedId) throw new Error('Document ID is unavailable');
-      await client.patch(publishedId).set({status: nextStatus}).commit();
+      // Wait until the published document is query-visible before updating the form.
+      // This makes one click sufficient for the website calendar to refresh.
+      await client.patch(publishedId).set({status: nextStatus}).commit({visibility: 'sync'});
+      onChange(PatchEvent.from(set(nextStatus)));
     } catch (updateError) {
       setError('Could not update the live calendar. Please retry.');
       console.error('Reservation status update failed:', updateError);
@@ -47,9 +49,10 @@ export default function ReservationStatusInput({value = 'pending', onChange}) {
               key={action.value}
               text={action.label}
               tone={action.tone}
+              type="button"
               mode={value === action.value ? 'default' : 'ghost'}
               loading={updating === action.value}
-              disabled={Boolean(updating) || value === action.value || (value === 'approved' && action.value === 'rejected')}
+              disabled={Boolean(updating) || value === action.value || ((value === 'approved' || value === 'cancelled') && (action.value === 'approved' || action.value === 'rejected')) || (value === 'cancelled' && action.value === 'cancelled')}
               onClick={() => updateStatus(action.value)}
             />
           ))}

@@ -7,8 +7,18 @@ import { useSanityLiveQuery } from '../sanity/useSanityLiveQuery';
 export default function RoyalHero({ lang, setActiveTab, ready }) {
   const bn = lang === 'bn';
   const video = useRef(null);
+  const [videoFailed, setVideoFailed] = useState(false);
   const {data: sanitySettings} = useSanityLiveQuery(SITE_SETTINGS_QUERY, null);
   const {data: heroContent} = useSanityLiveQuery(HERO_SECTION_QUERY, null);
+
+  const cmsDesktopVideo = sanitySettings?.heroVideoDesktop || heroContent?.heroVideoFile || heroContent?.heroVideoUrl;
+  const cmsMobileVideo = sanitySettings?.heroVideoMobile || cmsDesktopVideo;
+  const customDesktopVideo = videoFailed ? null : cmsDesktopVideo;
+  const customMobileVideo = videoFailed ? null : cmsMobileVideo;
+
+  useEffect(() => {
+    setVideoFailed(false);
+  }, [cmsDesktopVideo, cmsMobileVideo]);
 
   useEffect(() => {
     const el = video.current;
@@ -47,7 +57,7 @@ export default function RoyalHero({ lang, setActiveTab, ready }) {
       window.removeEventListener('click', handleFirstInteraction);
       window.removeEventListener('scroll', handleFirstInteraction);
     };
-  }, []);
+  }, [customDesktopVideo, customMobileVideo]);
 
   const discover = () => {
     const target = document.getElementById('home-legacy');
@@ -56,8 +66,6 @@ export default function RoyalHero({ lang, setActiveTab, ready }) {
   };
 
   const posterUrl = sanitySettings?.heroPoster || heroContent?.heroImage || getAssetUrl('/images/hero-staircase-poster.jpg');
-  const customDesktopVideo = sanitySettings?.heroVideoDesktop || heroContent?.heroVideoFile || heroContent?.heroVideoUrl;
-  const customMobileVideo = sanitySettings?.heroVideoMobile || customDesktopVideo;
   const firstLine = bn ? 'খেলাৎ' : (heroContent?.headlineFirstLine?.split(/\s+/)[0] || 'Khelat');
   const secondLine = bn ? 'ভবন' : (heroContent?.headlineFirstLine?.split(/\s+/).slice(1).join(' ') || 'Bhawan');
   const subtitle = bn
@@ -81,9 +89,12 @@ export default function RoyalHero({ lang, setActiveTab, ready }) {
           controlsList="nodownload nofullscreen noremoteplayback"
           aria-hidden="true"
           poster={posterUrl}
+          onError={() => {
+            if (customDesktopVideo || customMobileVideo) setVideoFailed(true);
+          }}
         >
-          {customMobileVideo && <source src={customMobileVideo} type="video/mp4" media="(max-width: 768px)" />}
-          {customDesktopVideo && <source src={customDesktopVideo} type="video/mp4" />}
+          {customMobileVideo && <source src={customMobileVideo} media="(max-width: 768px)" />}
+          {customDesktopVideo && <source src={customDesktopVideo} />}
           
           {!customDesktopVideo && (
             <>

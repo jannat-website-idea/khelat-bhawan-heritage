@@ -17,6 +17,42 @@ const validPhone = (value) => {
   return /^\d{10,11}$/.test(digits) && !/^(\d)\1+$/.test(digits);
 };
 
+const sendEnquiryEmails = async ({reference, name, email, phone, source, eventType, preferredDate, guestCount, message}) => {
+  const details = [
+    `Reference: ${reference}`,
+    `Source: ${source}`,
+    `Name: ${name}`,
+    `Email: ${email}`,
+    `Phone: ${phone}`,
+    eventType ? `Event / enquiry type: ${eventType}` : '',
+    preferredDate ? `Preferred date: ${preferredDate}` : '',
+    guestCount ? `Estimated guests: ${guestCount}` : '',
+    '',
+    'Message:',
+    message,
+  ].filter(Boolean).join('\n');
+
+  const emailResponse = await fetch('https://formsubmit.co/ajax/domainname.03@gmail.com', {
+    method: 'POST',
+    headers: {'Content-Type': 'application/json', Accept: 'application/json'},
+    body: JSON.stringify({
+      name,
+      email,
+      _replyto: email,
+      phone,
+      message: details,
+      _subject: `New Khelat Bhawan enquiry — ${reference}`,
+      _template: 'table',
+      _captcha: 'false',
+      _autoresponse: `Thank you for contacting Khelat Bhawan. We have received your enquiry (${reference}). A member of the Khelat Bhawan team will connect with you within 48 hours.`,
+    }),
+  });
+
+  if (!emailResponse.ok) {
+    throw new Error(`Email service returned ${emailResponse.status}`);
+  }
+};
+
 export default async function handler(request, response) {
   if (request.method !== 'POST') return json(response, 405, {error: 'Method not allowed'});
 
@@ -87,6 +123,28 @@ export default async function handler(request, response) {
 
     await sanity.createIfNotExists(document);
 
+    let emailDelivered = false;
+    try {
+      // Send from the server so browser privacy settings, CORS, and page navigation
+      // cannot interrupt either the client notification or visitor acknowledgement.
+      await sendEnquiryEmails({
+        reference,
+        name,
+        email,
+        phone,
+        source,
+        eventType,
+        preferredDate,
+        guestCount,
+        message,
+      });
+      emailDelivered = true;
+    } catch (emailError) {
+      // Keep the enquiry safely stored in the CMS even if the mail provider is
+      // temporarily unavailable. This also avoids duplicate records on retry.
+      console.error('Enquiry email delivery failed:', emailError);
+    }
+
     return json(response, 200, {
       ok: true,
       reference,
@@ -96,6 +154,7 @@ export default async function handler(request, response) {
       preferredDate,
       guestCount,
       cmsDocumentId: documentId,
+      emailDelivered,
     });
   } catch (error) {
     console.error('Enquiry submission failed:', error);
