@@ -34,7 +34,12 @@ const sendEnquiryEmails = async ({reference, name, email, phone, source, eventTy
 
   const emailResponse = await fetch('https://formsubmit.co/ajax/domainname.03@gmail.com', {
     method: 'POST',
-    headers: {'Content-Type': 'application/json', Accept: 'application/json'},
+    headers: {
+      'Content-Type': 'application/json',
+      Accept: 'application/json',
+      Origin: 'https://khelatbhawan.com',
+      Referer: 'https://khelatbhawan.com/',
+    },
     body: JSON.stringify({
       name,
       email,
@@ -48,7 +53,8 @@ const sendEnquiryEmails = async ({reference, name, email, phone, source, eventTy
     }),
   });
 
-  if (!emailResponse.ok) {
+  const emailResult = await emailResponse.json().catch(() => ({}));
+  if (!emailResponse.ok || emailResult.success !== 'true') {
     throw new Error(`Email service returned ${emailResponse.status}`);
   }
 };
