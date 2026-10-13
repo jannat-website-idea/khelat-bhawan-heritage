@@ -38,7 +38,7 @@ export const initialCMSData = {
     heroPosterUrl: '/images/hero-staircase-poster.jpg',
     visitingHoursEn: 'Mon – Sat: 11:00 AM – 7:00 PM (Prior appointment recommended for heritage tours & meetings)',
     visitingHoursBn: 'সোম – শনিবার: সকাল ১১:০০ – সন্ধ্যা ৭:০০ (হেরিটেজ ট্যুর ও সাক্ষাতের জন্য পূর্বানুমতি আবশ্যক)',
-    phonePrimary: '+91 98310 17577',
+    phonePrimary: '+91 98310 93021',
     phoneSecondary: '+91 99031 34231',
     email: 'councilofculture.ghoshbari47@gmail.com',
     address: '47, Pathuria Ghata Street, Kolkata – 700006, West Bengal, India',

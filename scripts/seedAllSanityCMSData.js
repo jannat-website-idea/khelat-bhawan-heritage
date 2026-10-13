@@ -19,7 +19,7 @@ async function seedData() {
   await client.createOrReplace({
     _id: 'siteSettings',
     _type: 'siteSettings',
-    phonePrimary: '+91 98310 17577',
+    phonePrimary: '+91 98310 93021',
     phoneSecondary: '+91 99031 34231',
     email: 'councilofculture.ghoshbari47@gmail.com',
     address: '47, Pathuria Ghata Street, Kolkata – 700006, West Bengal, India',
@@ -68,7 +68,7 @@ async function seedData() {
         en: ev.highlights?.en || [],
         bn: ev.highlights?.bn || []
       },
-      whatsappNumber: ev.whatsappNumber || '9831017577',
+      whatsappNumber: ev.whatsappNumber || '9831093021',
       whatsappMessage: ev.whatsappMessage || ''
     });
     console.log(`  ✓ Seeded Event: ${ev.title.en}`);

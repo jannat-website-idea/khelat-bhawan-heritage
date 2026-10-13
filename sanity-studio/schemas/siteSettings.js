@@ -26,7 +26,7 @@ export default {
       name: 'phonePrimary',
       title: 'Primary Phone Number',
       type: 'string',
-      initialValue: '+91 98310 17577'
+      initialValue: '+91 98310 93021'
     },
     {
       name: 'phoneSecondary',

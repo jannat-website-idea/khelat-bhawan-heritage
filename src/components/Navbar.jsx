@@ -191,9 +191,9 @@ export default function Navbar({ lang, setLang, activeTab, setActiveTab, onOpenB
             </div>
 
             <div className="flex items-center gap-5 sm:gap-8">
-              <a href="tel:+919831017577" className="hover:text-[#d8ae62] transition-colors flex items-center gap-1.5">
+              <a href="tel:+919831093021" className="hover:text-[#d8ae62] transition-colors flex items-center gap-1.5">
                 <Phone className="w-3 h-3 text-[#d8ae62]" />
-                <span>+91 98310 17577</span>
+                <span>+91 98310 93021</span>
               </a>
               <a href="mailto:councilofculture.ghoshbari47@gmail.com" className="hover:text-[#d8ae62] transition-colors flex items-center gap-1.5">
                 <Mail className="w-3 h-3 text-[#d8ae62]" />

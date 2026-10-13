@@ -87,8 +87,8 @@ export default {
       name: 'whatsappNumber',
       title: 'WhatsApp Inquiry Number',
       type: 'string',
-      description: 'Default is 9831017577. You can enter a custom 10-digit number if needed.',
-      initialValue: '9831017577'
+      description: 'Default is 9831093021. You can enter a custom 10-digit number if needed.',
+      initialValue: '9831093021'
     },
     {
       name: 'whatsappMessage',

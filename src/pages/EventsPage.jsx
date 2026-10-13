@@ -395,7 +395,7 @@ const EventsPage = ({ lang = 'en' }) => {
               <div className="flex flex-col sm:flex-row items-center justify-between gap-4 pt-4 border-t border-white/15">
                 <p className="text-xs text-[#f0e8d8]/70 text-center sm:text-left">
                   {!isPastEvent(activeModalEvent)
-                    ? (isBn ? 'আসন সংরক্ষণের জন্য আমাদের হোয়াটসঅ্যাপ হেল্পডেস্কে যোগাযোগ করুন (+91 98310 17577)।' : 'For invitations, reservations, or bespoke inquiries, connect via WhatsApp (+91 98310 17577).')
+                    ? (isBn ? 'আসন সংরক্ষণের জন্য আমাদের হোয়াটসঅ্যাপ হেল্পডেস্কে যোগাযোগ করুন (+91 98310 93021)।' : 'For invitations, reservations, or bespoke inquiries, connect via WhatsApp (+91 98310 93021).')
                     : (isBn ? 'এই অনুষ্ঠানটি সম্পন্ন হয়েছে। আর্কাইভ এবং স্মারক তথ্যের জন্য আমাদের সাথে যোগাযোগ করতে পারেন।' : 'This event has concluded. For archival inquiries, please contact estate management.')}
                 </p>
                 <div className="flex items-center gap-3 w-full sm:w-auto justify-end">

@@ -281,7 +281,7 @@ export default function AboutPage({ lang = 'en', setActiveTab, onOpenBooking, on
               <Phone className="w-5 h-5 text-primary shrink-0 mt-0.5" />
               <div>
                 <strong className="block text-foreground mb-1">{isBn ? 'ফোন নম্বর:' : 'Phone Numbers:'}</strong>
-                <span>+91 98310 17577 / +91 99031 34231</span>
+                <span>+91 98310 93021 / +91 99031 34231</span>
               </div>
             </div>
             <div className="flex items-start gap-3 p-4 rounded-xl bg-background border border-border/50">
