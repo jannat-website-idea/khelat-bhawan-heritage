@@ -27,7 +27,12 @@ async function auditViewport(browser, viewportName, viewport) {
     await page.evaluate((nextRoute) => {
       window.location.hash = nextRoute === 'home' ? '' : nextRoute;
     }, route);
-    await wait(650);
+    if (route === 'home') {
+      await page.waitForFunction(() => {
+        const video = document.querySelector('.royal-hero__film');
+        return video && video.readyState >= 2;
+      }, {timeout: 10000}).catch(() => {});
+    }
 
     const state = await page.evaluate(() => {
       const pageContent = document.querySelector('[data-page-content]');
