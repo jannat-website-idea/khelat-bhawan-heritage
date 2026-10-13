@@ -138,7 +138,7 @@ export default function AdminCMSDashboard({ isOpen, onClose }) {
         en: ['Classical Music Baithak', 'Heritage Architecture Walk', 'Illuminated Courtyard'], 
         bn: ['শাস্ত্রীয় সঙ্গীত সন্ধ্যা', 'ঐতিহ্য পরিক্রমা', 'আলোকোজ্জ্বল প্রাঙ্গণ'] 
       },
-      whatsappNumber: '9831093021'
+      whatsappNumber: '9831017577'
     };
     const updated = [newEv, ...(cmsData.events || [])];
     setCmsData({ ...cmsData, events: updated });
@@ -837,9 +837,9 @@ export default function AdminCMSDashboard({ isOpen, onClose }) {
                         </label>
                         <input
                           type="text"
-                          value={ev.whatsappNumber || '9831093021'}
+                          value={ev.whatsappNumber || '9831017577'}
                           onChange={(e) => updateEventField(activeEventIndex, 'whatsappNumber', e.target.value)}
-                          placeholder="9831093021"
+                          placeholder="9831017577"
                           className="w-full px-3.5 py-2 rounded-lg bg-black/70 border border-emerald-700/50 text-xs text-white font-mono"
                         />
                       </div>

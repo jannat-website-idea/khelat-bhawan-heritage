@@ -459,7 +459,7 @@ export const siteData = {
       landmark: "Near Pathuria Ghata, North Kolkata Heritage Precinct",
       phonesTitle: "Official Phone Numbers",
       phones: [
-        "+91 98310 93021",
+        "+91 98310 17577",
         "+91 99031 34231",
         "+91 62895 80889",
         "+91 98300 12950",
@@ -1110,7 +1110,7 @@ export const siteData = {
       landmark: "পাথুরিয়াঘাটা সংলগ্ন, উত্তর কলকাতা হেরিটেজ অঞ্চল",
       phonesTitle: "অফিসিয়াল ফোন নম্বরসমূহ",
       phones: [
-        "+91 98310 93021",
+        "+91 98310 17577",
         "+91 99031 34231",
         "+91 62895 80889",
         "+91 98300 12950",

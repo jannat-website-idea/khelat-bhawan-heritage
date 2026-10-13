@@ -125,8 +125,8 @@ export default function Footer({ lang, setActiveTab, onOpenBooking, onOpenLegal,
               </div>
               <div className="flex items-center gap-2">
                 <Phone className="w-4 h-4 text-rose-gold flex-shrink-0" />
-                <a href="tel:+919831093021" className="hover:text-rose-gold transition-colors">
-                  +91 98310 93021 / +91 99031 34231
+                <a href="tel:+919831017577" className="hover:text-rose-gold transition-colors">
+                  +91 98310 17577 / +91 99031 34231
                 </a>
               </div>
               <div className="flex items-center gap-2">
