@@ -144,6 +144,14 @@ export default function App() {
   };
 
   const handleLoaderComplete = () => {
+    // A full browser load always opens with the cinematic entrance and then
+    // begins at Home. In-app navigation still preserves the selected page.
+    setActiveTab('home');
+    try {
+      history.replaceState({ tab: 'home' }, document.title, window.location.pathname);
+    } catch {
+      window.location.hash = '';
+    }
     setLoading(false);
     setHomeReady(true);
     scrollToTop();
