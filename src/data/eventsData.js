@@ -270,7 +270,7 @@ export const isFutureEvent = (dateStr) => {
 };
 
 export const getWhatsAppLink = (customPhone) => {
-  const raw = customPhone || '9831093021';
+  const raw = customPhone || '9831017577';
   const clean = raw.replace(/\D/g, '');
   const phone = clean.startsWith('91') && clean.length > 10 ? clean : `91${clean}`;
   return `https://wa.me/${phone}`;

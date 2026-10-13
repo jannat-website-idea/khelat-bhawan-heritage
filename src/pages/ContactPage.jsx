@@ -122,7 +122,7 @@ export default function ContactPage({ lang, content }) {
                         inputMode="numeric"
                         autoComplete="tel"
                         maxLength={13}
-                        placeholder="+91 98310 93021"
+                        placeholder="+91 98310 17577"
                         aria-invalid={!!fieldErrors.phone} 
                         className={`w-full px-4 py-3.5 rounded-xl border bg-background/80 outline-none text-foreground text-sm transition-all ${fieldErrors.phone ? 'border-red-500 ring-2 ring-red-200 focus:border-red-500' : 'border-primary/20 focus:border-primary focus:ring-2 focus:ring-primary/20'}`}
                         value={formData.phone} 
