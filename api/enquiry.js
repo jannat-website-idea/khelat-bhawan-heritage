@@ -56,7 +56,7 @@ export default async function handler(request, response) {
   const isFeedback = source.toLowerCase().includes('feedback');
   const messageIsValid = countCharacters(message) >= 30;
 
-  const guestCountIsValid = !isReservation || (Number.isInteger(guestCount) && guestCount >= 1 && guestCount <= 1500);
+  const guestCountIsValid = !isReservation || (Number.isInteger(guestCount) && guestCount >= 2 && guestCount <= 1500);
 
   if (!name || !validEmail(email) || !validPhone(phone) || !messageIsValid || !guestCountIsValid) {
     return json(response, 400, {error: 'Please complete all required fields.'});
