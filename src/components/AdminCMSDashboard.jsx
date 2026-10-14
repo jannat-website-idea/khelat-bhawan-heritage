@@ -788,7 +788,7 @@ export default function AdminCMSDashboard({ isOpen, onClose }) {
                                 addEventHighlight(activeEventIndex);
                               }
                             }}
-                            placeholder="Enter a new key highlight (e.g. 171-year Ekchala Idol, Classical Sarod recital)..."
+                            placeholder="Enter a new key highlight (e.g. 181-year Ekchala Idol, Classical Sarod recital)..."
                             className="flex-1 px-3.5 py-2 rounded-xl bg-black/70 border border-white/20 text-xs text-white outline-none focus:border-[#d8ae62]"
                           />
                           <button

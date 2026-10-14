@@ -5,8 +5,8 @@ export const defaultEventsData = [
     category: 'upcoming',
     featured: true,
     title: {
-      en: '171st Annual Durga Puja Celebration',
-      bn: '১৭১তম বার্ষিক দুর্গাপূজা মহোৎসব'
+      en: '181st Annual Durga Puja Celebration',
+      bn: '১৮১তম বার্ষিক দুর্গাপূজা মহোৎসব'
     },
     date: {
       en: 'October 18 – 22, 2026',
@@ -26,14 +26,14 @@ export const defaultEventsData = [
       bn: 'প্রধান সাংস্কৃতিক উৎসব'
     },
     desc: {
-      en: 'Join the sacred 171-year continuous traditional Durga Puja at Pathuria Ghata Ghosh Bari. Experience traditional Ekchala Pratima, Sandhi Puja with 108 lotus offerings, classical Dhaki beats, and community Prasad distribution.',
-      bn: 'পাথুরিয়াঘাটা ঘোষ বাড়ির ১৭১ বছরের ঐতিহ্যবাহী একচালা প্রতিমার পুজোয় অংশ নিন। ১০৮ পদ্মের সন্ধিপূজা, রাজকীয় ঢাকের ছন্দ ও মহাপ্রসাদ বিতরণের পবিত্র অভিজ্ঞতা অনুভব করুন।'
+      en: 'Join the sacred 181-year continuous traditional Durga Puja at Pathuria Ghata Ghosh Bari. Experience traditional Ekchala Pratima, Sandhi Puja with 108 lotus offerings, classical Dhaki beats, and community Prasad distribution.',
+      bn: 'পাথুরিয়াঘাটা ঘোষ বাড়ির ১৮১ বছরের ঐতিহ্যবাহী একচালা প্রতিমার পুজোয় অংশ নিন। ১০৮ পদ্মের সন্ধিপূজা, রাজকীয় ঢাকের ছন্দ ও মহাপ্রসাদ বিতরণের পবিত্র অভিজ্ঞতা অনুভব করুন।'
     },
     highlights: {
       en: ['Traditional Ekchala Daker Saaj Idol', '108 Deepam Sandhi Puja', 'Classical Dhaki Performance', 'Community Mahaprasad'],
       bn: ['ঐতিহ্যবাহী একচালা ডাকের সাজের প্রতিমা', '১০৮ প্রদীপের সন্ধিপূজা', 'শাস্ত্রীয় ঢাকের বাদন', 'মহাপ্রসাদ বিতরণ']
     },
-    whatsappMessage: 'Hello, I would like to enquire about attending the 171st Durga Puja Celebration at Khelat Bhawan.'
+    whatsappMessage: 'Hello, I would like to enquire about attending the 181st Durga Puja Celebration at Khelat Bhawan.'
   },
   {
     id: 'classical-music-soiree',

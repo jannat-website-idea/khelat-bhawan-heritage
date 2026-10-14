@@ -87,8 +87,8 @@ export const photographyGalleryData = [
     },
     verticalWord: "DURGA PUJA",
     desc: {
-      en: "Unbroken 171-year sacred ritual at Thakur Dalan celebrating Maa Durga with traditional Daker Saaj craftsmanship.",
-      bn: "১৭১ বছরের নিরবচ্ছিন্ন ঐতিহ্যবাহী একচালা ডাকের সাজের দেবী দুর্গার পুণ্য আরাধনা।"
+      en: "Unbroken 181-year sacred ritual at Thakur Dalan celebrating Maa Durga with traditional Daker Saaj craftsmanship.",
+      bn: "১৮১ বছরের নিরবচ্ছিন্ন ঐতিহ্যবাহী একচালা ডাকের সাজের দেবী দুর্গার পুণ্য আরাধনা।"
     },
     src: "/images/SDP_0257.jpg",
     photographer: "Heritage Photography Team",

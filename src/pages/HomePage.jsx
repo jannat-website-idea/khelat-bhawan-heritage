@@ -205,8 +205,8 @@ export default function HomePage({ lang = 'en', setActiveTab, onOpenBooking, onO
           <AlpanaDivider light />
           <p className="text-sm sm:text-base text-[#f0e6d2]/80 leading-relaxed font-sans">
             {isBn
-              ? 'পাথুরিয়াঘাটা ঘোষ বাড়ির ঠাকুর দালানে ১৭১ বছর ধরে অবিচ্ছিন্ন নিষ্ঠায় অনুষ্ঠিত হচ্ছে ঐতিহ্যবাহী একচালা ডাকের সাজের দেবী দুর্গাপূজা ও নিত্য সেবা।'
-              : 'For over 171 consecutive years, the sacred Thakur Dalan of Pathuria Ghata Ghosh Bari has witnessed unbroken traditional Durga Puja, sandhi puja, and community Prasad distribution.'}
+              ? 'পাথুরিয়াঘাটা ঘোষ বাড়ির ঠাকুর দালানে ১৮১ বছর ধরে অবিচ্ছিন্ন নিষ্ঠায় অনুষ্ঠিত হচ্ছে ঐতিহ্যবাহী একচালা ডাকের সাজের দেবী দুর্গাপূজা ও নিত্য সেবা।'
+              : 'For over 181 consecutive years, the sacred Thakur Dalan of Pathuria Ghata Ghosh Bari has witnessed unbroken traditional Durga Puja, sandhi puja, and community Prasad distribution.'}
           </p>
           <div className="pt-4">
             <button className="heritage-button heritage-button--gold" onClick={() => setActiveTab('events')}>

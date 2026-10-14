@@ -119,7 +119,7 @@ export default function AboutPage({ lang = 'en', setActiveTab, onOpenBooking, on
               </p>
             </div>
             <div className="p-6 bg-background rounded-2xl border border-border/60 space-y-3 text-center">
-              <span className="text-3xl font-serif font-bold text-primary block">171+</span>
+              <span className="text-3xl font-serif font-bold text-primary block">181+</span>
               <h4 className="font-serif text-lg font-semibold text-foreground">{isBn ? 'পবিত্র ঠাকুর দালান' : 'Sacred Thakur Dalan'}</h4>
               <p className="text-xs text-muted-foreground font-sans leading-relaxed">
                 {isBn ? '১৮৫৫ সাল থেকে অবিচ্ছিন্ন একচালা দুর্গোৎসব ও নিত্যসেবা।' : 'The sanctum for the unbroken annual Durga Puja and deity veneration.'}

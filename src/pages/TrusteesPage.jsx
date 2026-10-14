@@ -21,8 +21,8 @@ export default function TrusteesPage({ lang = 'en', setActiveTab, onOpenLightbox
         ? "১৮৫৫ সাল থেকে খেলাৎ ভবনের পুণ্য ধর্মীয় ঐতিহ্য, বিশেষত ঐতিহাসিক দুর্গাপূজা, জগদ্ধাত্রী পূজা পরিচালনা এবং পারিবারিক বিগ্রহের নিত্যসেবায় নিয়োজিত।"
         : "Dedicated to preserving the spiritual essence of Bengali culture through devotional practices and religious ceremonies.",
       achievements: isBn 
-        ? ["১৭১+ বছর ধরে নিরবচ্ছিন্ন দুর্গাপূজা", "১৮৮১ সালে শ্রীরামকৃষ্ণের পুণ্য আগমন ও আশীর্বাদ", "১০৮ পদ্মের ঐতিহ্যবাহী সন্ধিপূজা ও মহাপ্রসাদ বিতরণ", "নিত্য দেবসেবা ও আধ্যাত্মিক দিকনির্দেশনা"]
-        : ["170+ years of continuous Durga Puja", "Blessed by Sri Ramakrishna in 1881", "Traditional ritual preservation", "Community spiritual guidance"],
+        ? ["১৮১+ বছর ধরে নিরবচ্ছিন্ন দুর্গাপূজা", "১৮৮১ সালে শ্রীরামকৃষ্ণের পুণ্য আগমন ও আশীর্বাদ", "১০৮ পদ্মের ঐতিহ্যবাহী সন্ধিপূজা ও মহাপ্রসাদ বিতরণ", "নিত্য দেবসেবা ও আধ্যাত্মিক দিকনির্দেশনা"]
+        : ["181+ years of continuous Durga Puja", "Blessed by Sri Ramakrishna in 1881", "Traditional ritual preservation", "Community spiritual guidance"],
       initiatives: isBn 
         ? ["১৮৫৫ সাল থেকে দুর্গাপূজা মহোৎসব", "ঐতিহ্যবাহী রীতিতে জগদ্ধাত্রী পূজা", "দৈনিক নিত্যসেবা ও আরতি", "আধ্যাত্মিক আলোচনা ও ভক্তিমূলক সঙ্গীত"]
         : ["Durga Puja celebration since 1855", "Jagadhatri Puja with traditional rituals", "Daily Nitya Seva and prayers", "Spiritual discourse and bhajans", "Religious festival organization"],
