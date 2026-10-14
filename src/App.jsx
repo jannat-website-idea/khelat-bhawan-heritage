@@ -144,13 +144,21 @@ export default function App() {
   };
 
   const handleLoaderComplete = () => {
-    // A full browser load always opens with the cinematic entrance and then
-    // begins at Home. In-app navigation still preserves the selected page.
-    setActiveTab('home');
-    try {
-      history.replaceState({ tab: 'home' }, document.title, window.location.pathname);
-    } catch {
-      window.location.hash = '';
+    // Preserve requested section/tab from URL hash across reloads
+    const currentTab = getTabFromHash();
+    setActiveTab(currentTab);
+    if (currentTab !== 'home') {
+      try {
+        history.replaceState({ tab: currentTab }, document.title, `${window.location.pathname}#${currentTab}`);
+      } catch {
+        window.location.hash = currentTab;
+      }
+    } else {
+      try {
+        history.replaceState({ tab: 'home' }, document.title, window.location.pathname);
+      } catch {
+        window.location.hash = '';
+      }
     }
     setLoading(false);
     setHomeReady(true);

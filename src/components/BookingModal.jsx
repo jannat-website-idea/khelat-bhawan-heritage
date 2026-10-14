@@ -460,7 +460,7 @@ export default function BookingModal({ isOpen, onClose, lang = 'en', content, in
                   <input
                     type="number"
                     required
-                    min="2"
+                    min="1"
                     max="1500"
                     step="1"
                     inputMode="numeric"
@@ -472,7 +472,7 @@ export default function BookingModal({ isOpen, onClose, lang = 'en', content, in
                       setFieldErrors({...fieldErrors, guests: guests ? validateGuestCount(guests) : ''});
                     }}
                     onBlur={() => setFieldErrors({...fieldErrors, guests: validateGuestCount(formData.guests)})}
-                    placeholder="2–1500 guests"
+                    placeholder="1–1500 guests"
                     className={`w-full px-3.5 py-2.5 text-xs sm:text-sm bg-background border rounded-xl focus:outline-none text-foreground ${fieldErrors.guests ? 'border-red-500 ring-1 ring-red-200 focus:border-red-500' : 'border-border/80 focus:border-primary'}`}
                   />
                   {fieldErrors.guests && <p className="text-[11px] text-red-700 mt-1">{fieldErrors.guests}</p>}
