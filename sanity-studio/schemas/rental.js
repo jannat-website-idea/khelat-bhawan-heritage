@@ -46,6 +46,11 @@ export default {
       ]
     },
     {
+      name: 'orderRank',
+      title: 'Display Order Rank',
+      type: 'number'
+    },
+    {
       name: 'features',
       title: 'Key Features / Highlights',
       type: 'array',

@@ -18,12 +18,32 @@ export default function BookingModal({ isOpen, onClose, lang = 'en', content, in
     closeBtn: lang === 'bn' ? 'বন্ধ করুন' : 'Close'
   };
 
-  const defaultOption = 'Wedding Ceremony & Sangeet';
+  const EVENT_OPTIONS = [
+    'Wedding Ceremony & Sangeet',
+    'Heritage Classical Concert / Soiree',
+    'Private Gala / Aristocratic Dinner',
+    'Film & Art Photography Shoot',
+    'Corporate Cultural Summit'
+  ];
+
+  const normalizeEventType = (evt) => {
+    if (!evt) return EVENT_OPTIONS[0];
+    if (EVENT_OPTIONS.includes(evt)) return evt;
+    const lower = evt.toLowerCase();
+    if (lower.includes('wedding') || lower.includes('বিবাহ') || lower.includes('sangeet')) return 'Wedding Ceremony & Sangeet';
+    if (lower.includes('concert') || lower.includes('soiree') || lower.includes('উচ্চাঙ্গ')) return 'Heritage Classical Concert / Soiree';
+    if (lower.includes('gala') || lower.includes('dinner') || lower.includes('নৈশভোজ')) return 'Private Gala / Aristocratic Dinner';
+    if (lower.includes('shoot') || lower.includes('film') || lower.includes('cinema') || lower.includes('ফটোগ্রাফি')) return 'Film & Art Photography Shoot';
+    if (lower.includes('corporate') || lower.includes('summit') || lower.includes('কর্পোরেট')) return 'Corporate Cultural Summit';
+    return EVENT_OPTIONS[0];
+  };
+
+  const defaultOption = EVENT_OPTIONS[0];
   const [formData, setFormData] = useState({
     name: '',
     email: '',
     phone: '',
-    eventType: initialEvent || defaultOption,
+    eventType: normalizeEventType(initialEvent),
     preferredDate: '',
     guests: '',
     message: ''
@@ -43,7 +63,7 @@ export default function BookingModal({ isOpen, onClose, lang = 'en', content, in
 
   useEffect(() => {
     if (initialEvent) {
-      setFormData(prev => ({ ...prev, eventType: initialEvent }));
+      setFormData(prev => ({ ...prev, eventType: normalizeEventType(initialEvent) }));
     }
   }, [initialEvent, isOpen]);
 
@@ -314,12 +334,9 @@ export default function BookingModal({ isOpen, onClose, lang = 'en', content, in
                     onChange={(e) => setFormData({ ...formData, eventType: e.target.value })}
                     className="w-full px-3.5 py-2.5 text-xs sm:text-sm bg-background border border-border/80 rounded-xl focus:outline-none focus:border-primary text-foreground"
                   >
-                    <option value="Wedding Ceremony & Sangeet">Wedding Ceremony & Sangeet</option>
-                    <option value="Heritage Classical Concert / Soiree">Heritage Classical Concert / Soiree</option>
-                    <option value="Private Gala / Aristocratic Dinner">Private Gala / Aristocratic Dinner</option>
-                    <option value="Film & Art Photography Shoot">Film & Art Photography Shoot</option>
-                    <option value="Corporate Cultural Summit">Corporate Cultural Summit</option>
-                    <option value="Durga Puja VIP Visit">Durga Puja VIP Visit</option>
+                    {EVENT_OPTIONS.map((opt) => (
+                      <option key={opt} value={opt}>{opt}</option>
+                    ))}
                   </select>
                 </div>
               </div>
@@ -444,18 +461,18 @@ export default function BookingModal({ isOpen, onClose, lang = 'en', content, in
                     type="number"
                     required
                     min="1"
-                    max="150"
+                    max="1500"
                     step="1"
                     inputMode="numeric"
                     aria-invalid={!!fieldErrors.guests}
                     value={formData.guests}
                     onChange={(e) => {
-                      const guests = e.target.value.replace(/\D/g, '').slice(0, 3);
+                      const guests = e.target.value.replace(/\D/g, '').slice(0, 4);
                       setFormData({ ...formData, guests });
                       setFieldErrors({...fieldErrors, guests: guests ? validateGuestCount(guests) : ''});
                     }}
                     onBlur={() => setFieldErrors({...fieldErrors, guests: validateGuestCount(formData.guests)})}
-                    placeholder="1–150 guests"
+                    placeholder="1–1500 guests"
                     className={`w-full px-3.5 py-2.5 text-xs sm:text-sm bg-background border rounded-xl focus:outline-none text-foreground ${fieldErrors.guests ? 'border-red-500 ring-1 ring-red-200 focus:border-red-500' : 'border-border/80 focus:border-primary'}`}
                   />
                   {fieldErrors.guests && <p className="text-[11px] text-red-700 mt-1">{fieldErrors.guests}</p>}

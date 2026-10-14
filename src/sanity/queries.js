@@ -71,11 +71,12 @@ export const TRUSTEES_QUERY = `*[_type == "trustee"] | order(orderRank asc) {
   bio
 }`;
 
-export const RENTAL_QUERY = `*[_type == "rentalPackage"] {
+export const RENTAL_QUERY = `*[_type == "rentalPackage"] | order(orderRank asc, _createdAt asc) {
   _id,
   title,
   category,
-  "coverImage": coverImage.asset->url,
+  orderRank,
+  "coverImage": coalesce(coverImage.asset->url, heroImage.asset->url),
   guestCapacity,
   desc,
   features

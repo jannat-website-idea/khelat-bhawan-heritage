@@ -34,14 +34,18 @@ export default function HeritageRentalPage({ lang = 'en', onOpenBooking, onOpenL
   
   const daysInMonth = new Date(year, month + 1, 0).getDate();
   const firstDayIndex = new Date(year, month, 1).getDay();
-  const services = rentalsLoaded && Array.isArray(rentalPackages)
-    ? rentalPackages.map((item) => ({
-        id: item._id,
-        title: item.title?.[lang] || item.title?.en || '',
-        desc: item.desc?.[lang] || item.desc?.en || '',
-        image: item.coverImage,
-        features: item.features || [],
-      }))
+  const services = rentalsLoaded && Array.isArray(rentalPackages) && rentalPackages.length > 0
+    ? rentalPackages.map((item, index) => {
+        const fallback = t.rental.services[index] || t.rental.services.find(s => s.id === item._id || s.title === item.title?.en) || {};
+        return {
+          id: item._id,
+          title: item.title?.[lang] || item.title?.en || fallback.title || '',
+          rawTitle: item.title?.en || fallback.title || '',
+          desc: item.desc?.[lang] || item.desc?.en || fallback.desc || '',
+          image: item.coverImage || fallback.image,
+          features: (Array.isArray(item.features) && item.features.length > 0) ? item.features : (fallback.features || []),
+        };
+      })
     : t.rental.services;
 
   return (
@@ -240,7 +244,7 @@ export default function HeritageRentalPage({ lang = 'en', onOpenBooking, onOpenL
 
               <div className="p-8 pt-0">
                 <button
-                  onClick={() => onOpenBooking(srv.title)}
+                  onClick={() => onOpenBooking(srv.rawTitle || srv.title)}
                   className="w-full py-3.5 bg-primary text-primary-foreground text-xs tracking-[0.2em] uppercase font-sans font-semibold hover:bg-primary/90 transition-all rounded-xl text-center shadow-md"
                 >
                   {lang === 'bn' ? 'এই রিজার্ভেশন সম্পর্কে অনুসন্ধান করুন' : 'Enquire About This Reservation'}

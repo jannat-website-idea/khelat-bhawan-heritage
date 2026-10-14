@@ -397,54 +397,66 @@ export const siteData = {
       services: [
         {
           id: "wedding",
-          title: "Wedding Ceremonies & Auspicious Rituals",
+          title: "Wedding Ceremony & Sangeet",
           pricing: "Contact for tailored pricing",
-          desc: "Celebrate your sacred union amidst authentic 19th-century royal Bengali aesthetics, antique courtyards, and grand heritage halls.",
+          desc: "Host unforgettable royal wedding ceremonies, grand receptions, and vibrant sangeet celebrations in the illuminated Thakur Dalan courtyard and grand ballroom suites.",
           features: [
-            "Authentic Thakur Dalan & courtyard setting",
-            "Traditional mandap & floral setup coordination",
-            "Dedicated bride & groom heritage green rooms",
-            "Authentic background for traditional Bengali wedding rituals"
-          ],
-          image: "/images/SDP_0344.jpg"
-        },
-        {
-          id: "shoots",
-          title: "Photography, Cinema & Film Shoots",
-          pricing: "Contact for shoot schedules & rates",
-          desc: "A premier location for period cinema, television productions, high-fashion editorials, music videos, and bridal photo shoots.",
-          features: [
-            "Authentic period architecture & multiple distinct shoot zones",
-            "Grand colonnaded corridors, vintage balconies & marble rooms",
-            "Abundant natural courtyard lighting & power support",
-            "Private dressing and production coordination spaces"
+            "Accommodates up to 1,500 guests across grand courtyards and wings",
+            "Exclusive access to Thakur Dalan and Corinthian colonnade",
+            "Private heritage bridal suite and royal dressing chambers",
+            "Full coordination for traditional rituals, mandap, and luxury dining"
           ],
           image: "/images/SDP_0282.jpg"
         },
         {
-          id: "concerts",
-          title: "Classical Music & Cultural Performances",
+          id: "concert",
+          title: "Heritage Classical Concert / Soiree",
           pricing: "Contact for program bookings",
-          desc: "Host acoustic classical concerts, baithaks, literary discussions, and theatrical presentations in an acoustically rich historic salon.",
+          desc: "Acoustically rich classical Indian concerts, baithaks, poetry recitals, and intimate musical soirees in a 170-year-old aristocratic ambiance.",
           features: [
-            "Naturally resonant salon with historic baithak ambiance",
-            "Traditional seating & stage arrangement support",
-            "Green room facilities for distinguished performing artists",
-            "Cultural aura steeped in 175+ years of musical history"
+            "Accommodates up to 1,500 attendees with traditional seating options",
+            "Naturally resonant courtyard with 19th-century acoustic architecture",
+            "Dedicated platform stage for classical virtuosos and ensembles",
+            "Artist green rooms and archival sound & lighting setup"
           ],
           image: "/images/SDP_0257.jpg"
         },
         {
-          id: "brand-launches",
-          title: "Product Launches & Corporate Showcases",
-          pricing: "Corporate & Event Enquiries",
-          desc: "An iconic, prestigious 19th-century aristocratic estate for luxury product launches, press previews, corporate gatherings, and executive events amidst timeless royal architecture.",
+          id: "gala",
+          title: "Private Gala / Aristocratic Dinner",
+          pricing: "Private Banquet Enquiries",
+          desc: "Distinguished private banquets, royal feasts, and aristocratic gala dinners under antique Belgian glass chandeliers and illuminated heritage arches.",
           features: [
-            "Exclusive heritage licensing for product launches & corporate showcases",
-            "Prestigious heritage backdrop for luxury media productions & ad films",
-            "Flagship product reveals, press previews & exhibition showcases",
-            "High-amperage production power, VIP hospitality & reception areas",
-            "Full coordination for print editorials, digital features & institutional events"
+            "Banquets, gala dinners, and celebratory receptions up to 1,500 guests",
+            "Grand Courtyard & Banquet Hall Setting with silver-service dining",
+            "Ambient evening illumination with antique chandeliers and lanterns",
+            "Dedicated estate concierge, valet coordination, and hospitality staff"
+          ],
+          image: "/images/SDP_0365.jpg"
+        },
+        {
+          id: "cinema",
+          title: "Film & Art Photography Shoot",
+          pricing: "Contact for shoot schedules & rates",
+          desc: "Authentic 19th-century architectural backdrops for national & international period cinema, feature films, documentaries, and editorial fashion shoots.",
+          features: [
+            "1845 Corinthian colonnades, marble arches, and grand courtyards",
+            "Abundant natural daylight with 3-phase high-amperage production power",
+            "Private hair, makeup, wardrobe, and production coordination green rooms",
+            "Historic period furniture and rare architectural backdrops"
+          ],
+          image: "/images/SDP_0344.jpg"
+        },
+        {
+          id: "corporate",
+          title: "Corporate Cultural Summit",
+          pricing: "Corporate & Event Enquiries",
+          desc: "Prestigious executive conclaves, corporate summits, flagship product unveilings, and institutional galas blending modern amenities with 170+ years of aristocratic stature.",
+          features: [
+            "Flexible summit, conference, and banquet capacity up to 1,500 delegates",
+            "Exclusive heritage licensing, AV infrastructure, and high-amperage power",
+            "VIP executive lounge, reception areas, and breakout colonnade courtyards",
+            "Full coordination for press briefings, digital showcases, and high-protocol security"
           ],
           image: "/images/SDP_0299.jpg"
         }
@@ -1048,54 +1060,66 @@ export const siteData = {
       services: [
         {
           id: "wedding",
-          title: "বিবাহ অনুষ্ঠান ও শুভ সামাজিক অনুষ্ঠান",
+          title: "Wedding Ceremony & Sangeet",
           pricing: "অনুষ্ঠানের বিবরণ অনুযায়ী নির্ধারিত",
-          desc: "উনিশ শতকের রাজকীয় বাঙালি ঐতিহ্য, প্রাচীন ঠাকুর দালান ও মার্বেল প্রাঙ্গণে আপনার শুভ পরিণয়কে স্মরণীয় করে রাখুন।",
+          desc: "ঐতিহাসিক ঠাকুর দালান প্রাঙ্গণ ও রাজকীয় মহলে স্মরণীয় বিবাহ, সাড়ম্বর সংবর্ধনা ও আনন্দমুখর সঙ্গীত অনুষ্ঠান আয়োজন।",
           features: [
-            "ঐতিহাসিক ঠাকুর দালান ও সুবিশাল প্রাঙ্গণ",
-            "সাবেকি মণ্ডপ ও পুষ্পসজ্জার সমন্বয়",
-            "বর ও কনের জন্য পৃথক ঐতিহ্যবাহী সাজঘর",
-            "বাঙালি সাবেকি বিবাহ রীতির উপযুক্ত পরিবেশ"
-          ],
-          image: "/images/SDP_0344.jpg"
-        },
-        {
-          id: "shoots",
-          title: "ফটোগ্রাফি, চলচ্চিত্র ও নাট্য শুটিং",
-          pricing: "সময়সূচী ও চাহিদা অনুযায়ী যোগাযোগ করুন",
-          desc: "ঐতিহাসিক চলচ্চিত্র, টেলিভিশন নাটক, ফ্যাশন শুট, মিউজিক ভিডিও এবং ব্রাইডাল ফটোশুটের জন্য এক অনন্য লোকেশন।",
-          features: [
-            "প্রকৃত ঐতিহাসিক স্থাপত্য ও একাধিক শুটিং জোন",
-            "স্তম্ভযুক্ত বারান্দা, প্রাচীন ঝুলবারান্দা ও মার্বেল হল",
-            "প্রচুর প্রাকৃতিক আলো ও বিদ্যুৎ সহায়তা ব্যবস্থা",
-            "প্রযোজনা দল ও ড্রেসিং রুমের সুব্যবস্থা"
+            "সুবিশাল প্রাঙ্গণ জুড়ে ১,৫০০ পর্যন্ত অতিথি ধারণক্ষমতা",
+            "ঐতিহাসিক ঠাকুর দালান ও করিডোরে বিশেষ প্রবেশাধিকার",
+            "বর ও কনের জন্য পৃথক ঐতিহ্যবাহী সাজঘর ও বিশ্রামকক্ষ",
+            "সাবেকি আচার, মণ্ডপ ও রাজকীয় আপ্যায়নের সুব্যবস্থা"
           ],
           image: "/images/SDP_0282.jpg"
         },
         {
-          id: "concerts",
-          title: "উচ্চাঙ্গ সঙ্গীত ও সাংস্কৃতিক পরিবেশনা",
+          id: "concert",
+          title: "Heritage Classical Concert / Soiree",
           pricing: "অনুষ্ঠান অনুযায়ী যোগাযোগ করুন",
-          desc: "ধ্বনিমাধুর্যপূর্ণ ঐতিহাসিক বৈঠকখানায় উচ্চাঙ্গ সঙ্গীত আসর, বাচিক অনুষ্ঠান, সাহিত্য সভা ও সাংস্কৃতিক সম্মিলনী।",
+          desc: "শাস্ত্রীয় উচ্চাঙ্গ সঙ্গীত, বাচিক অনুষ্ঠান, সাহিত্য সভা ও সঙ্গীত সন্ধ্যার জন্য অনুপম মার্বেল প্রাঙ্গণ।",
           features: [
-            "ঐতিহাসিক সাবেকি বৈঠকখানার অতুলনীয় পরিবেশ",
-            "প্রথাগত বসার আসন ও মঞ্চ ব্যবস্থাপনার সুযোগ",
-            "আমন্ত্রিত বিশিষ্ট শিল্পীদের জন্য গ্রিন রুম সুবিধা",
-            "১৭৫+ বছরের সঙ্গীত ঐতিহ্যের অনুপ্রেরণা"
+            "প্রথাগত বসার আসন সহ ১,৫০০ পর্যন্ত দর্শক ধারণক্ষমতা",
+            "উনিশ শতকের প্রাকৃতিক ধ্বনিমাধুর্যপূর্ণ সুবিশাল কোর্টইয়ার্ড",
+            "আমন্ত্রিত গুণী শিল্পীদের জন্য ঐতিহ্যবাহী মঞ্চ ব্যবস্থা",
+            "শিল্পীদের জন্য গ্রিন রুম ও উন্নত আলো-শব্দ সমন্বয়"
           ],
           image: "/images/SDP_0257.jpg"
         },
         {
-          id: "brand-launches",
-          title: "কর্পোরেট ইভেন্ট ও প্রডাক্ট লঞ্চ",
-          pricing: "কর্পোরেট ও প্রাতিষ্ঠানিক বুকিং",
-          desc: "ফ্ল্যাগশিপ প্রডাক্ট লঞ্চ, প্রেস প্রিভিউ, কর্পোরেট সম্মেলন ও সম্মানীয় প্রাতিষ্ঠানিক সমাবেশের জন্য উনিশ শতকের এক অনন্য ঐতিহাসিক রাজকীয় পটভূমি।",
+          id: "gala",
+          title: "Private Gala / Aristocratic Dinner",
+          pricing: "প্রাইভেট ব্যাঙ্কোয়েট অনুসন্ধান",
+          desc: "বেলজিয়াম কাচের ঝাড়বাতি ও সাবেকি আলোয় সজ্জিত মহলে বিশিষ্ট সান্ধ্যভোজ, রাজকীয় ভোজসভা ও গালা ডিনার।",
           features: [
-            "প্রডাক্ট লঞ্চ ও প্রাতিষ্ঠানিক প্রদর্শনীর বিশেষ লাইসেন্সিং সুবিধা",
-            "মিডিয়া প্রোডাকশন ও মর্যাদাপূর্ণ প্রদর্শনীর রাজকীয় পটভূমি",
-            "ফ্ল্যাগশিপ প্রডাক্ট উন্মোচন, প্রেস প্রিভিউ ও শোকেস আয়োজন",
-            "উচ্চক্ষমতাসম্পন্ন বিদ্যুৎ সংযোগ, ভিআইপি লাউঞ্জ ও আধুনিক আপ্যায়ন ব্যবস্থা",
-            "প্রিন্ট মিডিয়া, ডিজিটাল ফিচার ও কর্পোরেট সম্মেলনের সার্বিক সমন্বয়"
+            "১,৫০০ পর্যন্ত অতিথিদের জন্য রাজকীয় ভোজ ও আপ্যায়ন ব্যবস্থা",
+            "ঐতিহাসিক মহল ও প্রাঙ্গণে রূপালী টেবিল সার্ভিস ও ক্যাটারিং জোন",
+            "ঝাড়বাতি ও সাবেকি আলোয় সজ্জিত মনোহর সান্ধ্য রূপসজ্জা",
+            "এস্টেট লিয়াজোঁ, ভ্যালেট পার্কিং ও বিশিষ্ট অতিথিসেবা"
+          ],
+          image: "/images/SDP_0365.jpg"
+        },
+        {
+          id: "cinema",
+          title: "Film & Art Photography Shoot",
+          pricing: "সময়সূচী ও চাহিদা অনুযায়ী যোগাযোগ করুন",
+          desc: "ঐতিহাসিক চলচ্চিত্র, তথ্যচিত্র, ফ্যাশন ফটোশুট এবং সৃজনশীল আর্ট প্রজেক্টের জন্য উনিশ শতকের দুর্লভ ঐতিহ্যবাহী প্রাসাদের দৃশ্যপট।",
+          features: [
+            "১৮৪৫ সালের করিন্থিয়ান স্তম্ভ, মার্বেল খিলান ও ঐতিহাসিক প্রাঙ্গণ",
+            "প্রচুর প্রাকৃতিক আলো ও ৩-ফেজ হাই-পাওয়ার বৈদ্যুতিক সংযোগ",
+            "মেকআপ, পোশাক ও প্রযোজনা দলের জন্য পৃথক গ্রিন রুম",
+            "দুর্লভ প্রাচীন আসবাবপত্র ও সাবেকি দৃশ্যপট ব্যবহারের সুবিধা"
+          ],
+          image: "/images/SDP_0344.jpg"
+        },
+        {
+          id: "corporate",
+          title: "Corporate Cultural Summit",
+          pricing: "কর্পোরেট ও প্রাতিষ্ঠানিক বুকিং",
+          desc: "ফ্ল্যাগশিপ প্রডাক্ট লঞ্চ, উচ্চপর্যায়ের সম্মেলন ও প্রাতিষ্ঠানিক সমাবেশের জন্য আধুনিক সুবিধা ও ১৭০ বছরের আভিজাত্যের রাজকীয় পরিবেশ।",
+          features: [
+            "১,৫০০ জন পর্যন্ত প্রতিনিধি ও অতিথিদের সম্মেলন ধারণক্ষমতা",
+            "হাই-স্পিড সংযোগ, এভি পরিকাঠামো ও আধুনিক মিডিয়া প্রেজেন্টেশন সুবিধা",
+            "ভিআইপি এক্সিকিউটিভ লাউঞ্জ ও খোলামেলা আলোচনা প্রাঙ্গণ",
+            "নিরাপত্তা প্রোটোকল, প্রেস ব্রিফিং ও ক্যাটারিংয়ের সর্বাঙ্গীন সহায়তা"
           ],
           image: "/images/SDP_0299.jpg"
         }

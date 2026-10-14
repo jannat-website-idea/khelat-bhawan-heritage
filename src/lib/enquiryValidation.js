@@ -27,8 +27,8 @@ export const emailValidationMessage = 'Enter a valid email address, such as name
 export const validateGuestCount = (value = '') => {
   if (String(value).trim() === '') return 'Enter the estimated number of guests.';
   const guests = Number(value);
-  if (!Number.isInteger(guests) || guests < 1 || guests > 150) {
-    return 'Guest count must be a whole number between 1 and 150.';
+  if (!Number.isInteger(guests) || guests < 1 || guests > 1500) {
+    return 'Guest count must be a whole number between 1 and 1500.';
   }
   return '';
 };

@@ -155,31 +155,54 @@ async function runSeeder() {
   console.log('📦 Seeding Rental Packages...');
   const rentalPackages = [
     {
-      id: 'royal-wedding',
-      titleEn: 'Royal Weddings & Banquets',
-      titleBn: 'রাজকীয় বিবাহ ও উৎসব',
+      id: 'wedding',
+      orderRank: 1,
+      titleEn: 'Wedding Ceremony & Sangeet',
+      titleBn: 'ওয়েডিং সিরিমনি ও সঙ্গীত (Wedding Ceremony & Sangeet)',
       category: 'wedding',
-      guestCapacity: '100 – 600 Guests',
-      descEn: 'Host timeless wedding ceremonies in the illuminated Thakur Dalan courtyard and grand ballroom suites.',
-      descBn: 'ঐতিহাসিক ঠাকুর দালান প্রাঙ্গণ ও রাজকীয় মহলে স্মরণীয় বিবাহ ও অনুষ্ঠান আয়োজন।'
+      guestCapacity: 'Up to 1,500 Guests',
+      descEn: 'Host timeless royal wedding ceremonies, grand receptions, and vibrant sangeet celebrations in the illuminated Thakur Dalan courtyard and grand ballroom suites.',
+      descBn: 'ঐতিহাসিক ঠাকুর দালান প্রাঙ্গণ ও রাজকীয় মহলে স্মরণীয় বিবাহ, সাড়ম্বর সংবর্ধনা ও আনন্দমুখর সঙ্গীত অনুষ্ঠান আয়োজন।'
     },
     {
-      id: 'cinema-shoot',
-      titleEn: 'Period Cinema & Production Shoots',
-      titleBn: 'চলচ্চিত্র ও ফটোশুট',
-      category: 'cinema',
-      guestCapacity: 'Cast & Crew Custom Setup',
-      descEn: 'Authentic 19th-century architectural backdrops for national and international period cinema, documentaries, and editorial fashion shoots.',
-      descBn: 'চলচ্চিত্র ও তথ্যচিত্রের জন্য উনিশ শতকের দুর্লভ ঐতিহ্যবাহী প্রাসাদের দৃশ্যপট।'
-    },
-    {
-      id: 'cultural-concert',
-      titleEn: 'Classical Soirees & Cultural Evenings',
-      titleBn: 'মার্গ সঙ্গীত ও সান্ধ্য জলসা',
+      id: 'concert',
+      orderRank: 2,
+      titleEn: 'Heritage Classical Concert / Soiree',
+      titleBn: 'মার্গ সঙ্গীত ও সান্ধ্য জলসা (Heritage Classical Concert / Soiree)',
       category: 'concert',
-      guestCapacity: '50 – 250 Guests',
-      descEn: 'Acoustically rich classical Indian concerts, baithaks, poetry recitals, and intellectual literary conclaves.',
-      descBn: 'শাস্ত্রীয় উচ্চাঙ্গ সঙ্গীত ও সাহিত্য সন্ধ্যার জন্য অনুপম মার্বেল প্রাঙ্গণ।'
+      guestCapacity: 'Up to 1,500 Guests',
+      descEn: 'Acoustically rich classical Indian concerts, baithaks, poetry recitals, and intimate musical soirees in a 170-year-old aristocratic ambiance.',
+      descBn: 'শাস্ত্রীয় উচ্চাঙ্গ সঙ্গীত, বাচিক অনুষ্ঠান, সাহিত্য সভা ও সঙ্গীত সন্ধ্যার জন্য অনুপম মার্বেল প্রাঙ্গণ।'
+    },
+    {
+      id: 'gala',
+      orderRank: 3,
+      titleEn: 'Private Gala / Aristocratic Dinner',
+      titleBn: 'অভিজাত নৈশভোজ ও গালা (Private Gala / Aristocratic Dinner)',
+      category: 'gala',
+      guestCapacity: 'Up to 1,500 Guests',
+      descEn: 'Distinguished private banquets, royal feasts, and aristocratic gala dinners under antique Belgian glass chandeliers and illuminated heritage arches.',
+      descBn: 'বেলজিয়াম কাচের ঝাড়বাতি ও সাবেকি আলোয় সজ্জিত মহলে বিশিষ্ট সান্ধ্যভোজ, রাজকীয় ভোজসভা ও গালা ডিনার।'
+    },
+    {
+      id: 'cinema',
+      orderRank: 4,
+      titleEn: 'Film & Art Photography Shoot',
+      titleBn: 'চলচ্চিত্র ও আর্ট ফটোশুট (Film & Art Photography Shoot)',
+      category: 'cinema',
+      guestCapacity: 'Cast & Production Crew (Up to 1,500)',
+      descEn: 'Authentic 19th-century architectural backdrops for national and international period cinema, documentaries, and editorial fashion shoots.',
+      descBn: 'ঐতিহাসিক চলচ্চিত্র, তথ্যচিত্র ও ফ্যাশন ফটোশুটের জন্য উনিশ শতকের দুর্লভ ঐতিহ্যবাহী প্রাসাদের দৃশ্যপট।'
+    },
+    {
+      id: 'corporate',
+      orderRank: 5,
+      titleEn: 'Corporate Cultural Summit',
+      titleBn: 'কর্পোরেট কালচারাল সামিট (Corporate Cultural Summit)',
+      category: 'corporate',
+      guestCapacity: 'Up to 1,500 Guests',
+      descEn: 'Prestigious executive conclaves, corporate summits, flagship product unveilings, and institutional galas amidst 170+ years of aristocratic stature.',
+      descBn: 'ফ্ল্যাগশিপ প্রডাক্ট লঞ্চ, উচ্চপর্যায়ের সম্মেলন ও প্রাতিষ্ঠানিক সমাবেশের জন্য আধুনিক সুবিধা ও ১৭০ বছরের আভিজাত্যের রাজকীয় পরিবেশ।'
     }
   ];
 
@@ -187,6 +210,7 @@ async function runSeeder() {
     await client.createOrReplace({
       _id: `rental-${r.id}`,
       _type: 'rentalPackage',
+      orderRank: r.orderRank,
       title: { en: r.titleEn, bn: r.titleBn },
       category: r.category,
       guestCapacity: r.guestCapacity,

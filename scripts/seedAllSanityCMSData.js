@@ -79,14 +79,16 @@ async function seedData() {
   const rentalPackages = [
     {
       id: 'wedding',
-      title: { en: 'Royal Weddings & Banquets', bn: 'রাজকীয় বিবাহ ও উৎসব' },
+      orderRank: 1,
+      title: { en: 'Wedding Ceremony & Sangeet', bn: 'ওয়েডিং সিরিমনি ও সঙ্গীত (Wedding Ceremony & Sangeet)' },
       category: 'wedding',
-      guestCapacity: '100 – 600 Guests',
+      guestCapacity: 'Up to 1,500 Guests',
       desc: {
-        en: 'Host timeless wedding ceremonies in the illuminated Thakur Dalan courtyard and grand ballroom suites.',
-        bn: 'ঐতিহাসিক ঠাকুর দালান প্রাঙ্গণ ও রাজকীয় মহলে স্মরণীয় বিবাহ ও অনুষ্ঠান আয়োজন।'
+        en: 'Host timeless royal wedding ceremonies, grand receptions, and vibrant sangeet celebrations in the illuminated Thakur Dalan courtyard and grand ballroom suites.',
+        bn: 'ঐতিহাসিক ঠাকুর দালান প্রাঙ্গণ ও রাজকীয় মহলে স্মরণীয় বিবাহ, সাড়ম্বর সংবর্ধনা ও আনন্দমুখর সঙ্গীত অনুষ্ঠান আয়োজন।'
       },
       features: [
+        'Capacity for up to 1,500 guests across grand courtyards',
         'Exclusive Access to Thakur Dalan Courtyard',
         'Bridal Suite & Royal Dressing Chambers',
         'Heritage Chandelier & Courtyard Lighting',
@@ -94,35 +96,75 @@ async function seedData() {
       ]
     },
     {
+      id: 'concert',
+      orderRank: 2,
+      title: { en: 'Heritage Classical Concert / Soiree', bn: 'মার্গ সঙ্গীত ও সান্ধ্য জলসা (Heritage Classical Concert / Soiree)' },
+      category: 'concert',
+      guestCapacity: 'Up to 1,500 Guests',
+      desc: {
+        en: 'Acoustically rich classical Indian concerts, baithaks, poetry recitals, and intimate musical soirees in a 170-year-old aristocratic ambiance.',
+        bn: 'শাস্ত্রীয় উচ্চাঙ্গ সঙ্গীত, বাচিক অনুষ্ঠান, সাহিত্য সভা ও সঙ্গীত সন্ধ্যার জন্য অনুপম মার্বেল প্রাঙ্গণ।'
+      },
+      features: [
+        'Accommodates up to 1,500 attendees with traditional seating',
+        'Acoustically Reverberant Historic Courtyard',
+        'Platform Stage for Classical Virtuosos',
+        'Traditional Carpet & Gaddi Seating Layouts',
+        'Archival Audio & Ambient Illumination'
+      ]
+    },
+    {
+      id: 'gala',
+      orderRank: 3,
+      title: { en: 'Private Gala / Aristocratic Dinner', bn: 'অভিজাত নৈশভোজ ও গালা (Private Gala / Aristocratic Dinner)' },
+      category: 'gala',
+      guestCapacity: 'Up to 1,500 Guests',
+      desc: {
+        en: 'Distinguished private banquets, royal feasts, and aristocratic gala dinners under antique Belgian glass chandeliers and illuminated heritage arches.',
+        bn: 'বেলজিয়াম কাচের ঝাড়বাতি ও সাবেকি আলোয় সজ্জিত মহলে বিশিষ্ট সান্ধ্যভোজ, রাজকীয় ভোজসভা ও গালা ডিনার।'
+      },
+      features: [
+        'Royal banquet and reception capacity up to 1,500 guests',
+        'Grand Courtyard & Banquet Hall Setting',
+        'Silver-Service Dining Coordination & Heritage Lounges',
+        'Evening Heritage Chandelier & Architectural Lighting',
+        'Estate Concierge & Valet Service Coordination'
+      ]
+    },
+    {
       id: 'cinema',
-      title: { en: 'Period Cinema & Production Shoots', bn: 'চলচ্চিত্র ও ফটোশুট' },
+      orderRank: 4,
+      title: { en: 'Film & Art Photography Shoot', bn: 'চলচ্চিত্র ও আর্ট ফটোশুট (Film & Art Photography Shoot)' },
       category: 'cinema',
-      guestCapacity: 'Cast & Crew Setup',
+      guestCapacity: 'Cast & Production Crew (Up to 1,500)',
       desc: {
         en: 'Authentic 19th-century architectural backdrops for national and international period cinema, documentaries, and editorial fashion shoots.',
-        bn: 'চলচ্চিত্র ও তথ্যচিত্রের জন্য উনিশ শতকের দুর্লভ ঐতিহ্যবাহী প্রাসাদের দৃশ্যপট।'
+        bn: 'ঐতিহাসিক চলচ্চিত্র, তথ্যচিত্র ও ফ্যাশন ফটোশুটের জন্য উনিশ শতকের দুর্লভ ঐতিহ্যবাহী প্রাসাদের দৃশ্যপট।'
       },
       features: [
         '1845 Corinthian Colonnade Architecture',
         'Uninterrupted Daylight Courtyard Access',
         '3-Phase Power & Production Green Rooms',
-        'Historic Marble Halls & Period Furniture'
+        'Historic Marble Halls & Period Furniture',
+        'Dedicated Hair, Makeup & Wardrobe Chambers'
       ]
     },
     {
-      id: 'concert',
-      title: { en: 'Classical Soirees & Cultural Evenings', bn: 'মার্গ সঙ্গীত ও সান্ধ্য জলসা' },
-      category: 'concert',
-      guestCapacity: '50 – 250 Guests',
+      id: 'corporate',
+      orderRank: 5,
+      title: { en: 'Corporate Cultural Summit', bn: 'কর্পোরেট কালচারাল সামিট (Corporate Cultural Summit)' },
+      category: 'corporate',
+      guestCapacity: 'Up to 1,500 Guests',
       desc: {
-        en: 'Acoustically rich classical Indian concerts, baithaks, poetry recitals, and intellectual literary conclaves.',
-        bn: 'শাস্ত্রীয় উচ্চাঙ্গ সঙ্গীত ও সাহিত্য সন্ধ্যার জন্য অনুপম মার্বেল প্রাঙ্গণ।'
+        en: 'Prestigious executive conclaves, corporate summits, flagship product unveilings, and institutional galas amidst 170+ years of aristocratic stature.',
+        bn: 'ফ্ল্যাগশিপ প্রডাক্ট লঞ্চ, উচ্চপর্যায়ের সম্মেলন ও প্রাতিষ্ঠানিক সমাবেশের জন্য আধুনিক সুবিধা ও ১৭০ বছরের আভিজাত্যের রাজকীয় পরিবেশ।'
       },
       features: [
-        'Acoustically Reverberant Historic Courtyard',
-        'Platform Stage for Classical Virtuosos',
-        'Traditional Carpet & Gaddi Seating Layouts',
-        'Archival Audio & Ambient Illumination'
+        'Flexible summit and conference capacity up to 1,500 delegates',
+        'Exclusive Heritage Licensing & High-Amperage Power',
+        'VIP Executive Lounge & Breakout Colonnade Areas',
+        'AV Presentation & Media Production Support',
+        'Bespoke Catering Liaison & High-Protocol Security'
       ]
     }
   ];
@@ -131,6 +173,7 @@ async function seedData() {
     await client.createOrReplace({
       _id: `rental-${r.id}`,
       _type: 'rentalPackage',
+      orderRank: r.orderRank,
       title: r.title,
       category: r.category,
       guestCapacity: r.guestCapacity,
