@@ -62,7 +62,7 @@ export default function TrusteesPage({ lang = 'en', setActiveTab, onOpenLightbox
       initiatives: isBn 
         ? ["মঞ্চশিল্প কর্মশালা ও নাট্যোৎসব", "সুবিধাবঞ্চিত শিশুদের শিক্ষা সহায়তা", "বিনামূল্যে স্বাস্থ্য সচেতনতা শিবির", "ডিজিটাল সংস্কৃতি আর্কাইভ উদ্যোগ"]
         : ["Performing arts workshops and shows", "Educational support for underprivileged children", "Healthcare awareness campaigns", "Social service initiatives", "Cultural preservation programs"],
-      image: "/images/unnamed_12.webp"
+      image: "/images/durga-puja-idol-heritage.jpg"
     }
   ];
 

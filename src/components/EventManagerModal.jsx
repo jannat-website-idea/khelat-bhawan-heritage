@@ -10,7 +10,7 @@ const PRESET_IMAGES = [
   { label: 'Architecture Walk / Facade', path: '/images/SDP_0344.jpg' },
   { label: 'Courtyard Arches Night', path: '/images/SDP_0291.jpg' },
   { label: 'Sanctified Room / Blessing', path: '/images/rk01.png' },
-  { label: 'Nat Mandir / Workshop', path: '/images/unnamed_12.webp' },
+  { label: 'Durga Puja Idol', path: '/images/durga-puja-idol-heritage.jpg' },
   { label: 'Grand Colonnade Corridor', path: '/images/khelat-bhawan-colonnade-corridor.jpg' },
   { label: 'Vintage Estate Hall', path: '/images/SDP_0365.jpg' },
 ];

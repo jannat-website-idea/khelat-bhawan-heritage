@@ -160,7 +160,7 @@ export const defaultEventsData = [
       en: 'Courtyard & Nat Mandir',
       bn: 'নাটমন্দির ও আঙিনা'
     },
-    image: '/images/unnamed_12.webp',
+    image: '/images/durga-puja-idol-heritage.jpg',
     badge: {
       en: 'Performing Arts',
       bn: 'মঞ্চকলা'

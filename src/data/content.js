@@ -98,7 +98,7 @@ export const siteData = {
           title: "Council of Culture",
           desc: "Establishment of Artist Nectar Council of Culture for comprehensive artist welfare, classical arts preservation, and cultural initiatives.",
           highlight: "Modern initiatives to support artists while maintaining traditional values and cultural authenticity.",
-          image: "/images/unnamed_12.webp"
+          image: "/images/durga-puja-idol-heritage.jpg"
         },
         {
           year: "Present",
@@ -172,7 +172,7 @@ export const siteData = {
             "Social welfare and philanthropic initiatives",
             "Cultural workshops and youth heritage engagement"
           ],
-          image: "/images/unnamed_12.webp"
+          image: "/images/durga-puja-idol-heritage.jpg"
         }
       ]
     },
@@ -305,7 +305,7 @@ export const siteData = {
           category: "culture",
           title: "Artist Nectar Council Event",
           desc: "Community gathering and performing arts program organized by the Artist Nectar Council of Culture.",
-          src: "/images/unnamed_12.webp"
+          src: "/images/durga-puja-idol-heritage.jpg"
         },
         {
           id: 8,
@@ -761,7 +761,7 @@ export const siteData = {
           title: "কাউন্সিল অফ কালচার",
           desc: "শিল্পী কল্যাণ, উচ্চাঙ্গ শিল্পকলার সংরক্ষণ এবং বহুমুখী সাংস্কৃতিক ও সমাজকল্যাণমূলক উদ্যোগের প্রসারে আর্টিস্ট নেকটার কাউন্সিল অফ কালচারের প্রতিষ্ঠা।",
           highlight: "ঐতিহ্যগত মূল্যবোধ অক্ষুণ্ণ রেখে আধুনিক যুগে গুণী শিল্পীদের পৃষ্ঠপোষকতায় সময়োপযোগী উদ্যোগ।",
-          image: "/images/unnamed_12.webp"
+          image: "/images/durga-puja-idol-heritage.jpg"
         },
         {
           year: "বর্তমান",
@@ -835,7 +835,7 @@ export const siteData = {
             "সামাজিক কল্যাণ ও সেবা কার্যক্রম",
             "যুবসমাজের মধ্যে ঐতিহ্য সচেতনতা বৃদ্ধি"
           ],
-          image: "/images/unnamed_12.webp"
+          image: "/images/durga-puja-idol-heritage.jpg"
         }
       ]
     },
@@ -968,7 +968,7 @@ export const siteData = {
           category: "culture",
           title: "কাউন্সিল অফ কালচার অনুষ্ঠান",
           desc: "আর্টিস্ট নেকটার কাউন্সিল অফ কালচারের উদ্যোগে আয়োজিত সাংস্কৃতিক সমাবেশ।",
-          src: "/images/unnamed_12.webp"
+          src: "/images/durga-puja-idol-heritage.jpg"
         },
         {
           id: 8,

@@ -130,7 +130,7 @@ export default function TimelinePage({ lang = 'en', setActiveTab, onOpenLightbox
       desc: isBn 
         ? "বাংলা নাটক, মার্গ সঙ্গীত ও যুব শিল্পীদের উৎসাহ দিতে আর্টিস্ট নেকটার কাউন্সিল প্রতিষ্ঠিত হয়।"
         : "Formation of Artist Nectar Council of Culture to mentor emerging classical musicians, host cultural workshops, and organize heritage theatrical productions.",
-      image: "/images/unnamed_12.webp",
+      image: "/images/durga-puja-idol-heritage.jpg",
       caption: isBn ? "শাস্ত্রীয় সঙ্গীত ও কলা সম্মিলনী" : "Classical Music Conclave",
       actionLabel: isBn ? "পরিষদ জানুন" : "READ ARCHIVE",
       quote: isBn ? "“সুরের ঝর্ণাধারা রাজদরবারে।”" : "“Melodies in the grand salon.”",

@@ -21,7 +21,7 @@ const PRESET_IMAGES = [
   { label: 'Architecture Walk / Facade', path: '/images/SDP_0344.jpg' },
   { label: 'Courtyard Arches Night', path: '/images/SDP_0291.jpg' },
   { label: 'Sanctified Room / Sri Ramakrishna', path: '/images/rk01.png' },
-  { label: 'Nat Mandir / Workshop', path: '/images/unnamed_12.webp' },
+  { label: 'Durga Puja Idol', path: '/images/durga-puja-idol-heritage.jpg' },
   { label: 'Colonnade Corridor', path: '/images/khelat-bhawan-colonnade-corridor.jpg' },
   { label: 'Living Monument Hall', path: '/images/SDP_0368.jpg' },
   { label: 'Family Trust Archives', path: '/images/SDP_0299.jpg' },
