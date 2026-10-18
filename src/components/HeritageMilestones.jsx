@@ -19,8 +19,8 @@ export default function HeritageMilestones({ lang, milestones, onExplore, onOpen
           </h2>
           <p className="archive-subtitle" data-reveal>
             {subtitle || (bn
-              ? '১৭৫+ বছরের সাংস্কৃতিক সংরক্ষণ, আধ্যাত্মিক ভক্তি এবং সমাজসেবার ঐতিহ্যময় পথচলা'
-              : 'Journey through 175+ years of cultural preservation, spiritual devotion, and community service')}
+              ? '১৮০+ বছরের সাংস্কৃতিক সংরক্ষণ, আধ্যাত্মিক ভক্তি এবং সমাজসেবার ঐতিহ্যময় পথচলা'
+              : 'Journey through 180+ years of cultural preservation, spiritual devotion, and community service')}
           </p>
         </header>
 

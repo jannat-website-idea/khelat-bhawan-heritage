@@ -67,7 +67,7 @@ export default function FeedbackPage({ lang, content }) {
           title={isBn ? 'দর্শক প্রতিক্রিয়া ও পর্যালোচনা' : 'Visitor Voices & Reviews'}
           subtitle={isBn 
             ? '১৮৪৫ সাল থেকে খেলাৎ ভবনের পুণ্যভূমিতে আগত গবেষক, ভক্তবৃন্দ ও অতিথিদের প্রত্যক্ষ অভিজ্ঞতা' 
-            : 'Authentic reflections and verified Google reviews from scholars, devotees, patrons, and guests experiencing 175+ years of living heritage.'}
+            : 'Authentic reflections and verified Google reviews from scholars, devotees, patrons, and guests experiencing 180+ years of living heritage.'}
         />
 
         {/* Featured Google Reviews Grid */}

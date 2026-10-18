@@ -100,7 +100,7 @@ const EventsPage = ({ lang = 'en' }) => {
         <p className="max-w-2xl mx-auto text-muted-foreground font-sans text-sm sm:text-base leading-relaxed">
           {isBn
             ? 'খেলাৎ ভবনের দেড় শতাব্দীরও প্রাচীন প্রাঙ্গণে অনুষ্ঠিত শাস্ত্রীয় সঙ্গীত সন্ধ্যা, বাৎসরিক দুর্গাপূজা এবং হেরিটেজ ট্যুরের বিস্তারিত সময়সূচি।'
-            : 'Experience over 170 years of living tradition through our curated classical soirees, sacred annual Durga Puja, and exclusive architectural heritage tours.'}
+            : 'Experience 180+ years of living tradition through our curated classical soirees, sacred annual Durga Puja, and exclusive architectural heritage tours.'}
         </p>
 
         {/* Action Controls: All Events, Upcoming, Past */}

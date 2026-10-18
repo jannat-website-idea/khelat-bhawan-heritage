@@ -74,7 +74,7 @@ export default function HomePage({ lang = 'en', setActiveTab, onOpenBooking, onO
       <section className="royal-legacy-strip" aria-label={isBn ? 'ঐতিহ্যের পরিচয়' : 'Heritage at a glance'}>
         <div className="royal-legacy-strip__intro">
           <h2>{isBn ? 'এক জীবন্ত উত্তরাধিকার' : 'A living legacy,'}<em>{isBn ? '১৮৪৫ সাল থেকে সযত্নে রক্ষিত' : 'held in trust since 1845'}</em></h2>
-          <p>{isBn ? '১৭৫ বছরেরও বেশি সময় ধরে বাংলা সংস্কৃতি, সঙ্গীত ও ভক্তির ঐতিহ্য সংরক্ষণ করে চলেছে খেলাৎ ভবন।' : 'Khelat Bhawan—Pathuria Ghata Ghosh Bari—has preserved Bengal’s culture, music and devotion for more than 175 years.'}</p>
+          <p>{isBn ? '১৮০+ বছরেরও বেশি সময় ধরে বাংলা সংস্কৃতি, সঙ্গীত ও ভক্তির ঐতিহ্য সংরক্ষণ করে চলেছে খেলাৎ ভবন।' : 'Khelat Bhawan—Pathuria Ghata Ghosh Bari—has preserved Bengal’s culture, music and devotion for 180+ years.'}</p>
           <div>
             <button onClick={() => setActiveTab('trustees')}>{isBn ? 'ট্রাস্টের বিস্তারিত' : 'Trustee details'}<ArrowRight size={16} /></button>
             <button onClick={() => setActiveTab('timeline')}>{isBn ? 'ঐতিহ্যের সময়রেখা' : 'Heritage timeline'}<ArrowRight size={16} /></button>
@@ -82,11 +82,11 @@ export default function HomePage({ lang = 'en', setActiveTab, onOpenBooking, onO
         </div>
         <div className="royal-legacy-strip__stats">
           <div>
-            <AnimatedStat target={175} suffix="+" isBn={isBn} />
+            <AnimatedStat target={180} suffix="+" isBn={isBn} />
             <span>{isBn ? 'বছরের ঐতিহ্য' : 'Years of heritage'}</span>
           </div>
           <div>
-            <AnimatedStat target={170} suffix="+" isBn={isBn} />
+            <AnimatedStat target={180} suffix="+" isBn={isBn} />
             <span>{isBn ? 'বছরের দুর্গাপূজা' : 'Years of Durga Puja'}</span>
           </div>
           <div>

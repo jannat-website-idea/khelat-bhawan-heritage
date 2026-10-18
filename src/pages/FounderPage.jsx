@@ -54,7 +54,7 @@ export default function FounderPage({ lang = 'en', setActiveTab, onOpenLightbox,
             </div>
 
             <h2 className="font-serif text-3xl sm:text-4xl md:text-5xl font-bold text-foreground leading-tight">
-              {bn ? 'এক অমর সাংস্কৃতিক ঐতিহ্যের পথিকৃৎ' : 'The Patriarch of a 175-Year Living Legacy'}
+              {bn ? 'এক অমর সাংস্কৃতিক ঐতিহ্যের পথিকৃৎ' : 'The Patriarch of a Living Legacy Spanning 180+ Years'}
             </h2>
 
             <p className="text-foreground/90 font-sans text-base leading-relaxed font-light">

@@ -80,7 +80,7 @@ async function runSeeder() {
       bn: 'খেলাৎ ভবন ও রাজবাড়ির ঐতিহাসিক উত্তরাধিকার'
     },
     subtitle: {
-      en: 'A 175-year journey of preserving Bengali aristocratic heritage, sacred traditions, and classical arts',
+      en: 'A journey spanning 180+ years of preserving Bengali aristocratic heritage, sacred traditions, and classical arts',
       bn: '১৮৪৫ সাল থেকে উত্তর কলকাতায় বাঙালি সংস্কৃতি, শাস্ত্রীয় সঙ্গীত ও আধ্যাত্মিক ভক্তি সংরক্ষণের দেড় শতাব্দীরও প্রাচীন গৌরব'
     },
     historyOverview: {
@@ -171,7 +171,7 @@ async function runSeeder() {
       titleBn: 'মার্গ সঙ্গীত ও সান্ধ্য জলসা (Heritage Classical Concert / Soiree)',
       category: 'concert',
       guestCapacity: 'Up to 1,500 Guests',
-      descEn: 'Acoustically rich classical Indian concerts, baithaks, poetry recitals, and intimate musical soirees in a 170-year-old aristocratic ambiance.',
+      descEn: 'Acoustically rich classical Indian concerts, baithaks, poetry recitals, and intimate musical soirees in an aristocratic ambiance shaped by 180+ years of heritage.',
       descBn: 'শাস্ত্রীয় উচ্চাঙ্গ সঙ্গীত, বাচিক অনুষ্ঠান, সাহিত্য সভা ও সঙ্গীত সন্ধ্যার জন্য অনুপম মার্বেল প্রাঙ্গণ।'
     },
     {
@@ -201,8 +201,8 @@ async function runSeeder() {
       titleBn: 'কর্পোরেট কালচারাল সামিট (Corporate Cultural Summit)',
       category: 'corporate',
       guestCapacity: 'Up to 1,500 Guests',
-      descEn: 'Prestigious executive conclaves, corporate summits, flagship product unveilings, and institutional galas amidst 170+ years of aristocratic stature.',
-      descBn: 'ফ্ল্যাগশিপ প্রডাক্ট লঞ্চ, উচ্চপর্যায়ের সম্মেলন ও প্রাতিষ্ঠানিক সমাবেশের জন্য আধুনিক সুবিধা ও ১৭০ বছরের আভিজাত্যের রাজকীয় পরিবেশ।'
+      descEn: 'Prestigious executive conclaves, corporate summits, flagship product unveilings, and institutional galas amidst 180+ years of aristocratic stature.',
+      descBn: 'ফ্ল্যাগশিপ প্রডাক্ট লঞ্চ, উচ্চপর্যায়ের সম্মেলন ও প্রাতিষ্ঠানিক সমাবেশের জন্য আধুনিক সুবিধা ও ১৮০+ বছরের আভিজাত্যের রাজকীয় পরিবেশ।'
     }
   ];
 

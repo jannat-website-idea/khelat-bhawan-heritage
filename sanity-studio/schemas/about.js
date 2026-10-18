@@ -22,14 +22,14 @@ export default {
           title: 'English Subtitle', 
           type: 'text', 
           rows: 2,
-          initialValue: '175 Years of Sacred Tradition, Architectural Brilliance & Cultural Patronage'
+          initialValue: '180+ Years of Sacred Tradition, Architectural Brilliance & Cultural Patronage'
         },
         { 
           name: 'bn', 
           title: 'Bengali Subtitle', 
           type: 'text', 
           rows: 2,
-          initialValue: '১৭৫ বছরের পবিত্র ঐতিহ্য, স্থাপত্যকলার উৎকর্ষ ও সাংস্কৃতিক উত্তরাধিকার'
+          initialValue: '১৮০+ বছরের পবিত্র ঐতিহ্য, স্থাপত্যকলার উৎকর্ষ ও সাংস্কৃতিক উত্তরাধিকার'
         }
       ]
     },

@@ -49,7 +49,7 @@ export default function ContactPage({ lang, content }) {
       <div className="container mx-auto px-4 sm:px-6 max-w-7xl space-y-12">
         <SectionHeader 
           title={isBn ? 'যোগাযোগ ও অবস্থান' : 'Contact & Location'} 
-          subtitle={isBn ? 'খেলাৎ ভবন পরিদর্শনে ও যেকোনো তথ্যের জন্য আমাদের সাথে সরাসরি যোগাযোগ করুন' : 'Connect with us to experience 175 years of Bengali heritage and culture'} 
+          subtitle={isBn ? 'খেলাৎ ভবন পরিদর্শনে ও যেকোনো তথ্যের জন্য আমাদের সাথে সরাসরি যোগাযোগ করুন' : 'Connect with us to experience 180+ years of Bengali heritage and culture'}
         />
 
         {/* Top 3 Official Contact Cards */}

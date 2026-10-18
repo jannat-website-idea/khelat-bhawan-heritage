@@ -102,7 +102,7 @@ async function seedData() {
       category: 'concert',
       guestCapacity: 'Up to 1,500 Guests',
       desc: {
-        en: 'Acoustically rich classical Indian concerts, baithaks, poetry recitals, and intimate musical soirees in a 170-year-old aristocratic ambiance.',
+        en: 'Acoustically rich classical Indian concerts, baithaks, poetry recitals, and intimate musical soirees in an aristocratic ambiance shaped by 180+ years of heritage.',
         bn: 'শাস্ত্রীয় উচ্চাঙ্গ সঙ্গীত, বাচিক অনুষ্ঠান, সাহিত্য সভা ও সঙ্গীত সন্ধ্যার জন্য অনুপম মার্বেল প্রাঙ্গণ।'
       },
       features: [
@@ -156,8 +156,8 @@ async function seedData() {
       category: 'corporate',
       guestCapacity: 'Up to 1,500 Guests',
       desc: {
-        en: 'Prestigious executive conclaves, corporate summits, flagship product unveilings, and institutional galas amidst 170+ years of aristocratic stature.',
-        bn: 'ফ্ল্যাগশিপ প্রডাক্ট লঞ্চ, উচ্চপর্যায়ের সম্মেলন ও প্রাতিষ্ঠানিক সমাবেশের জন্য আধুনিক সুবিধা ও ১৭০ বছরের আভিজাত্যের রাজকীয় পরিবেশ।'
+        en: 'Prestigious executive conclaves, corporate summits, flagship product unveilings, and institutional galas amidst 180+ years of aristocratic stature.',
+        bn: 'ফ্ল্যাগশিপ প্রডাক্ট লঞ্চ, উচ্চপর্যায়ের সম্মেলন ও প্রাতিষ্ঠানিক সমাবেশের জন্য আধুনিক সুবিধা ও ১৮০+ বছরের আভিজাত্যের রাজকীয় পরিবেশ।'
       },
       features: [
         'Flexible summit and conference capacity up to 1,500 delegates',

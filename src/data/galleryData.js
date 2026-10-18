@@ -324,8 +324,8 @@ export const filmsGalleryData = [
     duration: "05:15",
     year: "2023",
     desc: {
-      en: "An intimate cinematic chronicle tracing 170+ years of family stewardship, musical patronage, and continuous ritual devotion.",
-      bn: "১৭০+ বছরের পারিবারিক অভিভাবকত্ব, সঙ্গীত পৃষ্ঠপোষকতা ও দেবসেবার ইতিহাস।"
+      en: "An intimate cinematic chronicle tracing 180+ years of family stewardship, musical patronage, and continuous ritual devotion.",
+      bn: "১৮০+ বছরের পারিবারিক অভিভাবকত্ব, সঙ্গীত পৃষ্ঠপোষকতা ও দেবসেবার ইতিহাস।"
     },
     src: "/Videos/hero-palace-film.mp4",
     poster: "/images/khelat-bhawan-night-courtyard.jpg",

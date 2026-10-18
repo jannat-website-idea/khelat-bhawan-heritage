@@ -19,12 +19,12 @@ export const siteData = {
     hero: {
       subtitle: "PATHURIA GHATA GHOSH BARI • ESTABLISHED 1845",
       title: "Living Bengali Heritage & Aristocratic Grandeur",
-      tagline: "Preserving Bengali culture, classical music, and spiritual devotion for over 175 continuous years in the historic heart of North Kolkata.",
+      tagline: "Preserving Bengali culture, classical music, and spiritual devotion for 180+ continuous years in the historic heart of North Kolkata.",
       exploreBtn: "Explore Our Heritage",
       timelineBtn: "View Historic Timeline",
       stats: [
-        { value: "175+", label: "Years of Living Heritage", sub: "Since 1845" },
-        { value: "1855", label: "Durga Puja Tradition", sub: "170+ Years Uninterrupted" },
+        { value: "180+", label: "Years of Living Heritage", sub: "Since 1845" },
+        { value: "1855", label: "Durga Puja Tradition", sub: "180+ Years Uninterrupted" },
         { value: "1881", label: "Sanctified by Sri Ramakrishna", sub: "Divine Historic Visit" },
         { value: "3", label: "Active Cultural Trusts", sub: "Devotion, Music & Service" }
       ]
@@ -32,9 +32,9 @@ export const siteData = {
     intro: {
       eyebrow: "The Estate & Its Legacy",
       heading: "A Sanctuary of Bengali Culture in Pathuria Ghata",
-      p1: "Established in 1845, Khelat Bhawan (famously known as Pathuria Ghata Ghosh Bari) stands as one of Kolkata's most magnificent aristocratic residences. For more than 175 years, this majestic mansion has been an epicenter of Bengal's cultural renaissance, spiritual devotion, and artistic patronage.",
+      p1: "Established in 1845, Khelat Bhawan (famously known as Pathuria Ghata Ghosh Bari) stands as one of Kolkata's most magnificent aristocratic residences. For 180+ years, this majestic mansion has been an epicenter of Bengal's cultural renaissance, spiritual devotion, and artistic patronage.",
       p2: "The mansion gained immortal spiritual sanctity in 1881 when Sri Ramakrishna Paramhansa, the revered saint and mystic, blessed this house with his divine presence. Today, the estate continues to uphold its timeless traditions under the stewardship of three dedicated trusts.",
-      statHighlight: "170+ continuous years of sacred Durga Puja celebration since 1855."
+      statHighlight: "180+ continuous years of sacred Durga Puja celebration since 1855."
     },
     highlights: [
       {
@@ -69,7 +69,7 @@ export const siteData = {
     timelinePreview: {
       eyebrow: "Our Legacy Timeline",
       heading: "Key Historical Milestones",
-      desc: "Journey through 175+ years of cultural preservation, spiritual devotion, and community service",
+      desc: "Journey through 180+ years of cultural preservation, spiritual devotion, and community service",
       viewFull: "View Full Heritage Timeline",
       items: [
         {
@@ -82,7 +82,7 @@ export const siteData = {
         {
           year: "1855",
           title: "Durga Puja Begins",
-          desc: "Started the sacred tradition of Durga Puja that continues uninterrupted for 170+ years, becoming one of Kolkata's oldest and most revered aristocratic celebrations.",
+          desc: "Started the sacred tradition of Durga Puja that continues uninterrupted for 180+ years, becoming one of Kolkata's oldest and most revered aristocratic celebrations.",
           highlight: "The first Durga Puja was celebrated with great devotion, establishing rituals that are followed to this day.",
           image: "/images/unnamed_6.webp"
         },
@@ -134,7 +134,7 @@ export const siteData = {
           focus: "Devotional & Spiritual Preservation",
           desc: "Dedicated to upholding the sacred spiritual traditions of Khelat Bhawan, including the historic Durga Puja and Jagadhatri Puja rituals since 1855.",
           activities: [
-            "170+ continuous years of traditional Durga Puja",
+            "180+ continuous years of traditional Durga Puja",
             "Annual Jagadhatri Puja celebrations",
             "Daily Nitya Seva & devotional rituals",
             "Maintenance of the sacred Thakur Dalan & shrine",
@@ -242,7 +242,7 @@ export const siteData = {
     gallery: {
       eyebrow: "Visual Archive",
       heading: "Heritage Gallery & Visual Chronicles",
-      desc: "Immerse yourself in 175+ years of architectural splendor, sacred festivities, and cultural gatherings at Pathuria Ghata Ghosh Bari.",
+      desc: "Immerse yourself in 180+ years of architectural splendor, sacred festivities, and cultural gatherings at Pathuria Ghata Ghosh Bari.",
       filters: {
         all: "All Media",
         puja: "Puja Celebrations",
@@ -393,7 +393,7 @@ export const siteData = {
     rental: {
       eyebrow: "Exclusive Experiences",
       heading: "Heritage Spaces & Venue Rental",
-      desc: "Experience the timeless grandeur of 175-year-old Bengali aristocratic architecture as the distinguished setting for your extraordinary occasions.",
+      desc: "Experience the timeless grandeur of Bengali aristocratic architecture shaped by 180+ years of heritage as the distinguished setting for your extraordinary occasions.",
       services: [
         {
           id: "wedding",
@@ -412,7 +412,7 @@ export const siteData = {
           id: "concert",
           title: "Heritage Classical Concert / Soiree",
           pricing: "Contact for program bookings",
-          desc: "Acoustically rich classical Indian concerts, baithaks, poetry recitals, and intimate musical soirees in a 170-year-old aristocratic ambiance.",
+          desc: "Acoustically rich classical Indian concerts, baithaks, poetry recitals, and intimate musical soirees in an aristocratic ambiance shaped by 180+ years of heritage.",
           features: [
             "Accommodates up to 1,500 attendees with traditional seating options",
             "Naturally resonant courtyard with 19th-century acoustic architecture",
@@ -451,7 +451,7 @@ export const siteData = {
           id: "corporate",
           title: "Corporate Cultural Summit",
           pricing: "Corporate & Event Enquiries",
-          desc: "Prestigious executive conclaves, corporate summits, flagship product unveilings, and institutional galas blending modern amenities with 170+ years of aristocratic stature.",
+          desc: "Prestigious executive conclaves, corporate summits, flagship product unveilings, and institutional galas blending modern amenities with 180+ years of aristocratic stature.",
           features: [
             "Flexible summit, conference, and banquet capacity up to 1,500 delegates",
             "Exclusive heritage licensing, AV infrastructure, and high-amperage power",
@@ -558,7 +558,7 @@ export const siteData = {
           rating: 5,
           time: "Google Review",
           title: "Acoustic grandeur steeped in the All India Music Conference legacy",
-          review: "Attending an evening baithak and classical recital at Khelat Bhavan was pure magic. The natural acoustics of the salon, surrounded by 175 years of musical heritage where legends once performed, is incomparable. A true jewel of Kolkata’s cultural landscape.",
+          review: "Attending an evening baithak and classical recital at Khelat Bhavan was pure magic. The natural acoustics of the salon, surrounded by 180+ years of musical heritage where legends once performed, is incomparable. A true jewel of Kolkata’s cultural landscape.",
           category: "Classical Music & Baithak"
         },
         {
@@ -628,7 +628,7 @@ export const siteData = {
           rating: 5,
           time: "গুগল রিভিউ",
           title: "বাংলার নবজাগরণের এক জীবন্ত প্রতীক ও অমূল্য সাংস্কৃতিক নিদর্শন",
-          review: "পাথুরিয়াঘাটা ঘোষ বাড়ির ট্রাস্টিগণ যেভাবে ১৭৫ বছরের পারিবারিক আচার ও শিল্পকলার পৃষ্ঠপোষকতা সংরক্ষণ করে আসছেন, তা অত্যন্ত প্রশংসনীয়।",
+          review: "পাথুরিয়াঘাটা ঘোষ বাড়ির ট্রাস্টিগণ যেভাবে ১৮০+ বছরের পারিবারিক আচার ও শিল্পকলার পৃষ্ঠপোষকতা সংরক্ষণ করে আসছেন, তা অত্যন্ত প্রশংসনীয়।",
           category: "সাংস্কৃতিক ঐতিহ্য"
         },
         {
@@ -682,12 +682,12 @@ export const siteData = {
     hero: {
       subtitle: "পাথুরিয়াঘাটা ঘোষ বাড়ি • স্থাপিত ১৮৪৫",
       title: "বাঙালির জীবন্ত ঐতিহ্য ও আভিজাত্যের মহিমা",
-      tagline: "উত্তর কলকাতার ঐতিহ্যবাহী বুকে ১৭৫ বছরেরও বেশি সময় ধরে বাঙালি সংস্কৃতি, শাস্ত্রীয় সঙ্গীত ও আধ্যাত্মিক ভক্তি সংরক্ষণ।",
+      tagline: "উত্তর কলকাতার ঐতিহ্যবাহী বুকে ১৮০+ বছরেরও বেশি সময় ধরে বাঙালি সংস্কৃতি, শাস্ত্রীয় সঙ্গীত ও আধ্যাত্মিক ভক্তি সংরক্ষণ।",
       exploreBtn: "আমাদের ঐতিহ্য দেখুন",
       timelineBtn: "ঐতিহাসিক সময়রেখা",
       stats: [
-        { value: "১৭৫+", label: "বছরের জীবন্ত ঐতিহ্য", sub: "১৮৪৫ সাল থেকে" },
-        { value: "১৮৫৫", label: "ঐতিহ্যবাহী দুর্গাপূজা", sub: "১৭০+ বছর নিরবচ্ছিন্ন" },
+        { value: "১৮০+", label: "বছরের জীবন্ত ঐতিহ্য", sub: "১৮৪৫ সাল থেকে" },
+        { value: "১৮৫৫", label: "ঐতিহ্যবাহী দুর্গাপূজা", sub: "১৮০+ বছর নিরবচ্ছিন্ন" },
         { value: "১৮৮১", label: "শ্রীরামকৃষ্ণ পরমহংসদেবের আগমন", sub: "পবিত্র ঐতিহাসিক পদার্পণ" },
         { value: "৩", label: "সক্রিয় সাংস্কৃতিক ট্রাস্ট", sub: "ভক্তি, সঙ্গীত ও সমাজসেবা" }
       ]
@@ -695,9 +695,9 @@ export const siteData = {
     intro: {
       eyebrow: "এস্টেট ও তার উত্তরাধিকার",
       heading: "পাথুরিয়াঘাটায় বাঙালি সংস্কৃতির এক পবিত্র অঙ্গন",
-      p1: "১৮৪৫ সালে প্রতিষ্ঠিত খেলাৎ ভবন (পাথুরিয়াঘাটা ঘোষ বাড়ি নামে সমধিক পরিচিত) কলকাতার অন্যতম শ্রেষ্ঠ আভিজাত্যপূর্ণ ঐতিহাসিক প্রাসাদ। ১৭৫ বছরেরও বেশি সময় ধরে এই সুবিশাল ভবনটি বাংলার সাংস্কৃতিক নবজাগরণ, আধ্যাত্মিক নিষ্ঠা এবং শিল্প-পৃষ্ঠপোষকতার প্রাণকেন্দ্র হিসেবে বিরাজমান।",
+      p1: "১৮৪৫ সালে প্রতিষ্ঠিত খেলাৎ ভবন (পাথুরিয়াঘাটা ঘোষ বাড়ি নামে সমধিক পরিচিত) কলকাতার অন্যতম শ্রেষ্ঠ আভিজাত্যপূর্ণ ঐতিহাসিক প্রাসাদ। ১৮০+ বছরেরও বেশি সময় ধরে এই সুবিশাল ভবনটি বাংলার সাংস্কৃতিক নবজাগরণ, আধ্যাত্মিক নিষ্ঠা এবং শিল্প-পৃষ্ঠপোষকতার প্রাণকেন্দ্র হিসেবে বিরাজমান।",
       p2: "১৮৮১ সালে মহাত্মা শ্রীরামকৃষ্ণ পরমহংসদেবের পুণ্য পদার্পণে এই ভবনটি আধ্যাত্মিক মহিমায় ভাস্বর হয়ে ওঠে। আজও তিনটি সক্রিয় ট্রাস্টের মাধ্যমে ঘোষ পরিবার তাঁদের এই ঐতিহ্যকে অক্ষুণ্ণ রেখেছেন।",
-      statHighlight: "১৮৫৫ সাল থেকে ১৭০ বছরেরও বেশি সময় ধরে অনুষ্ঠিত হচ্ছে ঐতিহ্যবাহী দুর্গাপূজা।"
+      statHighlight: "১৮৫৫ সাল থেকে ১৮০+ বছরেরও বেশি সময় ধরে অনুষ্ঠিত হচ্ছে ঐতিহ্যবাহী দুর্গাপূজা।"
     },
     highlights: [
       {
@@ -732,7 +732,7 @@ export const siteData = {
     timelinePreview: {
       eyebrow: "আমাদের ঐতিহ্যের সময়রেখা",
       heading: "ঐতিহাসিক মাইলফলক",
-      desc: "১৭৫+ বছরের সাংস্কৃতিক সংরক্ষণ, আধ্যাত্মিক ভক্তি এবং সমাজসেবার ঐতিহ্যময় পথচলা",
+      desc: "১৮০+ বছরের সাংস্কৃতিক সংরক্ষণ, আধ্যাত্মিক ভক্তি এবং সমাজসেবার ঐতিহ্যময় পথচলা",
       viewFull: "সম্পূর্ণ ইতিহাস সময়রেখা দেখুন",
       items: [
         {
@@ -745,7 +745,7 @@ export const siteData = {
         {
           year: "১৮৫৫",
           title: "দুর্গাপূজার শুভ সূচনা",
-          desc: "ঐতিহাসিক পারিবারিক দুর্গোৎসবের শুভ সূচনা যা আজ ১৭০+ বছর ধরে অবিরাম উদযাপিত হচ্ছে এবং কলকাতার অন্যতম প্রাচীন ও সম্ভ্রান্ত উৎসব হিসেবে পরিগণিত।",
+          desc: "ঐতিহাসিক পারিবারিক দুর্গোৎসবের শুভ সূচনা যা আজ ১৮০+ বছর ধরে অবিরাম উদযাপিত হচ্ছে এবং কলকাতার অন্যতম প্রাচীন ও সম্ভ্রান্ত উৎসব হিসেবে পরিগণিত।",
           highlight: "গভীর ভক্তির সাথে প্রথম দুর্গাপূজা উদযাপিত হয় এবং আজ পর্যন্ত অক্ষুণ্ণ থাকা পবিত্র রীতিনীতির সূচনা হয়।",
           image: "/images/unnamed_6.webp"
         },
@@ -797,7 +797,7 @@ export const siteData = {
           focus: "ভক্তি ও আধ্যাত্মিক ঐতিহ্য সংরক্ষণ",
           desc: "১৮৫৫ সাল থেকে খেলাৎ ভবনের পুণ্য ধর্মীয় ঐতিহ্য, বিশেষত ঐতিহাসিক দুর্গাপূজা ও জগদ্ধাত্রী পূজা পরিচালনা ও নিত্যসেবায় নিয়োজিত।",
           activities: [
-            "১৭০+ বছরের ধারাবাহিক দুর্গাপূজা উৎসব",
+            "১৮০+ বছরের ধারাবাহিক দুর্গাপূজা উৎসব",
             "বাৎসরিক জগদ্ধাত্রী পূজা উদযাপন",
             "দৈনন্দিন নিত্য সেবা ও আরতি",
             "পবিত্র ঠাকুর দালান ও মন্দিরের সংরক্ষণ",
@@ -905,7 +905,7 @@ export const siteData = {
     gallery: {
       eyebrow: "আর্কাইভ চিত্রশালা",
       heading: "ঐতিহাসিক গ্যালারি ও স্থিরচিত্র",
-      desc: "পাথুরিয়াঘাটা ঘোষ বাড়ির ১৭৫ বছরেরও বেশি সময়ের স্থাপত্য সৌন্দর্য, উৎসবের মহিমা ও ঐতিহাসিক মুহূর্তগুলির সংগ্রহ।",
+      desc: "পাথুরিয়াঘাটা ঘোষ বাড়ির ১৮০+ বছরেরও বেশি সময়ের স্থাপত্য সৌন্দর্য, উৎসবের মহিমা ও ঐতিহাসিক মুহূর্তগুলির সংগ্রহ।",
       filters: {
         all: "সকল চিত্র ও ভিডিও",
         puja: "পূজা ও উৎসব",
@@ -1056,7 +1056,7 @@ export const siteData = {
     rental: {
       eyebrow: "অনন্য সুযোগ",
       heading: "ঐতিহাসিক প্রাঙ্গণ ও ভেন্যু পরিষেবা",
-      desc: "আপনার বিশেষ মুহূর্ত ও স্মরণীয় অনুষ্ঠানকে রাজকীয় রূপ দিতে ১৭৫ বছরের প্রাচীন বাঙালি আভিজাত্যের অপরূপ স্থান।",
+      desc: "আপনার বিশেষ মুহূর্ত ও স্মরণীয় অনুষ্ঠানকে রাজকীয় রূপ দিতে ১৮০+ বছরের প্রাচীন বাঙালি আভিজাত্যের অপরূপ স্থান।",
       services: [
         {
           id: "wedding",
@@ -1114,7 +1114,7 @@ export const siteData = {
           id: "corporate",
           title: "Corporate Cultural Summit",
           pricing: "কর্পোরেট ও প্রাতিষ্ঠানিক বুকিং",
-          desc: "ফ্ল্যাগশিপ প্রডাক্ট লঞ্চ, উচ্চপর্যায়ের সম্মেলন ও প্রাতিষ্ঠানিক সমাবেশের জন্য আধুনিক সুবিধা ও ১৭০ বছরের আভিজাত্যের রাজকীয় পরিবেশ।",
+          desc: "ফ্ল্যাগশিপ প্রডাক্ট লঞ্চ, উচ্চপর্যায়ের সম্মেলন ও প্রাতিষ্ঠানিক সমাবেশের জন্য আধুনিক সুবিধা ও ১৮০+ বছরের আভিজাত্যের রাজকীয় পরিবেশ।",
           features: [
             "১,৫০০ জন পর্যন্ত প্রতিনিধি ও অতিথিদের সম্মেলন ধারণক্ষমতা",
             "হাই-স্পিড সংযোগ, এভি পরিকাঠামো ও আধুনিক মিডিয়া প্রেজেন্টেশন সুবিধা",
@@ -1221,7 +1221,7 @@ export const siteData = {
           rating: 5,
           time: "গুগল পর্যালোচনা",
           title: "অল ইন্ডিয়া মিউজিক কনফারেন্সের ঐতিহাসিক ঐতিহ্য ও বৈঠকখানা",
-          review: "খেলাৎ ভবনের বৈঠকখানায় শাস্ত্রীয় সঙ্গীত আসরের অভিজ্ঞতা ছিল জাদুকরী। যেখানে একদা সঙ্গীত জগতের দিকপালরা সঙ্গীত পরিবেশন করেছিলেন, সেই ১৭৫ বছরের সুরের আবহ আজও এর প্রতিটি স্তম্ভে অনুরণিত হয়।",
+          review: "খেলাৎ ভবনের বৈঠকখানায় শাস্ত্রীয় সঙ্গীত আসরের অভিজ্ঞতা ছিল জাদুকরী। যেখানে একদা সঙ্গীত জগতের দিকপালরা সঙ্গীত পরিবেশন করেছিলেন, সেই ১৮০+ বছরের সুরের আবহ আজও এর প্রতিটি স্তম্ভে অনুরণিত হয়।",
           category: "শাস্ত্রীয় সঙ্গীত আসর"
         },
         {

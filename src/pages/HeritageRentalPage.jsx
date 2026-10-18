@@ -54,8 +54,8 @@ export default function HeritageRentalPage({ lang = 'en', onOpenBooking, onOpenL
         <SectionHeader
           title={lang === 'bn' ? 'রিজার্ভেশন ও হেরিটেজ বুকিং' : 'Reservations & Heritage Bookings'}
           subtitle={lang === 'bn'
-            ? 'আপনার বিশেষ মুহূর্ত ও স্মরণীয় অনুষ্ঠানকে রাজকীয় রূপ দিতে ১৭০ বছরেরও প্রাচীন ঐতিহ্যবাহী বাঙালি আভিজাত্যের স্থান'
-            : 'Experience the grandeur of 170+ years of living heritage for aristocratic soirees, weddings, and cultural celebrations'}
+            ? 'আপনার বিশেষ মুহূর্ত ও স্মরণীয় অনুষ্ঠানকে রাজকীয় রূপ দিতে ১৮০+ বছরেরও প্রাচীন ঐতিহ্যবাহী বাঙালি আভিজাত্যের স্থান'
+            : 'Experience the grandeur of 180+ years of living heritage for aristocratic soirees, weddings, and cultural celebrations'}
         />
 
         {/* Live Reservation Calendar Preview Section */}
