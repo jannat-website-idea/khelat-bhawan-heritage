@@ -33,7 +33,7 @@ export default function AboutPage({ lang = 'en', setActiveTab, onOpenBooking, on
             title={isBn ? 'খেলাৎ ভবন ও রাজবাড়ির ঐতিহাসিক উত্তরাধিকার' : 'The Imperial Legacy of Khelat Bhawan'}
             subtitle={isBn 
               ? '১৮৪৫ সাল থেকে উত্তর কলকাতায় বাঙালি সংস্কৃতি, শাস্ত্রীয় সঙ্গীত ও আধ্যাত্মিক ভক্তি সংরক্ষণের দেড় শতাব্দীরও প্রাচীন গৌরব' 
-              : 'A journey spanning 180+ years of preserving Bengali aristocratic heritage, sacred traditions, and classical arts'}
+              : 'A journey spanning 181 years of preserving Bengali aristocratic heritage, sacred traditions, and classical arts'}
           />
 
           <div className="flex justify-end pt-1 pb-2">
@@ -119,7 +119,7 @@ export default function AboutPage({ lang = 'en', setActiveTab, onOpenBooking, on
               </p>
             </div>
             <div className="p-6 bg-background rounded-2xl border border-border/60 space-y-3 text-center">
-              <span className="text-3xl font-serif font-bold text-primary block">181+</span>
+              <span className="text-3xl font-serif font-bold text-primary block">{isBn ? '১৭১' : '171'}</span>
               <h4 className="font-serif text-lg font-semibold text-foreground">{isBn ? 'পবিত্র ঠাকুর দালান' : 'Sacred Thakur Dalan'}</h4>
               <p className="text-xs text-muted-foreground font-sans leading-relaxed">
                 {isBn ? '১৮৫৫ সাল থেকে অবিচ্ছিন্ন একচালা দুর্গোৎসব ও নিত্যসেবা।' : 'The sanctum for the unbroken annual Durga Puja and deity veneration.'}
@@ -240,8 +240,8 @@ export default function AboutPage({ lang = 'en', setActiveTab, onOpenBooking, on
             </h3>
             <p className="text-xs sm:text-sm font-sans text-primary-foreground/90 leading-relaxed font-light">
               {isBn
-                ? 'ধর্মীয় ভক্তি, শাস্ত্রীয় শিল্পকলা ও সমাজসেবার মাধ্যমে বাংলা সাংস্কৃতিক ঐতিহ্য ও তার ১৮০+ বছরের সাবেকি পরম্পরা সংরক্ষণ করা।'
-                : 'To preserve, promote, and perpetuate Bengali cultural heritage through religious devotion, classical arts, and community service while maintaining the sanctity and traditions of our legacy spanning 180+ years.'}
+                ? 'ধর্মীয় ভক্তি, শাস্ত্রীয় শিল্পকলা ও সমাজসেবার মাধ্যমে বাংলা সাংস্কৃতিক ঐতিহ্য ও তার ১৮১ বছরের সাবেকি পরম্পরা সংরক্ষণ করা।'
+                : 'To preserve, promote, and perpetuate Bengali cultural heritage through religious devotion, classical arts, and community service while maintaining the sanctity and traditions of our legacy spanning 181 years.'}
             </p>
           </div>
 

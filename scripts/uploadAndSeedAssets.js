@@ -58,8 +58,8 @@ async function run() {
     headlineFirstLine: 'Khelat Bhawan',
     headlineSecondLine: 'Living Heritage of Pathuria Ghata Ghosh Bari',
     headlineBn: 'পাথুরিয়াঘাটা ঘোষ বাড়ির জীবন্ত ঐতিহ্য',
-    subheadlineEn: 'An imperial 19th-century palace where timeless Bengali aristocracy, grand Corinthian colonnades, and 181 years of continuous Durga Puja live on.',
-    subheadlineBn: 'ঊনবিংশ শতাব্দীর এক রাজকীয় ঐতিহ্যবাহী প্রাসাদ—যেখানে করিন্থিয়ান স্থাপত্য, সুরের মূর্ছনা এবং ১৮১ বছরের ঐতিহ্যবাহী দুর্গাপূজা আজও বহমান।',
+    subheadlineEn: 'An imperial 19th-century palace where timeless Bengali aristocracy, grand Corinthian colonnades, and 171 years of continuous Durga Puja live on.',
+    subheadlineBn: 'ঊনবিংশ শতাব্দীর এক রাজকীয় ঐতিহ্যবাহী প্রাসাদ—যেখানে করিন্থিয়ান স্থাপত্য, সুরের মূর্ছনা এবং ১৭১ বছরের ঐতিহ্যবাহী দুর্গাপূজা আজও বহমান।',
     heroImage: heroImageAsset,
     heroVideoUrl: 'https://khelatbhawan.com/Videos/drone_hero.mp4',
     heroBanners: [

@@ -61,7 +61,7 @@ All personal data is encrypted in transit and stored in protected databases with
 By accessing the Khelat Bhawan digital archive and estate services, you agree to comply with all architectural conservation protocols, intellectual property guidelines, and reservation terms outlined herein.
 
 ### 2. Heritage Estate Reservations & Conduct
-- **Sacred & Living Heritage:** Khelat Bhawan is an active, sanctified 19th-century private palace. All guests and event attendees are expected to maintain reverence and decorum fitting its cultural legacy spanning 180+ years.
+- **Sacred & Living Heritage:** Khelat Bhawan is an active, sanctified 19th-century private palace. All guests and event attendees are expected to maintain reverence and decorum fitting its cultural legacy spanning 181 years.
 - **Booking SLA & Verification:** Reservation inquiries submitted via this website are preliminary requests subject to written trust approval and date-block confirmation within 48 hours.
 - **Cancellation & Rescheduling:** Event dates may be adjusted in coordination with our concierge team, subject to the ceremonial calendar of family pujas and classical music conventions.
 

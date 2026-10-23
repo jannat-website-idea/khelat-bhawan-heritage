@@ -87,8 +87,8 @@ export const photographyGalleryData = [
     },
     verticalWord: "DURGA PUJA",
     desc: {
-      en: "Unbroken 181-year sacred ritual at Thakur Dalan celebrating Maa Durga with traditional Daker Saaj craftsmanship.",
-      bn: "১৮১ বছরের নিরবচ্ছিন্ন ঐতিহ্যবাহী একচালা ডাকের সাজের দেবী দুর্গার পুণ্য আরাধনা।"
+      en: "Unbroken 171-year sacred ritual at Thakur Dalan celebrating Maa Durga with traditional Daker Saaj craftsmanship.",
+      bn: "১৭১ বছরের নিরবচ্ছিন্ন ঐতিহ্যবাহী একচালা ডাকের সাজের দেবী দুর্গার পুণ্য আরাধনা।"
     },
     src: "/images/SDP_0257.jpg",
     photographer: "Heritage Photography Team",
@@ -324,8 +324,8 @@ export const filmsGalleryData = [
     duration: "05:15",
     year: "2023",
     desc: {
-      en: "An intimate cinematic chronicle tracing 180+ years of family stewardship, musical patronage, and continuous ritual devotion.",
-      bn: "১৮০+ বছরের পারিবারিক অভিভাবকত্ব, সঙ্গীত পৃষ্ঠপোষকতা ও দেবসেবার ইতিহাস।"
+      en: "An intimate cinematic chronicle tracing 181 years of family stewardship, musical patronage, and continuous ritual devotion.",
+      bn: "১৮১ বছরের পারিবারিক অভিভাবকত্ব, সঙ্গীত পৃষ্ঠপোষকতা ও দেবসেবার ইতিহাস।"
     },
     src: "/Videos/hero-palace-film.mp4",
     poster: "/images/khelat-bhawan-night-courtyard.jpg",

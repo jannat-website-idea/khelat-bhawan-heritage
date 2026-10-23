@@ -37,7 +37,7 @@ export default function HeritageFamilyTree({ lang = 'en', setActiveTab }) {
       <header className="heritage-family-journey__header">
         <p><span />{isBn ? 'আমাদের উত্তরাধিকার' : 'OUR LEGACY'}<span /></p>
         <h2>{isBn ? 'সাত প্রজন্ম, এক চিরন্তন উত্তরাধিকার' : <>Seven Generations,<br /><em>One Enduring Legacy</em></>}</h2>
-        <div>{isBn ? '১৮০+ বছরের দূরদৃষ্টি, অভিভাবকত্ব ও সাংস্কৃতিক ধারাবাহিকতার কাহিনি।' : 'A story of vision, stewardship and cultural continuity across 180+ years.'}</div>
+        <div>{isBn ? '১৮১ বছরের দূরদৃষ্টি, অভিভাবকত্ব ও সাংস্কৃতিক ধারাবাহিকতার কাহিনি।' : 'A story of vision, stewardship and cultural continuity across 181 years.'}</div>
       </header>
 
       <div className="heritage-family-journey__path">

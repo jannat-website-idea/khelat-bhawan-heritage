@@ -80,7 +80,7 @@ async function runSeeder() {
       bn: 'খেলাৎ ভবন ও রাজবাড়ির ঐতিহাসিক উত্তরাধিকার'
     },
     subtitle: {
-      en: 'A journey spanning 180+ years of preserving Bengali aristocratic heritage, sacred traditions, and classical arts',
+      en: 'A journey spanning 181 years of preserving Bengali aristocratic heritage, sacred traditions, and classical arts',
       bn: '১৮৪৫ সাল থেকে উত্তর কলকাতায় বাঙালি সংস্কৃতি, শাস্ত্রীয় সঙ্গীত ও আধ্যাত্মিক ভক্তি সংরক্ষণের দেড় শতাব্দীরও প্রাচীন গৌরব'
     },
     historyOverview: {
@@ -132,7 +132,7 @@ async function runSeeder() {
   console.log('📦 Seeding History Timeline Milestones...');
   const timelineMilestones = [
     { year: '1845', eraEn: 'ESTATE FOUNDATION', eraBn: 'স্থাপত্য ও প্রাসাদ প্রতিষ্ঠা', titleEn: 'Founding of Khelat Bhawan Palace', titleBn: 'খেলাৎ ভবনের প্রতিষ্ঠা ও রাজপ্রাসাদ নির্মাণ', descEn: 'Khelat Bhawan was established as a grand Bengali heritage mansion by Babu Khelat Chandra Ghosh.', descBn: 'বাবু খেলাৎ চন্দ্র ঘোষ উত্তর কলকাতার পাথুরিয়াঘাটায় গ্র্যান্ড করিন্থিয়ান স্তম্ভ ও মার্বেল চত্বর শোভিত এই ঐতিহাসিক প্রাসাদ নির্মাণ করেন।' },
-    { year: '1855', eraEn: 'DURGA PUJA INAUGURATION', eraBn: 'দুর্গাপূজার সূচনা', titleEn: 'Inauguration of Historic Durga Puja', titleBn: 'প্রথম দুর্গাপূজা ও নিত্য দেবসেবার সূচনা', descEn: 'The first formal Durga Puja celebration at Khelat Bhawan established an unbroken 181-year sacred tradition.', descBn: 'খেলাৎ ভবনে প্রথম আনুষ্ঠানিক একচালা ডাকের সাজের দেবী দুর্গাপূজার সূচনা হয়—যা ১৮১ বছর ধরে অব্যাহত।' },
+    { year: '1855', eraEn: 'DURGA PUJA INAUGURATION', eraBn: 'দুর্গাপূজার সূচনা', titleEn: 'Inauguration of Historic Durga Puja', titleBn: 'প্রথম দুর্গাপূজা ও নিত্য দেবসেবার সূচনা', descEn: 'The first formal Durga Puja celebration at Khelat Bhawan established an unbroken 171-year sacred tradition.', descBn: 'খেলাৎ ভবনে প্রথম আনুষ্ঠানিক একচালা ডাকের সাজের দেবী দুর্গাপূজার সূচনা হয়—যা ১৭১ বছর ধরে অব্যাহত।' },
     { year: '1881', eraEn: 'SPIRITUAL VISITATION', eraBn: 'আধ্যাত্মিক আশীর্বাদ', titleEn: 'Historic Visit of Sri Ramakrishna', titleBn: 'শ্রীরামকৃষ্ণ পরমহংসদেবের ঐতিহাসিক আগমন', descEn: 'Sri Ramakrishna sanctified Khelat Bhawan with his divine presence and musical discourse.', descBn: 'শ্রীরামকৃষ্ণ পরমহংসদেব খেলাৎ ভবনে শুভাগমন করেন এবং প্রাঙ্গণকে চিরতরে পবিত্র করেন।' },
     { year: '1920', eraEn: 'LEGAL TRUST FORMALIZATION', eraBn: 'বিধিবদ্ধ ট্রাস্ট প্রশাসন', titleEn: 'Formalization of First Heritage Trusts', titleBn: 'প্রথম আনুষ্ঠানিক হেরিটেজ ট্রাস্ট প্রতিষ্ঠা', descEn: 'Formal legal trusts established to safeguard the estate and cultural endowments permanently.', descBn: 'পারিবারিক দেবসেবা ও দানশীল সমাজকল্যাণ স্থায়ী করতে বিধিবদ্ধ ট্রাস্ট দলিল সম্পাদিত হয়।' },
     { year: '1985', eraEn: 'PERFORMING ARTS COUNCIL', eraBn: 'সাংস্কৃতিক পরিষদ', titleEn: 'Foundation of Artist Nectar Council', titleBn: 'আর্টিস্ট নেকটার কাউন্সিল অফ কালচার প্রতিষ্ঠা', descEn: 'Formation of Artist Nectar Council of Culture to mentor classical musicians.', descBn: 'মার্গ সঙ্গীত ও যুব শিল্পীদের উৎসাহ দিতে আর্টিস্ট নেকটার কাউন্সিল প্রতিষ্ঠিত হয়।' },
@@ -171,7 +171,7 @@ async function runSeeder() {
       titleBn: 'মার্গ সঙ্গীত ও সান্ধ্য জলসা (Heritage Classical Concert / Soiree)',
       category: 'concert',
       guestCapacity: 'Up to 1,500 Guests',
-      descEn: 'Acoustically rich classical Indian concerts, baithaks, poetry recitals, and intimate musical soirees in an aristocratic ambiance shaped by 180+ years of heritage.',
+      descEn: 'Acoustically rich classical Indian concerts, baithaks, poetry recitals, and intimate musical soirees in an aristocratic ambiance shaped by 181 years of heritage.',
       descBn: 'শাস্ত্রীয় উচ্চাঙ্গ সঙ্গীত, বাচিক অনুষ্ঠান, সাহিত্য সভা ও সঙ্গীত সন্ধ্যার জন্য অনুপম মার্বেল প্রাঙ্গণ।'
     },
     {
@@ -201,8 +201,8 @@ async function runSeeder() {
       titleBn: 'কর্পোরেট কালচারাল সামিট (Corporate Cultural Summit)',
       category: 'corporate',
       guestCapacity: 'Up to 1,500 Guests',
-      descEn: 'Prestigious executive conclaves, corporate summits, flagship product unveilings, and institutional galas amidst 180+ years of aristocratic stature.',
-      descBn: 'ফ্ল্যাগশিপ প্রডাক্ট লঞ্চ, উচ্চপর্যায়ের সম্মেলন ও প্রাতিষ্ঠানিক সমাবেশের জন্য আধুনিক সুবিধা ও ১৮০+ বছরের আভিজাত্যের রাজকীয় পরিবেশ।'
+      descEn: 'Prestigious executive conclaves, corporate summits, flagship product unveilings, and institutional galas amidst 181 years of aristocratic stature.',
+      descBn: 'ফ্ল্যাগশিপ প্রডাক্ট লঞ্চ, উচ্চপর্যায়ের সম্মেলন ও প্রাতিষ্ঠানিক সমাবেশের জন্য আধুনিক সুবিধা ও ১৮১ বছরের আভিজাত্যের রাজকীয় পরিবেশ।'
     }
   ];
 

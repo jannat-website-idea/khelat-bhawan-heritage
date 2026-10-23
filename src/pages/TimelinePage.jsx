@@ -63,7 +63,7 @@ export default function TimelinePage({ lang = 'en', setActiveTab, onOpenLightbox
       badge: isBn ? "দুর্গাপূজার সূচনা" : "DURGA PUJA INAUGURATION",
       title: isBn ? "প্রথম দুর্গাপূজা ও নিত্য দেবসেবার সূচনা" : "Inauguration of Historic Durga Puja",
       desc: isBn 
-        ? "খেলাৎ ভবনে প্রথম আনুষ্ঠানিক একচালা ডাকের সাজের দেবী দুর্গাপূজার সূচনা হয়—যে পবিত্র ঐতিহ্য ১৮১ বছর ধরে আজ পর্যন্ত অব্যাহত।"
+        ? "খেলাৎ ভবনে প্রথম আনুষ্ঠানিক একচালা ডাকের সাজের দেবী দুর্গাপূজার সূচনা হয়—যে পবিত্র ঐতিহ্য ১৭১ বছর ধরে আজ পর্যন্ত অব্যাহত।"
         : "The first formal Durga Puja celebration at Khelat Bhawan established a tradition that continues to this day.",
       image: "/images/unnamed_6.webp",
       caption: isBn ? "খেলাৎ ভবনে ঐতিহাসিক দুর্গাপূজা" : "Durga Puja at Khelat Bhawan",

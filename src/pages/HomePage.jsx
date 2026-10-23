@@ -74,7 +74,7 @@ export default function HomePage({ lang = 'en', setActiveTab, onOpenBooking, onO
       <section className="royal-legacy-strip" aria-label={isBn ? 'ঐতিহ্যের পরিচয়' : 'Heritage at a glance'}>
         <div className="royal-legacy-strip__intro">
           <h2>{isBn ? 'এক জীবন্ত উত্তরাধিকার' : 'A living legacy,'}<em>{isBn ? '১৮৪৫ সাল থেকে সযত্নে রক্ষিত' : 'held in trust since 1845'}</em></h2>
-          <p>{isBn ? '১৮০+ বছরেরও বেশি সময় ধরে বাংলা সংস্কৃতি, সঙ্গীত ও ভক্তির ঐতিহ্য সংরক্ষণ করে চলেছে খেলাৎ ভবন।' : 'Khelat Bhawan—Pathuria Ghata Ghosh Bari—has preserved Bengal’s culture, music and devotion for 180+ years.'}</p>
+          <p>{isBn ? '১৮১ বছর ধরে বাংলা সংস্কৃতি, সঙ্গীত ও ভক্তির ঐতিহ্য সংরক্ষণ করে চলেছে খেলাৎ ভবন।' : 'Khelat Bhawan—Pathuria Ghata Ghosh Bari—has preserved Bengal’s culture, music and devotion for 181 years.'}</p>
           <div>
             <button onClick={() => setActiveTab('trustees')}>{isBn ? 'ট্রাস্টের বিস্তারিত' : 'Trustee details'}<ArrowRight size={16} /></button>
             <button onClick={() => setActiveTab('timeline')}>{isBn ? 'ঐতিহ্যের সময়রেখা' : 'Heritage timeline'}<ArrowRight size={16} /></button>
@@ -82,11 +82,11 @@ export default function HomePage({ lang = 'en', setActiveTab, onOpenBooking, onO
         </div>
         <div className="royal-legacy-strip__stats">
           <div>
-            <AnimatedStat target={180} suffix="+" isBn={isBn} />
-            <span>{isBn ? 'বছরের ঐতিহ্য' : 'Years of heritage'}</span>
+            <AnimatedStat target={181} suffix="" isBn={isBn} />
+            <span>{isBn ? 'বছর আগে প্রতিষ্ঠিত' : 'Years since establishment'}</span>
           </div>
           <div>
-            <AnimatedStat target={180} suffix="+" isBn={isBn} />
+            <AnimatedStat target={171} suffix="" isBn={isBn} />
             <span>{isBn ? 'বছরের দুর্গাপূজা' : 'Years of Durga Puja'}</span>
           </div>
           <div>
@@ -205,8 +205,8 @@ export default function HomePage({ lang = 'en', setActiveTab, onOpenBooking, onO
           <AlpanaDivider light />
           <p className="text-sm sm:text-base text-[#f0e6d2]/80 leading-relaxed font-sans">
             {isBn
-              ? 'পাথুরিয়াঘাটা ঘোষ বাড়ির ঠাকুর দালানে ১৮১ বছর ধরে অবিচ্ছিন্ন নিষ্ঠায় অনুষ্ঠিত হচ্ছে ঐতিহ্যবাহী একচালা ডাকের সাজের দেবী দুর্গাপূজা ও নিত্য সেবা।'
-              : 'For over 181 consecutive years, the sacred Thakur Dalan of Pathuria Ghata Ghosh Bari has witnessed unbroken traditional Durga Puja, sandhi puja, and community Prasad distribution.'}
+              ? 'পাথুরিয়াঘাটা ঘোষ বাড়ির ঠাকুর দালানে ১৭১ বছর ধরে অবিচ্ছিন্ন নিষ্ঠায় অনুষ্ঠিত হচ্ছে ঐতিহ্যবাহী একচালা ডাকের সাজের দেবী দুর্গাপূজা ও নিত্য সেবা।'
+              : 'For 171 consecutive years, the sacred Thakur Dalan of Pathuria Ghata Ghosh Bari has witnessed unbroken traditional Durga Puja, sandhi puja, and community Prasad distribution.'}
           </p>
           <div className="pt-4">
             <button className="heritage-button heritage-button--gold" onClick={() => setActiveTab('events')}>
