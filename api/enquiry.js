@@ -1,4 +1,5 @@
 import {createClient} from '@sanity/client';
+import {isReservationEnquiry, RESERVATIONS_ENABLED, RESERVATIONS_PAUSED_NOTICE} from '../src/config/reservations.js';
 
 const json = (response, status, body) => {
   response.status(status).setHeader('Content-Type', 'application/json');
@@ -52,7 +53,10 @@ export default async function handler(request, response) {
   const preferredDate = clean(payload.preferredDate, 20);
   const guestText = clean(payload.guests, 8);
   const guestCount = /^\d+$/.test(guestText) ? Number(guestText) : undefined;
-  const isReservation = source.toLowerCase().includes('reservation');
+  const isReservation = isReservationEnquiry(payload);
+  if (!RESERVATIONS_ENABLED && isReservation) {
+    return json(response, 503, {error: RESERVATIONS_PAUSED_NOTICE.en, code: 'RESERVATIONS_PAUSED'});
+  }
   const isFeedback = source.toLowerCase().includes('feedback');
   const messageIsValid = countCharacters(message) >= 30;
 

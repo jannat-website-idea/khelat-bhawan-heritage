@@ -7,6 +7,7 @@ import { countCharacters, emailValidationMessage, isValidEmail, isValidPhone, ph
 import { useSanityLiveQuery } from '../sanity/useSanityLiveQuery';
 import { CALENDAR_BLOCKS_LISTEN_QUERY, CALENDAR_BLOCKS_QUERY } from '../sanity/queries';
 import { collectBlockedDates } from '../utils/calendarBlocks';
+import { RESERVATIONS_ENABLED, RESERVATIONS_PAUSED_NOTICE } from '../config/reservations.js';
 
 export default function BookingModal({ isOpen, onClose, lang = 'en', content, initialEvent = '' }) {
   const t = content[lang]?.bookingModal || {
@@ -133,6 +134,10 @@ export default function BookingModal({ isOpen, onClose, lang = 'en', content, in
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    if (!RESERVATIONS_ENABLED) {
+      setSubmitError(RESERVATIONS_PAUSED_NOTICE[lang] || RESERVATIONS_PAUSED_NOTICE.en);
+      return;
+    }
     if (!formData.preferredDate) {
       alert(lang === 'bn' ? 'অনুগ্রহ করে ক্যালেন্ডার থেকে একটি উপলব্ধ তারিখ নির্বাচন করুন।' : 'Please select an available date from the reservation calendar.');
       return;
@@ -262,6 +267,11 @@ export default function BookingModal({ isOpen, onClose, lang = 'en', content, in
             </div>
           ) : (
             <form onSubmit={handleSubmit} className="space-y-6">
+              {!RESERVATIONS_ENABLED && (
+                <p role="status" className="rounded-xl border border-primary/20 bg-primary/5 p-3 text-xs leading-relaxed text-muted-foreground">
+                  {RESERVATIONS_PAUSED_NOTICE[lang] || RESERVATIONS_PAUSED_NOTICE.en}
+                </p>
+              )}
               {submitError && <div role="alert" className="flex items-start gap-2 rounded-xl border border-red-400/40 bg-red-500/10 p-3 text-xs text-red-700"><AlertCircle className="w-4 h-4 shrink-0" />{submitError}</div>}
               {/* Top Details Grid */}
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
@@ -501,14 +511,17 @@ export default function BookingModal({ isOpen, onClose, lang = 'en', content, in
               <div className="pt-2">
                 <button
                   type="submit"
-                  disabled={isSubmitting}
-                  className="w-full py-3.5 bg-primary text-primary-foreground text-xs sm:text-sm tracking-[0.2em] uppercase font-semibold hover:bg-primary/90 transition-all rounded-xl shadow-lg flex items-center justify-center gap-2"
+                  disabled={!RESERVATIONS_ENABLED || isSubmitting}
+                  aria-describedby="reservation-submission-note"
+                  className="w-full py-3.5 bg-primary text-primary-foreground text-xs sm:text-sm tracking-[0.2em] uppercase font-semibold hover:bg-primary/90 transition-all rounded-xl shadow-lg flex items-center justify-center gap-2 disabled:opacity-50 disabled:cursor-not-allowed"
                 >
                   <Send className="w-4 h-4" />
                   <span>{isSubmitting ? (lang === 'bn' ? 'প্রেরণ করা হচ্ছে...' : 'Dispatching Confirmation...') : (lang === 'bn' ? 'বুকিং আবেদন প্রেরণ করুন' : 'Submit Reservation Request')}</span>
                 </button>
-                <p className="text-[11px] text-center text-muted-foreground mt-2">
-                  {lang === 'bn'
+                <p id="reservation-submission-note" className="text-[11px] text-center text-muted-foreground mt-2 leading-relaxed">
+                  {!RESERVATIONS_ENABLED
+                    ? (RESERVATIONS_PAUSED_NOTICE[lang] || RESERVATIONS_PAUSED_NOTICE.en)
+                    : lang === 'bn'
                     ? 'আবেদন প্রেরণের পর ২৪-৪৮ ঘণ্টার মধ্যে আমাদের কনসিয়ার্জ টিম আপনার সাথে যোগাযোগ করবে।'
                     : 'Dispatches automated confirmation to your email and notifies the Ghosh Bari Concierge.'}
                 </p>

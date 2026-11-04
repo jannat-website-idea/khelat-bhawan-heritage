@@ -6,6 +6,7 @@ import { getBlockedDates, isDateBlocked, isPastDate } from '../data/bookingData'
 import { CALENDAR_BLOCKS_LISTEN_QUERY, CALENDAR_BLOCKS_QUERY, RENTAL_QUERY } from '../sanity/queries';
 import { useSanityLiveQuery } from '../sanity/useSanityLiveQuery';
 import { collectBlockedDates } from '../utils/calendarBlocks';
+import { RESERVATIONS_ENABLED, RESERVATIONS_PAUSED_NOTICE } from '../config/reservations.js';
 
 export default function HeritageRentalPage({ lang = 'en', onOpenBooking, onOpenLightbox, content }) {
   const t = content[lang];
@@ -58,6 +59,12 @@ export default function HeritageRentalPage({ lang = 'en', onOpenBooking, onOpenL
             : 'Experience the grandeur of 181 years of living heritage for aristocratic soirees, weddings, and cultural celebrations'}
         />
 
+        {!RESERVATIONS_ENABLED && (
+          <p role="status" className="mx-auto mt-5 max-w-2xl text-center text-xs sm:text-sm leading-relaxed text-muted-foreground">
+            {RESERVATIONS_PAUSED_NOTICE[lang] || RESERVATIONS_PAUSED_NOTICE.en}
+          </p>
+        )}
+
         {/* Live Reservation Calendar Preview Section */}
         <section className="my-12 p-6 sm:p-8 bg-card/60 border border-border/70 rounded-3xl backdrop-blur-sm shadow-xl">
           <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-center">
@@ -71,16 +78,16 @@ export default function HeritageRentalPage({ lang = 'en', onOpenBooking, onOpenL
               </h2>
               <p className="text-muted-foreground text-xs sm:text-sm font-sans leading-relaxed">
                 {lang === 'bn'
-                  ? 'লাল রঙের চিহ্নিত তারিখগুলি সংরক্ষিত বা উৎসবের কারণে ব্লক করা। যে কোনো উপলব্ধ তারিখের জন্য এখনই অনুসন্ধান পাঠান।'
-                  : 'Dates highlighted in red are reserved or blocked for estate festivals. Click below to initiate your formal reservation with our concierge team.'}
+                  ? 'লাল রঙের চিহ্নিত তারিখগুলি সংরক্ষিত বা উৎসবের কারণে ব্লক করা।'
+                  : 'Dates highlighted in red are reserved or blocked for estate festivals.'}
               </p>
               
-              <div className="space-y-2 pt-2 text-xs text-muted-foreground">
+              {RESERVATIONS_ENABLED && <div className="space-y-2 pt-2 text-xs text-muted-foreground">
                 <div className="flex items-center gap-2">
                   <ShieldCheck className="w-4 h-4 text-emerald-500" />
                   <span>{lang === 'bn' ? '৪৮ ঘণ্টার মধ্যে নিশ্চিতকরণ প্রতিক্রিয়া' : 'Guaranteed 48-hour response SLA'}</span>
                 </div>
-              </div>
+              </div>}
 
               <div className="pt-4">
                 <button

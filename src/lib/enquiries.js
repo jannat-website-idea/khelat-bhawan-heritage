@@ -1,7 +1,11 @@
 import {validateEnquiry} from './enquiryValidation';
 import { recordNewEnquiry } from '../data/enquiriesStore';
+import {isReservationEnquiry, RESERVATIONS_ENABLED, RESERVATIONS_PAUSED_NOTICE} from '../config/reservations.js';
 
 export async function submitEnquiry(payload) {
+  if (!RESERVATIONS_ENABLED && isReservationEnquiry(payload)) {
+    throw new Error(RESERVATIONS_PAUSED_NOTICE.en);
+  }
   const validationErrors = validateEnquiry(
     payload,
     payload.source === 'Reservation enquiry' ? {minMessageCharacters: 30} : {},
