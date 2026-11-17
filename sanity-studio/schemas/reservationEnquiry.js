@@ -1,4 +1,5 @@
 import ReservationStatusInput from '../components/ReservationStatusInput';
+import {MANUAL_BOOKING_PREFIX} from '../reservationCalendar.js';
 
 export default {
   name: 'reservationEnquiry',
@@ -75,6 +76,7 @@ export default {
       name: 'notes',
       title: 'Admin Concierge Notes',
       type: 'text',
+      hidden: ({document}) => document?._id?.replace(/^drafts\./, '').startsWith(MANUAL_BOOKING_PREFIX),
       rows: 2
     },
     {

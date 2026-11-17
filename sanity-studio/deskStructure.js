@@ -1,3 +1,5 @@
+import BookReservationPane from './components/BookReservationPane';
+
 export const deskStructure = (S) =>
   S.list()
     .title('Khelat Bhawan CMS')
@@ -18,8 +20,13 @@ export const deskStructure = (S) =>
         .child(
           S.documentTypeList('reservationEnquiry')
             .title('Booking Enquiries & Approvals')
+            .initialValueTemplates([])
             .defaultOrdering([{ field: 'receivedAt', direction: 'desc' }])
         ),
+      S.listItem()
+        .id('book-a-date')
+        .title('📅 Book a Date')
+        .child(S.component(BookReservationPane).id('book-a-date').title('Book a Date')),
 
       // 3. Guest Reviews & Feedback
       S.listItem()

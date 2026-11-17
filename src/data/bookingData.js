@@ -1,5 +1,5 @@
 // Booking and reservation calendar management
-const INITIAL_BLOCKED_DATES = [
+export const INITIAL_BLOCKED_DATES = [
   '2026-10-18', '2026-10-19', '2026-10-20', '2026-10-21', '2026-10-22', // Durga Puja 2026
   '2026-11-14', // Classical Sangeet Sabha
   '2026-12-06', // Heritage Walk

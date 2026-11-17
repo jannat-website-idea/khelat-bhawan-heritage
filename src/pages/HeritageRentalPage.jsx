@@ -74,7 +74,7 @@ export default function HeritageRentalPage({ lang = 'en', onOpenBooking, onOpenL
                 <span>{lang === 'bn' ? 'লাইভ বুকিং ক্যালেন্ডার' : 'Live Availability Calendar'}</span>
               </div>
               <h2 className="font-serif text-2xl sm:text-3xl font-bold text-foreground">
-                {lang === 'bn' ? 'উপলব্ধ তারিখ ও বুকিং অবস্থা' : 'Check Available Dates & Reserve'}
+                {lang === 'bn' ? 'উপলব্ধ তারিখ ও বুকিং অবস্থা' : RESERVATIONS_ENABLED ? 'Check Available Dates & Reserve' : 'Check Date Availability'}
               </h2>
               <p className="text-muted-foreground text-xs sm:text-sm font-sans leading-relaxed">
                 {lang === 'bn'
@@ -94,7 +94,9 @@ export default function HeritageRentalPage({ lang = 'en', onOpenBooking, onOpenL
                   onClick={() => onOpenBooking()}
                   className="px-6 py-3 rounded-xl bg-primary text-primary-foreground text-xs font-semibold tracking-widest uppercase hover:bg-primary/90 transition-all shadow-md inline-flex items-center gap-2"
                 >
-                  <span>{lang === 'bn' ? 'তারিখ বুক করুন' : 'Book a Date Now'}</span>
+                  <span>{RESERVATIONS_ENABLED
+                    ? (lang === 'bn' ? 'তারিখ বুক করুন' : 'Book a Date Now')
+                    : (lang === 'bn' ? 'বুকিংয়ের তথ্য দেখুন' : 'View Reservation Details')}</span>
                   <ArrowRight className="w-4 h-4" />
                 </button>
               </div>

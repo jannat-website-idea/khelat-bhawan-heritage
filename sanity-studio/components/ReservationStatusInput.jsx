@@ -1,6 +1,7 @@
 import React, {useState} from 'react';
 import {Button, Card, Flex, Stack, Text} from '@sanity/ui';
-import {PatchEvent, set, useClient, useFormValue} from 'sanity';
+import {useClient, useEditState, useFormValue} from 'sanity';
+import {bookingErrorMessage, isReservationDate, reserveDate} from '../reservationCalendar.js';
 
 const actions = [
   {value: 'approved', label: 'Approve & Block Date', tone: 'positive'},
@@ -8,9 +9,18 @@ const actions = [
   {value: 'cancelled', label: 'Cancel Booking & Reallocate Slot', tone: 'caution'},
 ];
 
-export default function ReservationStatusInput({value = 'pending', onChange}) {
-  const client = useClient({apiVersion: '2024-01-01'});
-  const documentId = useFormValue(['_id']);
+function canUpdateStatus(booking, nextStatus) {
+  if (!booking || booking.status === nextStatus || booking.status === 'cancelled') return false;
+  if (nextStatus === 'cancelled') return booking.status === 'approved';
+  if (nextStatus === 'approved') return isReservationDate(booking.preferredDate);
+  return booking.status !== 'approved';
+}
+
+export default function ReservationStatusInput() {
+  const client = useClient({apiVersion: '2024-01-01', useCdn: false});
+  const documentId = String(useFormValue(['_id']) || '').replace(/^drafts\./, '');
+  const {published} = useEditState(documentId, 'reservationEnquiry');
+  const value = published?.status || 'pending';
   const [updating, setUpdating] = useState('');
   const [error, setError] = useState('');
 
@@ -19,15 +29,24 @@ export default function ReservationStatusInput({value = 'pending', onChange}) {
     setError('');
 
     try {
-      const publishedId = String(documentId || '').replace(/^drafts\./, '');
-      if (!publishedId) throw new Error('Document ID is unavailable');
-      // Wait until the published document is query-visible before updating the form.
-      // This makes one click sufficient for the website calendar to refresh.
-      await client.patch(publishedId).set({status: nextStatus}).commit({visibility: 'sync'});
-      onChange(PatchEvent.from(set(nextStatus)));
+      const [booking, draft] = await client.getDocuments([documentId, `drafts.${documentId}`]);
+      if (!canUpdateStatus(booking, nextStatus)) throw new Error('This action is no longer available.');
+
+      const updateBooking = (transaction) => {
+        transaction.patch(booking._id, (patch) => patch.ifRevisionId(booking._rev).set({status: nextStatus}));
+        if (draft) {
+          transaction.patch(draft._id, (patch) => patch.ifRevisionId(draft._rev).set({status: nextStatus}));
+        }
+        return transaction;
+      };
+
+      if (nextStatus === 'approved') {
+        await reserveDate(client, booking.preferredDate, booking._id, updateBooking);
+      } else {
+        await updateBooking(client.transaction()).commit({visibility: 'sync'});
+      }
     } catch (updateError) {
-      setError('Could not update the live calendar. Please retry.');
-      console.error('Reservation status update failed:', updateError);
+      setError(bookingErrorMessage(updateError, 'Could not update the live calendar. Please retry.'));
     } finally {
       setUpdating('');
     }
@@ -52,7 +71,7 @@ export default function ReservationStatusInput({value = 'pending', onChange}) {
               type="button"
               mode={value === action.value ? 'default' : 'ghost'}
               loading={updating === action.value}
-              disabled={Boolean(updating) || value === action.value || ((value === 'approved' || value === 'cancelled') && (action.value === 'approved' || action.value === 'rejected')) || (value === 'cancelled' && action.value === 'cancelled')}
+              disabled={Boolean(updating) || !canUpdateStatus(published, action.value)}
               onClick={() => updateStatus(action.value)}
             />
           ))}
