@@ -1,7 +1,13 @@
+import {CalendarIcon} from '@sanity/icons';
 import BookReservationPane from './components/BookReservationPane';
 
-export const deskStructure = (S) =>
-  S.list()
+export const deskStructure = (S) => {
+  const bookings = S.documentTypeList('reservationEnquiry')
+    .title('Booking Enquiries & Approvals')
+    .initialValueTemplates([])
+    .defaultOrdering([{field: 'receivedAt', direction: 'desc'}]);
+
+  return S.list()
     .title('Khelat Bhawan CMS')
     .items([
       // 1. Events & Celebrations
@@ -18,10 +24,14 @@ export const deskStructure = (S) =>
         .title('📋 Booking & Enquiries')
         .schemaType('reservationEnquiry')
         .child(
-          S.documentTypeList('reservationEnquiry')
-            .title('Booking Enquiries & Approvals')
-            .initialValueTemplates([])
-            .defaultOrdering([{ field: 'receivedAt', direction: 'desc' }])
+          bookings.menuItems([
+            S.menuItem()
+              .title('Book a Date')
+              .icon(CalendarIcon)
+              .showAsAction(true)
+              .action(() => window.location.assign('/studio/structure/book-a-date')),
+            ...(bookings.getMenuItems() || []),
+          ])
         ),
       S.listItem()
         .id('book-a-date')
@@ -79,3 +89,4 @@ export const deskStructure = (S) =>
             .title('Terms & Privacy Policy')
         ),
     ]);
+};

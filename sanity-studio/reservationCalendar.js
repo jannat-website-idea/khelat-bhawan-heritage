@@ -4,6 +4,46 @@ import {collectBlockedDates} from '../src/utils/calendarBlocks.js';
 
 export const MANUAL_BOOKING_PREFIX = 'reservation-staff-';
 
+export function staffBookingDetailsId(bookingId) {
+  if (!bookingId.startsWith(MANUAL_BOOKING_PREFIX)) throw new Error('Expected a staff booking.');
+  // A non-root Sanity document is visible only to authenticated users.
+  return `staffBookingDetails.${bookingId}`;
+}
+
+export function staffBookingDetailsDocument(bookingId, details) {
+  return {
+    _id: staffBookingDetailsId(bookingId),
+    _type: 'staffBookingDetails',
+    name: details.name?.trim() || '',
+    eventType: details.eventType?.trim() || '',
+    email: details.email?.trim() || '',
+    phone: details.phone?.trim() || '',
+    guests: details.guests || '',
+    notes: details.notes?.trim() || '',
+  };
+}
+
+export async function createStaffBooking(client, date, details) {
+  const id = crypto.randomUUID();
+  const bookingId = `${MANUAL_BOOKING_PREFIX}${id}`;
+  const reference = `KB-${id.slice(0, 8).toUpperCase()}`;
+  const privateDetails = staffBookingDetailsDocument(bookingId, details);
+
+  await reserveDate(client, date, bookingId, (transaction) => transaction
+    .create({
+      _id: bookingId,
+      _type: 'reservationEnquiry',
+      name: 'Staff reservation',
+      reference,
+      preferredDate: date,
+      status: 'approved',
+      receivedAt: new Date().toISOString(),
+    })
+    .create(privateDetails));
+
+  return reference;
+}
+
 export function isReservationDate(date) {
   if (!/^\d{4}-\d{2}-\d{2}$/.test(date || '')) return false;
   const parsed = new Date(`${date}T00:00:00Z`);

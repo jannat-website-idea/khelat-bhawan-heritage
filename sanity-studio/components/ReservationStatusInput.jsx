@@ -1,7 +1,8 @@
 import React, {useState} from 'react';
 import {Button, Card, Flex, Stack, Text} from '@sanity/ui';
 import {useClient, useEditState, useFormValue} from 'sanity';
-import {bookingErrorMessage, isReservationDate, reserveDate} from '../reservationCalendar.js';
+import {MANUAL_BOOKING_PREFIX, bookingErrorMessage, isReservationDate, reserveDate} from '../reservationCalendar.js';
+import StaffBookingDetails from './StaffBookingDetails';
 
 const actions = [
   {value: 'approved', label: 'Approve & Block Date', tone: 'positive'},
@@ -19,6 +20,7 @@ function canUpdateStatus(booking, nextStatus) {
 export default function ReservationStatusInput() {
   const client = useClient({apiVersion: '2024-01-01', useCdn: false});
   const documentId = String(useFormValue(['_id']) || '').replace(/^drafts\./, '');
+  const isStaffBooking = documentId.startsWith(MANUAL_BOOKING_PREFIX);
   const {published} = useEditState(documentId, 'reservationEnquiry');
   const value = published?.status || 'pending';
   const [updating, setUpdating] = useState('');
@@ -53,31 +55,34 @@ export default function ReservationStatusInput() {
   };
 
   return (
-    <Card padding={4} radius={3} border>
-      <Stack space={4}>
-        <Stack space={2}>
-          <Text size={2} weight="semibold">Booking decision</Text>
-          <Text size={1} muted>Guest information above is read-only. Each action updates the enquiry and live website calendar immediately.</Text>
+    <Stack space={4}>
+      <Card padding={4} radius={3} border>
+        <Stack space={4}>
+          <Stack space={2}>
+            <Text size={2} weight="semibold">Booking decision</Text>
+            <Text size={1} muted>Each action updates the booking and the live website calendar immediately.</Text>
+          </Stack>
+          <Card padding={3} radius={2} tone={value === 'approved' ? 'positive' : value === 'rejected' ? 'critical' : value === 'cancelled' ? 'caution' : 'primary'}>
+            <Text size={1} weight="semibold">CURRENT STATUS: {value.toUpperCase()}</Text>
+          </Card>
+          <Flex gap={2} wrap="wrap">
+            {actions.map((action) => (
+              <Button
+                key={action.value}
+                text={action.label}
+                tone={action.tone}
+                type="button"
+                mode={value === action.value ? 'default' : 'ghost'}
+                loading={updating === action.value}
+                disabled={Boolean(updating) || !canUpdateStatus(published, action.value)}
+                onClick={() => updateStatus(action.value)}
+              />
+            ))}
+          </Flex>
+          {error ? <Text size={1} tone="critical">{error}</Text> : null}
         </Stack>
-        <Card padding={3} radius={2} tone={value === 'approved' ? 'positive' : value === 'rejected' ? 'critical' : value === 'cancelled' ? 'caution' : 'primary'}>
-          <Text size={1} weight="semibold">CURRENT STATUS: {value.toUpperCase()}</Text>
-        </Card>
-        <Flex gap={2} wrap="wrap">
-          {actions.map((action) => (
-            <Button
-              key={action.value}
-              text={action.label}
-              tone={action.tone}
-              type="button"
-              mode={value === action.value ? 'default' : 'ghost'}
-              loading={updating === action.value}
-              disabled={Boolean(updating) || !canUpdateStatus(published, action.value)}
-              onClick={() => updateStatus(action.value)}
-            />
-          ))}
-        </Flex>
-        {error ? <Text size={1} tone="critical">{error}</Text> : null}
-      </Stack>
-    </Card>
+      </Card>
+      {isStaffBooking && <StaffBookingDetails key={documentId} bookingId={documentId} client={client} />}
+    </Stack>
   );
 }

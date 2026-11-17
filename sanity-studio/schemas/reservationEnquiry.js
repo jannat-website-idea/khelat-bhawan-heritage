@@ -1,6 +1,8 @@
 import ReservationStatusInput from '../components/ReservationStatusInput';
 import {MANUAL_BOOKING_PREFIX} from '../reservationCalendar.js';
 
+const isStaffBooking = ({document}) => document?._id?.replace(/^drafts\./, '').startsWith(MANUAL_BOOKING_PREFIX);
+
 export default {
   name: 'reservationEnquiry',
   title: 'Reservation Enquiries & Bookings',
@@ -16,18 +18,21 @@ export default {
       name: 'name',
       title: 'Guest / Patron Name',
       type: 'string',
+      hidden: isStaffBooking,
       readOnly: true
     },
     {
       name: 'email',
       title: 'Guest Email Address',
       type: 'string',
+      hidden: isStaffBooking,
       readOnly: true
     },
     {
       name: 'phone',
       title: 'Phone Number',
       type: 'string',
+      hidden: isStaffBooking,
       readOnly: true
     },
     {
@@ -40,18 +45,21 @@ export default {
       name: 'eventType',
       title: 'Event / Package Type',
       type: 'string',
+      hidden: isStaffBooking,
       readOnly: true
     },
     {
       name: 'guests',
       title: 'Estimated Guests',
       type: 'string',
+      hidden: isStaffBooking,
       readOnly: true
     },
     {
       name: 'message',
       title: 'Guest Message & Specific Requirements',
       type: 'text',
+      hidden: isStaffBooking,
       rows: 4,
       readOnly: true
     },
@@ -76,7 +84,7 @@ export default {
       name: 'notes',
       title: 'Admin Concierge Notes',
       type: 'text',
-      hidden: ({document}) => document?._id?.replace(/^drafts\./, '').startsWith(MANUAL_BOOKING_PREFIX),
+      hidden: isStaffBooking,
       rows: 2
     },
     {
